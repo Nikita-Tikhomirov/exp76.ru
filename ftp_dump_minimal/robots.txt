@@ -1,0 +1,32 @@
+User-agent: *               # общие правила для роботов, кроме Яндекса и Google, 
+                            # т.к. для них правила ниже
+Disallow: /cgi-bin          # системная папка на хостинге, закрывается всегда
+Disallow: /?                # все параметры запроса на главной
+Disallow: /wp-              # все файлы WP: /wp-json/, /wp-includes, /wp-content/plugins
+Disallow: /wp/              # если есть подкаталог /wp/, где установлена CMS (если нет, 
+                            # правило можно удалить)
+Disallow: *?s=              # запрос поиска
+Disallow: *&s=              # запрос поиска
+Disallow: /search/          # запрос поиска
+Disallow: /author/          # архив автора, если у Вас новостной блог с авторскими колонками, то можно открыть
+# архив автора, если у Вас новостной блог с авторскими колонками, то можно открыть
+Disallow: /users/           # архив авторов
+Disallow: */trackback       # трекбеки, уведомления в комментариях о появлении открытой 
+                            # ссылки на статью
+Disallow: */feed            # все фиды
+Disallow: */rss             # rss фид
+Disallow: */embed           # все встраивания
+Disallow: */wlwmanifest.xml # xml-файл манифеста Windows Live Writer (если не используете, 
+                            # правило можно удалить)
+Disallow: /xmlrpc.php       # файл WordPress API
+Disallow: *utm*=             # ссылки с utm-метками
+Disallow: *openstat=        # ссылки с метками openstat
+Allow: */uploads            # открываем папку с файлами uploads
+Disallow: */attachment/ # запрещаем страницы вложений
+
+# Укажите один или несколько файлов Sitemap (дублировать для каждого User-agent 
+# не нужно). Google XML Sitemap создает 2 карты сайта, как в примере ниже.
+Sitemap: https://exp76.ru/sitemap.xml
+Sitemap: https://exp76.ru/sitemap.xml.gz
+
+# Host прописывать больше не нужно.

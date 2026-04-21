@@ -1,0 +1,149 @@
+<?php
+/*
+Template Name: Контакты
+*/
+?>
+
+<?php get_header('page'); ?>
+
+      <section class="contacts wrapper">
+        <div class="formWrapper" id="popup">
+          <form class="form">
+            <p class="form__title">Заполните форму</p><label class="form__label">
+              <p>Имя или название организации *</p><input class="form__input" type="text" name="name" placeholder=""
+                required="required" />
+            </label><label class="form__label">
+              <p>Контактный телефон *</p><input class="form__input" type="text" name="phone" placeholder=""
+                required="required" />
+            </label>
+            <div class="formConsent"><label class="formConsent__container"><input class="formConsent__input"
+                  type="checkbox" required="required" /><span class="formConsent__checkbox"><svg
+                    class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px">
+                    <path
+                      d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265  c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386  c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928  C170.827,363.533,162.165,366.839,153.504,366.839z"
+                      fill="#B22917"></path>
+                  </svg></span></label>
+              <p class="formConsent__text">Я ознакомлен и согласен с <a href="privacy.html">политикой конфиденциальности
+                </a>оператора, подтверждаю свое <a href="consent.html">согласие </a>на обработку введенных мною
+                персональных данных</p>
+            </div><button class="form__btn btn" type="submit">Отправить</button>
+          </form>
+          <div class="ajaxMessage">
+            <div class="ajaxMessage__success">
+              <div class="ajaxMessage__title">
+                <p>Спасибо!</p>
+                <p>Ваша заявка принята</p>
+              </div>
+              <div class="ajaxMessage__text">Мы свяжемся с вами в ближайшее время, что бы обсудить детали и ответить на
+                вопросы</div>
+            </div>
+            <div class="ajaxMessage__error">
+              <div class="ajaxMessage__title">Ошибка при отправке!</div>
+              <div class="ajaxMessage__text">Попробуйте позднее</div>
+            </div><button class="ajaxMessage__btn btn closeModal" type="button">закрыть</button>
+          </div>
+        </div>
+        <h2 class="contacts__title">Свяжитесь с нами</h2>
+        <div class="contacts__wrap">
+          <div class="contacts__ls">
+            <div class="contacts__img-wrap"><img class="contacts__img" src="<?php echo get_template_directory_uri() ?>/img/contacts2.png" alt=""
+                role="presentation" /></div>
+            <div class="contacts__action">
+              <p class="contacts__info">Мобильный офис приедет сам </p><a class="contacts__btn openPopup"
+                data-modal="#popup">Вызвать </a>
+            </div>
+          </div>
+          <div class="contacts__text-wrap">
+            <h3 class="contacts__subtitle">Ландшафтно-строительная компания<br>"ЭКСПЕРТЫ"</h3>
+            <a class="contacts__social" href="tel:89159788809"><svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 300 300" width="23" height="23">
+                <circle class="active-path" cx="150" cy="226.1" r="11.7" data-original="#000000"
+                  data-old_color="#000000" fill="#0a9215"></circle>
+                <path class="active-path svg-path"
+                  d="M182.7 68.2h-65.4a6.5 6.5 0 00-6.6 6.4v123.6c0 3.5 3 6.3 6.6 6.3h65.4c3.7 0 6.6-2.8 6.6-6.3V74.6c0-3.5-3-6.4-6.6-6.4z"
+                  data-original="#000000" data-old_color="#000000" fill="#0a9215"></path>
+                <path class="active-path svg-path"
+                  d="M150 0a150 150 0 100 300 150 150 0 000-300zm58.4 224c0 11.5-9.3 20.8-20.8 20.8h-75.2A20.8 20.8 0 0191.6 224V75.3c0-11.4 9.3-20.7 20.8-20.7h75.2c11.5 0 20.8 9.3 20.8 20.7V224z"
+                  data-original="#000000" data-old_color="#000000" fill="#0a9215"></path>
+              </svg><span class="contacts__link-name">Телефон:8(915)-978-88-09</span></a>
+              
+              <a class="contacts__social" href="mailto:info@exp76.ru"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="23" height="23">
+                <path class="active-path"
+                  d="M150 0a150 150 0 100 300 150 150 0 000-300zm0 53l89 55H61l89-55zm90 143c0 9-7 16-16 16H76c-9 0-16-7-16-16v-84-3l85 53h1a9 9 0 002 1h4a9 9 0 002-1h1l85-53v87z"
+                  data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
+              </svg><span class="contacts__link-name">Почта: info@exp76.ru</span></a>
+            <p class="contacts__description">Мы в социальных сетях:</p>
+            <div class="contacts__socials-wrap">
+            
+            <a class="contacts__social"  target="_blank" href="https://vk.com/exp_76"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 97.8 97.8">
+                  <path class="active-path svg-path"
+                    d="M48.9 0a48.9 48.9 0 100 97.8 48.9 48.9 0 000-97.8zm24.8 54.2c2.2 2.2 4.7 4.3 6.7 6.7 1 1.1 1.8 2.2 2.4 3.5 1 1.8.1 3.8-1.5 3.9h-10c-2.6.2-4.7-.8-6.4-2.6l-4-4.4a9.4 9.4 0 00-1.8-1.6c-1.4-.9-2.6-.6-3.3.8-.8 1.5-1 3-1.1 4.7-.1 2.4-.8 3-3.2 3a25.6 25.6 0 01-24-12c-5.1-7-9-14.7-12.7-22.6-.8-1.8-.2-2.8 1.8-2.8h9.8c1.3 0 2.2.8 2.7 2 1.8 4.4 4 8.5 6.7 12.3.7 1 1.4 2 2.5 2.8 1.1.8 2 .5 2.6-.8a38.6 38.6 0 00.4-11.6C41 33.6 40 32.4 38 32c-1-.1-.8-.5-.4-1 .8-1 1.6-1.6 3.1-1.6h11.3c1.8.4 2.2 1.2 2.4 3v12.5c0 .7.4 2.8 1.6 3.3 1 .3 1.7-.5 2.3-1.2 2.7-2.8 4.6-6.2 6.4-9.7l2-4.8c.5-1.2 1.3-1.8 2.6-1.8h10.9l1 .1c1.8.3 2.3 1.1 1.7 2.9-.9 2.8-2.6 5.2-4.3 7.5l-5.6 7.5c-1.6 2.3-1.5 3.5.6 5.5z"
+                    data-original="#000000" data-old_color="#000000" fill="#0a9215"></path>
+                </svg><span class="contacts__link-name">ВКонтакте</span></a>
+                
+                <a class="contacts__social"  target="_blank" href="https://www.facebook.com/groups/exp76/?ref=share"><svg
+                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.7 167.7" width="23" height="23">
+                  <path class="active-path svg-path"
+                    d="M83.8.3a83.8 83.8 0 00-14 166.4v-65H49.6V78.2h20.2V61c0-20 12.3-31 30.2-31 8.5 0 15.9.7 18 1v20.9h-12.4C96 51.9 94 56.5 94 63.3v15h23.2l-3 23.4H94v65.6A83.8 83.8 0 0083.8.3z"
+                    data-original="#010002" data-old_color="#010002" fill="#0a9215"></path>
+                </svg><span class="contacts__link-name">Facebook</span></a>
+                
+                <a class="contacts__social"  target="_blank" href="https://www.instagram.com/exp_76/?igshid=e2jlt4ojs5qq"><svg
+                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89.8 89.8" width="23" height="23">
+                  <path class="active-path svg-path"
+                    d="M58.3 23.9H31.5a7.8 7.8 0 00-7.7 7.7v26.8c0 4.2 3.4 7.7 7.7 7.7h26.8c4.2 0 7.7-3.5 7.7-7.7V31.6c0-4.2-3.5-7.7-7.7-7.7zm-13.4 35a14 14 0 110-27.8 14 14 0 010 27.8zm14.3-25a3.3 3.3 0 110-6.5 3.3 3.3 0 010 6.6z"
+                    data-original="#6A453B" data-old_color="#6A453B" fill="#0a9215"></path>
+                  <path class="active-path svg-path" d="M44.9 37a8 8 0 100 16 8 8 0 000-16z" data-original="#6A453B"
+                    data-old_color="#6A453B" fill="#0a9215"></path>
+                  <path class="active-path svg-path"
+                    d="M44.9 0a44.9 44.9 0 100 89.8 44.9 44.9 0 000-89.8zm27 58.4c0 7.5-6.1 13.6-13.6 13.6H31.5c-7.5 0-13.6-6.1-13.6-13.6V31.6c0-7.5 6-13.6 13.6-13.6h26.8c7.5 0 13.6 6.1 13.6 13.6v26.8z"
+                    data-original="#6A453B" data-old_color="#6A453B" fill="#0a9215"></path>
+                </svg><span class="contacts__link-name">Instagram</span></a></div>
+            <p class="contacts__adress">Мы в процессе переезда в новый офис. Адрес сообщим дополнительно.</p>
+          </div>
+        </div>
+      </section>
+      <section class="action wrapper">
+        <div class="formWrapper" id="form" data-aos="fade-up" data-aos-duration="1600">
+          <form class="form">
+            <p class="form__title">Остались вопросы?</p><label class="form__label">
+              <p>Имя или название организации *</p><input class="form__input" type="text" name="name" placeholder=""
+                required="required" />
+            </label><label class="form__label">
+              <p>Контактный телефон *</p><input class="form__input" type="text" name="phone" placeholder=""
+                required="required" />
+            </label>
+            <div class="formConsent"><label class="formConsent__container"><input class="formConsent__input"
+                  type="checkbox" required="required" /><span class="formConsent__checkbox"><svg
+                    class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px">
+                    <path
+                      d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265  c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386  c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928  C170.827,363.533,162.165,366.839,153.504,366.839z"
+                      fill="#B22917"></path>
+                  </svg></span></label>
+              <p class="formConsent__text">Я ознакомлен и согласен с <a href="privacy.html">политикой конфиденциальности
+                </a>оператора, подтверждаю свое <a href="consent.html">согласие </a>на обработку введенных мною
+                персональных данных</p>
+            </div><button class="form__btn btn" type="submit">Отправить</button>
+          </form>
+          <div class="ajaxMessage">
+            <div class="ajaxMessage__success">
+              <div class="ajaxMessage__title">
+                <p>Спасибо!</p>
+                <p>Ваша заявка принята</p>
+              </div>
+              <div class="ajaxMessage__text">Мы свяжемся с вами в ближайшее время, что бы обсудить детали и ответить на
+                вопросы</div>
+            </div>
+            <div class="ajaxMessage__error">
+              <div class="ajaxMessage__title">Ошибка при отправке!</div>
+              <div class="ajaxMessage__text">Попробуйте позднее</div>
+            </div><button class="ajaxMessage__btn btn closeModal" type="button">закрыть</button>
+          </div>
+        </div>
+        <div class="action__img-wrap"><img class="action__man" src="<?php echo get_template_directory_uri() ?>/img/man22.png" alt="" role="presentation" /></div>
+      </section>
+    </main>
+  </div>
+
+  <?php get_footer(); ?>
