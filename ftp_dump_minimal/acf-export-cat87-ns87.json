@@ -1,0 +1,817 @@
+[
+  {
+    "key": "group_cat87_content",
+    "title": "cat87_content",
+    "fields": [
+      {
+        "key": "field_cat87_hero_title",
+        "label": "Hero: Заголовок",
+        "name": "cat87_hero_title",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": ""
+      },
+      {
+        "key": "field_cat87_hero_subtitle",
+        "label": "Hero: Подзаголовок",
+        "name": "cat87_hero_subtitle",
+        "type": "textarea",
+        "instructions": "",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_cat87_hero_btn_primary_text",
+        "label": "Hero: Кнопка 1 текст",
+        "name": "cat87_hero_btn_primary_text",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": ""
+      },
+      {
+        "key": "field_cat87_hero_btn_primary_url",
+        "label": "Hero: Кнопка 1 URL",
+        "name": "cat87_hero_btn_primary_url",
+        "type": "url",
+        "instructions": "",
+        "required": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": ""
+      },
+      {
+        "key": "field_cat87_hero_btn_secondary_text",
+        "label": "Hero: Кнопка 2 текст",
+        "name": "cat87_hero_btn_secondary_text",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": ""
+      },
+      {
+        "key": "field_cat87_hero_btn_secondary_url",
+        "label": "Hero: Кнопка 2 URL",
+        "name": "cat87_hero_btn_secondary_url",
+        "type": "url",
+        "instructions": "",
+        "required": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": ""
+      },
+      {
+        "key": "field_cat87_offer_title",
+        "label": "Оффер: Заголовок",
+        "name": "cat87_offer_title",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": ""
+      },
+      {
+        "key": "field_cat87_trust_items",
+        "label": "Оффер: Пункты доверия",
+        "name": "cat87_trust_items",
+        "type": "repeater",
+        "instructions": "",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "table",
+        "button_label": "Добавить пункт",
+        "sub_fields": [
+          {
+            "key": "field_cat87_trust_items_title",
+            "label": "Текст пункта",
+            "name": "title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+          }
+        ]
+      },
+      {
+        "key": "field_cat87_prices_title",
+        "label": "Цены: Заголовок",
+        "name": "cat87_prices_title",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": ""
+      },
+      {
+        "key": "field_cat87_price_rows",
+        "label": "Цены: Строки таблицы",
+        "name": "cat87_price_rows",
+        "type": "repeater",
+        "instructions": "",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "table",
+        "button_label": "Добавить строку",
+        "sub_fields": [
+          {
+            "key": "field_cat87_price_rows_service",
+            "label": "Услуга",
+            "name": "service",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "33",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          },
+          {
+            "key": "field_cat87_price_rows_price",
+            "label": "Цена",
+            "name": "price",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "33",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          },
+          {
+            "key": "field_cat87_price_rows_term",
+            "label": "Сроки",
+            "name": "term",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "34",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "key": "field_cat87_estimate_title",
+        "label": "Смета: Заголовок",
+        "name": "cat87_estimate_title",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_cat87_estimate_items",
+        "label": "Смета: Пункты",
+        "name": "cat87_estimate_items",
+        "type": "repeater",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "table",
+        "button_label": "Добавить пункт",
+        "sub_fields": [
+          {
+            "key": "field_cat87_estimate_items_item",
+            "label": "Пункт",
+            "name": "item",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "key": "field_cat87_estimate_total",
+        "label": "Смета: Итого",
+        "name": "cat87_estimate_total",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_cat87_prices_link_text",
+        "label": "Цены: Текст ссылки",
+        "name": "cat87_prices_link_text",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_cat87_prices_link_url",
+        "label": "Цены: URL ссылки",
+        "name": "cat87_prices_link_url",
+        "type": "url",
+        "required": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_cat87_faq_title",
+        "label": "FAQ: Заголовок",
+        "name": "cat87_faq_title",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_cat87_faq_items",
+        "label": "FAQ: Вопросы",
+        "name": "cat87_faq_items",
+        "type": "repeater",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "block",
+        "button_label": "Добавить вопрос",
+        "sub_fields": [
+          {
+            "key": "field_cat87_faq_items_question",
+            "label": "Вопрос",
+            "name": "question",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          },
+          {
+            "key": "field_cat87_faq_items_answer",
+            "label": "Ответ",
+            "name": "answer",
+            "type": "textarea",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "rows": 3,
+            "new_lines": ""
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "taxonomy",
+          "operator": "==",
+          "value": "category"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Поля для category-87.php (префикс cat87_).",
+    "show_in_rest": 0
+  },
+  {
+    "key": "group_ns87_content",
+    "title": "ns87_content",
+    "fields": [
+      {
+        "key": "field_ns87_hero_title",
+        "label": "Hero: Заголовок",
+        "name": "ns87_hero_title",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_hero_subtitle",
+        "label": "Hero: Подзаголовок",
+        "name": "ns87_hero_subtitle",
+        "type": "textarea",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_ns87_hero_btn_primary_text",
+        "label": "Hero: Кнопка 1 текст",
+        "name": "ns87_hero_btn_primary_text",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_hero_btn_primary_url",
+        "label": "Hero: Кнопка 1 URL",
+        "name": "ns87_hero_btn_primary_url",
+        "type": "url",
+        "required": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_hero_btn_secondary_text",
+        "label": "Hero: Кнопка 2 текст",
+        "name": "ns87_hero_btn_secondary_text",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_hero_btn_secondary_url",
+        "label": "Hero: Кнопка 2 URL",
+        "name": "ns87_hero_btn_secondary_url",
+        "type": "url",
+        "required": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_problem_title",
+        "label": "Проблема: Заголовок",
+        "name": "ns87_problem_title",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_problem_text",
+        "label": "Проблема: Текст",
+        "name": "ns87_problem_text",
+        "type": "textarea",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_ns87_problem_items",
+        "label": "Проблема: Карточки",
+        "name": "ns87_problem_items",
+        "type": "repeater",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "block",
+        "button_label": "Добавить карточку",
+        "sub_fields": [
+          {
+            "key": "field_ns87_problem_items_title",
+            "label": "Заголовок",
+            "name": "title",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          },
+          {
+            "key": "field_ns87_problem_items_text",
+            "label": "Текст",
+            "name": "text",
+            "type": "textarea",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "rows": 3,
+            "new_lines": ""
+          },
+          {
+            "key": "field_ns87_problem_items_image",
+            "label": "Изображение",
+            "name": "image",
+            "type": "image",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": ""
+          }
+        ]
+      },
+      {
+        "key": "field_ns87_solution_title",
+        "label": "Решение: Заголовок",
+        "name": "ns87_solution_title",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_solution_text",
+        "label": "Решение: Текст",
+        "name": "ns87_solution_text",
+        "type": "textarea",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_ns87_solution_points",
+        "label": "Решение: Пункты",
+        "name": "ns87_solution_points",
+        "type": "repeater",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "table",
+        "button_label": "Добавить пункт",
+        "sub_fields": [
+          {
+            "key": "field_ns87_solution_points_title",
+            "label": "Заголовок",
+            "name": "title",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "40",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          },
+          {
+            "key": "field_ns87_solution_points_text",
+            "label": "Текст",
+            "name": "text",
+            "type": "textarea",
+            "required": 0,
+            "wrapper": {
+              "width": "60",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "rows": 3,
+            "new_lines": ""
+          }
+        ]
+      },
+      {
+        "key": "field_ns87_prices_title",
+        "label": "Цены: Заголовок",
+        "name": "ns87_prices_title",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_price_rows",
+        "label": "Цены: Строки таблицы",
+        "name": "ns87_price_rows",
+        "type": "repeater",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "table",
+        "button_label": "Добавить строку",
+        "sub_fields": [
+          {
+            "key": "field_ns87_price_rows_service",
+            "label": "Услуга",
+            "name": "service",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "33",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          },
+          {
+            "key": "field_ns87_price_rows_price",
+            "label": "Цена",
+            "name": "price",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "33",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          },
+          {
+            "key": "field_ns87_price_rows_term",
+            "label": "Сроки",
+            "name": "term",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "34",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "key": "field_ns87_estimate_title",
+        "label": "Смета: Заголовок",
+        "name": "ns87_estimate_title",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_estimate_items",
+        "label": "Смета: Пункты",
+        "name": "ns87_estimate_items",
+        "type": "repeater",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "table",
+        "button_label": "Добавить пункт",
+        "sub_fields": [
+          {
+            "key": "field_ns87_estimate_items_item",
+            "label": "Пункт",
+            "name": "item",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "key": "field_ns87_estimate_total",
+        "label": "Смета: Итого",
+        "name": "ns87_estimate_total",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_faq_title",
+        "label": "FAQ: Заголовок",
+        "name": "ns87_faq_title",
+        "type": "text",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": ""
+      },
+      {
+        "key": "field_ns87_faq_items",
+        "label": "FAQ: Вопросы",
+        "name": "ns87_faq_items",
+        "type": "repeater",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "block",
+        "button_label": "Добавить вопрос",
+        "sub_fields": [
+          {
+            "key": "field_ns87_faq_items_question",
+            "label": "Вопрос",
+            "name": "question",
+            "type": "text",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": ""
+          },
+          {
+            "key": "field_ns87_faq_items_answer",
+            "label": "Ответ",
+            "name": "answer",
+            "type": "textarea",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "rows": 3,
+            "new_lines": ""
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "taxonomy",
+          "operator": "==",
+          "value": "category"
+        }
+      ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Поля для newservicepost.php (префикс ns87_).",
+    "show_in_rest": 0
+  }
+]
