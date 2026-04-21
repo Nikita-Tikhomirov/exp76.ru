@@ -447,17 +447,81 @@ Template Name: Категория Дренаж участка
   }
 }
 </style>
+<?php
+$cat87_term_context = 'category_' . get_queried_object_id();
+$cat87_hero_title = function_exists('get_field') ? get_field('cat87_hero_title', $cat87_term_context) : '';
+$cat87_hero_subtitle = function_exists('get_field') ? get_field('cat87_hero_subtitle', $cat87_term_context) : '';
+$cat87_hero_btn_primary_text = function_exists('get_field') ? get_field('cat87_hero_btn_primary_text', $cat87_term_context) : '';
+$cat87_hero_btn_primary_url = function_exists('get_field') ? get_field('cat87_hero_btn_primary_url', $cat87_term_context) : '';
+$cat87_hero_btn_secondary_text = function_exists('get_field') ? get_field('cat87_hero_btn_secondary_text', $cat87_term_context) : '';
+$cat87_hero_btn_secondary_url = function_exists('get_field') ? get_field('cat87_hero_btn_secondary_url', $cat87_term_context) : '';
+$cat87_offer_title = function_exists('get_field') ? get_field('cat87_offer_title', $cat87_term_context) : '';
+$cat87_trust_items = function_exists('get_field') ? get_field('cat87_trust_items', $cat87_term_context) : array();
+$cat87_prices_title = function_exists('get_field') ? get_field('cat87_prices_title', $cat87_term_context) : '';
+$cat87_price_rows = function_exists('get_field') ? get_field('cat87_price_rows', $cat87_term_context) : array();
+$cat87_estimate_title = function_exists('get_field') ? get_field('cat87_estimate_title', $cat87_term_context) : '';
+$cat87_estimate_items = function_exists('get_field') ? get_field('cat87_estimate_items', $cat87_term_context) : array();
+$cat87_estimate_total = function_exists('get_field') ? get_field('cat87_estimate_total', $cat87_term_context) : '';
+$cat87_prices_link_text = function_exists('get_field') ? get_field('cat87_prices_link_text', $cat87_term_context) : '';
+$cat87_prices_link_url = function_exists('get_field') ? get_field('cat87_prices_link_url', $cat87_term_context) : '';
+$cat87_faq_title = function_exists('get_field') ? get_field('cat87_faq_title', $cat87_term_context) : '';
+$cat87_faq_items = function_exists('get_field') ? get_field('cat87_faq_items', $cat87_term_context) : array();
+
+$cat87_default_trust_titles = array('Авторский дизайн', 'Индивидуальный подход', 'Профессионализм', 'Высокое качество');
+$cat87_trust_titles = $cat87_default_trust_titles;
+if (!empty($cat87_trust_items) && is_array($cat87_trust_items)) {
+    foreach ($cat87_default_trust_titles as $idx => $fallback_title) {
+        if (!empty($cat87_trust_items[$idx]['title'])) {
+            $cat87_trust_titles[$idx] = $cat87_trust_items[$idx]['title'];
+        }
+    }
+}
+
+if (empty($cat87_price_rows) || !is_array($cat87_price_rows)) {
+    $cat87_price_rows = array(
+        array('service' => 'Глубинный дренаж', 'price' => 'от 3 500 ₽', 'term' => '3-5 дней'),
+        array('service' => 'Поверхностный дренаж', 'price' => 'от 2 800 ₽', 'term' => '2-4 дня'),
+        array('service' => 'Пристенный дренаж', 'price' => 'от 4 200 ₽', 'term' => '4-6 дней'),
+    );
+}
+
+if (empty($cat87_estimate_items) || !is_array($cat87_estimate_items)) {
+    $cat87_estimate_items = array(
+        array('item' => 'Проектирование системы - 15 000 ₽'),
+        array('item' => 'Монтаж дренажных труб (150 м) - 525 000 ₽'),
+        array('item' => 'Установка дренажных колодцев (3 шт) - 45 000 ₽'),
+        array('item' => 'Обратная засыпка и трамбовка - 30 000 ₽'),
+    );
+}
+
+if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
+    $cat87_faq_items = array(
+        array(
+            'question' => 'Сколько стоит дренаж участка?',
+            'answer' => 'Стоимость дренажа участка зависит от площади, типа почвы и сложности работ. В среднем цена варьируется от 2 800 до 4 200 рублей за погонный метр. Точную стоимость мы рассчитываем после бесплатного выезда на объект.',
+        ),
+        array(
+            'question' => 'Какая глубина дренажной системы?',
+            'answer' => 'Глубина заложения дренажных труб составляет 0.8-1.5 метра для поверхностного дренажа и 1.5-3 метра для глубинного дренажа.',
+        ),
+        array(
+            'question' => 'Сколько времени занимает монтаж?',
+            'answer' => 'Сроки монтажа дренажной системы зависят от площади участка и сложности работ. В среднем на стандартный участок 10-15 соток уходит от 3 до 7 рабочих дней.',
+        ),
+    );
+}
+?>
     <!-- 1. Hero блок с полной структурой из header-page.php -->
       <section class="hero">
         <div class="hero__scene" id="scene">
           <div class="hero__bg" data-depth="0.4"></div>
         </div>
         <div class="hero__content wrapper">
-          <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800">Дренаж участка под ключ в Ярославской области</h1>
-          <p class="hero__subtitle" data-aos="fade-up" data-aos-duration="900">Проектируем и выполняем монтаж дренажных систем любой сложности. Гарантия, расчет стоимости за 1 день.</p>
+          <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800"><?php echo esc_html($cat87_hero_title ? $cat87_hero_title : 'Дренаж участка под ключ в Ярославской области'); ?></h1>
+          <p class="hero__subtitle" data-aos="fade-up" data-aos-duration="900"><?php echo esc_html($cat87_hero_subtitle ? $cat87_hero_subtitle : 'Проектируем и выполняем монтаж дренажных систем любой сложности. Гарантия, расчет стоимости за 1 день.'); ?></p>
           <div class="hero__buttons" data-aos="fade-up" data-aos-duration="1000">
-            <a href="#calc" class="hero__btn">Рассчитать стоимость</a>
-            <a href="#consultation" class="hero__btn openPopup" data-modal="#popup" style="margin-left: 15px;">Получить консультацию</a>
+            <a href="<?php echo esc_url($cat87_hero_btn_primary_url ? $cat87_hero_btn_primary_url : '#calc'); ?>" class="hero__btn"><?php echo esc_html($cat87_hero_btn_primary_text ? $cat87_hero_btn_primary_text : 'Рассчитать стоимость'); ?></a>
+            <a href="<?php echo esc_url($cat87_hero_btn_secondary_url ? $cat87_hero_btn_secondary_url : '#consultation'); ?>" class="hero__btn openPopup" data-modal="#popup" style="margin-left: 15px;"><?php echo esc_html($cat87_hero_btn_secondary_text ? $cat87_hero_btn_secondary_text : 'Получить консультацию'); ?></a>
           </div>
           <div class="hero__breadcramps"><a class="hero__home" href="<?php echo get_home_url(); ?>">Компания "Эксперты"
               | </a><span class="hero__active-page">Дренаж участка</span></div>
@@ -506,14 +570,14 @@ Template Name: Категория Дренаж участка
 
     <!-- 2. Краткий оффер + доверие -->
 <section class="advantages wrapper">
-        <h2 class="advantages__title">Наши преимущества</h2>
+        <h2 class="advantages__title"><?php echo esc_html($cat87_offer_title ? $cat87_offer_title : 'Наши преимущества'); ?></h2>
         <div class="advantages__how">
           <div class="advantages__step">
             <div class="advantages__svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" height="512" width="512">
                 <path class="active-path" d="M505 50H271V8c0-5-4-8-8-8h-47c-4 0-7 3-7 8v42h-92c-4 0-7 3-7 7v65c-5 2-10 6-14 10v-22c0-14-13-25-34-29V65c0-4-3-8-7-8-13 0-27 6-37 14a51 51 0 00-18 40v31c0 10 15 10 15 0v-31c0-17 12-34 32-38v288c-11 1-23 6-32 14V182c0-10-15-10-15 0v234c1 22 21 39 48 39 13 0 25-4 33-10v27c0 26 26 40 48 40 24 0 48-14 48-40V366h214L235 499c-5 4-2 13 5 13h226c4 0 8-3 8-8v-36c0-10-15-10-15 0v29H261l198-169v99c0 9 15 9 15 0v-61h31c4 0 7-3 7-7V57c0-4-3-7-7-7zm-8 15v182H321V65zM256 15v192h-32v-19h5c10 0 10-15 0-15h-5v-20h12c10 0 10-15 0-15h-12v-20h5a8 8 0 000-15h-5V84h12c10 0 10-15 0-15h-12V49h5c10 0 10-15 0-15h-5V15zM118 134c4-2 7-3 11-3v287c-9 1-22 5-33 15V168c0-13 8-28 22-34zm44 316c-9-5-20-7-32-7v-10h6c5-1 7-3 8-8V154c10 3 18 8 18 13zM81 110v283c-8-5-20-8-32-8v-9l6-1c4 0 7-2 7-7V97c12 2 19 8 19 13zm0 308c0 12-15 22-33 22-19 0-33-11-33-25s5-28 19-35v13c0 5 3 7 8 7 10-1 22 1 31 6 5 3 9 6 8 12zm48 79c-18 0-33-11-33-25s5-27 19-34v12c0 5 3 8 8 8 13-1 40 1 39 18 0 11-15 21-33 21zm48-330c0-13-13-25-33-28v-17c-1-4-3-7-8-7l-11 1V65h84v149c0 5 3 8 7 8h47c4 0 8-3 8-8V65h35v286H177zm292 138c-2-1-6 0-8 1l-52 45h-88v-89h176v89h-23v-39c0-3-2-5-5-7z" data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
                 <path class="active-path" d="M357 215h69l6-2 34-35c2-1 3-3 3-5l-1-69c0-4-3-8-7-8h-69c-2 0-4 1-5 3l-35 34-2 5v69c0 5 3 8 7 8zm8-69h54v54h-54zm69 43v-47l20-20v48zm-39-78h48l-20 20h-48zM393 314h-25c-10 0-10 15 0 15h25c10 0 10-15 0-15zM432 284h-64c-10 0-10 15 0 15h64c9 0 9-15 0-15zM425 385l-91 77c-5 5-2 14 5 14h91c4 0 7-4 7-8v-77c0-6-7-10-12-6zm-3 76h-63l63-54z" data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
               </svg></div>
-            <p class="advantages__step-description">Авторский дизайн</p>
+            <p class="advantages__step-description"><?php echo esc_html($cat87_trust_titles[0]); ?></p>
           </div>
           <div class="advantages__arrow"></div>
           <div class="advantages__step">
@@ -523,7 +587,7 @@ Template Name: Категория Дренаж участка
                 <path class="active-path" d="M383 192l-18-5v-3c11-8 19-21 19-36v-24a45 45 0 00-74-34 58 58 0 00-108 0c-8-6-18-10-29-10-25 0-45 20-45 44v24c0 15 8 28 19 36v3l-18 5c-21 5-36 24-36 45v19c0 6 5 10 10 10h46v40c0 5 5 10 10 10h60a10 10 0 000-20h-10v-21a10 10 0 00-20 0v21h-20v-26c0-20 13-36 32-41l28-6 18 42c1 3 5 6 9 6s8-3 9-6l19-42 27 6c19 5 32 21 32 41v26h-20v-21a10 10 0 00-20 0v21h-11a10 10 0 000 20h61c5 0 10-5 10-10v-36-4h46c5 0 10-4 10-10v-19c0-21-15-40-36-45zm-44-92c13 0 24 10 25 23h-14c-12 0-23-3-33-8 3-9 12-15 22-15zm-24 46v-10c11 4 23 7 35 7h14v5a25 25 0 01-49 0v-2zm-97-34a38 38 0 0176-6l-17-10c-4-2-9-1-13 3-8 9-20 15-33 15h-13v-2zm-45-12c10 0 19 6 23 15-11 5-22 8-34 8h-14c1-13 12-23 25-23zm-25 43h14c12 0 24-3 36-7v12a25 25 0 01-50 0v-5zm48 67c-19 5-35 18-42 36h-41v-9c0-12 9-23 21-26l26-6c4-1 7-5 7-10v-3a45 45 0 0011 0v3a10 10 0 009 10l14 4-5 1zm28-16l-8-2-18-5v-3c4-2 7-5 9-8 5 7 10 13 17 18zm44 15l-12 27-12-27v-7a58 58 0 0024 0v7zm-12-26c-21 0-38-17-38-38v-11h13c16 0 31-6 43-16l20 12v16c0 21-17 37-38 37zm32 11c7-5 13-11 17-18 3 3 5 6 9 8v3l-18 5-8 2zm111 52h-41c-7-18-23-31-42-36l-5-1 15-4a10 10 0 008-10v-3a45 45 0 0011 0v3c0 5 3 9 8 10l25 6c12 3 21 14 21 26v9z" data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
                 <path class="active-path" d="M263 299a10 10 0 00-14 0 10 10 0 000 14 10 10 0 0014 0c2-2 3-5 3-7 0-3-1-6-3-7zM256 0c-6 0-10 4-10 10v15a10 10 0 0020 0V10c0-6-4-10-10-10zM219 33l-10-11a10 10 0 10-14 14l10 11a10 10 0 0014 0c4-4 4-10 0-14zM317 22c-4-4-10-4-14 0l-10 11a10 10 0 0014 14l10-10c4-4 4-11 0-15z" data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
               </svg></div>
-            <p class="advantages__step-description">Индивидуальный подход</p>
+            <p class="advantages__step-description"><?php echo esc_html($cat87_trust_titles[1]); ?></p>
           </div>
           <div class="advantages__arrow"></div>
           <div class="advantages__step">
@@ -532,14 +596,14 @@ Template Name: Категория Дренаж участка
                 <path class="active-path" d="M515 358c0-5-4-9-9-10-24-2-53-18-75-40-2-2-4-4-7-4s-5 2-7 4c-10 10-21 19-33 25a181 181 0 00-82-52c25-25 41-57 41-86v-16a33 33 0 00-1-61c-5-50-40-92-89-106-1-7-7-12-14-12h-37c-7 0-12 5-14 11a124 124 0 00-91 107 33 33 0 00-2 61v16c0 29 17 61 42 86a205 205 0 00-8 3c-33 11-60 31-82 58-20 26-35 58-43 95-3 14-5 31 4 42s24 12 37 12h66a10 10 0 000-20H45c-12 0-19-1-22-5-3-3-3-11 0-24 11-47 36-104 97-133-2 34 17 56 28 70a10 10 0 0015 0l56-54 57 54a10 10 0 0014 0c12-14 30-36 28-70 18 8 34 20 47 34-8 3-16 5-23 5-5 1-9 5-9 10a168 168 0 0035 113H201a10 10 0 000 20h183c12 14 26 25 40 25 32 0 69-66 70-67 16-30 22-55 21-91zM322 115h-56c-10-27-12-49-12-82 36 13 62 45 68 82zM207 20h27c0 39 1 65 11 95h-49c10-30 11-56 11-95zm-20 12c0 34-2 56-12 83h-58c6-38 34-71 70-83zm-78 103h221a13 13 0 010 27H109a13 13 0 010-27zm6 60v-13h208v13c0 38-37 85-79 101-18 6-31 6-50 0-42-16-79-63-79-101zm42 162a68 68 0 01-16-57l14-3a134 134 0 0043 21zm125 0l-41-39a120 120 0 0043-21l13 3c5 26-5 44-15 57zm194 83c-12 22-40 56-52 56s-40-34-52-56c-13-25-19-45-19-73a126 126 0 0034-12c13-7 26-16 37-26 21 19 47 33 71 38 0 28-6 48-19 73z" data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
                 <path class="active-path" d="M156 471a10 10 0 000 20 10 10 0 100-20z" data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
               </svg></div>
-            <p class="advantages__step-description">Профессионализм</p>
+            <p class="advantages__step-description"><?php echo esc_html($cat87_trust_titles[2]); ?></p>
           </div>
           <div class="advantages__arrow"></div>
           <div class="advantages__step">
             <div class="advantages__svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 516 516" width="512" height="512">
                 <path class="active-path" d="M473 461l36-37a9 9 0 00-6-15h-68v-34c0-9-7-17-17-17H94c-10 0-17 8-17 17v34H9a9 9 0 00-6 15l36 37-36 36a9 9 0 006 15h153c5 0 9-4 9-9v-42h170v42c0 5 4 9 9 9h153a9 9 0 006-15l-36-36zm-319 34H29l28-28a9 9 0 000-12l-28-29h48v18c0 9 7 17 17 17h60v34zm-60-51v-69h324v69H94zm264 51v-34h60c10 0 17-8 17-17v-18h48l-28 29a9 9 0 000 12l28 28H358zM33 272l-7 42a9 9 0 0013 9l38-20 38 20a9 9 0 0012-9l-7-42 31-29a9 9 0 00-5-15l-42-6-20-38a9 9 0 00-15 0l-19 38-43 6a9 9 0 00-4 15l30 29zm24-34c3 0 5-2 6-4l14-27 13 27c2 2 4 4 7 4l30 4-22 21c-2 2-3 5-2 8l5 29-27-14h-8l-27 14 5-29c1-3 0-6-2-8l-22-21 30-4zM359 234c-1 3 0 6 2 9l31 29-7 42a9 9 0 0012 9l38-20 38 20a9 9 0 0013-9l-7-42 30-29a9 9 0 00-4-15l-43-6-19-38a9 9 0 00-15 0l-20 38-42 6c-4 0-6 3-7 6zm56 4c3 0 5-2 7-4l13-27 14 27c1 2 3 4 6 4l30 4-22 21c-2 2-3 5-2 8l5 29-27-14h-8l-27 14 5-29c1-3 0-6-2-8l-22-21 30-4zM187 148l-13 72a9 9 0 0012 9l70-34 70 34a9 9 0 0012-9l-13-72 56-52a9 9 0 00-4-15l-79-10-34-67a9 9 0 00-16 0l-34 67-79 10a9 9 0 00-4 15l56 52zm33-61c3 0 5-2 7-4l29-56 29 56c2 2 4 4 7 4l64 9-46 42c-2 2-3 5-3 8l11 61-58-29c-3-2-5-2-8 0l-58 29 11-61c0-3-1-6-3-8l-46-42 64-9z" data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
               </svg></div>
-            <p class="advantages__step-description">Высокое качество</p>
+            <p class="advantages__step-description"><?php echo esc_html($cat87_trust_titles[3]); ?></p>
           </div>
         </div>
       </section>
@@ -715,7 +779,7 @@ Template Name: Категория Дренаж участка
 
     <!-- 6. Цены (укороченная версия) -->
     <section class="services wrapper portfolio">
-      <h2 class="services__title">Стоимость дренажа участка</h2>
+      <h2 class="services__title"><?php echo esc_html($cat87_prices_title ? $cat87_prices_title : 'Стоимость дренажа участка'); ?></h2>
       <div style="overflow-x: auto; margin-bottom: 30px;">
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #fff;">
           <thead>
@@ -726,34 +790,25 @@ Template Name: Категория Дренаж участка
             </tr>
           </thead>
           <tbody>
+            <?php foreach ($cat87_price_rows as $cat87_price_row) : ?>
             <tr>
-              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;">Глубинный дренаж</td>
-              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;">от 3 500 ₽</td>
-              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;">3-5 дней</td>
+              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;"><?php echo esc_html(!empty($cat87_price_row['service']) ? $cat87_price_row['service'] : ''); ?></td>
+              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;"><?php echo esc_html(!empty($cat87_price_row['price']) ? $cat87_price_row['price'] : ''); ?></td>
+              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;"><?php echo esc_html(!empty($cat87_price_row['term']) ? $cat87_price_row['term'] : ''); ?></td>
             </tr>
-            <tr>
-              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;">Поверхностный дренаж</td>
-              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;">от 2 800 ₽</td>
-              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;">2-4 дня</td>
-            </tr>
-            <tr>
-              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;">Пристенный дренаж</td>
-              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;">от 4 200 ₽</td>
-              <td style="padding: 15px; border: 1px solid #ddd; background: #fff;">4-6 дней</td>
-            </tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
       </div>
       <div class="price-example">
-        <h3>Пример сметы на дренаж участка 10 соток</h3>
+        <h3><?php echo esc_html($cat87_estimate_title ? $cat87_estimate_title : 'Пример сметы на дренаж участка 10 соток'); ?></h3>
         <ul>
-          <li>Проектирование системы - 15 000 ₽</li>
-          <li>Монтаж дренажных труб (150 м) - 525 000 ₽</li>
-          <li>Установка дренажных колодцев (3 шт) - 45 000 ₽</li>
-          <li>Обратная засыпка и трамбовка - 30 000 ₽</li>
-          <li><strong>Итого: 615 000 ₽</strong></li>
+          <?php foreach ($cat87_estimate_items as $cat87_estimate_item) : ?>
+          <li><?php echo esc_html(!empty($cat87_estimate_item['item']) ? $cat87_estimate_item['item'] : ''); ?></li>
+          <?php endforeach; ?>
+          <li><strong><?php echo esc_html($cat87_estimate_total ? $cat87_estimate_total : 'Итого: 615 000 ₽'); ?></strong></li>
         </ul>
-        <a href="/drenazh-uchastka/cena/" class="btn--outline-custom">Подробные цены</a>
+        <a href="<?php echo esc_url($cat87_prices_link_url ? $cat87_prices_link_url : '/drenazh-uchastka/cena/'); ?>" class="btn--outline-custom"><?php echo esc_html($cat87_prices_link_text ? $cat87_prices_link_text : 'Подробные цены'); ?></a>
       </div>
     </section>
 
@@ -828,60 +883,30 @@ Template Name: Категория Дренаж участка
     <!-- 8. Блок SEO текста -->
     <section class="services wrapper">
       <div class="seo-text" style="line-height: 1.6; margin-bottom: 40px;">
-        <h2>Дренаж участка: профессиональное решение для вашей земли</h2>
-        <p>Дренаж участка — это комплексная система отвода избыточной влаги с территории, которая защищает фундамент здания, растения и благоустройство от разрушительного воздействия воды. Правильное устройство дренажной системы позволяет решить проблемы с переувлажнением почвы, предотвратить появление плесени и грибка в подвальных помещениях, а также сохранить ландшафтный дизайн.</p>
-        
-        <p>Стоимость дренажа участка зависит от множества факторов: площади территории, типа почвы, уровня грунтовых вод, сложности рельефа и выбранной системы водоотведения. Наша компания предлагает гибкую ценовую политику и индивидуальный подход к каждому объекту. Мы используем современные материалы и технологии, что гарантирует долговечность и эффективность системы дренажа.</p>
-        
-        <p>Устройство дренажной системы включает в себя несколько этапов: геологические изыскания, проектирование, земляные работы, укладку дренажных труб, установку колодцев и фильтрующих материалов. Каждая дренажная система разрабатывается с учетом особенностей участка и потребностей заказчика. Мы предлагаем различные виды дренажа: глубинный, поверхностный, пристенный и ливневый.</p>
-        
-        <p>Цена на дренаж участка формируется на основе сложности работ, объема земляных работ, количества используемых материалов и сроков выполнения проекта. Важно понимать, что экономить на дренажной системе не стоит — качественный дренаж защищает ваше имущество от более серьезных финансовых потерь в будущем. Наша система дренажа обеспечивает надежную защиту от влаги на долгие годы.</p>
-        
-        <p>Профессиональный монтаж дренажной системы требует специальных знаний, оборудования и опыта. Наши специалисты имеют многолетний опыт работы с различными типами участков и почв. Мы гарантируем качество выполненных работ и предоставляем официальную гарантию на все виды дренажных систем. Обращаясь к нам, вы получаете не просто дренаж участка, а комплексное решение проблемы избыточной влаги на вашей территории.</p>
+       <?php the_content(); ?>
       </div>
     </section>
 
     <!-- 9. FAQ -->
     <section class="services wrapper">
-      <h2 class="services__title">Ответы на частые вопросы</h2>
+      <h2 class="services__title"><?php echo esc_html($cat87_faq_title ? $cat87_faq_title : 'Ответы на частые вопросы'); ?></h2>
       <div style="margin-bottom: 30px;">
+        <?php foreach ($cat87_faq_items as $cat87_faq_item) : ?>
         <div style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
           <div style="background: #f5f5f5; padding: 20px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
             <h3 class="faq-toggle">
-              Сколько стоит дренаж участка?
+              <?php echo esc_html(!empty($cat87_faq_item['question']) ? $cat87_faq_item['question'] : ''); ?>
               <span>+</span>
             </h3>
           </div>
           <div class="faq-answer" style="padding: 20px; display: none; border-top: 1px solid #ddd;">
-            <p>Стоимость дренажа участка зависит от площади, типа почвы и сложности работ. В среднем цена варьируется от 2 800 до 4 200 рублей за погонный метр. Точную стоимость мы рассчитываем после бесплатного выезда на объект.</p>
+            <p><?php echo esc_html(!empty($cat87_faq_item['answer']) ? $cat87_faq_item['answer'] : ''); ?></p>
           </div>
         </div>
-        
-        <div style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
-          <div style="background: #f5f5f5; padding: 20px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
-            <h3 class="faq-toggle">
-              Какая глубина дренажной системы?
-              <span>+</span>
-            </h3>
-          </div>
-          <div class="faq-answer" style="padding: 20px; display: none; border-top: 1px solid #ddd;">
-            <p>Глубина заложения дренажных труб составляет 0.8-1.5 метра для поверхностного дренажа и 1.5-3 метра для глубинного дренажа.</p>
-          </div>
-        </div>
-        
-        <div style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
-          <div style="background: #f5f5f5; padding: 20px; cursor: pointer;" onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'block' ? 'none' : 'block'">
-            <h3 class="faq-toggle">
-              Сколько времени занимает монтаж?
-              <span>+</span>
-            </h3>
-          </div>
-          <div class="faq-answer" style="padding: 20px; display: none; border-top: 1px solid #ddd;">
-            <p>Сроки монтажа дренажной системы зависят от площади участка и сложности работ. В среднем на стандартный участок 10-15 соток уходит от 3 до 7 рабочих дней.</p>
-          </div>
-        </div>
+        <?php endforeach; ?>
       </div>
     </section>
+
     <section class="advantages wrapper">
       <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
         <h2 class="cta-title">Получите расчет дренажа участка за 1 день</h2>
@@ -893,5 +918,6 @@ Template Name: Категория Дренаж участка
         </form>
       </div>
     </section>
+    
 
 <?php get_footer(); ?>
