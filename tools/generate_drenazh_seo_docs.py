@@ -124,7 +124,7 @@ def build_category_payload() -> dict:
             "cat87_estimate_items": [{"item": item} for item in MAIN_PAGE["estimate_items"]],
             "cat87_estimate_total": MAIN_PAGE["estimate_total"],
             "cat87_prices_link_text": "Подробные цены",
-            "cat87_prices_link_url": "/drenazh-uchastka/cena/",
+            "cat87_prices_link_url": "/cena-drenazha-uchastka/",
             "cat87_faq_title": MAIN_PAGE["faq_title"],
             "cat87_faq_items": [
                 {
@@ -144,7 +144,7 @@ def build_post_payload(page: dict) -> dict:
         "post_title": page["h1"],
         "post_content": render_service_post_content_html(page),
         "post_excerpt": page["description"],
-        "categories": [87, 72],
+        "categories": [87, 74],
         "acf": {
             "ns87_hero_title": page["hero_title"],
             "ns87_hero_subtitle": page["hero_subtitle"],
@@ -189,9 +189,14 @@ def build_post_payload(page: dict) -> dict:
 
 
 def write_import_json(path: Path) -> None:
-    pages = [PRICE_PAGE, *SERVICE_PAGES, *PROBLEM_PAGES]
+    pages = [PRICE_PAGE, *SERVICE_PAGES]
     payload = {
         "category": build_category_payload(),
+        "cleanup": {
+            "category_id": 87,
+            "keep_slugs": [page["slug"] for page in pages],
+            "delete_stale_posts": True,
+        },
         "posts": [build_post_payload(page) for page in pages],
     }
     with path.open("w", encoding="utf-8") as fp:
@@ -238,7 +243,7 @@ def write_core_doc(path: Path, page: dict) -> None:
     add_bullets(doc, page["estimate_items"])
     add_kv(doc, "cat87_estimate_total", page["estimate_total"])
     add_kv(doc, "cat87_prices_link_text", "Подробные цены")
-    add_kv(doc, "cat87_prices_link_url", "/drenazh-uchastka/cena/")
+    add_kv(doc, "cat87_prices_link_url", "/cena-drenazha-uchastka/")
 
     doc.add_heading("FAQ", level=2)
     add_kv(doc, "cat87_faq_title", page["faq_title"])
@@ -486,7 +491,7 @@ MAIN_PAGE = {
         ),
     ],
     "links": [
-        "/drenazh-uchastka/cena/",
+        "/cena-drenazha-uchastka/",
         "/drenazh-uchastka/vysokie-gruntovye-vody/",
         "/drenazh-uchastka/glinistaya-pochva/",
         "/drenazh-uchastka/vokrug-doma/",
@@ -501,8 +506,8 @@ MAIN_PAGE = {
 
 PRICE_PAGE = {
     "name": "Дренаж участка — страница цены",
-    "url": "/drenazh-uchastka/cena/",
-    "slug": "cena",
+    "url": "/cena-drenazha-uchastka/",
+    "slug": "cena-drenazha-uchastka",
     "intent": "Коммерческий запрос на стоимость и расчет сметы",
     "title": "Цена дренажа участка под ключ в Ярославле и области",
     "h1": "Цена дренажа участка: от чего зависит стоимость работ",
@@ -635,7 +640,7 @@ SERVICE_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/glubinnyy/",
             "/drenazh-uchastka/vokrug-doma/",
         ],
@@ -701,7 +706,7 @@ SERVICE_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/poverhnostnyy/",
             "/drenazh-uchastka/s-uklonom/",
         ],
@@ -768,7 +773,7 @@ SERVICE_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/vysokie-gruntovye-vody/",
             "/drenazh-uchastka/glubinnyy/",
         ],
@@ -834,7 +839,7 @@ SERVICE_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/vysokie-gruntovye-vody/",
             "/drenazh-uchastka/glinistaya-pochva/",
         ],
@@ -898,7 +903,7 @@ SERVICE_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/glubinnyy/",
             "/drenazh-uchastka/glinistaya-pochva/",
         ],
@@ -963,7 +968,7 @@ SERVICE_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/6-sotok/",
             "/drenazh-uchastka/s-uklonom/",
         ],
@@ -1028,7 +1033,7 @@ SERVICE_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/10-sotok/",
             "/drenazh-uchastka/vokrug-doma/",
         ],
@@ -1093,7 +1098,7 @@ SERVICE_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/glinistaya-pochva/",
             "/drenazh-uchastka/10-sotok/",
         ],
@@ -1159,7 +1164,7 @@ GEO_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/vysokie-gruntovye-vody/",
             "/drenazh-uchastka/glinistaya-pochva/",
         ],
@@ -1220,7 +1225,7 @@ GEO_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/vokrug-doma/",
             "/drenazh-uchastka/poverhnostnyy/",
         ],
@@ -1281,7 +1286,7 @@ GEO_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/glubinnyy/",
             "/drenazh-uchastka/10-sotok/",
         ],
@@ -1342,7 +1347,7 @@ GEO_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/glinistaya-pochva/",
             "/drenazh-uchastka/6-sotok/",
         ],
@@ -1403,7 +1408,7 @@ GEO_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/vysokie-gruntovye-vody/",
             "/drenazh-uchastka/vokrug-doma/",
         ],
@@ -1468,7 +1473,7 @@ PROBLEM_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/glubinnyy/",
             "/drenazh-uchastka/vysokie-gruntovye-vody/",
         ],
@@ -1529,7 +1534,7 @@ PROBLEM_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/poverhnostnyy/",
             "/drenazh-uchastka/glinistaya-pochva/",
         ],
@@ -1590,7 +1595,7 @@ PROBLEM_PAGES = [
         ],
         "links": [
             "/drenazh-uchastka/",
-            "/drenazh-uchastka/cena/",
+            "/cena-drenazha-uchastka/",
             "/drenazh-uchastka/poverhnostnyy/",
             "/drenazh-uchastka/s-uklonom/",
         ],
