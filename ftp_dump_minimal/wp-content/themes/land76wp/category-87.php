@@ -648,6 +648,52 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
       </div>
     </section>
 
+    <!-- 4. Кейсы из ACF -->
+    <section class="services wrapper casesCustom">
+      <h2 class="services__title">Наши работы</h2>
+      <div class="services__cards columns3">
+        <?php
+        $selected_posts = get_field('selected_works_posts', 'category_' . get_queried_object_id());
+
+        if ($selected_posts && !empty($selected_posts)) {
+          foreach ($selected_posts as $post_id) {
+            $post = get_post($post_id);
+            setup_postdata($post);
+        ?>
+        <div class="service" data-aos="fade-up" data-aos-duration="400">
+          <div class="service__img-wrap">
+            <?php if (has_post_thumbnail($post_id)): ?>
+              <img class="service__img" src="<?php echo esc_url(get_the_post_thumbnail_url($post_id)); ?>" alt="<?php echo esc_attr(get_the_title($post_id)); ?>">
+            <?php else: ?>
+              <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/default-case.jpg" alt="<?php echo esc_attr(get_the_title($post_id)); ?>">
+            <?php endif; ?>
+          </div>
+          <div class="service__text-wrap">
+            <h5 class="service__title"><?php echo esc_html(get_the_title($post_id)); ?></h5>
+            <?php
+            $excerpt = get_the_excerpt($post_id);
+            if (empty($excerpt)) {
+              $excerpt = wp_trim_words(get_post_field('post_content', $post_id), 15);
+            }
+            echo '<p>' . esc_html($excerpt) . '</p>';
+            ?>
+            <p><strong><?php echo get_field('price', $post_id) ? 'от ' . esc_html(get_field('price', $post_id)) : 'Цена по запросу'; ?></strong></p>
+            <div class="service__link-wrap">
+              <a class="service__link" href="<?php echo esc_url(get_permalink($post_id)); ?>">Подробнее</a>
+            </div>
+          </div>
+        </div>
+        <?php
+          }
+          wp_reset_postdata();
+        }
+        ?>
+      </div>
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="/fotogalereja/" class="btn--primary-custom">Смотреть все работы</a>
+      </div>
+    </section>
+
     <!-- 5. Полезное / блог -->
     <section class="services wrapper casesCustom">
       <h2 class="services__title">Полезное о дренаже участка</h2>
