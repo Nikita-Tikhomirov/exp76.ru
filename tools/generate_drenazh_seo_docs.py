@@ -138,9 +138,126 @@ def build_category_payload() -> dict:
     }
 
 
+PROBLEM_ITEM_TITLES = {
+    "cena-drenazha-uchastka": [
+        "Высокий уровень воды",
+        "Тяжелая глинистая почва",
+        "Вода у фундамента дома",
+    ],
+    "vysokie-gruntovye-vody": [
+        "Лужи и сырой грунт",
+        "Сырость в цоколе",
+        "Просадка благоустройства",
+    ],
+    "glinistaya-pochva": [
+        "Участок долго не просыхает",
+        "Проседают дорожки и газон",
+        "Влага давит на фундамент",
+    ],
+    "vokrug-doma": [
+        "Сырость в подвале или цоколе",
+        "Размывает зону у отмостки",
+        "Вода портит благоустройство",
+    ],
+    "glubinnyy": [
+        "Подтапливает фундамент",
+        "Грунт мокрый без дождей",
+        "Нужно стабильное основание",
+    ],
+    "poverhnostnyy": [
+        "Лужи после ливня",
+        "Хаотичный сток с крыши и дорожек",
+        "Переувлажнение газона и мощения",
+    ],
+    "10-sotok": [
+        "Длина трасс отличается",
+        "Готовый участок сложнее",
+        "Нужна общая схема объектов",
+    ],
+    "6-sotok": [
+        "Мало места для трасс",
+        "Дом и дорожки ограничивают монтаж",
+        "Ошибка сразу видна в результате",
+    ],
+    "s-uklonom": [
+        "Размывает грунт",
+        "Топит нижнюю часть участка",
+        "Вода перегружает отдельные зоны",
+    ],
+}
+
+
+SOLUTION_POINT_TITLES = {
+    "cena-drenazha-uchastka": [
+        "Предварительный ориентир",
+        "Точный расчет по объекту",
+        "Прозрачная смета",
+        "Оптимизация без потери результата",
+    ],
+    "vysokie-gruntovye-vody": [
+        "Находим зоны давления воды",
+        "Считаем глубину заложения",
+        "Проектируем обслуживаемую схему",
+        "Связываем глубинный и поверхностный отвод",
+    ],
+    "glinistaya-pochva": [
+        "Проверяем рельеф и низкие точки",
+        "Подбираем схему для глины",
+        "Защищаем систему от заиливания",
+        "Усиливаем отвод воды у дома",
+    ],
+    "vokrug-doma": [
+        "Учитываем конструкцию дома",
+        "Защищаем фундамент по глубине",
+        "Оставляем доступ к обслуживанию",
+        "Увязываем с ливневкой и участком",
+    ],
+    "glubinnyy": [
+        "Привязываем систему к фундаменту",
+        "Подбираем рабочую глубину",
+        "Планируем ревизию и обслуживание",
+        "Соединяем с поверхностным отводом",
+    ],
+    "poverhnostnyy": [
+        "Определяем точки сбора воды",
+        "Подбираем формат водоотвода",
+        "Проверяем уклоны участка",
+        "Дополняем глубинной частью при необходимости",
+    ],
+    "10-sotok": [
+        "Оцениваем задачу по плану",
+        "Предлагаем реальные сценарии",
+        "Показываем структуру цены",
+        "Фиксируем состав работ после осмотра",
+    ],
+    "6-sotok": [
+        "Проверяем локальное решение",
+        "Делаем компактную схему",
+        "Сохраняем доступ к обслуживанию",
+        "Продумываем поэтапный монтаж",
+    ],
+    "s-uklonom": [
+        "Читаем движение воды по рельефу",
+        "Перехватываем поток до проблемной зоны",
+        "Защищаем фундамент и нижние зоны",
+        "Учитываем будущие дорожки и подпорные стенки",
+    ],
+}
+
+
+def build_titled_items(slug: str, texts: list[str], title_map: dict[str, list[str]]) -> list[dict]:
+    titles = title_map.get(slug, [])
+    items = []
+    for idx, text in enumerate(texts):
+        title = titles[idx] if idx < len(titles) else text.split(".")[0][:80]
+        items.append({"title": title, "text": text})
+    return items
+
+
 def build_post_payload(page: dict) -> dict:
+    slug = page["slug"]
     return {
-        "slug": page["slug"],
+        "slug": slug,
         "post_title": page["h1"],
         "post_content": render_service_post_content_html(page),
         "post_excerpt": page["description"],
@@ -155,22 +272,12 @@ def build_post_payload(page: dict) -> dict:
             "ns87_problem_title": page["problem_title"],
             "ns87_problem_text": page["problem_text"],
             "ns87_problem_items": [
-                {
-                    "title": f"Проблема {idx + 1}",
-                    "text": item,
-                    "image": "",
-                }
-                for idx, item in enumerate(page["problem_items"])
+                {**item, "image": ""}
+                for item in build_titled_items(slug, page["problem_items"], PROBLEM_ITEM_TITLES)
             ],
             "ns87_solution_title": page["solution_title"],
             "ns87_solution_text": page["solution_text"],
-            "ns87_solution_points": [
-                {
-                    "title": f"Пункт {idx + 1}",
-                    "text": item,
-                }
-                for idx, item in enumerate(page["solution_points"])
-            ],
+            "ns87_solution_points": build_titled_items(slug, page["solution_points"], SOLUTION_POINT_TITLES),
             "ns87_prices_title": page["prices_title"],
             "ns87_price_rows": [parse_price_row(row) for row in page["price_rows"]],
             "ns87_estimate_title": page["estimate_title"],
