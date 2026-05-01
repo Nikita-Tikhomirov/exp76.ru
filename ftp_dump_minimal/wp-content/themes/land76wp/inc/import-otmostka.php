@@ -56,7 +56,7 @@ function land76wp_otmostka_import_upsert_post(array $post_payload, array &$stats
         $stats['posts_created']++;
     }
 
-    $categories = array(88, 72);
+    $categories = array(88, 74);
     if (!empty($post_payload['categories']) && is_array($post_payload['categories'])) {
         $categories = array_map('intval', $post_payload['categories']);
     }
@@ -69,6 +69,42 @@ function land76wp_otmostka_import_upsert_post(array $post_payload, array &$stats
     land76wp_otmostka_import_update_acf_fields($acf_fields, $post_id, $stats);
 }
 
+function land76wp_otmostka_import_cleanup_stale_posts(array $cleanup_payload, array &$stats)
+{
+    $category_id = !empty($cleanup_payload['category_id']) ? (int) $cleanup_payload['category_id'] : 88;
+    $keep_slugs = !empty($cleanup_payload['keep_slugs']) && is_array($cleanup_payload['keep_slugs'])
+        ? array_map('sanitize_title', $cleanup_payload['keep_slugs'])
+        : array();
+
+    if (empty($cleanup_payload['delete_stale_posts']) || empty($keep_slugs)) {
+        return;
+    }
+
+    $stale_posts = get_posts(array(
+        'post_type' => 'post',
+        'post_status' => array('publish', 'draft', 'pending', 'private', 'future'),
+        'posts_per_page' => -1,
+        'fields' => 'ids',
+        'category' => $category_id,
+        'suppress_filters' => true,
+    ));
+
+    foreach ($stale_posts as $post_id) {
+        $post = get_post($post_id);
+        if (!$post instanceof WP_Post || in_array($post->post_name, $keep_slugs, true)) {
+            continue;
+        }
+
+        $deleted = wp_delete_post($post_id, true);
+        if ($deleted instanceof WP_Post) {
+            $stats['posts_deleted']++;
+            continue;
+        }
+
+        $stats['errors'][] = 'Failed to delete stale post ' . $post->post_name . ' (' . $post_id . ').';
+    }
+}
+
 function land76wp_run_otmostka_import($json_path = '')
 {
     $stats = array(
@@ -76,6 +112,7 @@ function land76wp_run_otmostka_import($json_path = '')
         'category_updated' => false,
         'posts_created' => 0,
         'posts_updated' => 0,
+        'posts_deleted' => 0,
         'errors' => array(),
     );
 
@@ -113,6 +150,10 @@ function land76wp_run_otmostka_import($json_path = '')
 
         land76wp_otmostka_import_update_acf_fields($term_fields, $term_context, $stats);
         $stats['category_updated'] = true;
+    }
+
+    if (!empty($payload['cleanup']) && is_array($payload['cleanup'])) {
+        land76wp_otmostka_import_cleanup_stale_posts($payload['cleanup'], $stats);
     }
 
     if (!empty($payload['posts']) && is_array($payload['posts'])) {

@@ -608,22 +608,29 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
         </div>
       </section>
 
-    <!-- 3. Блок "Когда нужна отмостка" -->
+    <!-- 3. Services -->
     <section class="services wrapper">
-      <h2 class="services__title">Когда нужна отмостка</h2>
+      <h2 class="services__title">Услуги по устройству отмостки вокруг дома</h2>
       <div class="services__cards columns3">
         <?php
-        $otmostka_problem_posts = get_posts(array(
-          'posts_per_page' => 3,
+        $posts = get_posts(array(
+          'numberposts' => -1,
           'post_type' => 'post',
           'post_status' => 'publish',
-          'category' => get_queried_object_id(),
-          'post_name__in' => array('prosela', 'treshchiny', 'remont-staroy'),
+          'post_name__in' => array('cena', 'betonnaya-otmostka', 'myagkaya-otmostka', 'uteplennaya-otmostka', 'otmostka-iz-plitki', 'podgotovka-osnovaniya', 'varianty', 'zalivka', 'remont-staroy'),
           'orderby' => 'post_name__in',
           'suppress_filters' => true,
+          'tax_query' => array(
+            array(
+              'taxonomy' => 'category',
+              'field' => 'term_id',
+              'terms' => array(88, 74),
+              'operator' => 'AND'
+            )
+          )
         ));
 
-        foreach ($otmostka_problem_posts as $post) {
+        foreach ($posts as $post) {
           setup_postdata($post);
           $otmostka_excerpt = get_the_excerpt();
           if (empty($otmostka_excerpt)) {
@@ -648,54 +655,13 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
       </div>
     </section>
 
-    <!-- 4. Устройство отмостки (ключевой SEO блок) -->
-    <section class="services wrapper">
-      <h2 class="services__title">Устройство отмостки вокруг дома: этапы и стоимость</h2>
-      <div class="services__cards columns3">
-        <?php
-        $otmostka_service_posts = get_posts(array(
-          'posts_per_page' => 4,
-          'post_type' => 'post',
-          'post_status' => 'publish',
-          'category' => get_queried_object_id(),
-          'post_name__in' => array('podgotovka-osnovaniya', 'varianty', 'zalivka', 'cena'),
-          'orderby' => 'post_name__in',
-          'suppress_filters' => true,
-        ));
-
-        foreach ($otmostka_service_posts as $post) {
-          setup_postdata($post);
-          $otmostka_excerpt = get_the_excerpt();
-          if (empty($otmostka_excerpt)) {
-            $otmostka_excerpt = wp_trim_words(get_the_content(), 22);
-          }
-        ?>
-        <div class="service" data-aos="fade-up" data-aos-duration="400">
-          <?php if (has_post_thumbnail()) : ?>
-          <div class="service__img-wrap">
-            <img class="service__img" src="<?php the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>">
-          </div>
-          <?php endif; ?>
-          <div class="service__text-wrap">
-            <h5 class="service__title"><?php the_title(); ?></h5>
-            <p><?php echo esc_html($otmostka_excerpt); ?></p>
-            <div class="service__link-wrap">
-              <a class="service__link" href="<?php the_permalink(); ?>">Подробнее</a>
-            </div>
-          </div>
-        </div>
-        <?php } wp_reset_postdata(); ?>
-      </div>
-    </section>
-
-    <!-- 5. Our Works with ACF field selection -->
+    <!-- 4. ACF cases -->
     <section class="services wrapper casesCustom">
       <h2 class="services__title">Наши работы</h2>
       <div class="services__cards columns3">
         <?php
-        // Get selected posts from ACF field
         $selected_posts = get_field('selected_works_posts', 'category_' . get_queried_object_id());
-        
+
         if ($selected_posts && !empty($selected_posts)) {
           foreach ($selected_posts as $post_id) {
             $post = get_post($post_id);
@@ -704,76 +670,90 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
         <div class="service" data-aos="fade-up" data-aos-duration="400">
           <div class="service__img-wrap">
             <?php if (has_post_thumbnail($post_id)): ?>
-              <img class="service__img" src="<?php echo get_the_post_thumbnail_url($post_id); ?>" alt="<?php echo get_the_title($post_id); ?>">
+              <img class="service__img" src="<?php echo esc_url(get_the_post_thumbnail_url($post_id)); ?>" alt="<?php echo esc_attr(get_the_title($post_id)); ?>">
             <?php else: ?>
-              <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/default-case.jpg" alt="<?php echo get_the_title($post_id); ?>">
+              <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/default-case.jpg" alt="<?php echo esc_attr(get_the_title($post_id)); ?>">
             <?php endif; ?>
           </div>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php echo get_the_title($post_id); ?></h5>
-            <?php 
+            <h5 class="service__title"><?php echo esc_html(get_the_title($post_id)); ?></h5>
+            <?php
             $excerpt = get_the_excerpt($post_id);
             if (empty($excerpt)) {
               $excerpt = wp_trim_words(get_post_field('post_content', $post_id), 15);
             }
-            echo '<p>' . $excerpt . '</p>';
+            echo '<p>' . esc_html($excerpt) . '</p>';
             ?>
-            <p><strong><?php echo get_field('price', $post_id) ? 'от ' . get_field('price', $post_id) : 'Цена по запросу'; ?></strong></p>
+            <p><strong><?php echo get_field('price', $post_id) ? 'от ' . esc_html(get_field('price', $post_id)) : 'Цена по запросу'; ?></strong></p>
             <div class="service__link-wrap">
-              <a class="service__link" href="<?php echo get_permalink($post_id); ?>">Подробнее</a>
+              <a class="service__link" href="<?php echo esc_url(get_permalink($post_id)); ?>">Подробнее</a>
             </div>
           </div>
         </div>
-        <?php 
+        <?php
           }
           wp_reset_postdata();
-        } else {
-          // Fallback to default static cards if no posts selected
+        }
         ?>
-        <div class="service" data-aos="fade-up" data-aos-duration="400">
-          <div class="service__img-wrap">
-            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case1.jpg" alt="Отмостка вокруг дома">
-          </div>
-          <div class="service__text-wrap">
-            <h5 class="service__title">Отмостка вокруг дома</h5>
-            <p>Устройство основания, уклона и покрытия вокруг дома для защиты фундамента от дождевой и талой воды</p>
-            <p><strong>от 180 000 ₽</strong></p>
-          </div>
-        </div>
-        <div class="service" data-aos="fade-up" data-aos-duration="400">
-          <div class="service__img-wrap">
-            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case2.jpg" alt="Бетонная отмостка">
-          </div>
-          <div class="service__text-wrap">
-            <h5 class="service__title">Бетонная отмостка</h5>
-            <p>Армирование, заливка и формирование деформационных швов с правильным уклоном от фасада</p>
-            <p><strong>от 3 500 ₽/м</strong></p>
-          </div>
-        </div>
-        <div class="service" data-aos="fade-up" data-aos-duration="400">
-          <div class="service__img-wrap">
-            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case3.jpg" alt="Ремонт отмостки">
-          </div>
-          <div class="service__text-wrap">
-            <h5 class="service__title">Ремонт отмостки</h5>
-            <p>Восстановление просевших участков, трещин и примыканий к цоколю без лишней переделки всего контура</p>
-            <p><strong>от 2 500 ₽/м</strong></p>
-          </div>
-        </div>
-        <div class="service" data-aos="fade-up" data-aos-duration="400">
-          <div class="service__img-wrap">
-            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case4.jpg" alt="Подготовка основания под отмостку">
-          </div>
-          <div class="service__text-wrap">
-            <h5 class="service__title">Подготовка основания</h5>
-            <p>Выемка грунта, подушка, трамбовка и подготовка контура перед заливкой или укладкой покрытия</p>
-            <p><strong>от 1 500 ₽/м</strong></p>
-          </div>
-        </div>
-        <?php } ?>
       </div>
       <div style="text-align: center; margin-top: 30px;">
         <a href="/fotogalereja/" class="btn--primary-custom">Смотреть все работы</a>
+      </div>
+    </section>
+
+    <!-- 5. Blog placeholder -->
+    <section class="services wrapper casesCustom">
+      <h2 class="services__title">Полезное об отмостке вокруг дома</h2>
+      <div class="services__cards columns3">
+        <?php
+        $blog_posts = get_posts(array(
+          'numberposts' => 6,
+          'post_type' => 'post',
+          'post_status' => 'publish',
+          'orderby' => 'date',
+          'order' => 'DESC',
+          'suppress_filters' => true,
+          'tax_query' => array(
+            array(
+              'taxonomy' => 'category',
+              'field' => 'term_id',
+              'terms' => array(88, 72),
+              'operator' => 'AND'
+            )
+          )
+        ));
+
+        if (!empty($blog_posts)) {
+          foreach ($blog_posts as $post) {
+            setup_postdata($post);
+        ?>
+        <div class="service" data-aos="fade-up" data-aos-duration="400">
+          <?php if (has_post_thumbnail()) : ?>
+            <div class="service__img-wrap">
+              <img class="service__img" src="<?php the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>">
+            </div>
+          <?php endif; ?>
+          <div class="service__text-wrap">
+            <h5 class="service__title"><?php the_title(); ?></h5>
+            <?php
+            $excerpt = get_the_excerpt();
+            if (empty($excerpt)) {
+              $excerpt = wp_trim_words(get_the_content(), 18);
+            }
+            echo '<p>' . esc_html($excerpt) . '</p>';
+            ?>
+            <div class="service__link-wrap">
+              <a class="service__link" href="<?php the_permalink(); ?>">Подробнее</a>
+            </div>
+          </div>
+        </div>
+        <?php
+          }
+          wp_reset_postdata();
+        } else {
+        ?>
+          <p>Материалы раздела готовятся. Сейчас можно выбрать нужную услугу выше и запросить расчет по отмостке.</p>
+        <?php } ?>
       </div>
     </section>
 
