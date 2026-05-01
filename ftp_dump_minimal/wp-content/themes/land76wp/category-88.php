@@ -648,9 +648,9 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
       </div>
     </section>
 
-    <!-- 4. Виды отмостки (ключевой SEO блок) -->
+    <!-- 4. Устройство отмостки (ключевой SEO блок) -->
     <section class="services wrapper">
-      <h2 class="services__title">Виды отмостки</h2>
+      <h2 class="services__title">Устройство отмостки вокруг дома: этапы и стоимость</h2>
       <div class="services__cards columns3">
         <?php
         $otmostka_service_posts = get_posts(array(
