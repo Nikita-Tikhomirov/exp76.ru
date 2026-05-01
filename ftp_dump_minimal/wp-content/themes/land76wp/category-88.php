@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Категория Дренаж участка
+Template Name: Категория Отмостка вокруг дома
 */
 ?>
 
@@ -479,34 +479,34 @@ if (!empty($cat87_trust_items) && is_array($cat87_trust_items)) {
 
 if (empty($cat87_price_rows) || !is_array($cat87_price_rows)) {
     $cat87_price_rows = array(
-        array('service' => 'Глубинный дренаж', 'price' => 'от 3 500 ₽', 'term' => '3-5 дней'),
-        array('service' => 'Поверхностный дренаж', 'price' => 'от 2 800 ₽', 'term' => '2-4 дня'),
-        array('service' => 'Пристенный дренаж', 'price' => 'от 4 200 ₽', 'term' => '4-6 дней'),
+        array('service' => 'Бетонная отмостка', 'price' => 'от 3 500 ₽', 'term' => '3-5 дней'),
+        array('service' => 'Мягкая отмостка', 'price' => 'от 2 800 ₽', 'term' => '2-4 дня'),
+        array('service' => 'Ремонт старой отмостки', 'price' => 'от 2 500 ₽', 'term' => '1-3 дня'),
     );
 }
 
 if (empty($cat87_estimate_items) || !is_array($cat87_estimate_items)) {
     $cat87_estimate_items = array(
-        array('item' => 'Проектирование системы - 15 000 ₽'),
-        array('item' => 'Монтаж дренажных труб (150 м) - 525 000 ₽'),
-        array('item' => 'Установка дренажных колодцев (3 шт) - 45 000 ₽'),
-        array('item' => 'Обратная засыпка и трамбовка - 30 000 ₽'),
+        array('item' => 'Подготовка основания и разметка - 35 000 ₽'),
+        array('item' => 'Устройство песчано-щебеночной подушки - 80 000 ₽'),
+        array('item' => 'Армирование и заливка бетона - 180 000 ₽'),
+        array('item' => 'Финишная отделка и деформационные швы - 45 000 ₽'),
     );
 }
 
 if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
     $cat87_faq_items = array(
         array(
-            'question' => 'Сколько стоит дренаж участка?',
-            'answer' => 'Стоимость дренажа участка зависит от площади, типа почвы и сложности работ. В среднем цена варьируется от 2 800 до 4 200 рублей за погонный метр. Точную стоимость мы рассчитываем после бесплатного выезда на объект.',
+            'question' => 'Сколько стоит отмостка вокруг дома?',
+            'answer' => 'Стоимость отмостки зависит от периметра дома, выбранной конструкции, подготовки основания и финишного покрытия. Точную цену рассчитываем после осмотра участка и замеров.',
         ),
         array(
-            'question' => 'Какая глубина дренажной системы?',
-            'answer' => 'Глубина заложения дренажных труб составляет 0.8-1.5 метра для поверхностного дренажа и 1.5-3 метра для глубинного дренажа.',
+            'question' => 'Какую ширину отмостки выбрать?',
+            'answer' => 'Обычно делают ширину от 80 до 120 см. Итоговый размер зависит от свесов кровли, грунта, уклона участка и будущего благоустройства.',
         ),
         array(
             'question' => 'Сколько времени занимает монтаж?',
-            'answer' => 'Сроки монтажа дренажной системы зависят от площади участка и сложности работ. В среднем на стандартный участок 10-15 соток уходит от 3 до 7 рабочих дней.',
+            'answer' => 'Стандартная отмостка вокруг частного дома обычно занимает от 2 до 7 рабочих дней с учетом подготовки основания, заливки и технологических пауз.',
         ),
     );
 }
@@ -517,14 +517,14 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
           <div class="hero__bg" data-depth="0.4"></div>
         </div>
         <div class="hero__content wrapper">
-          <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800"><?php echo esc_html($cat87_hero_title ? $cat87_hero_title : 'Дренаж участка под ключ в Ярославской области'); ?></h1>
-          <p class="hero__subtitle" data-aos="fade-up" data-aos-duration="900"><?php echo esc_html($cat87_hero_subtitle ? $cat87_hero_subtitle : 'Проектируем и выполняем монтаж дренажных систем любой сложности. Гарантия, расчет стоимости за 1 день.'); ?></p>
+          <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800"><?php echo esc_html($cat87_hero_title ? $cat87_hero_title : 'Отмостка вокруг дома под ключ в Ярославской области'); ?></h1>
+          <p class="hero__subtitle" data-aos="fade-up" data-aos-duration="900"><?php echo esc_html($cat87_hero_subtitle ? $cat87_hero_subtitle : 'Делаем надежную отмостку вокруг дома: подготовка основания, уклон, заливка, ремонт и защита фундамента от воды.'); ?></p>
           <div class="hero__buttons" data-aos="fade-up" data-aos-duration="1000">
             <a href="<?php echo esc_url($cat87_hero_btn_primary_url ? $cat87_hero_btn_primary_url : '#calc'); ?>" class="hero__btn"><?php echo esc_html($cat87_hero_btn_primary_text ? $cat87_hero_btn_primary_text : 'Рассчитать стоимость'); ?></a>
             <a href="<?php echo esc_url($cat87_hero_btn_secondary_url ? $cat87_hero_btn_secondary_url : '#consultation'); ?>" class="hero__btn openPopup" data-modal="#popup" style="margin-left: 15px;"><?php echo esc_html($cat87_hero_btn_secondary_text ? $cat87_hero_btn_secondary_text : 'Получить консультацию'); ?></a>
           </div>
           <div class="hero__breadcramps"><a class="hero__home" href="<?php echo get_home_url(); ?>">Компания "Эксперты"
-              | </a><span class="hero__active-page">Дренаж участка</span></div>
+              | </a><span class="hero__active-page">Отмостка вокруг дома</span></div>
         </div>
 
         <div class="animation-wrap"><img style="margin-left:100px" class="animation-wrap__img" src="<?php echo get_template_directory_uri() ?>/img/mouse.png" alt=""
@@ -608,37 +608,37 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
         </div>
       </section>
 
-    <!-- 3. Блок "Когда нужен дренаж" -->
+    <!-- 3. Блок "Когда нужна отмостка" -->
     <section class="services wrapper">
-      <h2 class="services__title">Когда нужен дренаж</h2>
+      <h2 class="services__title">Когда нужна отмостка</h2>
       <div class="services__cards columns3">
         <?php
-        $posts = get_posts(array(
-          'numberposts' => -1,
+        $otmostka_problem_posts = get_posts(array(
+          'posts_per_page' => 3,
           'post_type' => 'post',
-          'orderby' => 'date',
-          'order' => 'DESC',
+          'post_status' => 'publish',
+          'category' => get_queried_object_id(),
+          'post_name__in' => array('prosela', 'treshchiny', 'remont-staroy'),
+          'orderby' => 'post_name__in',
           'suppress_filters' => true,
-          'tax_query' => array(
-            array(
-              'taxonomy' => 'category',
-              'field' => 'term_id',
-              'terms' => array(87, 72),
-              'operator' => 'AND'
-            )
-          )
         ));
 
-        foreach ($posts as $post) {
+        foreach ($otmostka_problem_posts as $post) {
           setup_postdata($post);
+          $otmostka_excerpt = get_the_excerpt();
+          if (empty($otmostka_excerpt)) {
+            $otmostka_excerpt = wp_trim_words(get_the_content(), 22);
+          }
         ?>
         <div class="service" data-aos="fade-up" data-aos-duration="400">
+          <?php if (has_post_thumbnail()) : ?>
           <div class="service__img-wrap">
             <img class="service__img" src="<?php the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>">
           </div>
+          <?php endif; ?>
           <div class="service__text-wrap">
             <h5 class="service__title"><?php the_title(); ?></h5>
-            <?php the_excerpt(); ?>
+            <p><?php echo esc_html($otmostka_excerpt); ?></p>
             <div class="service__link-wrap">
               <a class="service__link" href="<?php the_permalink(); ?>">Подробнее</a>
             </div>
@@ -648,37 +648,37 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
       </div>
     </section>
 
-    <!-- 4. Виды дренажа (ключевой SEO блок) -->
+    <!-- 4. Виды отмостки (ключевой SEO блок) -->
     <section class="services wrapper">
-      <h2 class="services__title">Виды дренажа</h2>
+      <h2 class="services__title">Виды отмостки</h2>
       <div class="services__cards columns3">
         <?php
-        $drainage_posts = get_posts(array(
-          'numberposts' => -1,
+        $otmostka_service_posts = get_posts(array(
+          'posts_per_page' => 4,
           'post_type' => 'post',
-          'orderby' => 'date',
-          'order' => 'DESC',
+          'post_status' => 'publish',
+          'category' => get_queried_object_id(),
+          'post_name__in' => array('podgotovka-osnovaniya', 'varianty', 'zalivka', 'cena'),
+          'orderby' => 'post_name__in',
           'suppress_filters' => true,
-          'tax_query' => array(
-            array(
-              'taxonomy' => 'category',
-              'field' => 'term_id',
-              'terms' => array(87, 74),
-              'operator' => 'AND'
-            )
-          )
         ));
 
-        foreach ($drainage_posts as $post) {
+        foreach ($otmostka_service_posts as $post) {
           setup_postdata($post);
+          $otmostka_excerpt = get_the_excerpt();
+          if (empty($otmostka_excerpt)) {
+            $otmostka_excerpt = wp_trim_words(get_the_content(), 22);
+          }
         ?>
         <div class="service" data-aos="fade-up" data-aos-duration="400">
+          <?php if (has_post_thumbnail()) : ?>
           <div class="service__img-wrap">
             <img class="service__img" src="<?php the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>">
           </div>
+          <?php endif; ?>
           <div class="service__text-wrap">
             <h5 class="service__title"><?php the_title(); ?></h5>
-            <?php the_excerpt(); ?>
+            <p><?php echo esc_html($otmostka_excerpt); ?></p>
             <div class="service__link-wrap">
               <a class="service__link" href="<?php the_permalink(); ?>">Подробнее</a>
             </div>
@@ -732,42 +732,42 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
         ?>
         <div class="service" data-aos="fade-up" data-aos-duration="400">
           <div class="service__img-wrap">
-            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case1.jpg" alt="Дренаж 6 соток">
+            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case1.jpg" alt="Отмостка вокруг дома">
           </div>
           <div class="service__text-wrap">
-            <h5 class="service__title">Дренаж 6 соток</h5>
-            <p>Комплексный дренаж частного дома с установкой колодцев и дренажа в ливневую канализацию</p>
-            <p><strong>от 250 000 РУБ</strong></p>
-          </div>
-        </div>
-        <div class="service" data-aos="fade-up" data-aos-duration="400">
-          <div class="service__img-wrap">
-            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case2.jpg" alt="Дренаж вокруг дома">
-          </div>
-          <div class="service__text-wrap">
-            <h5 class="service__title">Дренаж вокруг дома</h5>
-            <p>Пристенный дренаж для защиты фундамента от грунтовых вод с установкой дренажных труб</p>
+            <h5 class="service__title">Отмостка вокруг дома</h5>
+            <p>Устройство основания, уклона и покрытия вокруг дома для защиты фундамента от дождевой и талой воды</p>
             <p><strong>от 180 000 ₽</strong></p>
           </div>
         </div>
         <div class="service" data-aos="fade-up" data-aos-duration="400">
           <div class="service__img-wrap">
-            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case3.jpg" alt="Поверхностный дренаж">
+            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case2.jpg" alt="Бетонная отмостка">
           </div>
           <div class="service__text-wrap">
-            <h5 class="service__title">Поверхностный дренаж</h5>
-            <p>Ливневая канализация для отвода дождевых и талых вод с участка</p>
-            <p><strong>от 120 000 ₽</strong></p>
+            <h5 class="service__title">Бетонная отмостка</h5>
+            <p>Армирование, заливка и формирование деформационных швов с правильным уклоном от фасада</p>
+            <p><strong>от 3 500 ₽/м</strong></p>
           </div>
         </div>
         <div class="service" data-aos="fade-up" data-aos-duration="400">
           <div class="service__img-wrap">
-            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case4.jpg" alt="Дренаж заболоченного участка">
+            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case3.jpg" alt="Ремонт отмостки">
           </div>
           <div class="service__text-wrap">
-            <h5 class="service__title">Дренаж заболоченного участка</h5>
-            <p>Комплексное осушение проблемного участка с глубоким дренажом и системой колодцев</p>
-            <p><strong>от 450 000 ₽</strong></p>
+            <h5 class="service__title">Ремонт отмостки</h5>
+            <p>Восстановление просевших участков, трещин и примыканий к цоколю без лишней переделки всего контура</p>
+            <p><strong>от 2 500 ₽/м</strong></p>
+          </div>
+        </div>
+        <div class="service" data-aos="fade-up" data-aos-duration="400">
+          <div class="service__img-wrap">
+            <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/case4.jpg" alt="Подготовка основания под отмостку">
+          </div>
+          <div class="service__text-wrap">
+            <h5 class="service__title">Подготовка основания</h5>
+            <p>Выемка грунта, подушка, трамбовка и подготовка контура перед заливкой или укладкой покрытия</p>
+            <p><strong>от 1 500 ₽/м</strong></p>
           </div>
         </div>
         <?php } ?>
@@ -779,7 +779,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
 
     <!-- 6. Цены (укороченная версия) -->
     <section class="services wrapper portfolio">
-      <h2 class="services__title"><?php echo esc_html($cat87_prices_title ? $cat87_prices_title : 'Стоимость дренажа участка'); ?></h2>
+      <h2 class="services__title"><?php echo esc_html($cat87_prices_title ? $cat87_prices_title : 'Стоимость отмостки вокруг дома'); ?></h2>
       <div style="overflow-x: auto; margin-bottom: 30px;">
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #fff;">
           <thead>
@@ -801,14 +801,14 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
         </table>
       </div>
       <div class="price-example">
-        <h3><?php echo esc_html($cat87_estimate_title ? $cat87_estimate_title : 'Пример сметы на дренаж участка 10 соток'); ?></h3>
+        <h3><?php echo esc_html($cat87_estimate_title ? $cat87_estimate_title : 'Пример сметы на отмостку вокруг дома'); ?></h3>
         <ul>
           <?php foreach ($cat87_estimate_items as $cat87_estimate_item) : ?>
           <li><?php echo esc_html(!empty($cat87_estimate_item['item']) ? $cat87_estimate_item['item'] : ''); ?></li>
           <?php endforeach; ?>
           <li><strong><?php echo esc_html($cat87_estimate_total ? $cat87_estimate_total : 'Итого: 615 000 ₽'); ?></strong></li>
         </ul>
-        <a href="<?php echo esc_url($cat87_prices_link_url ? $cat87_prices_link_url : '/drenazh-uchastka/cena/'); ?>" class="btn--outline-custom"><?php echo esc_html($cat87_prices_link_text ? $cat87_prices_link_text : 'Подробные цены'); ?></a>
+        <a href="<?php echo esc_url($cat87_prices_link_url ? $cat87_prices_link_url : '/otmostka-vokrug-doma/cena/'); ?>" class="btn--outline-custom"><?php echo esc_html($cat87_prices_link_text ? $cat87_prices_link_text : 'Подробные цены'); ?></a>
       </div>
     </section>
 
@@ -909,7 +909,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
 
     <section class="advantages wrapper">
       <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
-        <h2 class="cta-title">Получите расчет дренажа участка за 1 день</h2>
+        <h2 class="cta-title">Получите расчет отмостки вокруг дома за 1 день</h2>
         <p style="margin-bottom: 30px;">Оставьте заявку и наш специалист свяжется с вами для бесплатной консультации</p>
         <form class="cta-form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
           <input type="text" placeholder="Ваше имя" required style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
