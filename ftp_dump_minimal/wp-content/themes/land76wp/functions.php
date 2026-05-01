@@ -2,6 +2,16 @@
 add_action( 'wp_enqueue_scripts', 'style_theme' );
 add_action( 'wp_footer', 'scripts_theme' );
 
+$land76_import_file = __DIR__ . '/inc/import-drenazh.php';
+if (file_exists($land76_import_file)) {
+  require_once $land76_import_file;
+}
+
+$land76_otmostka_import_file = __DIR__ . '/inc/import-otmostka.php';
+if (file_exists($land76_otmostka_import_file)) {
+  require_once $land76_otmostka_import_file;
+}
+
 
 function style_theme() {
 
@@ -32,4 +42,3 @@ if ( function_exists('acf_add_options_page') ) {
       'redirect'		=> false
     ));
 }
-

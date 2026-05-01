@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 from pathlib import Path
 
 from docx import Document
@@ -12,6 +13,7 @@ SUBFOLDERS = [
     "03-geo-backlog",
     "04-problem-backlog",
     "99-admin-checklists",
+    "import",
 ]
 
 
@@ -48,6 +50,152 @@ def add_faq(doc: Document, faq_items: list[tuple[str, str]]) -> None:
     for question, answer in faq_items:
         doc.add_paragraph(question, style="List Bullet")
         doc.add_paragraph(answer)
+
+
+def parse_price_row(row: str) -> dict:
+    service = row.strip()
+    price = ""
+    term = ""
+
+    if " — " in row:
+        service, rest = row.split(" — ", 1)
+        service = service.strip()
+        rest = rest.strip()
+
+        if ", сроки " in rest:
+            price, term = rest.split(", сроки ", 1)
+            price = price.strip()
+            term = term.strip()
+        else:
+            price = rest
+
+    return {
+        "service": service,
+        "price": price,
+        "term": term,
+    }
+
+
+def render_main_content_html(page: dict) -> str:
+    sections_html = []
+    for heading, paragraphs in page["content_sections"]:
+        paragraph_html = "".join(f"<p>{paragraph}</p>" for paragraph in paragraphs)
+        sections_html.append(f"<h2>{heading}</h2>{paragraph_html}")
+    return "\n".join(sections_html)
+
+
+def render_service_post_content_html(page: dict) -> str:
+    problem_items_html = "".join(f"<li>{item}</li>" for item in page["problem_items"])
+    solution_points_html = "".join(f"<li>{item}</li>" for item in page["solution_points"])
+
+    faq_html_parts = []
+    for question, answer in page["faq"]:
+        faq_html_parts.append(f"<h3>{question}</h3><p>{answer}</p>")
+
+    return "\n".join(
+        [
+            f"<h2>{page['problem_title']}</h2>",
+            f"<p>{page['problem_text']}</p>",
+            f"<ul>{problem_items_html}</ul>",
+            f"<h2>{page['solution_title']}</h2>",
+            f"<p>{page['solution_text']}</p>",
+            f"<ul>{solution_points_html}</ul>",
+            f"<h2>{page['faq_title']}</h2>",
+            "".join(faq_html_parts),
+        ]
+    )
+
+
+def build_category_payload() -> dict:
+    return {
+        "term_id": 87,
+        "acf": {
+            "cat87_hero_title": MAIN_PAGE["hero_title"],
+            "cat87_hero_subtitle": MAIN_PAGE["hero_subtitle"],
+            "cat87_hero_btn_primary_text": "Рассчитать стоимость",
+            "cat87_hero_btn_primary_url": "#calc",
+            "cat87_hero_btn_secondary_text": "Получить консультацию",
+            "cat87_hero_btn_secondary_url": "#consultation",
+            "cat87_offer_title": MAIN_PAGE["offer_title"],
+            "cat87_trust_items": [{"title": item} for item in MAIN_PAGE["trust_items"]],
+            "cat87_prices_title": MAIN_PAGE["prices_title"],
+            "cat87_price_rows": [parse_price_row(row) for row in MAIN_PAGE["price_rows"]],
+            "cat87_estimate_title": MAIN_PAGE["estimate_title"],
+            "cat87_estimate_items": [{"item": item} for item in MAIN_PAGE["estimate_items"]],
+            "cat87_estimate_total": MAIN_PAGE["estimate_total"],
+            "cat87_prices_link_text": "Подробные цены",
+            "cat87_prices_link_url": "/drenazh-uchastka/cena/",
+            "cat87_faq_title": MAIN_PAGE["faq_title"],
+            "cat87_faq_items": [
+                {
+                    "question": question,
+                    "answer": answer,
+                }
+                for question, answer in MAIN_PAGE["faq"]
+            ],
+            "the_content": render_main_content_html(MAIN_PAGE),
+        },
+    }
+
+
+def build_post_payload(page: dict) -> dict:
+    return {
+        "slug": page["slug"],
+        "post_title": page["h1"],
+        "post_content": render_service_post_content_html(page),
+        "post_excerpt": page["description"],
+        "categories": [87, 72],
+        "acf": {
+            "ns87_hero_title": page["hero_title"],
+            "ns87_hero_subtitle": page["hero_subtitle"],
+            "ns87_hero_btn_primary_text": "Рассчитать стоимость",
+            "ns87_hero_btn_primary_url": "#calc",
+            "ns87_hero_btn_secondary_text": "Получить консультацию",
+            "ns87_hero_btn_secondary_url": "#consultation",
+            "ns87_problem_title": page["problem_title"],
+            "ns87_problem_text": page["problem_text"],
+            "ns87_problem_items": [
+                {
+                    "title": f"Проблема {idx + 1}",
+                    "text": item,
+                    "image": "",
+                }
+                for idx, item in enumerate(page["problem_items"])
+            ],
+            "ns87_solution_title": page["solution_title"],
+            "ns87_solution_text": page["solution_text"],
+            "ns87_solution_points": [
+                {
+                    "title": f"Пункт {idx + 1}",
+                    "text": item,
+                }
+                for idx, item in enumerate(page["solution_points"])
+            ],
+            "ns87_prices_title": page["prices_title"],
+            "ns87_price_rows": [parse_price_row(row) for row in page["price_rows"]],
+            "ns87_estimate_title": page["estimate_title"],
+            "ns87_estimate_items": [{"item": item} for item in page["estimate_items"]],
+            "ns87_estimate_total": page["estimate_total"],
+            "ns87_faq_title": page["faq_title"],
+            "ns87_faq_items": [
+                {
+                    "question": question,
+                    "answer": answer,
+                }
+                for question, answer in page["faq"]
+            ],
+        },
+    }
+
+
+def write_import_json(path: Path) -> None:
+    pages = [PRICE_PAGE, *SERVICE_PAGES, *PROBLEM_PAGES]
+    payload = {
+        "category": build_category_payload(),
+        "posts": [build_post_payload(page) for page in pages],
+    }
+    with path.open("w", encoding="utf-8") as fp:
+        json.dump(payload, fp, ensure_ascii=False, indent=2)
 
 
 def write_core_doc(path: Path, page: dict) -> None:
@@ -1462,6 +1610,7 @@ def main() -> None:
     write_geo_pages()
     write_problem_pages()
     write_checklists()
+    write_import_json(ROOT / "import" / "drenazh-import.json")
 
 
 if __name__ == "__main__":

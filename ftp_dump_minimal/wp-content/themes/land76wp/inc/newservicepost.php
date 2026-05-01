@@ -511,26 +511,26 @@
   }
 </style>
 <?php
-$ns87_term_context = 'category_87';
-$ns87_hero_title = function_exists('get_field') ? get_field('ns87_hero_title', $ns87_term_context) : '';
-$ns87_hero_subtitle = function_exists('get_field') ? get_field('ns87_hero_subtitle', $ns87_term_context) : '';
-$ns87_hero_btn_primary_text = function_exists('get_field') ? get_field('ns87_hero_btn_primary_text', $ns87_term_context) : '';
-$ns87_hero_btn_primary_url = function_exists('get_field') ? get_field('ns87_hero_btn_primary_url', $ns87_term_context) : '';
-$ns87_hero_btn_secondary_text = function_exists('get_field') ? get_field('ns87_hero_btn_secondary_text', $ns87_term_context) : '';
-$ns87_hero_btn_secondary_url = function_exists('get_field') ? get_field('ns87_hero_btn_secondary_url', $ns87_term_context) : '';
-$ns87_problem_title = function_exists('get_field') ? get_field('ns87_problem_title', $ns87_term_context) : '';
-$ns87_problem_text = function_exists('get_field') ? get_field('ns87_problem_text', $ns87_term_context) : '';
-$ns87_problem_items = function_exists('get_field') ? get_field('ns87_problem_items', $ns87_term_context) : array();
-$ns87_solution_title = function_exists('get_field') ? get_field('ns87_solution_title', $ns87_term_context) : '';
-$ns87_solution_text = function_exists('get_field') ? get_field('ns87_solution_text', $ns87_term_context) : '';
-$ns87_solution_points = function_exists('get_field') ? get_field('ns87_solution_points', $ns87_term_context) : array();
-$ns87_prices_title = function_exists('get_field') ? get_field('ns87_prices_title', $ns87_term_context) : '';
-$ns87_price_rows = function_exists('get_field') ? get_field('ns87_price_rows', $ns87_term_context) : array();
-$ns87_estimate_title = function_exists('get_field') ? get_field('ns87_estimate_title', $ns87_term_context) : '';
-$ns87_estimate_items = function_exists('get_field') ? get_field('ns87_estimate_items', $ns87_term_context) : array();
-$ns87_estimate_total = function_exists('get_field') ? get_field('ns87_estimate_total', $ns87_term_context) : '';
-$ns87_faq_title = function_exists('get_field') ? get_field('ns87_faq_title', $ns87_term_context) : '';
-$ns87_faq_items = function_exists('get_field') ? get_field('ns87_faq_items', $ns87_term_context) : array();
+$ns87_post_context = get_the_ID();
+$ns87_hero_title = function_exists('get_field') ? get_field('ns87_hero_title', $ns87_post_context) : '';
+$ns87_hero_subtitle = function_exists('get_field') ? get_field('ns87_hero_subtitle', $ns87_post_context) : '';
+$ns87_hero_btn_primary_text = function_exists('get_field') ? get_field('ns87_hero_btn_primary_text', $ns87_post_context) : '';
+$ns87_hero_btn_primary_url = function_exists('get_field') ? get_field('ns87_hero_btn_primary_url', $ns87_post_context) : '';
+$ns87_hero_btn_secondary_text = function_exists('get_field') ? get_field('ns87_hero_btn_secondary_text', $ns87_post_context) : '';
+$ns87_hero_btn_secondary_url = function_exists('get_field') ? get_field('ns87_hero_btn_secondary_url', $ns87_post_context) : '';
+$ns87_problem_title = function_exists('get_field') ? get_field('ns87_problem_title', $ns87_post_context) : '';
+$ns87_problem_text = function_exists('get_field') ? get_field('ns87_problem_text', $ns87_post_context) : '';
+$ns87_problem_items = function_exists('get_field') ? get_field('ns87_problem_items', $ns87_post_context) : array();
+$ns87_solution_title = function_exists('get_field') ? get_field('ns87_solution_title', $ns87_post_context) : '';
+$ns87_solution_text = function_exists('get_field') ? get_field('ns87_solution_text', $ns87_post_context) : '';
+$ns87_solution_points = function_exists('get_field') ? get_field('ns87_solution_points', $ns87_post_context) : array();
+$ns87_prices_title = function_exists('get_field') ? get_field('ns87_prices_title', $ns87_post_context) : '';
+$ns87_price_rows = function_exists('get_field') ? get_field('ns87_price_rows', $ns87_post_context) : array();
+$ns87_estimate_title = function_exists('get_field') ? get_field('ns87_estimate_title', $ns87_post_context) : '';
+$ns87_estimate_items = function_exists('get_field') ? get_field('ns87_estimate_items', $ns87_post_context) : array();
+$ns87_estimate_total = function_exists('get_field') ? get_field('ns87_estimate_total', $ns87_post_context) : '';
+$ns87_faq_title = function_exists('get_field') ? get_field('ns87_faq_title', $ns87_post_context) : '';
+$ns87_faq_items = function_exists('get_field') ? get_field('ns87_faq_items', $ns87_post_context) : array();
 
 if (empty($ns87_problem_items) || !is_array($ns87_problem_items)) {
     $ns87_problem_items = array(
