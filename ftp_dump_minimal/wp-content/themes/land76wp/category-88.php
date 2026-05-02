@@ -448,7 +448,8 @@ Template Name: Категория Отмостка вокруг дома
 }
 </style>
 <?php
-$cat87_term_context = 'category_' . get_queried_object_id();
+$cat88_region = function_exists('land76wp_get_current_otmostka_region') ? land76wp_get_current_otmostka_region() : null;
+$cat87_term_context = $cat88_region ? 'category_88' : 'category_' . get_queried_object_id();
 $cat87_hero_title = function_exists('get_field') ? get_field('cat87_hero_title', $cat87_term_context) : '';
 $cat87_hero_subtitle = function_exists('get_field') ? get_field('cat87_hero_subtitle', $cat87_term_context) : '';
 $cat87_hero_btn_primary_text = function_exists('get_field') ? get_field('cat87_hero_btn_primary_text', $cat87_term_context) : '';
@@ -466,6 +467,33 @@ $cat87_prices_link_text = function_exists('get_field') ? get_field('cat87_prices
 $cat87_prices_link_url = function_exists('get_field') ? get_field('cat87_prices_link_url', $cat87_term_context) : '';
 $cat87_faq_title = function_exists('get_field') ? get_field('cat87_faq_title', $cat87_term_context) : '';
 $cat87_faq_items = function_exists('get_field') ? get_field('cat87_faq_items', $cat87_term_context) : array();
+
+$cat88_region_seo_content = '';
+if ($cat88_region) {
+    $cat87_hero_title = 'Отмостка вокруг дома в ' . $cat88_region['locative'] . ' под ключ';
+    $cat87_hero_subtitle = $cat88_region['lead'];
+    $cat87_hero_btn_primary_text = 'Рассчитать отмостку';
+    $cat87_hero_btn_primary_url = '#calc';
+    $cat87_hero_btn_secondary_text = 'Получить консультацию';
+    $cat87_hero_btn_secondary_url = '#consultation';
+    $cat87_prices_title = 'Стоимость отмостки вокруг дома в ' . $cat88_region['locative'];
+    $cat87_faq_title = 'Вопросы по отмостке вокруг дома в ' . $cat88_region['locative'];
+    $cat87_faq_items = array(
+        array(
+            'question' => 'Какую отмостку лучше сделать вокруг дома?',
+            'answer' => 'Выбор зависит от грунта, воды у фундамента, будущего покрытия и утепления. Чаще рассматриваем бетонную, мягкую, утепленную отмостку или отмостку из плитки.',
+        ),
+        array(
+            'question' => 'Можно ли сделать отмостку на готовом участке?',
+            'answer' => 'Да. Мы учитываем дорожки, газон, посадки, цоколь, водостоки и существующие отметки, чтобы аккуратно связать отмостку с благоустройством.',
+        ),
+        array(
+            'question' => 'От чего зависит цена отмостки вокруг дома?',
+            'answer' => 'На стоимость влияет периметр дома, ширина, подготовка основания, утепление, армирование, финишное покрытие, водоотвод и состояние старой отмостки.',
+        ),
+    );
+    $cat88_region_seo_content = !empty($cat88_region['content']) ? $cat88_region['content'] : '';
+}
 
 $cat87_default_trust_titles = array('Авторский дизайн', 'Индивидуальный подход', 'Профессионализм', 'Высокое качество');
 $cat87_trust_titles = $cat87_default_trust_titles;
@@ -644,7 +672,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
           </div>
           <?php endif; ?>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php the_title(); ?></h5>
+            <h3 class="service__title"><?php the_title(); ?></h3>
             <p><?php echo esc_html($otmostka_excerpt); ?></p>
             <div class="service__link-wrap">
               <a class="service__link" href="<?php the_permalink(); ?>">Подробнее</a>
@@ -660,7 +688,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
       <h2 class="services__title">Наши работы</h2>
       <div class="services__cards columns3">
         <?php
-        $selected_posts = get_field('selected_works_posts', 'category_' . get_queried_object_id());
+        $selected_posts = get_field('selected_works_posts', $cat87_term_context);
 
         if ($selected_posts && !empty($selected_posts)) {
           foreach ($selected_posts as $post_id) {
@@ -676,7 +704,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
             <?php endif; ?>
           </div>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php echo esc_html(get_the_title($post_id)); ?></h5>
+            <h3 class="service__title"><?php echo esc_html(get_the_title($post_id)); ?></h3>
             <?php
             $excerpt = get_the_excerpt($post_id);
             if (empty($excerpt)) {
@@ -734,7 +762,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
             </div>
           <?php endif; ?>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php the_title(); ?></h5>
+            <h3 class="service__title"><?php the_title(); ?></h3>
             <?php
             $excerpt = get_the_excerpt();
             if (empty($excerpt)) {
@@ -863,7 +891,13 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
     <!-- 8. Блок SEO текста -->
     <section class="services wrapper">
       <div class="seo-text" style="line-height: 1.6; margin-bottom: 40px;">
-       <?php the_content(); ?>
+       <?php
+       if ($cat88_region && !empty($cat88_region_seo_content)) {
+         echo wp_kses_post($cat88_region_seo_content);
+       } else {
+         the_content();
+       }
+       ?>
       </div>
     </section>
 
@@ -889,7 +923,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
 
     <section class="advantages wrapper">
       <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
-        <h2 class="cta-title">Получите расчет отмостки вокруг дома за 1 день</h2>
+        <h2 class="cta-title"><?php echo esc_html($cat88_region ? 'Рассчитать отмостку вокруг дома в ' . $cat88_region['locative'] : 'Получите расчет отмостки вокруг дома за 1 день'); ?></h2>
         <p style="margin-bottom: 30px;">Оставьте заявку и наш специалист свяжется с вами для бесплатной консультации</p>
         <form class="cta-form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
           <input type="text" placeholder="Ваше имя" required style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">

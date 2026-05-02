@@ -37,7 +37,7 @@ function land76_region_page_slugs() {
 }
 
 function land76_regional_service_slugs() {
-  return array('drenazh-uchastka', 'ukladka-trotuarnoy-plitki', 'osushenie-uchastka');
+  return array('drenazh-uchastka', 'ukladka-trotuarnoy-plitki', 'osushenie-uchastka', 'otmostka-vokrug-doma');
 }
 
 function land76_is_unknown_regional_service_request() {
