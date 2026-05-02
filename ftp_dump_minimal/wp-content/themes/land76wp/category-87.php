@@ -448,7 +448,8 @@ Template Name: Категория Дренаж участка
 }
 </style>
 <?php
-$cat87_term_context = 'category_' . get_queried_object_id();
+$cat87_region = function_exists('land76wp_get_current_drenazh_region') ? land76wp_get_current_drenazh_region() : null;
+$cat87_term_context = $cat87_region ? 'category_87' : 'category_' . get_queried_object_id();
 $cat87_hero_title = function_exists('get_field') ? get_field('cat87_hero_title', $cat87_term_context) : '';
 $cat87_hero_subtitle = function_exists('get_field') ? get_field('cat87_hero_subtitle', $cat87_term_context) : '';
 $cat87_hero_btn_primary_text = function_exists('get_field') ? get_field('cat87_hero_btn_primary_text', $cat87_term_context) : '';
@@ -466,6 +467,41 @@ $cat87_prices_link_text = function_exists('get_field') ? get_field('cat87_prices
 $cat87_prices_link_url = function_exists('get_field') ? get_field('cat87_prices_link_url', $cat87_term_context) : '';
 $cat87_faq_title = function_exists('get_field') ? get_field('cat87_faq_title', $cat87_term_context) : '';
 $cat87_faq_items = function_exists('get_field') ? get_field('cat87_faq_items', $cat87_term_context) : array();
+
+$cat87_region_seo_content = '';
+if ($cat87_region) {
+    $cat87_hero_title = 'Дренаж участка в ' . $cat87_region['locative'] . ' под ключ';
+    $cat87_hero_subtitle = $cat87_region['lead'];
+    $cat87_hero_btn_primary_text = 'Рассчитать стоимость';
+    $cat87_hero_btn_primary_url = '#calc';
+    $cat87_hero_btn_secondary_text = 'Получить консультацию';
+    $cat87_hero_btn_secondary_url = '#consultation';
+    $cat87_prices_title = 'Стоимость дренажа участка в ' . $cat87_region['locative'];
+    $cat87_faq_title = 'Вопросы по дренажу участка в ' . $cat87_region['locative'];
+    $cat87_faq_items = array(
+        array(
+            'question' => 'Можно ли посчитать стоимость дренажа без выезда?',
+            'answer' => 'Предварительно можно. Для точной сметы нужен осмотр участка: важно увидеть уклон, грунт, доступ к работам и точку отвода воды.',
+        ),
+        array(
+            'question' => 'Что выбрать: глубинный или поверхностный дренаж?',
+            'answer' => 'Это зависит от причины воды. Если проблема в грунтовых водах и сырости грунта, нужен глубинный дренаж; если вода идет с покрытий и крыши, часто хватает поверхностной системы или связки с ливневкой.',
+        ),
+        array(
+            'question' => 'Можно ли сделать дренаж на уже благоустроенном участке?',
+            'answer' => 'Да. Мы подбираем трассы с учетом дорожек, посадок, забора и подъезда техники, чтобы не вскрывать участок без необходимости.',
+        ),
+    );
+    $cat87_region_seo_content = '<h2>Когда нужен дренаж участка в ' . esc_html($cat87_region['locative']) . '</h2>';
+    $cat87_region_seo_content .= '<p>Дренаж нужен, если после дождя вода долго стоит на газоне, появляется сырость у фундамента, размывает дорожки, вспучивает покрытие или участок невозможно нормально благоустроить.</p>';
+    foreach ($cat87_region['text'] as $cat87_region_paragraph) {
+        $cat87_region_seo_content .= '<p>' . esc_html($cat87_region_paragraph) . '</p>';
+    }
+    $cat87_region_seo_content .= '<h2>Какие задачи решает дренаж на участке</h2>';
+    $cat87_region_seo_content .= '<p>Система отводит воду от фундамента, дорожек, газона, въезда и посадок. Мы подбираем схему под конкретную причину воды: высокий уровень грунтовых вод, глинистую почву, низину, уклон или проблему вокруг дома.</p>';
+    $cat87_region_seo_content .= '<h2>Как мы работаем в ' . esc_html($cat87_region['locative']) . '</h2>';
+    $cat87_region_seo_content .= '<p>Сначала осматриваем участок, затем готовим схему, считаем материалы и смету, после согласования монтируем трубы, колодцы, лотки и проверяем уклоны. В результате заказчик получает рабочую систему, а не набор траншей без понятной логики.</p>';
+}
 
 $cat87_default_trust_titles = array('Авторский дизайн', 'Индивидуальный подход', 'Профессионализм', 'Высокое качество');
 $cat87_trust_titles = $cat87_default_trust_titles;
@@ -524,7 +560,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
             <a href="<?php echo esc_url($cat87_hero_btn_secondary_url ? $cat87_hero_btn_secondary_url : '#consultation'); ?>" class="hero__btn openPopup" data-modal="#popup" style="margin-left: 15px;"><?php echo esc_html($cat87_hero_btn_secondary_text ? $cat87_hero_btn_secondary_text : 'Получить консультацию'); ?></a>
           </div>
           <div class="hero__breadcramps"><a class="hero__home" href="<?php echo get_home_url(); ?>">Компания "Эксперты"
-              | </a><span class="hero__active-page">Дренаж участка</span></div>
+              | </a><span class="hero__active-page"><?php echo esc_html($cat87_region ? 'Дренаж участка в ' . $cat87_region['locative'] : 'Дренаж участка'); ?></span></div>
         </div>
 
         <div class="animation-wrap"><img style="margin-left:100px" class="animation-wrap__img" src="<?php echo get_template_directory_uri() ?>/img/mouse.png" alt=""
@@ -653,7 +689,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
       <h2 class="services__title">Наши работы</h2>
       <div class="services__cards columns3">
         <?php
-        $selected_posts = get_field('selected_works_posts', 'category_' . get_queried_object_id());
+        $selected_posts = get_field('selected_works_posts', $cat87_term_context);
 
         if ($selected_posts && !empty($selected_posts)) {
           foreach ($selected_posts as $post_id) {
@@ -858,7 +894,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
     <section class="services wrapper">
       <div class="seo-text" style="line-height: 1.6; margin-bottom: 40px;">
        <?php
-       $cat87_seo_content = function_exists('get_field') ? get_field('the_content', $cat87_term_context) : '';
+       $cat87_seo_content = $cat87_region ? $cat87_region_seo_content : (function_exists('get_field') ? get_field('the_content', $cat87_term_context) : '');
        if (!empty($cat87_seo_content)) {
          echo wp_kses_post($cat87_seo_content);
        } else {
@@ -890,7 +926,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
 
     <section class="advantages wrapper">
       <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
-        <h2 class="cta-title">Получите расчет дренажа участка за 1 день</h2>
+        <h2 class="cta-title"><?php echo esc_html($cat87_region ? 'Рассчитать дренаж участка в ' . $cat87_region['locative'] : 'Получите расчет дренажа участка за 1 день'); ?></h2>
         <p style="margin-bottom: 30px;">Оставьте заявку и наш специалист свяжется с вами для бесплатной консультации</p>
         <form class="cta-form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
           <input type="text" placeholder="Ваше имя" required style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
