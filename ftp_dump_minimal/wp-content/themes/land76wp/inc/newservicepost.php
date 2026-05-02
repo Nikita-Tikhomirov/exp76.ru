@@ -535,18 +535,18 @@ $ns87_faq_items = function_exists('get_field') ? get_field('ns87_faq_items', $ns
 if (empty($ns87_problem_items) || !is_array($ns87_problem_items)) {
     $ns87_problem_items = array(
         array(
-            'title' => 'Вода стоит на участке',
-            'text' => 'Постоянные лужи, болотистая почва, невозможность использовать землю для посадок и строительства',
+            'title' => 'Есть задача на участке',
+            'text' => 'Нужно подобрать рабочее решение под конкретный участок, рельеф, покрытия и сценарий использования.',
             'image' => 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp',
         ),
         array(
-            'title' => 'Подтапливает фундамент',
-            'text' => 'Грунтовые воды разрушают бетон, вызывают коррозию арматуры, создают плесень в подвале',
+            'title' => 'Нужна понятная смета',
+            'text' => 'Важно заранее понимать состав работ, материалы, сроки и итоговую стоимость без лишних позиций.',
             'image' => 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp',
         ),
         array(
-            'title' => 'Невозможно использовать землю',
-            'text' => 'Затопленный газон, погибшие растения, невозможность строительства и благоустройства',
+            'title' => 'Важен аккуратный монтаж',
+            'text' => 'Работы должны вписаться в существующее благоустройство и не создавать новых проблем на участке.',
             'image' => 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp',
         ),
     );
@@ -554,42 +554,43 @@ if (empty($ns87_problem_items) || !is_array($ns87_problem_items)) {
 
 if (empty($ns87_solution_points) || !is_array($ns87_solution_points)) {
     $ns87_solution_points = array(
-        array('title' => 'Тип дренажа', 'text' => 'Комбинированная система: глубинный + поверхностный дренаж с дренажными колодцами'),
-        array('title' => 'Как делается', 'text' => 'Монтаж перфорированных труб на уровне грунтовых вод с уклоном 2-3% и выводом в дренажный колодец'),
-        array('title' => 'Почему именно так', 'text' => 'Только комплексный подход обеспечивает отвод как поверхностных, так и грунтовых вод'),
-        array('title' => 'Результат', 'text' => 'Сухой участок, защищенный фундамент, возможность полноценного использования земли'),
+        array('title' => 'Осмотр', 'text' => 'Смотрим участок, ограничения, доступы, покрытия и существующие инженерные решения.'),
+        array('title' => 'Схема', 'text' => 'Подбираем рабочую схему под задачу, бюджет и дальнейшую эксплуатацию.'),
+        array('title' => 'Монтаж', 'text' => 'Выполняем работы по согласованной смете и понятному составу материалов.'),
+        array('title' => 'Запуск', 'text' => 'Проверяем результат, объясняем обслуживание и сдаем работу заказчику.'),
     );
 }
 
 if (empty($ns87_price_rows) || !is_array($ns87_price_rows)) {
     $ns87_price_rows = array(
-        array('service' => 'Глубинный дренаж (высокий УГВ)', 'price' => 'от 4 500 ₽', 'term' => '5-7 дней'),
-        array('service' => 'Поверхностный дренаж', 'price' => 'от 2 800 ₽', 'term' => '2-4 дня'),
-        array('service' => 'Дренажные колодцы', 'price' => 'от 25 000 ₽', 'term' => '1-2 дня'),
+        array('service' => 'Осмотр и схема', 'price' => 'по расчету', 'term' => '1 день'),
+        array('service' => 'Материалы и оборудование', 'price' => 'по расчету', 'term' => 'по смете'),
+        array('service' => 'Монтажные работы', 'price' => 'по расчету', 'term' => 'по объему'),
     );
 }
 
 if (empty($ns87_estimate_items) || !is_array($ns87_estimate_items)) {
     $ns87_estimate_items = array(
-        array('item' => 'Геологические изыскания - 25 000 ₽'),
-        array('item' => 'Проектирование системы - 20 000 ₽'),
-        array('item' => 'Монтаж дренажных труб (200 м) - 900 000 ₽'),
-        array('item' => 'Установка дренажных колодцев (4 шт) - 100 000 ₽'),
+        array('item' => 'Осмотр участка и уточнение задачи - по расчету'),
+        array('item' => 'Подбор материалов и оборудования - по расчету'),
+        array('item' => 'Монтажные работы - по расчету'),
+        array('item' => 'Проверка и сдача результата - по расчету'),
     );
 }
 
 if (empty($ns87_faq_items) || !is_array($ns87_faq_items)) {
     $ns87_faq_items = array(
         array(
-            'question' => 'Как определить высокий уровень грунтовых вод?',
-            'answer' => 'Признаки высокого УГВ: лужи не уходят после дождя, вода в подвале, заболоченность участка, уровень воды в колодцах выше 2 метров.',
+            'question' => 'Можно рассчитать стоимость заранее?',
+            'answer' => 'Предварительно да. Точная смета зависит от осмотра участка, объема работ, материалов и условий монтажа.',
         ),
         array(
-            'question' => 'Нужна ли разрешительная документация?',
-            'answer' => 'Для дренажной системы на собственном участке разрешительная документация не требуется, за исключением случаев подключения к центральной канализации.',
+            'question' => 'Можно выполнить работы поэтапно?',
+            'answer' => 'Да, если это не ломает техническую логику решения. Поэтапность обсуждаем при подготовке схемы.',
         ),
     );
 }
+$ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
 ?>
 
 <!-- 1. Hero блок -->
@@ -598,15 +599,15 @@ if (empty($ns87_faq_items) || !is_array($ns87_faq_items)) {
     <div class="hero__bg" data-depth="0.4"></div>
   </div>
   <div class="hero__content wrapper">
-    <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800"><?php echo esc_html($ns87_hero_title ? $ns87_hero_title : 'Дренаж участка с высоким уровнем грунтовых вод'); ?>
+    <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800"><?php echo esc_html($ns87_hero_title ? $ns87_hero_title : get_the_title()); ?>
     </h1>
-    <p class="hero__subtitle" data-aos="fade-up" data-aos-duration="900"><?php echo esc_html($ns87_hero_subtitle ? $ns87_hero_subtitle : 'Профессиональное решение для участков с высоким уровнем грунтовых вод. Гарантия защиты фундамента и благоустройства.'); ?></p>
+    <p class="hero__subtitle" data-aos="fade-up" data-aos-duration="900"><?php echo esc_html($ns87_hero_subtitle ? $ns87_hero_subtitle : 'Выполняем работы под ключ: осмотр, схема, смета, монтаж и проверка результата.'); ?></p>
     <div class="hero__buttons" data-aos="fade-up" data-aos-duration="1000">
       <a href="<?php echo esc_url($ns87_hero_btn_primary_url ? $ns87_hero_btn_primary_url : '#calc'); ?>" class="hero__btn"><?php echo esc_html($ns87_hero_btn_primary_text ? $ns87_hero_btn_primary_text : 'Рассчитать стоимость'); ?></a>
       <a href="<?php echo esc_url($ns87_hero_btn_secondary_url ? $ns87_hero_btn_secondary_url : '#consultation'); ?>" class="hero__btn openPopup" data-modal="#popup" style="margin-left: 15px;"><?php echo esc_html($ns87_hero_btn_secondary_text ? $ns87_hero_btn_secondary_text : 'Получить консультацию'); ?></a>
     </div>
     <div class="hero__breadcramps"><a class="hero__home" href="<?php echo get_home_url(); ?>">Компания "Эксперты"
-        | </a><span class="hero__active-page">Дренаж с высоким уровнем грунтовых вод</span></div>
+        | </a><span class="hero__active-page"><?php echo esc_html($ns87_breadcrumb_title); ?></span></div>
   </div>
 
   <div class="animation-wrap"><img style="margin-left:100px" class="animation-wrap__img"
@@ -617,8 +618,8 @@ if (empty($ns87_faq_items) || !is_array($ns87_faq_items)) {
 <!-- 2. Проблема -->
 <section class="services wrapper howWorkCustom portfolio">
   <div class="problem-block" data-aos="fade-up" data-aos-duration="600">
-    <h3><?php echo esc_html($ns87_problem_title ? $ns87_problem_title : 'Вода стоит на участке?'); ?></h3>
-    <p><?php echo esc_html($ns87_problem_text ? $ns87_problem_text : 'Высокий уровень грунтовых вод — это серьезная проблема, которая требует немедленного решения. Игнорирование проблемы приводит к разрушению фундамента и порче имущества.'); ?></p>
+    <h3><?php echo esc_html($ns87_problem_title ? $ns87_problem_title : 'Какая задача решается'); ?></h3>
+    <p><?php echo esc_html($ns87_problem_text ? $ns87_problem_text : 'Подбираем решение по месту, чтобы работы были понятными по составу, стоимости и результату.'); ?></p>
 
     <?php foreach ($ns87_problem_items as $index => $ns87_problem_item) : ?>
     <?php
@@ -650,8 +651,8 @@ if (empty($ns87_faq_items) || !is_array($ns87_faq_items)) {
 <!-- 3. Решение -->
 <section class="services wrapper">
   <div class="solution-block" data-aos="fade-up" data-aos-duration="600">
-    <h3><?php echo esc_html($ns87_solution_title ? $ns87_solution_title : 'Комплексное решение проблемы'); ?></h3>
-    <p><?php echo esc_html($ns87_solution_text ? $ns87_solution_text : 'Для участков с высоким уровнем грунтовых вод применяем комбинированную систему дренажа, которая обеспечивает 100% защиту от влаги.'); ?></p>
+    <h3><?php echo esc_html($ns87_solution_title ? $ns87_solution_title : 'Как мы решаем задачу'); ?></h3>
+    <p><?php echo esc_html($ns87_solution_text ? $ns87_solution_text : 'Сначала разбираем условия участка, затем согласуем схему, смету и выполняем монтаж с проверкой результата.'); ?></p>
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;">
       <?php foreach ($ns87_solution_points as $index => $ns87_solution_point) : ?>
@@ -668,41 +669,12 @@ Poiret One
   </div>
 </section>
 
-<!-- 4. Технология -->
+<!-- 4. SEO текст страницы -->
 <section class="services wrapper">
-  <div class="tech-block" data-aos="fade-up" data-aos-duration="600">
-    <h2 style="text-align: center; color: #0a9215; font-family: 
-'
-Poiret One
-'
-, cursive; font-size: 35px; margin-bottom: 20px;">Технология монтажа</h2>
-    <p style="text-align: center; margin-bottom: 30px;">Применяем проверенные технологии с учетом геологических
-      особенностей участка</p>
-
-    <div class="tech-grid">
-      <div class="tech-item" data-aos="fade-up" data-aos-duration="700">
-        <h4>Глубина</h4>
-        <p>1.5-2.5 метра до уровня залегания грунтовых вод</p>
-      </div>
-
-      <div class="tech-item" data-aos="fade-up" data-aos-duration="800">
-        <h4>Трубы</h4>
-        <p>Гофрированные трубы ПНД 110-160 мм с геотекстильной обмоткой</p>
-      </div>
-
-      <div class="tech-item" data-aos="fade-up" data-aos-duration="900">
-        <h4>Уклон</h4>
-        <p>2-3% на 1 метр для самотека воды к дренажным колодцам</p>
-      </div>
-
-      <div class="tech-item" data-aos="fade-up" data-aos-duration="1000">
-        <h4>Схема</h4>
-        <p>Елочка с выводом в главный дренажный колодец и ливневую канализацию</p>
-      </div>
-    </div>
+  <div class="seo-text" style="line-height: 1.6; margin-bottom: 40px;">
+    <?php the_content(); ?>
   </div>
 </section>
-
 <!-- 5. Кейсы -->
 <section class="services wrapper casesCustom">
   <h2 style="text-align: center; color: #0a9215; font-family: 
@@ -740,55 +712,18 @@ Poiret One
             echo '<p>' . $excerpt . '</p>';
             ?>
             <p>
-              <strong><?php echo get_field('price', $post_id) ? 'from ' . get_field('price', $post_id) : 'Price on request'; ?></strong>
+              <strong><?php echo get_field('price', $post_id) ? 'от ' . esc_html(get_field('price', $post_id)) : 'Цена по запросу'; ?></strong>
             </p>
             <div class="service__link-wrap">
-              <a class="service__link" href="<?php echo get_permalink($post_id); ?>">Read more</a>
+              <a class="service__link" href="<?php echo get_permalink($post_id); ?>">Подробнее</a>
             </div>
           </div>
         </div>
       <?php
       }
       wp_reset_postdata();
-    } else {
-      // Fallback to default static cards if no posts selected
-      ?>
-      <div class="service" data-aos="fade-up" data-aos-duration="400">
-        <div class="service__img-wrap">
-          <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/high-water-1.jpg"
-            alt="Äðåíàæ ñ âûñîêèì ÓÃÂ 6 ñîòîê">
-        </div>
-        <div class="service__text-wrap">
-          <h5 class="service__title">Äðåíàæ ñ âûñîêèì ÓÃÂ 6 ñîòîê</h5>
-          <p>Êîìïëåêñíûé äðåíàæ ó÷àñòêà ñ âûñîêèì óðîâíåì ãðóíòîâûõ âîä. Óñòàíîâêà 4 äðåíàæíûõ êîëîäöåâ.</p>
-          <p><strong>îò 480 000 â</strong></p>
-        </div>
-      </div>
-
-      <div class="service" data-aos="fade-up" data-aos-duration="500">
-        <div class="service__img-wrap">
-          <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/high-water-2.jpg"
-            alt="Äðåíàæ çàáîëî÷åííîãî ó÷àñòêà">
-        </div>
-        <div class="service__text-wrap">
-          <h5 class="service__title">Äðåíàæ çàáîëî÷åííîãî ó÷àñòêà</h5>
-          <p>Îñóøåíèå ïðîáëåìíîãî ó÷àñòêà 10 ñîòîê ñ âûñîêèì óðîâíåì ãðóíòîâûõ âîä.</p>
-          <p><strong>îò 750 000 â</strong></p>
-        </div>
-      </div>
-
-      <div class="service" data-aos="fade-up" data-aos-duration="600">
-        <div class="service__img-wrap">
-          <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/high-water-3.jpg"
-            alt="Ïðèñòåííûé äðåíàæ ñ âûñîêèì ÓÃÂ">
-        </div>
-        <div class="service__text-wrap">
-          <h5 class="service__title">Ïðèñòåííûé äðåíàæ ñ âûñîêèì ÓÃÂ</h5>
-          <p>Çàùèòà ôóíäàìåíòà äîìà îò ãðóíòîâûõ âîä ñ óñòàíîâêîé ïðèñòâîëüíîé äðåíàæíîé ñèñòåìû.</p>
-          <p><strong>îò 320 000 â</strong></p>
-        </div>
-      </div>
-    <?php } ?>
+    }
+    ?>
   </div>
 </section>
 
@@ -798,7 +733,7 @@ Poiret One
 '
 Poiret One
 '
-, cursive; font-size: 35px; margin-bottom: 40px;"><?php echo esc_html($ns87_prices_title ? $ns87_prices_title : 'Стоимость дренажа с высоким УГВ'); ?></h2>
+, cursive; font-size: 35px; margin-bottom: 40px;"><?php echo esc_html($ns87_prices_title ? $ns87_prices_title : 'Стоимость услуги'); ?></h2>
 
   <div style="overflow-x: auto; margin-bottom: 30px;">
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #fff;">
@@ -829,49 +764,15 @@ Poiret One
 '
 Poiret One
 '
-, cursive; font-size: 24px; color: #333;"><?php echo esc_html($ns87_estimate_title ? $ns87_estimate_title : 'Пример сметы на дренаж участка 10 соток (высокий УГВ)'); ?></h3>
+, cursive; font-size: 24px; color: #333;"><?php echo esc_html($ns87_estimate_title ? $ns87_estimate_title : 'Пример расчета'); ?></h3>
     <ul class="estimate-list">
       <?php foreach ($ns87_estimate_items as $ns87_estimate_item) : ?>
       <li><?php echo esc_html(!empty($ns87_estimate_item['item']) ? $ns87_estimate_item['item'] : ''); ?></li>
       <?php endforeach; ?>
-      <li><strong><?php echo esc_html($ns87_estimate_total ? $ns87_estimate_total : 'Итого: 1 045 000 ₽'); ?></strong></li>
+      <li><strong><?php echo esc_html($ns87_estimate_total ? $ns87_estimate_total : 'Итого: по расчету'); ?></strong></li>
     </ul>
   </div>
 </section>
-
-<!-- 7. Ошибки -->
-<section class="services wrapper portfolio">
-  <div class="error-block" data-aos="fade-up" data-aos-duration="600">
-    <h3>Частые ошибки при монтаже</h3>
-    <p>Избегайте этих ошибок, которые приводят к неэффективной работе дренажной системы</p>
-
-    <div class="error-item" data-aos="fade-up" data-aos-duration="700">
-      <img src="https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp" alt="Неправильный уклон">
-      <div>
-        <h4>Неправильный уклон</h4>
-        <p>Уклон менее 1% приводит к застою воды в трубах и образованию засоров</p>
-      </div>
-    </div>
-
-    <div class="error-item" data-aos="fade-up" data-aos-duration="800">
-      <img src="https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp" alt="Нет геотекстиля">
-      <div>
-        <h4>Нет геотекстиля</h4>
-        <p>Отсутствие геотекстильной обмотки приводит к заиливанию труб и выходу системы из строя</p>
-      </div>
-    </div>
-
-    <div class="error-item" data-aos="fade-up" data-aos-duration="900">
-      <img src="https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp" alt="Экономия на трубах">
-      <div>
-        <h4>Экономия на трубах</h4>
-        <p>Использование дешевых труб без перфорации и геотекстиля быстро приводит к поломке системы</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 
 <!-- 8. Мини FAQ -->
 <section class="services wrapper">
@@ -897,100 +798,10 @@ Poiret One
     <?php endforeach; ?>
   </div>
 </section>
-<!-- 9. Перелинковка -->
-<section class="services wrapper">
-  <h2 style="text-align: center; color: #0a9215; font-family: 
-'
-, cursive; font-size: 35px; margin-bottom: 40px;">Другие виды дренажа</h2>
-
-  <div class="columns3" style=" gap: 30px;">
-    <?php
-    // Get selected posts from ACF field for Other Drainage Types
-    $selected_drainage = get_field('selected_other_drainage');
-
-    if ($selected_drainage && !empty($selected_drainage)) {
-      foreach ($selected_drainage as $post_id) {
-        $post = get_post($post_id);
-        setup_postdata($post);
-        ?>
-        <div class="service" data-aos="fade-up" data-aos-duration="400">
-          <div class="service__img-wrap">
-            <?php if (has_post_thumbnail($post_id)): ?>
-              <img class="service__img" src="<?php echo get_the_post_thumbnail_url($post_id); ?>"
-                alt="<?php echo get_the_title($post_id); ?>">
-            <?php else: ?>
-              <img class="service__img" src="/wp-content/themes/theme/assets/img/drainage/default-drainage.jpg"
-                alt="<?php echo get_the_title($post_id); ?>">
-            <?php endif; ?>
-          </div>
-          <div class="service__text-wrap">
-            <h5 class="service__title"><?php echo get_the_title($post_id); ?></h5>
-            <?php
-            $excerpt = get_the_excerpt($post_id);
-            if (empty($excerpt)) {
-              $excerpt = wp_trim_words(get_post_field('post_content', $post_id), 15);
-            }
-            echo '<p>' . $excerpt . '</p>';
-            ?>
-            <div class="service__link-wrap">
-              <a class="service__link" href="<?php echo get_permalink($post_id); ?>">Подробнее</a>
-            </div>
-          </div>
-        </div>
-      <?php
-      }
-      wp_reset_postdata();
-    } else {
-      // Fallback to default static cards if no posts selected
-      ?>
-      <div class="service" data-aos="fade-up" data-aos-duration="400">
-        <div class="service__img-wrap">
-          <img class="service__img" src="/wp-content/themes/theme/assets/img/drainage/deep-drainage.jpg"
-            alt="Ãëóáèííûé äðåíàæ">
-        </div>
-        <div class="service__text-wrap">
-          <h5 class="service__title">Ãëóáèííûé äðåíàæ</h5>
-          <p>Äëÿ ó÷àñòêîâ ñ âûñîêèì óðîâíåì ãðóíòîâûõ âîä è ïîñòîÿííîé âëàæíîñòüþ</p>
-          <div class="service__link-wrap">
-            <a class="service__link" href="/glubinnyj-drenazh/">Ïîäðîáíåå</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="service" data-aos="fade-up" data-aos-duration="500">
-        <div class="service__img-wrap">
-          <img class="service__img" src="/wp-content/themes/theme/assets/img/drainage/surface-drainage.jpg"
-            alt="Ïîâåðõíîñòíûé äðåíàæ">
-        </div>
-        <div class="service__text-wrap">
-          <h5 class="service__title">Ïîâåðõíîñòíûé äðåíàæ</h5>
-          <p>Äëÿ îòâîäà äîæäåâûõ è òàëûõ âîä ñ ïîâåðõíîñòè ó÷àñòêà</p>
-          <div class="service__link-wrap">
-            <a class="service__link" href="/poverhnostnyj-drenazh/">Ïîäðîáíåå</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="service" data-aos="fade-up" data-aos-duration="600">
-        <div class="service__img-wrap">
-          <img class="service__img" src="/wp-content/themes/theme/assets/img/drainage/price.jpg" alt="Öåíà íà äðåíàæ">
-        </div>
-        <div class="service__text-wrap">
-          <h5 class="service__title">Öåíà</h5>
-          <p>Ïîäðîáíûé ðàñ÷åò ñòîèìîñòè äðåíàæíûõ ñèñòåì ëþáîé ñëîæíîñòè</p>
-          <div class="service__link-wrap">
-            <a class="service__link" href="/drenazh-uchastka/cena/">Ïîäðîáíåå</a>
-          </div>
-        </div>
-      </div>
-    <?php } ?>
-  </div>
-</section>
-
 <!-- 10. CTA -->
 <section class="advantages wrapper">
   <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
-    <h2 style="font-weight: 700; margin-bottom: 35px;">Получите расчет дренажа с высоким УГВ за 1 день</h2>
+    <h2 style="font-weight: 700; margin-bottom: 35px;">Получите расчет по услуге за 1 день</h2>
     <p style="margin-bottom: 30px;">Оставьте заявку и наш специалист свяжется с вами для бесплатной консультации и
       точного расчета стоимости</p>
     <form class="cta-form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
