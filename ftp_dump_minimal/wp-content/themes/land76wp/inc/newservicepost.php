@@ -703,7 +703,7 @@ Poiret One
             <?php endif; ?>
           </div>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php echo get_the_title($post_id); ?></h5>
+            <h3 class="service__title"><?php echo get_the_title($post_id); ?></h3>
             <?php
             $excerpt = get_the_excerpt($post_id);
             if (empty($excerpt)) {

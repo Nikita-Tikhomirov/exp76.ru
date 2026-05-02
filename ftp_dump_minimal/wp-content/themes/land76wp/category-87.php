@@ -610,7 +610,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
 
     <!-- 3. Услуги дренажа участка -->
     <section class="services wrapper">
-      <h2 class="services__title">Услуги дренажа участка</h2>
+      <h2 class="services__title">Услуги по дренажу участка</h2>
       <div class="services__cards columns3">
         <?php
         $posts = get_posts(array(
@@ -637,7 +637,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
             <img class="service__img" src="<?php the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>">
           </div>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php the_title(); ?></h5>
+            <h3 class="service__title"><?php the_title(); ?></h3>
             <?php the_excerpt(); ?>
             <div class="service__link-wrap">
               <a class="service__link" href="<?php the_permalink(); ?>">Подробнее</a>
@@ -669,7 +669,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
             <?php endif; ?>
           </div>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php echo esc_html(get_the_title($post_id)); ?></h5>
+            <h3 class="service__title"><?php echo esc_html(get_the_title($post_id)); ?></h3>
             <?php
             $excerpt = get_the_excerpt($post_id);
             if (empty($excerpt)) {
@@ -857,7 +857,14 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
     <!-- 8. Блок SEO текста -->
     <section class="services wrapper">
       <div class="seo-text" style="line-height: 1.6; margin-bottom: 40px;">
-       <?php the_content(); ?>
+       <?php
+       $cat87_seo_content = function_exists('get_field') ? get_field('the_content', $cat87_term_context) : '';
+       if (!empty($cat87_seo_content)) {
+         echo wp_kses_post($cat87_seo_content);
+       } else {
+         the_content();
+       }
+       ?>
       </div>
     </section>
 
