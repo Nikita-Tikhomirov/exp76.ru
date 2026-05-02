@@ -2,7 +2,7 @@
 <?php  ?>
 
 <?php
-if (in_category(87) || in_category(88) || in_category(89) || in_category(90)) {
+if (in_category(87) || in_category(88) || in_category(89) || in_category(90) || in_category(91)) {
     get_header('seo');
     include get_template_directory() . '/inc/newservicepost.php';
 } else if (in_category(72) || in_category(75)) {

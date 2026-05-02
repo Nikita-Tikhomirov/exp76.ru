@@ -22,6 +22,11 @@ if (file_exists($land76_osushenie_import_file)) {
   require_once $land76_osushenie_import_file;
 }
 
+$land76_livnevka_import_file = __DIR__ . '/inc/import-livnevka.php';
+if (file_exists($land76_livnevka_import_file)) {
+  require_once $land76_livnevka_import_file;
+}
+
 
 function style_theme() {
 
