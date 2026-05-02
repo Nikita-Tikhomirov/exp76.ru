@@ -32,10 +32,11 @@ if (file_exists($land76_autopoliv_import_file)) {
   require_once $land76_autopoliv_import_file;
 }
 
-$land76_regional_drenazh_file = __DIR__ . '/inc/regional-drenazh.php';
-if (file_exists($land76_regional_drenazh_file)) {
-  require_once $land76_regional_drenazh_file;
-}
+// Temporarily disabled while regional routing is being stabilized.
+// $land76_regional_drenazh_file = __DIR__ . '/inc/regional-drenazh.php';
+// if (file_exists($land76_regional_drenazh_file)) {
+//   require_once $land76_regional_drenazh_file;
+// }
 
 
 function style_theme() {
