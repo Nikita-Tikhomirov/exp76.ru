@@ -448,7 +448,8 @@ Template Name: Категория Автополив на участке
 }
 </style>
 <?php
-$cat87_term_context = 'category_' . get_queried_object_id();
+$cat92_region = function_exists('land76wp_get_current_autopoliv_region') ? land76wp_get_current_autopoliv_region() : null;
+$cat87_term_context = $cat92_region ? 'category_92' : 'category_' . get_queried_object_id();
 $cat87_hero_title = function_exists('get_field') ? get_field('cat87_hero_title', $cat87_term_context) : '';
 $cat87_hero_subtitle = function_exists('get_field') ? get_field('cat87_hero_subtitle', $cat87_term_context) : '';
 $cat87_hero_btn_primary_text = function_exists('get_field') ? get_field('cat87_hero_btn_primary_text', $cat87_term_context) : '';
@@ -466,6 +467,33 @@ $cat87_prices_link_text = function_exists('get_field') ? get_field('cat87_prices
 $cat87_prices_link_url = function_exists('get_field') ? get_field('cat87_prices_link_url', $cat87_term_context) : '';
 $cat87_faq_title = function_exists('get_field') ? get_field('cat87_faq_title', $cat87_term_context) : '';
 $cat87_faq_items = function_exists('get_field') ? get_field('cat87_faq_items', $cat87_term_context) : array();
+
+$cat92_region_seo_content = '';
+if ($cat92_region) {
+    $cat87_hero_title = 'Автополив на участке в ' . $cat92_region['locative'] . ' под ключ';
+    $cat87_hero_subtitle = $cat92_region['lead'];
+    $cat87_hero_btn_primary_text = 'Рассчитать автополив';
+    $cat87_hero_btn_primary_url = '#calc';
+    $cat87_hero_btn_secondary_text = 'Получить консультацию';
+    $cat87_hero_btn_secondary_url = '#consultation';
+    $cat87_prices_title = 'Стоимость автополива на участке в ' . $cat92_region['locative'];
+    $cat87_faq_title = 'Вопросы по автополиву на участке в ' . $cat92_region['locative'];
+    $cat87_faq_items = array(
+        array(
+            'question' => 'Можно ли рассчитать автополив без выезда?',
+            'answer' => 'Предварительно можно. Для точной схемы нужны площадь, зоны газона и посадок, источник воды, давление, насос, емкость и места прокладки магистралей.',
+        ),
+        array(
+            'question' => 'Что входит в систему автополива?',
+            'answer' => 'Обычно в систему входят проект, трубы, клапаны, дождеватели или капельные линии, контроллер, датчик дождя, насосное оборудование и пусконаладка.',
+        ),
+        array(
+            'question' => 'Когда лучше монтировать автополив?',
+            'answer' => 'Лучше до укладки газона, плитки и финальных посадок. На готовом участке тоже можно работать, но трассы нужно планировать аккуратнее.',
+        ),
+    );
+    $cat92_region_seo_content = !empty($cat92_region['content']) ? $cat92_region['content'] : '';
+}
 
 $cat87_default_trust_titles = array('Авторский дизайн', 'Индивидуальный подход', 'Профессионализм', 'Высокое качество');
 $cat87_trust_titles = $cat87_default_trust_titles;
@@ -644,7 +672,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
           </div>
           <?php endif; ?>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php the_title(); ?></h5>
+            <h3 class="service__title"><?php the_title(); ?></h3>
             <p><?php echo esc_html($autopoliv_excerpt); ?></p>
             <div class="service__link-wrap">
               <a class="service__link" href="<?php the_permalink(); ?>">Подробнее</a>
@@ -660,7 +688,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
       <h2 class="services__title">Наши работы</h2>
       <div class="services__cards columns3">
         <?php
-        $selected_posts = get_field('selected_works_posts', 'category_' . get_queried_object_id());
+        $selected_posts = get_field('selected_works_posts', $cat87_term_context);
 
         if ($selected_posts && !empty($selected_posts)) {
           foreach ($selected_posts as $post_id) {
@@ -676,7 +704,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
             <?php endif; ?>
           </div>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php echo esc_html(get_the_title($post_id)); ?></h5>
+            <h3 class="service__title"><?php echo esc_html(get_the_title($post_id)); ?></h3>
             <?php
             $excerpt = get_the_excerpt($post_id);
             if (empty($excerpt)) {
@@ -734,7 +762,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
             </div>
           <?php endif; ?>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php the_title(); ?></h5>
+            <h3 class="service__title"><?php the_title(); ?></h3>
             <?php
             $excerpt = get_the_excerpt();
             if (empty($excerpt)) {
@@ -863,7 +891,13 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
     <!-- 8. Блок SEO текста -->
     <section class="services wrapper">
       <div class="seo-text" style="line-height: 1.6; margin-bottom: 40px;">
-       <?php the_content(); ?>
+       <?php
+       if ($cat92_region && !empty($cat92_region_seo_content)) {
+         echo wp_kses_post($cat92_region_seo_content);
+       } else {
+         the_content();
+       }
+       ?>
       </div>
     </section>
 
@@ -889,7 +923,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
 
     <section class="advantages wrapper">
       <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
-        <h2 class="cta-title">Получите расчет автополива за 1 день</h2>
+        <h2 class="cta-title"><?php echo esc_html($cat92_region ? 'Рассчитать автополив на участке в ' . $cat92_region['locative'] : 'Получите расчет автополива за 1 день'); ?></h2>
         <p style="margin-bottom: 30px;">Оставьте заявку и наш специалист свяжется с вами для бесплатной консультации</p>
         <form class="cta-form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
           <input type="text" placeholder="Ваше имя" required style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
