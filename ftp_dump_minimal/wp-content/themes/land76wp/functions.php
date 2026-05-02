@@ -32,25 +32,33 @@ if (file_exists($land76_autopoliv_import_file)) {
   require_once $land76_autopoliv_import_file;
 }
 
-function land76_drenazh_region_page_slugs() {
+function land76_region_page_slugs() {
   return array('yaroslavl', 'rybinsk', 'uglich', 'tutaev', 'pereslavl');
 }
 
-function land76_is_unknown_drenazh_region_request() {
+function land76_regional_service_slugs() {
+  return array('drenazh-uchastka', 'ukladka-trotuarnoy-plitki');
+}
+
+function land76_is_unknown_regional_service_request() {
   $path = isset($_SERVER['REQUEST_URI']) ? trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') : '';
-  if (!preg_match('#^([^/]+)/drenazh-uchastka/?$#', $path, $matches)) {
+  if (!preg_match('#^([^/]+)/([^/]+)/?$#', $path, $matches)) {
     return false;
   }
 
-  return !in_array($matches[1], land76_drenazh_region_page_slugs(), true);
+  if (!in_array($matches[2], land76_regional_service_slugs(), true)) {
+    return false;
+  }
+
+  return !in_array($matches[1], land76_region_page_slugs(), true);
 }
 
 add_filter('redirect_canonical', function ($redirect_url) {
-  return land76_is_unknown_drenazh_region_request() ? false : $redirect_url;
+  return land76_is_unknown_regional_service_request() ? false : $redirect_url;
 }, 10, 1);
 
 add_action('template_redirect', function () {
-  if (!land76_is_unknown_drenazh_region_request()) {
+  if (!land76_is_unknown_regional_service_request()) {
     return;
   }
 

@@ -448,7 +448,8 @@ Template Name: Категория Укладка тротуарной плитк
 }
 </style>
 <?php
-$cat87_term_context = 'category_' . get_queried_object_id();
+$cat89_region = function_exists('land76wp_get_current_plitka_region') ? land76wp_get_current_plitka_region() : null;
+$cat87_term_context = $cat89_region ? 'category_89' : 'category_' . get_queried_object_id();
 $cat87_hero_title = function_exists('get_field') ? get_field('cat87_hero_title', $cat87_term_context) : '';
 $cat87_hero_subtitle = function_exists('get_field') ? get_field('cat87_hero_subtitle', $cat87_term_context) : '';
 $cat87_hero_btn_primary_text = function_exists('get_field') ? get_field('cat87_hero_btn_primary_text', $cat87_term_context) : '';
@@ -466,6 +467,33 @@ $cat87_prices_link_text = function_exists('get_field') ? get_field('cat87_prices
 $cat87_prices_link_url = function_exists('get_field') ? get_field('cat87_prices_link_url', $cat87_term_context) : '';
 $cat87_faq_title = function_exists('get_field') ? get_field('cat87_faq_title', $cat87_term_context) : '';
 $cat87_faq_items = function_exists('get_field') ? get_field('cat87_faq_items', $cat87_term_context) : array();
+
+$cat89_region_seo_content = '';
+if ($cat89_region) {
+    $cat87_hero_title = 'Укладка тротуарной плитки в ' . $cat89_region['locative'] . ' под ключ';
+    $cat87_hero_subtitle = $cat89_region['lead'];
+    $cat87_hero_btn_primary_text = 'Рассчитать стоимость';
+    $cat87_hero_btn_primary_url = '#calc';
+    $cat87_hero_btn_secondary_text = 'Получить консультацию';
+    $cat87_hero_btn_secondary_url = '#consultation';
+    $cat87_prices_title = 'Стоимость укладки тротуарной плитки в ' . $cat89_region['locative'];
+    $cat87_faq_title = 'Вопросы по укладке тротуарной плитки в ' . $cat89_region['locative'];
+    $cat87_faq_items = array(
+        array(
+            'question' => 'Можно ли посчитать стоимость укладки плитки без выезда?',
+            'answer' => 'Предварительно можно. Для точной сметы нужно увидеть площадь, уклоны, грунт, основание, бордюры, водоотвод и подъезд к участку.',
+        ),
+        array(
+            'question' => 'Что важнее всего при укладке тротуарной плитки?',
+            'answer' => 'Главное - правильное основание, трамбовка, уклоны и фиксация края бордюром. Без этого плитка может просесть, разойтись по швам или держать воду.',
+        ),
+        array(
+            'question' => 'Можно ли укладывать плитку на готовом участке?',
+            'answer' => 'Да. Мы учитываем дом, отмостку, дорожки, посадки, забор и существующие отметки, чтобы аккуратно вписать покрытие в участок.',
+        ),
+    );
+    $cat89_region_seo_content = !empty($cat89_region['content']) ? $cat89_region['content'] : '';
+}
 
 $cat87_default_trust_titles = array('Авторский дизайн', 'Индивидуальный подход', 'Профессионализм', 'Высокое качество');
 $cat87_trust_titles = $cat87_default_trust_titles;
@@ -524,7 +552,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
             <a href="<?php echo esc_url($cat87_hero_btn_secondary_url ? $cat87_hero_btn_secondary_url : '#consultation'); ?>" class="hero__btn openPopup" data-modal="#popup" style="margin-left: 15px;"><?php echo esc_html($cat87_hero_btn_secondary_text ? $cat87_hero_btn_secondary_text : 'Получить консультацию'); ?></a>
           </div>
           <div class="hero__breadcramps"><a class="hero__home" href="<?php echo get_home_url(); ?>">Компания "Эксперты"
-              | </a><span class="hero__active-page">Укладка тротуарной плитки</span></div>
+              | </a><span class="hero__active-page"><?php echo esc_html($cat89_region ? 'Укладка тротуарной плитки в ' . $cat89_region['locative'] : 'Укладка тротуарной плитки'); ?></span></div>
         </div>
 
         <div class="animation-wrap"><img style="margin-left:100px" class="animation-wrap__img" src="<?php echo get_template_directory_uri() ?>/img/mouse.png" alt=""
@@ -644,7 +672,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
           </div>
           <?php endif; ?>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php the_title(); ?></h5>
+            <h3 class="service__title"><?php the_title(); ?></h3>
             <p><?php echo esc_html($plitka_excerpt); ?></p>
             <div class="service__link-wrap">
               <a class="service__link" href="<?php the_permalink(); ?>">Подробнее</a>
@@ -660,7 +688,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
       <h2 class="services__title">Наши работы</h2>
       <div class="services__cards columns3">
         <?php
-        $selected_posts = get_field('selected_works_posts', 'category_' . get_queried_object_id());
+        $selected_posts = get_field('selected_works_posts', $cat87_term_context);
 
         if ($selected_posts && !empty($selected_posts)) {
           foreach ($selected_posts as $post_id) {
@@ -676,7 +704,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
             <?php endif; ?>
           </div>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php echo esc_html(get_the_title($post_id)); ?></h5>
+            <h3 class="service__title"><?php echo esc_html(get_the_title($post_id)); ?></h3>
             <?php
             $excerpt = get_the_excerpt($post_id);
             if (empty($excerpt)) {
@@ -863,7 +891,13 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
     <!-- 8. Блок SEO текста -->
     <section class="services wrapper">
       <div class="seo-text" style="line-height: 1.6; margin-bottom: 40px;">
-       <?php the_content(); ?>
+       <?php
+       if ($cat89_region && !empty($cat89_region_seo_content)) {
+         echo wp_kses_post($cat89_region_seo_content);
+       } else {
+         the_content();
+       }
+       ?>
       </div>
     </section>
 
@@ -889,7 +923,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
 
     <section class="advantages wrapper">
       <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
-        <h2 class="cta-title">Получите расчет укладки тротуарной плитки за 1 день</h2>
+        <h2 class="cta-title"><?php echo esc_html($cat89_region ? 'Рассчитать укладку тротуарной плитки в ' . $cat89_region['locative'] : 'Получите расчет укладки тротуарной плитки за 1 день'); ?></h2>
         <p style="margin-bottom: 30px;">Оставьте заявку и наш специалист свяжется с вами для бесплатной консультации</p>
         <form class="cta-form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
           <input type="text" placeholder="Ваше имя" required style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
