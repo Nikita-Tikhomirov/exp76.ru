@@ -22,6 +22,11 @@ if (file_exists($land76_plitka_import_file)) {
   require_once $land76_plitka_import_file;
 }
 
+$land76_plitka_blog_import_file = __DIR__ . '/inc/import-plitka-blog.php';
+if (file_exists($land76_plitka_blog_import_file)) {
+  require_once $land76_plitka_blog_import_file;
+}
+
 $land76_osushenie_import_file = __DIR__ . '/inc/import-osushenie.php';
 if (file_exists($land76_osushenie_import_file)) {
   require_once $land76_osushenie_import_file;

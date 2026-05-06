@@ -735,7 +735,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
       <div class="services__cards columns3">
         <?php
         $blog_posts = get_posts(array(
-          'numberposts' => 6,
+          'numberposts' => 9,
           'post_type' => 'post',
           'post_status' => 'publish',
           'orderby' => 'date',
@@ -756,13 +756,19 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
             setup_postdata($post);
         ?>
         <div class="service" data-aos="fade-up" data-aos-duration="400">
-          <?php if (has_post_thumbnail()) : ?>
+          <?php
+          $blog_card_image = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'medium') : '';
+          if (!$blog_card_image && function_exists('get_field')) {
+            $blog_card_image = get_field('blogseo_main_image_url', get_the_ID());
+          }
+          ?>
+          <?php if ($blog_card_image) : ?>
             <div class="service__img-wrap">
-              <img class="service__img" src="<?php the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>">
+              <img class="service__img" src="<?php echo esc_url($blog_card_image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
             </div>
           <?php endif; ?>
           <div class="service__text-wrap">
-            <h5 class="service__title"><?php the_title(); ?></h5>
+            <h3 class="service__title"><?php the_title(); ?></h3>
             <?php
             $excerpt = get_the_excerpt();
             if (empty($excerpt)) {
