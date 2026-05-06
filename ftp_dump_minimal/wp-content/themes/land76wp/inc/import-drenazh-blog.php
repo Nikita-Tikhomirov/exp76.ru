@@ -20,11 +20,31 @@ function land76wp_drenazh_blog_import_update_acf_fields(array $fields, $context,
         return;
     }
 
+    $field_keys = array(
+        'blogseo_hero_title' => 'field_blogseo_hero_title',
+        'blogseo_hero_subtitle' => 'field_blogseo_hero_subtitle',
+        'blogseo_lead' => 'field_blogseo_lead',
+        'blogseo_main_image' => 'field_blogseo_main_image',
+        'blogseo_main_image_url' => 'field_blogseo_main_image_url',
+        'blogseo_main_image_alt' => 'field_blogseo_main_image_alt',
+        'blogseo_sections' => 'field_blogseo_sections',
+        'blogseo_cta_title' => 'field_blogseo_cta_title',
+        'blogseo_cta_text' => 'field_blogseo_cta_text',
+        'blogseo_cta_button_text' => 'field_blogseo_cta_button_text',
+        'blogseo_cta_button_url' => 'field_blogseo_cta_button_url',
+        'blogseo_related_services' => 'field_blogseo_related_services',
+        'blogseo_faq_items' => 'field_blogseo_faq_items',
+        'blogseo_seo_title' => 'field_blogseo_seo_title',
+        'blogseo_seo_description' => 'field_blogseo_seo_description',
+    );
+
     foreach ($fields as $field_name => $field_value) {
         if ($field_name === 'blogseo_related_service_slugs') {
             continue;
         }
-        update_field($field_name, $field_value, $context);
+
+        $field_key = isset($field_keys[$field_name]) ? $field_keys[$field_name] : $field_name;
+        update_field($field_key, $field_value, $context);
     }
 }
 
