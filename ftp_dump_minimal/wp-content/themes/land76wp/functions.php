@@ -7,6 +7,11 @@ if (file_exists($land76_import_file)) {
   require_once $land76_import_file;
 }
 
+$land76_drenazh_blog_import_file = __DIR__ . '/inc/import-drenazh-blog.php';
+if (file_exists($land76_drenazh_blog_import_file)) {
+  require_once $land76_drenazh_blog_import_file;
+}
+
 $land76_otmostka_import_file = __DIR__ . '/inc/import-otmostka.php';
 if (file_exists($land76_otmostka_import_file)) {
   require_once $land76_otmostka_import_file;
@@ -80,6 +85,10 @@ function style_theme() {
 
   // wp_enqueue_style('style1', get_template_directory_uri() . '/css/index.css');
   wp_enqueue_style('style2', get_template_directory_uri() . '/css/styles.css');
+  if (is_singular('post') && has_category(72, get_queried_object_id())) {
+    wp_enqueue_style('land76-services', get_template_directory_uri() . '/css/services.css', array(), null);
+    wp_enqueue_style('land76-seoblog', get_template_directory_uri() . '/css/seoblog.css', array('land76-services'), null);
+  }
 
 }
 
@@ -92,6 +101,24 @@ function scripts_theme() {
 
 
 add_theme_support( 'post-thumbnails' );
+
+add_filter('aioseo_title', function ($title) {
+  if (!is_singular('post') || !in_category(72) || !function_exists('get_field')) {
+    return $title;
+  }
+
+  $seo_title = get_field('blogseo_seo_title', get_the_ID());
+  return $seo_title ? $seo_title : $title;
+}, 20, 1);
+
+add_filter('aioseo_description', function ($description) {
+  if (!is_singular('post') || !in_category(72) || !function_exists('get_field')) {
+    return $description;
+  }
+
+  $seo_description = get_field('blogseo_seo_description', get_the_ID());
+  return $seo_description ? $seo_description : $description;
+}, 20, 1);
 
 
 

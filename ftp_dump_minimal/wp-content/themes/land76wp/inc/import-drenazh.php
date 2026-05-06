@@ -91,6 +91,10 @@ function land76wp_drenazh_import_cleanup_stale_posts(array $cleanup_payload, arr
 
     foreach ($stale_posts as $post_id) {
         $post = get_post($post_id);
+        if (!has_category(74, $post_id)) {
+            continue;
+        }
+
         if (!$post instanceof WP_Post || in_array($post->post_name, $keep_slugs, true)) {
             continue;
         }

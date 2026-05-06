@@ -1,0 +1,232 @@
+.seoblog-hero .hero__bg {
+  background: url(../img/h11.jpg) center/cover;
+}
+
+.seoblog-hero .hero__subtitle {
+  max-width: 760px;
+  margin-top: 18px;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1.45;
+  text-shadow: 2px 2px 3px #000;
+}
+
+.seoblog {
+  padding-top: 55px;
+  padding-bottom: 55px;
+  color: #333;
+}
+
+.seoblog__article {
+  max-width: 980px;
+  margin: 0 auto;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.seoblog__lead {
+  padding: 28px 32px;
+  margin-bottom: 34px;
+  border-left: 5px solid #0a9215;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+  font-size: 21px;
+}
+
+.seoblog__figure {
+  margin: 0 0 34px;
+}
+
+.seoblog__figure img {
+  display: block;
+  width: 100%;
+  max-height: 440px;
+  object-fit: cover;
+}
+
+.seoblog__toc {
+  padding: 24px 28px;
+  margin-bottom: 42px;
+  background: #f7fbf7;
+  border: 1px solid rgba(10, 146, 21, .22);
+}
+
+.seoblog__toc-title {
+  margin: 0 0 12px;
+  font-weight: 700;
+  color: #0a9215;
+}
+
+.seoblog__toc ol {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.seoblog__toc li {
+  margin-bottom: 8px;
+}
+
+.seoblog__toc a {
+  color: #333;
+  text-decoration: none;
+}
+
+.seoblog__toc a:hover {
+  color: #0a9215;
+}
+
+.seoblog__section {
+  margin-bottom: 48px;
+}
+
+.seoblog h2 {
+  margin-bottom: 22px;
+  color: #0a9215;
+  font-family: "Poiret One", cursive;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.seoblog h3 {
+  margin-bottom: 10px;
+  color: #0a9215;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.seoblog__text p {
+  margin-bottom: 14px;
+}
+
+.seoblog__points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.seoblog__point {
+  padding: 22px;
+  background: #fff;
+  border-top: 3px solid #0a9215;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+}
+
+.seoblog__point p {
+  margin: 0;
+}
+
+.seoblog__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 32px;
+  margin: 55px 0;
+  background: #0a9215;
+  color: #fff;
+}
+
+.seoblog__cta h2 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.seoblog__cta p {
+  margin: 0;
+}
+
+.seoblog__cta .hero__btn {
+  flex: 0 0 auto;
+  margin: 0;
+  background: #ff5e00;
+}
+
+.seoblog__related,
+.seoblog__faq {
+  margin-top: 48px;
+}
+
+.seoblog__related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.seoblog__related-card {
+  display: block;
+  min-height: 100%;
+  padding: 18px;
+  background: #fff;
+  color: #333;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+}
+
+.seoblog__related-card img {
+  display: block;
+  width: 100%;
+  height: 150px;
+  margin-bottom: 14px;
+  object-fit: cover;
+}
+
+.seoblog__related-card span {
+  font-weight: 700;
+}
+
+.seoblog__faq-item {
+  padding: 24px;
+  margin-bottom: 18px;
+  background: #fff;
+  border-left: 4px solid #0a9215;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+}
+
+.seoblog__faq-item p {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .seoblog__points,
+  .seoblog__related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .seoblog__cta {
+    display: block;
+  }
+
+  .seoblog__cta .hero__btn {
+    display: inline-block;
+    margin-top: 20px;
+  }
+
+  .seoblog h2 {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .seoblog {
+    padding-top: 35px;
+    padding-bottom: 35px;
+  }
+
+  .seoblog__article {
+    font-size: 16px;
+  }
+
+  .seoblog__lead,
+  .seoblog__toc,
+  .seoblog__cta,
+  .seoblog__faq-item,
+  .seoblog__point {
+    padding: 20px;
+  }
+
+  .seoblog-hero .hero__subtitle {
+    font-size: 18px;
+  }
+}
