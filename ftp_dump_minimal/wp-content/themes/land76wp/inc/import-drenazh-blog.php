@@ -50,8 +50,8 @@ function land76wp_drenazh_blog_import_update_acf_fields(array $fields, $context,
 
 function land76wp_drenazh_blog_import_update_acf_field_recursive(array $field, $parent = 0)
 {
-    if (!function_exists('acf_update_field')) {
-        return;
+    if (!function_exists('acf_update_field') || empty($field['key'])) {
+        return 0;
     }
 
     $sub_fields = array();
@@ -61,13 +61,25 @@ function land76wp_drenazh_blog_import_update_acf_field_recursive(array $field, $
     }
 
     $field['parent'] = $parent;
-    acf_update_field($field);
+    $updated_field = acf_update_field($field);
+    $field_id = 0;
+    if (is_array($updated_field) && !empty($updated_field['ID'])) {
+        $field_id = (int) $updated_field['ID'];
+    }
+    if (!$field_id && function_exists('acf_get_field')) {
+        $stored_field = acf_get_field($field['key']);
+        if (!empty($stored_field['ID'])) {
+            $field_id = (int) $stored_field['ID'];
+        }
+    }
 
     foreach ($sub_fields as $sub_field) {
         if (is_array($sub_field)) {
-            land76wp_drenazh_blog_import_update_acf_field_recursive($sub_field, $field['key']);
+            land76wp_drenazh_blog_import_update_acf_field_recursive($sub_field, $field_id ? $field_id : $field['key']);
         }
     }
+
+    return $field_id;
 }
 
 function land76wp_drenazh_blog_import_acf_group($json_path, array &$stats)
@@ -103,10 +115,21 @@ function land76wp_drenazh_blog_import_acf_group($json_path, array &$stats)
             $group['ID'] = $existing_group['ID'];
         }
 
-        acf_update_field_group($group);
+        $updated_group = acf_update_field_group($group);
+        $group_id = 0;
+        if (is_array($updated_group) && !empty($updated_group['ID'])) {
+            $group_id = (int) $updated_group['ID'];
+        }
+        if (!$group_id && function_exists('acf_get_field_group')) {
+            $stored_group = acf_get_field_group($group['key']);
+            if (!empty($stored_group['ID'])) {
+                $group_id = (int) $stored_group['ID'];
+            }
+        }
+
         foreach ($fields as $field) {
             if (is_array($field)) {
-                land76wp_drenazh_blog_import_update_acf_field_recursive($field, $group['key']);
+                land76wp_drenazh_blog_import_update_acf_field_recursive($field, $group_id ? $group_id : $group['key']);
             }
         }
         $stats['acf_groups_imported']++;
