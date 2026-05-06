@@ -14,14 +14,14 @@ Template Name: Полезное
 
         $posts = get_posts( array(
         'numberposts' => -1,
-        'category'    => 72,
+        'category'    => 0,
         'orderby'     => 'date',
         'order'       => 'DESC',
         'include'     => array(),
         'exclude'     => array(),
         'meta_key'    => '',
         'meta_value'  =>'',
-        'post_type'   => 'post',
+        'post_type'   => '',
         'suppress_filters' => true, // подавление работы фильтров изменения SQL запроса
         ) );
 
