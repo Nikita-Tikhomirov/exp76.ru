@@ -57,6 +57,11 @@ if (file_exists($land76_autopoliv_import_file)) {
   require_once $land76_autopoliv_import_file;
 }
 
+$land76_autopoliv_blog_import_file = __DIR__ . '/inc/import-autopoliv-blog.php';
+if (file_exists($land76_autopoliv_blog_import_file)) {
+  require_once $land76_autopoliv_blog_import_file;
+}
+
 function land76_region_page_slugs() {
   return array('yaroslavl', 'rybinsk', 'uglich', 'tutaev', 'pereslavl');
 }
