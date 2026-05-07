@@ -17,6 +17,11 @@ if (file_exists($land76_otmostka_import_file)) {
   require_once $land76_otmostka_import_file;
 }
 
+$land76_otmostka_blog_import_file = __DIR__ . '/inc/import-otmostka-blog.php';
+if (file_exists($land76_otmostka_blog_import_file)) {
+  require_once $land76_otmostka_blog_import_file;
+}
+
 $land76_plitka_import_file = __DIR__ . '/inc/import-plitka.php';
 if (file_exists($land76_plitka_import_file)) {
   require_once $land76_plitka_import_file;
@@ -63,6 +68,10 @@ function land76_regional_service_slugs() {
 function land76_is_unknown_regional_service_request() {
   $path = isset($_SERVER['REQUEST_URI']) ? trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/') : '';
   if (!preg_match('#^([^/]+)/([^/]+)/?$#', $path, $matches)) {
+    return false;
+  }
+
+  if ($matches[1] === 'category') {
     return false;
   }
 
