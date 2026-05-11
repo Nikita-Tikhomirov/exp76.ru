@@ -1,7 +1,6 @@
 <?php
 add_action( 'wp_enqueue_scripts', 'style_theme' );
 add_action( 'wp_footer', 'scripts_theme' );
-add_action( 'wp_head', 'land76_fix_admin_bar_gap', 1000 );
 
 $land76_import_file = __DIR__ . '/inc/import-drenazh.php';
 if (file_exists($land76_import_file)) {
@@ -86,27 +85,6 @@ function land76_is_unknown_regional_service_request() {
   }
 
   return !in_array($matches[1], land76_region_page_slugs(), true);
-}
-
-function land76_fix_admin_bar_gap() {
-  if (!is_user_logged_in()) {
-    return;
-  }
-  ?>
-  <style id="land76-admin-bar-gap-fix">
-    html {
-      margin-top: 0 !important;
-    }
-    * html body {
-      margin-top: 0 !important;
-    }
-    @media screen and (max-width: 782px) {
-      html {
-        margin-top: 0 !important;
-      }
-    }
-  </style>
-  <?php
 }
 
 add_filter('redirect_canonical', function ($redirect_url) {
