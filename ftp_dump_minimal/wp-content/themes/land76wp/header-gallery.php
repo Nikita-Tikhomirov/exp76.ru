@@ -89,7 +89,6 @@
       </div>
     
     <button class="burger" aria-label="open"><span class="burger__icon"></span></button>
-    <?php wp_head() ?>
   </header>
 
   <div class="page-content">
