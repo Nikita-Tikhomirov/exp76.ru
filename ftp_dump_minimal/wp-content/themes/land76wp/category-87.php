@@ -671,10 +671,14 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
 
         foreach ($posts as $post) {
           setup_postdata($post);
+          $service_card_image = function_exists('land76_get_card_image_url') ? land76_get_card_image_url(get_the_ID(), 'medium') : get_the_post_thumbnail_url(get_the_ID(), 'medium');
+          if (!$service_card_image) {
+            $service_card_image = 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp';
+          }
         ?>
         <div class="service" data-aos="fade-up" data-aos-duration="400">
           <div class="service__img-wrap">
-            <img class="service__img" src="<?php the_post_thumbnail_url(); ?>" alt="<?php the_title(); ?>">
+            <img class="service__img" src="<?php echo esc_url($service_card_image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
           </div>
           <div class="service__text-wrap">
             <h3 class="service__title"><?php the_title(); ?></h3>

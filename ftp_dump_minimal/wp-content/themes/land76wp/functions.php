@@ -131,6 +131,56 @@ function scripts_theme() {
 
 add_theme_support( 'post-thumbnails' );
 
+function land76_get_card_image_url($post_id = null, $size = 'medium', $fallback = true) {
+  $post_id = $post_id ? (int) $post_id : get_the_ID();
+
+  if ($post_id && has_post_thumbnail($post_id)) {
+    $thumbnail_url = get_the_post_thumbnail_url($post_id, $size);
+    if ($thumbnail_url) {
+      return $thumbnail_url;
+    }
+  }
+
+  if ($post_id && function_exists('get_field')) {
+    $field_names = array(
+      'service_card_image',
+      'card_image',
+      'ns87_card_image',
+      'ns87_hero_image',
+      'image',
+      'blogseo_main_image_url',
+    );
+
+    foreach ($field_names as $field_name) {
+      $image = get_field($field_name, $post_id);
+      if (empty($image)) {
+        continue;
+      }
+
+      if (is_array($image) && !empty($image['sizes'][$size])) {
+        return $image['sizes'][$size];
+      }
+
+      if (is_array($image) && !empty($image['url'])) {
+        return $image['url'];
+      }
+
+      if (is_numeric($image)) {
+        $attachment_url = wp_get_attachment_image_url((int) $image, $size);
+        if ($attachment_url) {
+          return $attachment_url;
+        }
+      }
+
+      if (is_string($image)) {
+        return $image;
+      }
+    }
+  }
+
+  return $fallback ? 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp' : '';
+}
+
 add_filter('aioseo_title', function ($title) {
   if (!is_singular('post') || !in_category(72) || !function_exists('get_field')) {
     return $title;
