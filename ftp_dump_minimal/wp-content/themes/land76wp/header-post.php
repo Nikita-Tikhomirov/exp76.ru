@@ -18,7 +18,8 @@
 	
 </head>
 
-<body>
+<body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
   <header class="header wrapper"><a class="header__logo-wrap" href="<?php echo get_home_url(); ?>"><img class="header__logo" src="<?php echo get_template_directory_uri() ?>/img/logo4.png"
         alt="" role="presentation" /></a>
     <nav class="menu">
