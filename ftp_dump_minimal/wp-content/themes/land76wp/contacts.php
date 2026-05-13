@@ -82,24 +82,7 @@ Template Name: Контакты
                     data-original="#000000" data-old_color="#000000" fill="#0a9215"></path>
                 </svg><span class="contacts__link-name">ВКонтакте</span></a>
                 
-                <a class="contacts__social"  target="_blank" href="https://www.facebook.com/groups/exp76/?ref=share"><svg
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.7 167.7" width="23" height="23">
-                  <path class="active-path svg-path"
-                    d="M83.8.3a83.8 83.8 0 00-14 166.4v-65H49.6V78.2h20.2V61c0-20 12.3-31 30.2-31 8.5 0 15.9.7 18 1v20.9h-12.4C96 51.9 94 56.5 94 63.3v15h23.2l-3 23.4H94v65.6A83.8 83.8 0 0083.8.3z"
-                    data-original="#010002" data-old_color="#010002" fill="#0a9215"></path>
-                </svg><span class="contacts__link-name">Facebook</span></a>
-                
-                <a class="contacts__social"  target="_blank" href="https://www.instagram.com/exp_76/?igshid=e2jlt4ojs5qq"><svg
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 89.8 89.8" width="23" height="23">
-                  <path class="active-path svg-path"
-                    d="M58.3 23.9H31.5a7.8 7.8 0 00-7.7 7.7v26.8c0 4.2 3.4 7.7 7.7 7.7h26.8c4.2 0 7.7-3.5 7.7-7.7V31.6c0-4.2-3.5-7.7-7.7-7.7zm-13.4 35a14 14 0 110-27.8 14 14 0 010 27.8zm14.3-25a3.3 3.3 0 110-6.5 3.3 3.3 0 010 6.6z"
-                    data-original="#6A453B" data-old_color="#6A453B" fill="#0a9215"></path>
-                  <path class="active-path svg-path" d="M44.9 37a8 8 0 100 16 8 8 0 000-16z" data-original="#6A453B"
-                    data-old_color="#6A453B" fill="#0a9215"></path>
-                  <path class="active-path svg-path"
-                    d="M44.9 0a44.9 44.9 0 100 89.8 44.9 44.9 0 000-89.8zm27 58.4c0 7.5-6.1 13.6-13.6 13.6H31.5c-7.5 0-13.6-6.1-13.6-13.6V31.6c0-7.5 6-13.6 13.6-13.6h26.8c7.5 0 13.6 6.1 13.6 13.6v26.8z"
-                    data-original="#6A453B" data-old_color="#6A453B" fill="#0a9215"></path>
-                </svg><span class="contacts__link-name">Instagram</span></a></div>
+</div>
             <p class="contacts__adress">Мы в процессе переезда в новый офис. Адрес сообщим дополнительно.</p>
           </div>
         </div>

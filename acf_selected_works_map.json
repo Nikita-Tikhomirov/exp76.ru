@@ -1,0 +1,235 @@
+{
+  "drenazh": {
+    "cat_id": 87,
+    "cat_label": "Дренаж участка",
+    "template": "category-87.php",
+    "acf_field": "selected_works_posts",
+    "acf_context": "category_87",
+    "cases": [
+      {
+        "title": "д. Рябухино",
+        "url": "https://exp76.ru/d-rjabukhino/"
+      },
+      {
+        "title": "д. Волково",
+        "url": "https://exp76.ru/d-volkovo/"
+      },
+      {
+        "title": "поселок Искра-Октября",
+        "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+      },
+      {
+        "title": "поселок Дубрава, г. Ярославль",
+        "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+      },
+      {
+        "title": "д. Кузино",
+        "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+      },
+      {
+        "title": "д. Горохово",
+        "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+      },
+      {
+        "title": "Тимошкино",
+        "url": "https://exp76.ru/fotogalereja/timoshkino/"
+      },
+      {
+        "title": "Рыбинск, Шанхай",
+        "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+      },
+      {
+        "title": "Каменники",
+        "url": "https://exp76.ru/fotogalereja/kamenniki/"
+      },
+      {
+        "title": "Аксеново",
+        "url": "https://exp76.ru/fotogalereja/aksenovo/"
+      }
+    ]
+  },
+  "otmostka": {
+    "cat_id": 88,
+    "cat_label": "Отмостка вокруг дома",
+    "template": "category-88.php",
+    "acf_field": "selected_works_posts",
+    "acf_context": "category_88",
+    "cases": [
+      {
+        "title": "Милюшино",
+        "url": "https://exp76.ru/fotogalereja/miljushino/"
+      }
+    ]
+  },
+  "plitka": {
+    "cat_id": 89,
+    "cat_label": "Укладка тротуарной плитки",
+    "template": "category-89.php",
+    "acf_field": "selected_works_posts",
+    "acf_context": "category_89",
+    "cases": [
+      {
+        "title": "Тимошкино",
+        "url": "https://exp76.ru/fotogalereja/timoshkino/"
+      },
+      {
+        "title": "д. Тимошкино",
+        "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+      },
+      {
+        "title": "Коттеджный поселок Коприно",
+        "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+      },
+      {
+        "title": "Рыбинск ул. Веретьевская",
+        "url": "https://exp76.ru/rybinsk-ul-veretevskaja/"
+      },
+      {
+        "title": "Пошехонье",
+        "url": "https://exp76.ru/poshekhone/"
+      },
+      {
+        "title": "пос. Каменники",
+        "url": "https://exp76.ru/pos-kamenniki/"
+      },
+      {
+        "title": "Рыбинск, Слип",
+        "url": "https://exp76.ru/fotogalereja/rybinsk-slip/"
+      },
+      {
+        "title": "Рыбинск, Мариевка",
+        "url": "https://exp76.ru/fotogalereja/rybinsk-marievka/"
+      },
+      {
+        "title": "Пошехонский район",
+        "url": "https://exp76.ru/fotogalereja/poshekhonskijj-rajjon/"
+      },
+      {
+        "title": "поселок Свингино",
+        "url": "https://exp76.ru/fotogalereja/poselok-svingino/"
+      },
+      {
+        "title": "д. Малые Высока",
+        "url": "https://exp76.ru/fotogalereja/d-malye-vysoka/"
+      },
+      {
+        "title": "с.Спасс",
+        "url": "https://exp76.ru/fotogalereja/s-spass/"
+      },
+      {
+        "title": "Рыбинский р-он. пос.Свингино",
+        "url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-pos-svingino/"
+      },
+      {
+        "title": "Рыбинский р-он. пос. Свингино",
+        "url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-pos-svigino/"
+      },
+      {
+        "title": "Рыбинский район. Судоверфь",
+        "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+      },
+      {
+        "title": "Каменники",
+        "url": "https://exp76.ru/fotogalereja/kamenniki/"
+      }
+    ]
+  },
+  "osushenie": {
+    "cat_id": 90,
+    "cat_label": "Осушение участка",
+    "template": "category-90.php",
+    "acf_field": "selected_works_posts",
+    "acf_context": "category_90",
+    "cases": []
+  },
+  "livnevka": {
+    "cat_id": 91,
+    "cat_label": "Ливневая канализация",
+    "template": "category-91.php",
+    "acf_field": "selected_works_posts",
+    "acf_context": "category_91",
+    "cases": [
+      {
+        "title": "Тимошкино",
+        "url": "https://exp76.ru/fotogalereja/timoshkino/"
+      },
+      {
+        "title": "Пошехонье",
+        "url": "https://exp76.ru/poshekhone/"
+      },
+      {
+        "title": "д. Рябухино",
+        "url": "https://exp76.ru/d-rjabukhino/"
+      },
+      {
+        "title": "д. Волково",
+        "url": "https://exp76.ru/d-volkovo/"
+      },
+      {
+        "title": "поселок Дубрава, г. Ярославль",
+        "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+      },
+      {
+        "title": "Милюшино",
+        "url": "https://exp76.ru/fotogalereja/miljushino/"
+      },
+      {
+        "title": "д. Тимошкино",
+        "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+      },
+      {
+        "title": "д. Малые Высока",
+        "url": "https://exp76.ru/fotogalereja/d-malye-vysoka/"
+      },
+      {
+        "title": "д. Кузино",
+        "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+      },
+      {
+        "title": "д. Горохово",
+        "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+      },
+      {
+        "title": "c. Глебово, Рыбинский р-он",
+        "url": "https://exp76.ru/fotogalereja/c-glebovo-rybinskijj-r-on/"
+      },
+      {
+        "title": "Рыбинский р-он. д. Дягтерицы",
+        "url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-d-djagtericy/"
+      },
+      {
+        "title": "Рыбинск, Шанхай",
+        "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+      },
+      {
+        "title": "Каменники",
+        "url": "https://exp76.ru/fotogalereja/kamenniki/"
+      },
+      {
+        "title": "Аксеново",
+        "url": "https://exp76.ru/fotogalereja/aksenovo/"
+      }
+    ]
+  },
+  "autopoliv": {
+    "cat_id": 92,
+    "cat_label": "Автополив на участке",
+    "template": "category-92.php",
+    "acf_field": "selected_works_posts",
+    "acf_context": "category_92",
+    "cases": [
+      {
+        "title": "Рыбинский район. Судоверфь",
+        "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+      },
+      {
+        "title": "Ярославское взморье",
+        "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/"
+      },
+      {
+        "title": "г. Рыбинск",
+        "url": "https://exp76.ru/fotogalereja/g-rybinsk/"
+      }
+    ]
+  }
+}

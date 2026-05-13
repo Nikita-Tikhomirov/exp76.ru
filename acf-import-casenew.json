@@ -1,0 +1,277 @@
+[
+  {
+    "key": "group_cs87_content",
+    "title": "Кейс (SEO) — Поля страницы",
+    "fields": [
+      {
+        "key": "field_cs87_hero_title",
+        "label": "Шапка: Заголовок (H1)",
+        "name": "cs87_hero_title",
+        "type": "text",
+        "instructions": "Основной заголовок страницы кейса. По умолчанию — название страницы.",
+        "required": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "Например: Дренаж участка в Ярославском взморье"
+      },
+      {
+        "key": "field_cs87_hero_subtitle",
+        "label": "Шапка: Подзаголовок",
+        "name": "cs87_hero_subtitle",
+        "type": "textarea",
+        "instructions": "Краткое описание проекта. Отображается под H1 и используется в meta description.",
+        "required": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "",
+        "rows": 3,
+        "new_lines": ""
+      },
+      {
+        "key": "field_cs87_hero_btn_primary_text",
+        "label": "Шапка: Основная кнопка — текст",
+        "name": "cs87_hero_btn_primary_text",
+        "type": "text",
+        "instructions": "Текст основной кнопки. По умолчанию: «Смотреть фото».",
+        "required": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "Смотреть фото"
+      },
+      {
+        "key": "field_cs87_hero_btn_primary_url",
+        "label": "Шапка: Основная кнопка — ссылка",
+        "name": "cs87_hero_btn_primary_url",
+        "type": "url",
+        "instructions": "Ссылка основной кнопки. По умолчанию: якорь #gallery.",
+        "required": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "#gallery"
+      },
+      {
+        "key": "field_cs87_hero_btn_secondary_text",
+        "label": "Шапка: Дополнительная кнопка — текст",
+        "name": "cs87_hero_btn_secondary_text",
+        "type": "text",
+        "instructions": "Текст дополнительной кнопки. По умолчанию: «Заказать звонок».",
+        "required": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "Получить консультацию"
+      },
+      {
+        "key": "field_cs87_hero_btn_secondary_url",
+        "label": "Шапка: Дополнительная кнопка — ссылка",
+        "name": "cs87_hero_btn_secondary_url",
+        "type": "url",
+        "instructions": "Ссылка дополнительной кнопки. По умолчанию открывает popup-форму.",
+        "required": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "#popup"
+      },
+      {
+        "key": "field_cs87_location",
+        "label": "Факты: Объект / Местоположение",
+        "name": "cs87_location",
+        "type": "text",
+        "instructions": "Где выполнялись работы. Например: «КП Ярославское взморье».",
+        "required": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "КП Ярославское взморье"
+      },
+      {
+        "key": "field_cs87_work_type",
+        "label": "Факты: Тип работ",
+        "name": "cs87_work_type",
+        "type": "text",
+        "instructions": "Категория выполненных работ. Например: «Дренаж участка», «Укладка плитки».",
+        "required": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "Дренаж участка"
+      },
+      {
+        "key": "field_cs87_area",
+        "label": "Факты: Площадь / Объём",
+        "name": "cs87_area",
+        "type": "text",
+        "instructions": "Размер объекта. Например: «40 соток», «150 м²».",
+        "required": 0,
+        "wrapper": { "width": "33", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "40 соток"
+      },
+      {
+        "key": "field_cs87_timeline",
+        "label": "Факты: Сроки",
+        "name": "cs87_timeline",
+        "type": "text",
+        "instructions": "Срок реализации. Например: «14 дней», «июнь 2024».",
+        "required": 0,
+        "wrapper": { "width": "33", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "14 дней"
+      },
+      {
+        "key": "field_cs87_budget",
+        "label": "Факты: Бюджет",
+        "name": "cs87_budget",
+        "type": "text",
+        "instructions": "Стоимость проекта. Например: «615 000 ₽», «от 3500 ₽/м».",
+        "required": 0,
+        "wrapper": { "width": "34", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "615 000 ₽"
+      },
+      {
+        "key": "field_cs87_challenge_title",
+        "label": "Задача: Заголовок",
+        "name": "cs87_challenge_title",
+        "type": "text",
+        "instructions": "Заголовок блока с описанием задачи клиента. По умолчанию: «Задача».",
+        "required": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "Задача клиента"
+      },
+      {
+        "key": "field_cs87_challenge_text",
+        "label": "Задача: Текст",
+        "name": "cs87_challenge_text",
+        "type": "textarea",
+        "instructions": "Описание проблемы или задачи, которую нужно было решить.",
+        "required": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "",
+        "rows": 4,
+        "new_lines": ""
+      },
+      {
+        "key": "field_cs87_solution_title",
+        "label": "Решение: Заголовок",
+        "name": "cs87_solution_title",
+        "type": "text",
+        "instructions": "Заголовок блока с описанием решения. По умолчанию: «Решение».",
+        "required": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "Как мы решили задачу"
+      },
+      {
+        "key": "field_cs87_solution_text",
+        "label": "Решение: Текст",
+        "name": "cs87_solution_text",
+        "type": "textarea",
+        "instructions": "Описание того, как была решена задача.",
+        "required": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "",
+        "rows": 4,
+        "new_lines": ""
+      },
+      {
+        "key": "field_cs87_related_cases",
+        "label": "Похожие проекты",
+        "name": "cs87_related_cases",
+        "type": "relationship",
+        "instructions": "Выберите 2–3 похожих кейса для показа в блоке «Похожие проекты». Оставьте пустым — блок не отобразится.",
+        "required": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "post_type": ["page"],
+        "taxonomy": "",
+        "filters": ["search"],
+        "elements": ["featured_image"],
+        "min": 0,
+        "max": 6,
+        "return_format": "id"
+      },
+      {
+        "key": "field_cs87_faq_title",
+        "label": "Вопросы и ответы: Заголовок",
+        "name": "cs87_faq_title",
+        "type": "text",
+        "instructions": "Заголовок блока вопросов. По умолчанию: «Частые вопросы».",
+        "required": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "Частые вопросы"
+      },
+      {
+        "key": "field_cs87_faq_items",
+        "label": "Вопросы и ответы: Список",
+        "name": "cs87_faq_items",
+        "type": "repeater",
+        "instructions": "Добавьте 2–5 вопросов с ответами. Если не заполнено — подставятся стандартные вопросы.",
+        "required": 0,
+        "wrapper": { "width": "", "class": "", "id": "" },
+        "layout": "block",
+        "button_label": "Добавить вопрос",
+        "sub_fields": [
+          {
+            "key": "field_cs87_faq_items_question",
+            "label": "Вопрос",
+            "name": "question",
+            "type": "text",
+            "required": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": ""
+          },
+          {
+            "key": "field_cs87_faq_items_answer",
+            "label": "Ответ",
+            "name": "answer",
+            "type": "textarea",
+            "required": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "rows": 3,
+            "new_lines": ""
+          }
+        ]
+      },
+      {
+        "key": "field_cs87_seo_title",
+        "label": "SEO: Заголовок (title)",
+        "name": "cs87_seo_title",
+        "type": "text",
+        "instructions": "Переопределяет <title>. Если пусто — используется Hero-заголовок.",
+        "required": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "placeholder": "Дренаж участка 40 соток — Кейс компании Эксперты"
+      },
+      {
+        "key": "field_cs87_seo_description",
+        "label": "SEO: Мета-описание (meta description)",
+        "name": "cs87_seo_description",
+        "type": "textarea",
+        "instructions": "Переопределяет meta description. Если пусто — используется Hero-подзаголовок. Рекомендуется 120–155 символов.",
+        "required": 0,
+        "wrapper": { "width": "50", "class": "", "id": "" },
+        "default_value": "",
+        "rows": 2,
+        "new_lines": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "casenew.php"
+        }
+      ]
+    ],
+    "menu_order": 2,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Поля для шаблона casenew.php (Кейс SEO). Префикс: cs87_. Слайдер (repeater 'slider') настраивается отдельно.",
+    "show_in_rest": 0
+  }
+]
