@@ -2620,5 +2620,1228 @@
         }
       ]
     }
-  }
+  },
+  "service_case_maps": [
+    {
+      "slug": "cena-drenazha-uchastka",
+      "post_title": "Цена дренажа участка: от чего зависит стоимость работ",
+      "category_id": 87,
+      "category_key": "drenazh",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+        }
+      ]
+    },
+    {
+      "slug": "vysokie-gruntovye-vody",
+      "post_title": "Дренаж участка с высоким уровнем грунтовых вод",
+      "category_id": 87,
+      "category_key": "drenazh",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+        }
+      ]
+    },
+    {
+      "slug": "glinistaya-pochva",
+      "post_title": "Дренаж участка на глинистой почве",
+      "category_id": 87,
+      "category_key": "drenazh",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+        }
+      ]
+    },
+    {
+      "slug": "vokrug-doma",
+      "post_title": "Дренаж вокруг дома для защиты фундамента",
+      "category_id": 87,
+      "category_key": "drenazh",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "glubinnyy",
+      "post_title": "Глубинный дренаж участка под ключ",
+      "category_id": 87,
+      "category_key": "drenazh",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+        }
+      ]
+    },
+    {
+      "slug": "poverhnostnyy",
+      "post_title": "Поверхностный дренаж участка под ключ",
+      "category_id": 87,
+      "category_key": "drenazh",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+        }
+      ]
+    },
+    {
+      "slug": "10-sotok",
+      "post_title": "Дренаж участка 10 соток: цена и схема работ",
+      "category_id": 87,
+      "category_key": "drenazh",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+        }
+      ]
+    },
+    {
+      "slug": "6-sotok",
+      "post_title": "Дренаж участка 6 соток: стоимость и состав работ",
+      "category_id": 87,
+      "category_key": "drenazh",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+        }
+      ]
+    },
+    {
+      "slug": "s-uklonom",
+      "post_title": "Дренаж участка с уклоном: схема и монтаж",
+      "category_id": 87,
+      "category_key": "drenazh",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-gorokhovo/"
+        }
+      ]
+    },
+    {
+      "slug": "cena",
+      "post_title": "Стоимость отмостки вокруг дома под ключ",
+      "category_id": 88,
+      "category_key": "otmostka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "betonnaya-otmostka",
+      "post_title": "Бетонная отмостка вокруг дома",
+      "category_id": 88,
+      "category_key": "otmostka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "myagkaya-otmostka",
+      "post_title": "Мягкая отмостка вокруг дома",
+      "category_id": 88,
+      "category_key": "otmostka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "uteplennaya-otmostka",
+      "post_title": "Утепленная отмостка вокруг дома",
+      "category_id": 88,
+      "category_key": "otmostka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "otmostka-iz-plitki",
+      "post_title": "Отмостка из тротуарной плитки вокруг дома",
+      "category_id": 88,
+      "category_key": "otmostka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+        }
+      ]
+    },
+    {
+      "slug": "podgotovka-osnovaniya",
+      "post_title": "Подготовка основания под отмостку вокруг дома",
+      "category_id": 88,
+      "category_key": "otmostka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "varianty",
+      "post_title": "Варианты отмостки вокруг дома",
+      "category_id": 88,
+      "category_key": "otmostka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "zalivka",
+      "post_title": "Заливка и монтаж отмостки вокруг дома",
+      "category_id": 88,
+      "category_key": "otmostka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "remont-staroy",
+      "post_title": "Ремонт старой отмостки вокруг дома",
+      "category_id": 88,
+      "category_key": "otmostka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "cena-ukladki-trotuarnoy-plitki",
+      "post_title": "Стоимость укладки тротуарной плитки под ключ",
+      "category_id": 89,
+      "category_key": "plitka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+        },
+        {
+          "url": "https://exp76.ru/rybinsk-ul-veretevskaja/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/pos-kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "podgotovka-osnovaniya-pod-plitku",
+      "post_title": "Подготовка основания под тротуарную плитку",
+      "category_id": 89,
+      "category_key": "plitka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+        },
+        {
+          "url": "https://exp76.ru/rybinsk-ul-veretevskaja/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/pos-kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "sadovye-dorozhki-iz-plitki",
+      "post_title": "Садовые дорожки из тротуарной плитки",
+      "category_id": 89,
+      "category_key": "plitka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+        },
+        {
+          "url": "https://exp76.ru/rybinsk-ul-veretevskaja/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/pos-kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "ploshchadka-pod-avto-iz-plitki",
+      "post_title": "Площадка под автомобиль из тротуарной плитки",
+      "category_id": 89,
+      "category_key": "plitka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+        },
+        {
+          "url": "https://exp76.ru/rybinsk-ul-veretevskaja/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/pos-kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "dvor-iz-trotuarnoy-plitki",
+      "post_title": "Двор из тротуарной плитки под ключ",
+      "category_id": 89,
+      "category_key": "plitka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+        },
+        {
+          "url": "https://exp76.ru/rybinsk-ul-veretevskaja/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/pos-kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "ukladka-bruschatki",
+      "post_title": "Укладка брусчатки под ключ",
+      "category_id": 89,
+      "category_key": "plitka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+        },
+        {
+          "url": "https://exp76.ru/rybinsk-ul-veretevskaja/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/pos-kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "otmostka-iz-trotuarnoy-plitki",
+      "post_title": "Отмостка из тротуарной плитки вокруг дома",
+      "category_id": 89,
+      "category_key": "plitka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+        },
+        {
+          "url": "https://exp76.ru/rybinsk-ul-veretevskaja/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/pos-kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "bordyury-i-vodootvod-dlya-plitki",
+      "post_title": "Бордюры и водоотвод для тротуарной плитки",
+      "category_id": 89,
+      "category_key": "plitka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+        },
+        {
+          "url": "https://exp76.ru/rybinsk-ul-veretevskaja/"
+        }
+      ]
+    },
+    {
+      "slug": "remont-trotuarnoy-plitki",
+      "post_title": "Ремонт тротуарной плитки",
+      "category_id": 89,
+      "category_key": "plitka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/"
+        },
+        {
+          "url": "https://exp76.ru/rybinsk-ul-veretevskaja/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/pos-kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "cena-osusheniya-uchastka",
+      "post_title": "Стоимость осушения участка под ключ",
+      "category_id": 90,
+      "category_key": "osushenie",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        }
+      ]
+    },
+    {
+      "slug": "drenazh-dlya-osusheniya-uchastka",
+      "post_title": "Дренаж для осушения участка",
+      "category_id": 90,
+      "category_key": "osushenie",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        }
+      ]
+    },
+    {
+      "slug": "osushenie-pri-vysokih-gruntovyh-vodah",
+      "post_title": "Осушение участка при высоких грунтовых водах",
+      "category_id": 90,
+      "category_key": "osushenie",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        }
+      ]
+    },
+    {
+      "slug": "osushenie-zabolochennogo-uchastka",
+      "post_title": "Осушение заболоченного участка",
+      "category_id": 90,
+      "category_key": "osushenie",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "osushenie-dachnogo-uchastka",
+      "post_title": "Осушение дачного участка",
+      "category_id": 90,
+      "category_key": "osushenie",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        }
+      ]
+    },
+    {
+      "slug": "osushenie-glinistogo-uchastka",
+      "post_title": "Осушение глинистого участка",
+      "category_id": 90,
+      "category_key": "osushenie",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        }
+      ]
+    },
+    {
+      "slug": "otvod-vody-s-uchastka",
+      "post_title": "Отвод воды с участка",
+      "category_id": 90,
+      "category_key": "osushenie",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        }
+      ]
+    },
+    {
+      "slug": "voda-posle-dozhdya-na-uchastke",
+      "post_title": "Вода на участке после дождя",
+      "category_id": 90,
+      "category_key": "osushenie",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        }
+      ]
+    },
+    {
+      "slug": "proektirovanie-sistemy-osusheniya",
+      "post_title": "Проектирование системы осушения участка",
+      "category_id": 90,
+      "category_key": "osushenie",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        }
+      ]
+    },
+    {
+      "slug": "cena-livnevoy-kanalizatsii",
+      "post_title": "Стоимость ливневой канализации под ключ",
+      "category_id": 91,
+      "category_key": "livnevka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "montazh-livnevoy-kanalizatsii",
+      "post_title": "Монтаж ливневой канализации",
+      "category_id": 91,
+      "category_key": "livnevka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "livnevka-vokrug-doma",
+      "post_title": "Ливневка вокруг дома",
+      "category_id": 91,
+      "category_key": "livnevka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-kuzino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        }
+      ]
+    },
+    {
+      "slug": "livnevka-na-uchastke",
+      "post_title": "Ливневая канализация на участке",
+      "category_id": 91,
+      "category_key": "livnevka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "dozhdepriemniki-i-lotki",
+      "post_title": "Дождеприемники и лотки для ливневой канализации",
+      "category_id": 91,
+      "category_key": "livnevka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "lineynyy-vodootvod",
+      "post_title": "Линейный водоотвод",
+      "category_id": 91,
+      "category_key": "livnevka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "drenazh-i-livnevaya-kanalizatsiya",
+      "post_title": "Дренаж и ливневая канализация",
+      "category_id": 91,
+      "category_key": "livnevka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/kamenniki/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        }
+      ]
+    },
+    {
+      "slug": "otvod-vody-s-kryshi",
+      "post_title": "Отвод воды с крыши в ливневую канализацию",
+      "category_id": 91,
+      "category_key": "livnevka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/aksenovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/d-malye-vysoka/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        }
+      ]
+    },
+    {
+      "slug": "remont-livnevoy-kanalizatsii",
+      "post_title": "Ремонт ливневой канализации",
+      "category_id": 91,
+      "category_key": "livnevka",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/timoshkino/"
+        },
+        {
+          "url": "https://exp76.ru/poshekhone/"
+        },
+        {
+          "url": "https://exp76.ru/d-rjabukhino/"
+        },
+        {
+          "url": "https://exp76.ru/d-volkovo/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/miljushino/"
+        }
+      ]
+    },
+    {
+      "slug": "cena-avtopoliva-na-uchastke",
+      "post_title": "Стоимость автополива на участке",
+      "category_id": 92,
+      "category_key": "autopoliv",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/g-rybinsk/"
+        }
+      ]
+    },
+    {
+      "slug": "montazh-avtopoliva",
+      "post_title": "Монтаж автополива под ключ",
+      "category_id": 92,
+      "category_key": "autopoliv",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/g-rybinsk/"
+        }
+      ]
+    },
+    {
+      "slug": "avtopoliv-gazona",
+      "post_title": "Автополив газона",
+      "category_id": 92,
+      "category_key": "autopoliv",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/g-rybinsk/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+        }
+      ]
+    },
+    {
+      "slug": "kapelnyy-poliv",
+      "post_title": "Капельный полив на участке",
+      "category_id": 92,
+      "category_key": "autopoliv",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/g-rybinsk/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+        }
+      ]
+    },
+    {
+      "slug": "avtopoliv-sada",
+      "post_title": "Автополив сада и деревьев",
+      "category_id": 92,
+      "category_key": "autopoliv",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/g-rybinsk/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+        }
+      ]
+    },
+    {
+      "slug": "avtopoliv-teplitsy",
+      "post_title": "Автополив теплицы",
+      "category_id": 92,
+      "category_key": "autopoliv",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/g-rybinsk/"
+        }
+      ]
+    },
+    {
+      "slug": "proektirovanie-avtopoliva",
+      "post_title": "Проектирование системы автополива",
+      "category_id": 92,
+      "category_key": "autopoliv",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/g-rybinsk/"
+        }
+      ]
+    },
+    {
+      "slug": "nasos-i-emkost-dlya-poliva",
+      "post_title": "Насос и емкость для автополива",
+      "category_id": 92,
+      "category_key": "autopoliv",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/g-rybinsk/"
+        }
+      ]
+    },
+    {
+      "slug": "obsluzhivanie-avtopoliva",
+      "post_title": "Обслуживание и запуск автополива",
+      "category_id": 92,
+      "category_key": "autopoliv",
+      "acf_field": "selected_real_projects",
+      "cases": [
+        {
+          "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/"
+        },
+        {
+          "url": "https://exp76.ru/fotogalereja/g-rybinsk/"
+        }
+      ]
+    }
+  ]
 }

@@ -19,6 +19,15 @@ THEME_OUT_PATH = (
     / "cases-seo-import.json"
 )
 
+SERVICE_IMPORTS = [
+    ROOT / "seo-content" / "drenazh-uchastka" / "import" / "drenazh-import.json",
+    ROOT / "seo-content" / "otmostka-vokrug-doma" / "import" / "otmostka-import.json",
+    ROOT / "seo-content" / "ukladka-trotuarnoy-plitki" / "import" / "plitka-import.json",
+    ROOT / "seo-content" / "osushenie-uchastka" / "import" / "osushenie-import.json",
+    ROOT / "seo-content" / "livnevaya-kanalizatsiya" / "import" / "livnevka-import.json",
+    ROOT / "seo-content" / "avtopoliv-na-uchastke" / "import" / "autopoliv-import.json",
+]
+
 
 CATEGORIES = {
     "drenazh": {
@@ -128,6 +137,24 @@ OSUSHENIE_CASE_URLS = {
     "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/",
     "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/",
     "https://exp76.ru/fotogalereja/aksenovo/",
+}
+
+
+SERVICE_CASE_RULES = {
+    "vokrug-doma": ["d-rjabukhino", "d-volkovo", "poselok-dubrava", "d-kuzino", "d-gorokhovo", "kamenniki"],
+    "livnevka-vokrug-doma": ["d-rjabukhino", "d-volkovo", "poselok-dubrava", "miljushino", "d-kuzino"],
+    "drenazh-i-livnevaya-kanalizatsiya": ["timoshkino", "d-timoshkino", "poselok-dubrava", "kamenniki", "aksenovo"],
+    "otvod-vody-s-kryshi": ["miljushino", "d-timoshkino", "aksenovo", "d-malye-vysoka"],
+    "otmostka-iz-plitki": ["miljushino", "timoshkino", "d-timoshkino", "kottedzhnyjj-poselok-koprino"],
+    "bordyury-i-vodootvod-dlya-plitki": ["timoshkino", "d-timoshkino", "poshekhone", "kamenniki"],
+    "drenazh-dlya-osusheniya-uchastka": ["rybinsk-shankhajj", "kamenniki", "poselok-iskra", "poselok-dubrava"],
+    "osushenie-pri-vysokih-gruntovyh-vodah": ["rybinsk-shankhajj", "kamenniki", "poselok-iskra", "poselok-dubrava"],
+    "osushenie-zabolochennogo-uchastka": ["rybinsk-shankhajj", "poselok-iskra", "aksenovo"],
+    "otvod-vody-s-uchastka": ["aksenovo", "rybinsk-shankhajj", "kamenniki", "poselok-dubrava"],
+    "voda-posle-dozhdya-na-uchastke": ["aksenovo", "poselok-iskra", "rybinsk-shankhajj"],
+    "avtopoliv-gazona": ["g-rybinsk", "jaroslavskoe-vzmore", "rybinskijj-rajjon-sudoverf"],
+    "kapelnyy-poliv": ["jaroslavskoe-vzmore", "g-rybinsk"],
+    "avtopoliv-sada": ["jaroslavskoe-vzmore", "g-rybinsk"],
 }
 
 
@@ -244,6 +271,72 @@ def build_case_payload(item: dict, category: str, all_cases_by_url: dict) -> dic
     }
 
 
+def match_urls_by_fragments(urls: list[str], fragments: list[str], fallback: list[str], limit: int = 6) -> list[str]:
+    selected = []
+    for fragment in fragments:
+        for url in urls:
+            if fragment in url and url not in selected:
+                selected.append(url)
+                break
+
+    for url in fallback:
+        if len(selected) >= limit:
+            break
+        if url not in selected:
+            selected.append(url)
+
+    return selected[:limit]
+
+
+def build_service_case_maps(selected_map: dict) -> list[dict]:
+    service_maps = []
+    category_by_id = {
+        meta["cat_id"]: key
+        for key, meta in CATEGORIES.items()
+        if key in selected_map
+    }
+
+    case_urls_by_category = {
+        key: [norm_url(case["url"]) for case in value.get("cases", [])]
+        for key, value in selected_map.items()
+    }
+
+    for import_path in SERVICE_IMPORTS:
+        if not import_path.exists():
+            continue
+
+        payload = read_json(import_path)
+        category_id = payload.get("category", {}).get("term_id")
+        category_key = category_by_id.get(category_id)
+        if not category_key:
+            continue
+
+        fallback_urls = case_urls_by_category.get(category_key, [])
+        all_case_urls = sorted(set(sum(case_urls_by_category.values(), [])))
+        for post in payload.get("posts", []):
+            slug = post.get("slug", "")
+            if not slug:
+                continue
+
+            fragments = SERVICE_CASE_RULES.get(slug, [])
+            case_urls = match_urls_by_fragments(all_case_urls, fragments, fallback_urls)
+            if not case_urls:
+                continue
+
+            service_maps.append(
+                {
+                    "slug": slug,
+                    "post_title": post.get("post_title", slug),
+                    "category_id": category_id,
+                    "category_key": category_key,
+                    "acf_field": "selected_real_projects",
+                    "cases": [{"url": url} for url in case_urls],
+                }
+            )
+
+    return service_maps
+
+
 def main() -> None:
     cases_by_category = read_json(CASES_PATH)
     selected_map = read_json(MAP_PATH)
@@ -279,6 +372,7 @@ def main() -> None:
         "source": "Кейсы семантика.docx + cases_by_category.json",
         "cases": payloads,
         "category_case_maps": selected_map,
+        "service_case_maps": build_service_case_maps(selected_map),
     }
 
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)

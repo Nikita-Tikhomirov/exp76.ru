@@ -532,6 +532,34 @@ $ns87_estimate_total = function_exists('get_field') ? get_field('ns87_estimate_t
 $ns87_faq_title = function_exists('get_field') ? get_field('ns87_faq_title', $ns87_post_context) : '';
 $ns87_faq_items = function_exists('get_field') ? get_field('ns87_faq_items', $ns87_post_context) : array();
 
+if (!function_exists('land76_newservice_selected_real_projects')) {
+    function land76_newservice_selected_real_projects($post_id)
+    {
+        $selected_projects = function_exists('get_field') ? get_field('selected_real_projects', $post_id) : array();
+        if (!empty($selected_projects) && is_array($selected_projects)) {
+            return $selected_projects;
+        }
+
+        $terms = get_the_category($post_id);
+        if (empty($terms) || !function_exists('get_field')) {
+            return array();
+        }
+
+        foreach ($terms as $term) {
+            if (in_array((int) $term->term_id, array(72, 74), true)) {
+                continue;
+            }
+
+            $category_projects = get_field('selected_works_posts', 'category_' . (int) $term->term_id);
+            if (!empty($category_projects) && is_array($category_projects)) {
+                return $category_projects;
+            }
+        }
+
+        return array();
+    }
+}
+
 if (empty($ns87_problem_items) || !is_array($ns87_problem_items)) {
     $ns87_problem_items = array(
         array(
@@ -684,33 +712,42 @@ Poiret One
 , cursive; font-size: 35px; margin-bottom: 40px;">Примеры наших работ</h2>
   <div class="services__cards columns3">
     <?php
-    // Get selected posts from ACF field for Real Projects
-    $selected_projects = get_field('selected_real_projects');
+    $selected_projects = land76_newservice_selected_real_projects(get_the_ID());
 
     if ($selected_projects && !empty($selected_projects)) {
       foreach ($selected_projects as $post_id) {
+        $post_id = is_object($post_id) && !empty($post_id->ID) ? (int) $post_id->ID : (int) $post_id;
         $post = get_post($post_id);
+        if (!$post) {
+          continue;
+        }
         setup_postdata($post);
+        $project_image = function_exists('land76_get_card_image_url')
+          ? land76_get_card_image_url($post_id, 'medium')
+          : get_the_post_thumbnail_url($post_id, 'medium');
+        if (!$project_image) {
+          $project_image = 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp';
+        }
+        $project_title = function_exists('get_field') ? get_field('cs87_hero_title', $post_id) : '';
+        if (!$project_title) {
+          $project_title = get_the_title($post_id);
+        }
+        $project_excerpt = function_exists('get_field') ? get_field('cs87_hero_subtitle', $post_id) : '';
+        if (!$project_excerpt) {
+          $project_excerpt = get_the_excerpt($post_id);
+        }
+        if (!$project_excerpt) {
+          $project_excerpt = wp_trim_words(get_post_field('post_content', $post_id), 18);
+        }
         ?>
         <div class="service" data-aos="fade-up" data-aos-duration="400">
           <div class="service__img-wrap">
-            <?php if (has_post_thumbnail($post_id)): ?>
-              <img class="service__img" src="<?php echo get_the_post_thumbnail_url($post_id); ?>"
-                alt="<?php echo get_the_title($post_id); ?>">
-            <?php else: ?>
-              <img class="service__img" src="/wp-content/themes/theme/assets/img/cases/default-case.jpg"
-                alt="<?php echo get_the_title($post_id); ?>">
-            <?php endif; ?>
+            <img class="service__img" src="<?php echo esc_url($project_image); ?>"
+              alt="<?php echo esc_attr($project_title); ?>">
           </div>
           <div class="service__text-wrap">
-            <h3 class="service__title"><?php echo get_the_title($post_id); ?></h3>
-            <?php
-            $excerpt = get_the_excerpt($post_id);
-            if (empty($excerpt)) {
-              $excerpt = wp_trim_words(get_post_field('post_content', $post_id), 15);
-            }
-            echo '<p>' . $excerpt . '</p>';
-            ?>
+            <h3 class="service__title"><?php echo esc_html($project_title); ?></h3>
+            <p><?php echo esc_html(wp_trim_words($project_excerpt, 22)); ?></p>
             <p>
               <strong><?php echo get_field('price', $post_id) ? 'от ' . esc_html(get_field('price', $post_id)) : 'Цена по запросу'; ?></strong>
             </p>

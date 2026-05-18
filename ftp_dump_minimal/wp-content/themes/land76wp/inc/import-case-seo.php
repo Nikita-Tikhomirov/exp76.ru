@@ -224,6 +224,42 @@ function land76wp_case_seo_import_update_category_case_maps(array $maps, array &
     }
 }
 
+function land76wp_case_seo_import_update_service_case_maps(array $maps, array &$stats)
+{
+    if (!function_exists('update_field')) {
+        return;
+    }
+
+    foreach ($maps as $map) {
+        if (empty($map['slug']) || empty($map['acf_field']) || empty($map['cases']) || !is_array($map['cases'])) {
+            continue;
+        }
+
+        $service_post = get_page_by_path(sanitize_title($map['slug']), OBJECT, 'post');
+        if (!$service_post instanceof WP_Post) {
+            $stats['unresolved_service_posts'][] = $map['slug'];
+            continue;
+        }
+
+        $case_ids = array();
+        foreach ($map['cases'] as $case) {
+            if (empty($case['url'])) {
+                continue;
+            }
+            $case_id = land76wp_case_seo_import_resolve_post_id($case['url']);
+            if ($case_id) {
+                $case_ids[] = $case_id;
+            } else {
+                $stats['unresolved_service_cases'][] = $map['slug'] . ': ' . $case['url'];
+            }
+        }
+
+        $case_ids = array_values(array_unique($case_ids));
+        update_field($map['acf_field'], $case_ids, $service_post->ID);
+        $stats['service_maps_updated'][$map['slug']] = count($case_ids);
+    }
+}
+
 function land76wp_run_case_seo_import($json_path = '', $acf_json_path = '')
 {
     $stats = array(
@@ -233,8 +269,11 @@ function land76wp_run_case_seo_import($json_path = '', $acf_json_path = '')
         'cases_updated' => 0,
         'templates_updated' => 0,
         'category_maps_updated' => array(),
+        'service_maps_updated' => array(),
         'unresolved_cases' => array(),
         'unresolved_category_cases' => array(),
+        'unresolved_service_posts' => array(),
+        'unresolved_service_cases' => array(),
         'errors' => array(),
     );
 
@@ -274,6 +313,10 @@ function land76wp_run_case_seo_import($json_path = '', $acf_json_path = '')
 
     if (!empty($payload['category_case_maps']) && is_array($payload['category_case_maps'])) {
         land76wp_case_seo_import_update_category_case_maps($payload['category_case_maps'], $stats);
+    }
+
+    if (!empty($payload['service_case_maps']) && is_array($payload['service_case_maps'])) {
+        land76wp_case_seo_import_update_service_case_maps($payload['service_case_maps'], $stats);
     }
 
     return $stats;
