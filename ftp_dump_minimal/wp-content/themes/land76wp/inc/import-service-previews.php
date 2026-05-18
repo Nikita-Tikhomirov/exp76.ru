@@ -50,7 +50,7 @@ function land76wp_service_previews_register_attachment(array $item, array &$stat
         return 0;
     }
 
-    $subdir = !empty($item['upload_subdir']) ? trim($item['upload_subdir'], '/') : 'seo-service-previews';
+    $subdir = !empty($item['upload_subdir']) ? trim($item['upload_subdir'], '/') : 'seo-service-photos';
     $filename = isset($item['filename']) ? sanitize_file_name($item['filename']) : '';
     if ($filename === '') {
         $stats['errors'][] = 'Skipped preview with empty filename.';
@@ -152,6 +152,7 @@ function land76wp_run_service_previews_import($json_path = '')
 
         set_post_thumbnail($post->ID, $attachment_id);
         update_post_meta($post->ID, '_land76_service_preview_alt', !empty($item['alt']) ? wp_strip_all_tags($item['alt']) : '');
+        delete_post_meta($post->ID, '_land76_service_preview_source_case');
         $stats['posts_updated']++;
     }
 
