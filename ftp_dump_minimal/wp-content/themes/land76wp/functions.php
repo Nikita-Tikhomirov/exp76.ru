@@ -67,6 +67,11 @@ if (file_exists($land76_case_seo_import_file)) {
   require_once $land76_case_seo_import_file;
 }
 
+$land76_service_previews_import_file = __DIR__ . '/inc/import-service-previews.php';
+if (file_exists($land76_service_previews_import_file)) {
+  require_once $land76_service_previews_import_file;
+}
+
 function land76_region_page_slugs() {
   return array('yaroslavl', 'rybinsk', 'uglich', 'tutaev', 'pereslavl');
 }
@@ -184,6 +189,30 @@ function land76_get_card_image_url($post_id = null, $size = 'medium', $fallback 
   }
 
   return $fallback ? 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp' : '';
+}
+
+function land76_get_card_image_alt($post_id = null, $fallback = '') {
+  $post_id = $post_id ? (int) $post_id : get_the_ID();
+  $fallback = $fallback ? $fallback : ($post_id ? get_the_title($post_id) : '');
+
+  if (!$post_id) {
+    return $fallback;
+  }
+
+  $custom_alt = get_post_meta($post_id, '_land76_service_preview_alt', true);
+  if ($custom_alt) {
+    return $custom_alt;
+  }
+
+  $thumbnail_id = get_post_thumbnail_id($post_id);
+  if ($thumbnail_id) {
+    $attachment_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+    if ($attachment_alt) {
+      return $attachment_alt;
+    }
+  }
+
+  return $fallback;
 }
 
 add_filter('aioseo_title', function ($title) {

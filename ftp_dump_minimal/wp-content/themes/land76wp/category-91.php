@@ -671,7 +671,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
         ?>
         <div class="service" data-aos="fade-up" data-aos-duration="400">
           <div class="service__img-wrap">
-            <img class="service__img" src="<?php echo esc_url($service_card_image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+            <img class="service__img" src="<?php echo esc_url($service_card_image); ?>" alt="<?php echo esc_attr(function_exists('land76_get_card_image_alt') ? land76_get_card_image_alt(get_the_ID()) : get_the_title()); ?>">
           </div>
           <div class="service__text-wrap">
             <h3 class="service__title"><?php the_title(); ?></h3>
@@ -766,7 +766,7 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
           ?>
           <?php if ($blog_card_image) : ?>
             <div class="service__img-wrap">
-              <img class="service__img" src="<?php echo esc_url($blog_card_image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>">
+              <img class="service__img" src="<?php echo esc_url($blog_card_image); ?>" alt="<?php echo esc_attr(function_exists('land76_get_card_image_alt') ? land76_get_card_image_alt(get_the_ID()) : get_the_title()); ?>">
             </div>
           <?php endif; ?>
           <div class="service__text-wrap">
