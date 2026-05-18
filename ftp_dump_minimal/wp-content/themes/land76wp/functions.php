@@ -62,6 +62,11 @@ if (file_exists($land76_autopoliv_blog_import_file)) {
   require_once $land76_autopoliv_blog_import_file;
 }
 
+$land76_case_seo_import_file = __DIR__ . '/inc/import-case-seo.php';
+if (file_exists($land76_case_seo_import_file)) {
+  require_once $land76_case_seo_import_file;
+}
+
 function land76_region_page_slugs() {
   return array('yaroslavl', 'rybinsk', 'uglich', 'tutaev', 'pereslavl');
 }
@@ -196,6 +201,28 @@ add_filter('aioseo_description', function ($description) {
   }
 
   $seo_description = get_field('blogseo_seo_description', get_the_ID());
+  return $seo_description ? $seo_description : $description;
+}, 20, 1);
+
+function land76_is_case_seo_template() {
+  return is_page_template('casenew.php') && function_exists('get_field');
+}
+
+add_filter('aioseo_title', function ($title) {
+  if (!land76_is_case_seo_template()) {
+    return $title;
+  }
+
+  $seo_title = get_field('cs87_seo_title', get_the_ID());
+  return $seo_title ? $seo_title : $title;
+}, 20, 1);
+
+add_filter('aioseo_description', function ($description) {
+  if (!land76_is_case_seo_template()) {
+    return $description;
+  }
+
+  $seo_description = get_field('cs87_seo_description', get_the_ID());
   return $seo_description ? $seo_description : $description;
 }, 20, 1);
 

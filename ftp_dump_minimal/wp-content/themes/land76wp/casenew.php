@@ -22,6 +22,17 @@ $cs87_timeline   = function_exists('get_field') ? get_field('cs87_timeline', $cs
 $cs87_budget     = function_exists('get_field') ? get_field('cs87_budget', $cs87_post_id) : '';
 $cs87_work_type  = function_exists('get_field') ? get_field('cs87_work_type', $cs87_post_id) : '';
 
+$cs87_intro_title      = function_exists('get_field') ? get_field('cs87_intro_title', $cs87_post_id) : '';
+$cs87_intro_text       = function_exists('get_field') ? get_field('cs87_intro_text', $cs87_post_id) : '';
+$cs87_technology_title = function_exists('get_field') ? get_field('cs87_technology_title', $cs87_post_id) : '';
+$cs87_technology_text  = function_exists('get_field') ? get_field('cs87_technology_text', $cs87_post_id) : '';
+$cs87_result_title     = function_exists('get_field') ? get_field('cs87_result_title', $cs87_post_id) : '';
+$cs87_result_text      = function_exists('get_field') ? get_field('cs87_result_text', $cs87_post_id) : '';
+$cs87_scope_title      = function_exists('get_field') ? get_field('cs87_scope_title', $cs87_post_id) : '';
+$cs87_scope_items      = function_exists('get_field') ? get_field('cs87_scope_items', $cs87_post_id) : array();
+$cs87_price_note       = function_exists('get_field') ? get_field('cs87_price_note', $cs87_post_id) : '';
+$cs87_service_url      = function_exists('get_field') ? get_field('cs87_service_url', $cs87_post_id) : '';
+
 $cs87_challenge_title = function_exists('get_field') ? get_field('cs87_challenge_title', $cs87_post_id) : '';
 $cs87_challenge_text  = function_exists('get_field') ? get_field('cs87_challenge_text', $cs87_post_id) : '';
 $cs87_solution_title  = function_exists('get_field') ? get_field('cs87_solution_title', $cs87_post_id) : '';
@@ -68,6 +79,30 @@ $cs87_thumbnail_url = get_the_post_thumbnail_url($cs87_post_id, 'large');
 if (!$cs87_thumbnail_url) {
     $cs87_thumbnail_url = 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp';
 }
+
+$cs87_schema = array(
+    '@context'      => 'https://schema.org',
+    '@type'         => 'CreativeWork',
+    'name'          => $cs87_hero_title,
+    'description'   => wp_strip_all_tags($cs87_hero_subtitle),
+    'image'         => $cs87_thumbnail_url,
+    'url'           => get_permalink($cs87_post_id),
+    'datePublished' => get_the_date('c', $cs87_post_id),
+    'dateModified'  => get_the_modified_date('c', $cs87_post_id),
+    'author' => array(
+        '@type' => 'Organization',
+        'name'  => 'Компания «Эксперты»',
+        'url'   => home_url(),
+    ),
+    'about' => $cs87_work_type ?: 'Ландшафтные работы',
+);
+
+if ($cs87_location) {
+    $cs87_schema['contentLocation'] = array(
+        '@type' => 'Place',
+        'name'  => $cs87_location,
+    );
+}
 ?><!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -75,8 +110,6 @@ if (!$cs87_thumbnail_url) {
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="yandex-verification" content="697af42ad3d96f49" />
-  <title><?php echo esc_html($cs87_page_title); ?> — Компания «Эксперты»</title>
-  <meta name="description" content="<?php echo esc_attr($cs87_page_description); ?>" />
 
   <meta property="og:type" content="article" />
   <meta property="og:url" content="<?php echo esc_url(get_permalink()); ?>" />
@@ -164,6 +197,48 @@ if (!$cs87_thumbnail_url) {
     .cs-block--challenge h3 { color: #ff5e00; }
     .cs-block--solution h3  { color: #0a9215; }
     .cs-block p { line-height: 1.8; color: #333; font-size: 16px; }
+    .case-seo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 28px;
+    }
+    .case-seo-card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+      padding: 28px;
+      border-top: 3px solid #0a9215;
+    }
+    .case-seo-card h3 {
+      color: #0a9215;
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+    .case-seo-card p, .case-seo-card li {
+      color: #333;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .case-seo-list {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .case-price-note {
+      margin-top: 28px;
+      padding: 24px 28px;
+      border-radius: 8px;
+      background: #f0faf1;
+      border-left: 4px solid #0a9215;
+      line-height: 1.75;
+    }
+    .case-service-link {
+      display: inline-block;
+      margin-top: 18px;
+      color: #0a9215;
+      font-weight: 700;
+      text-decoration: underline;
+    }
 
     /* ── Gallery ──────────────────────────── */
     .slider2Top { padding: 0 !important; margin: 0 !important; }
@@ -253,6 +328,7 @@ if (!$cs87_thumbnail_url) {
       .swiper-button-prev  { left: 0 !important; }
       .cs-block { padding: 25px; }
       .case-facts { grid-template-columns: 1fr 1fr; }
+      .case-seo-grid { grid-template-columns: 1fr; }
       .cta-form { flex-direction: column; align-items: center; }
       .cta-form input { width: 100%; min-width: auto; }
       .btn--primary-custom { width: 100%; }
@@ -432,6 +508,7 @@ if (!$cs87_thumbnail_url) {
           <div class="swiper-button-prev"></div>
         </div>
 
+        <?php if (function_exists('reset_rows')) reset_rows(); ?>
         <div class="slider2-thumbs" style="margin-top: 10px;" data-aos="fade-up">
           <div class="swiper-wrapper">
             <?php while (have_rows('slider')) : the_row();
@@ -458,6 +535,61 @@ if (!$cs87_thumbnail_url) {
           <?php the_content(); ?>
         </div>
       </section>
+
+      <?php if ($cs87_intro_title || $cs87_intro_text || $cs87_technology_text || $cs87_result_text || $cs87_scope_items || $cs87_price_note) : ?>
+      <section class="services wrapper">
+        <?php if ($cs87_intro_title || $cs87_intro_text) : ?>
+          <h2 class="section-title" data-aos="fade-up"><?php echo esc_html($cs87_intro_title ?: 'Описание проекта'); ?></h2>
+          <?php if ($cs87_intro_text) : ?>
+            <div class="seo-text" style="line-height:1.8; margin-bottom:34px;" data-aos="fade-up">
+              <p><?php echo esc_html($cs87_intro_text); ?></p>
+            </div>
+          <?php endif; ?>
+        <?php endif; ?>
+
+        <div class="case-seo-grid">
+          <?php if ($cs87_technology_title || $cs87_technology_text) : ?>
+          <div class="case-seo-card" data-aos="fade-up">
+            <h3><?php echo esc_html($cs87_technology_title ?: 'Технология работ'); ?></h3>
+            <p><?php echo esc_html($cs87_technology_text); ?></p>
+          </div>
+          <?php endif; ?>
+
+          <?php if ($cs87_result_title || $cs87_result_text) : ?>
+          <div class="case-seo-card" data-aos="fade-up">
+            <h3><?php echo esc_html($cs87_result_title ?: 'Результат'); ?></h3>
+            <p><?php echo esc_html($cs87_result_text); ?></p>
+          </div>
+          <?php endif; ?>
+
+          <?php if ($cs87_scope_title || !empty($cs87_scope_items)) : ?>
+          <div class="case-seo-card" data-aos="fade-up">
+            <h3><?php echo esc_html($cs87_scope_title ?: 'Что учесть при заказе'); ?></h3>
+            <?php if (!empty($cs87_scope_items) && is_array($cs87_scope_items)) : ?>
+            <ul class="case-seo-list">
+              <?php foreach ($cs87_scope_items as $scope_item) :
+                $scope_text = is_array($scope_item) ? ($scope_item['item'] ?? '') : $scope_item;
+                if (!$scope_text) continue;
+              ?>
+                <li><?php echo esc_html($scope_text); ?></li>
+              <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+          </div>
+          <?php endif; ?>
+
+          <?php if ($cs87_price_note) : ?>
+          <div class="case-seo-card" data-aos="fade-up">
+            <h3>Цена и расчет похожего проекта</h3>
+            <p><?php echo esc_html($cs87_price_note); ?></p>
+            <?php if ($cs87_service_url) : ?>
+              <a class="case-service-link" href="<?php echo esc_url($cs87_service_url); ?>">Перейти к услуге</a>
+            <?php endif; ?>
+          </div>
+          <?php endif; ?>
+        </div>
+      </section>
+      <?php endif; ?>
 
       <!-- ═══ 5. CHALLENGE / SOLUTION ═════════════════ -->
       <?php if ($cs87_challenge_title || $cs87_challenge_text || $cs87_solution_title || $cs87_solution_text) : ?>
@@ -587,39 +719,7 @@ if (!$cs87_thumbnail_url) {
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/42305934" style="position:absolute;left:-9999px" alt="" /></div></noscript>
 
+  <script type="application/ld+json"><?php echo wp_json_encode($cs87_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?></script>
   <?php wp_footer(); ?>
 </body>
 </html>
-
-<?php
-// ── Schema.org CreativeWork (для SEO) ─────────────────────
-add_action('wp_footer', function () use (
-    $cs87_hero_title, $cs87_hero_subtitle, $cs87_thumbnail_url,
-    $cs87_post_id, $cs87_location, $cs87_work_type
-) {
-    $schema = array(
-        '@context'      => 'https://schema.org',
-        '@type'         => 'CreativeWork',
-        'name'          => $cs87_hero_title,
-        'description'   => wp_strip_all_tags($cs87_hero_subtitle),
-        'image'         => $cs87_thumbnail_url,
-        'url'           => get_permalink($cs87_post_id),
-        'datePublished' => get_the_date('c', $cs87_post_id),
-        'dateModified'  => get_the_modified_date('c', $cs87_post_id),
-        'author' => array(
-            '@type' => 'Organization',
-            'name'  => 'Компания «Эксперты»',
-            'url'   => home_url(),
-        ),
-        'about' => $cs87_work_type ?: 'Ландшафтные работы',
-    );
-
-    if ($cs87_location) {
-        $schema['contentLocation'] = array(
-            '@type' => 'Place',
-            'name'  => $cs87_location,
-        );
-    }
-
-    echo "\n" . '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . '</script>' . "\n";
-}, 999);

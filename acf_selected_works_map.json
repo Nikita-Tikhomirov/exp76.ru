@@ -140,7 +140,28 @@
     "template": "category-90.php",
     "acf_field": "selected_works_posts",
     "acf_context": "category_90",
-    "cases": []
+    "cases": [
+      {
+        "title": "поселок Искра-Октября",
+        "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/"
+      },
+      {
+        "title": "поселок Дубрава, г. Ярославль",
+        "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/"
+      },
+      {
+        "title": "Рыбинск, Шанхай",
+        "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+      },
+      {
+        "title": "Каменники",
+        "url": "https://exp76.ru/fotogalereja/kamenniki/"
+      },
+      {
+        "title": "Аксеново",
+        "url": "https://exp76.ru/fotogalereja/aksenovo/"
+      }
+    ]
   },
   "livnevka": {
     "cat_id": 91,
