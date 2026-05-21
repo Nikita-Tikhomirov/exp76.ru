@@ -5,6 +5,181 @@ Template Name: Главная страница
 ?>
 <?php get_header(); ?>
 
+<?php
+if (!function_exists('land76_home_default_category_sections')) {
+  function land76_home_default_category_sections() {
+    return array(
+      87 => array(
+        'title' => 'Дренаж участка под ключ',
+        'button' => 'Все услуги по дренажу',
+        'slugs' => array('cena-drenazha-uchastka', 'vysokie-gruntovye-vody', 'glinistaya-pochva', 'vokrug-doma', 'glubinnyy', 'poverhnostnyy', '10-sotok', '6-sotok', 's-uklonom'),
+        'text' => '<p>Делаем дренаж участка в Ярославле и Ярославской области для домов, дач и участков со сложным грунтом: высокий уровень грунтовых вод, глинистая почва, вода у фундамента, лужи после дождя. Подбираем схему под рельеф, строения и будущие дорожки, а не ставим одинаковое решение для всех.</p><p>На главной собраны основные услуги: глубинный и поверхностный дренаж, дренаж вокруг дома, решения для участков 6 и 10 соток, монтаж на уклоне и расчет стоимости. Если нужно быстро понять бюджет, начните со страницы цены или оставьте заявку на расчет.</p>',
+      ),
+      90 => array(
+        'title' => 'Осушение участка и отвод воды',
+        'button' => 'Все услуги по осушению участка',
+        'slugs' => array('cena-osusheniya-uchastka', 'drenazh-dlya-osusheniya-uchastka', 'osushenie-pri-vysokih-gruntovyh-vodah', 'osushenie-zabolochennogo-uchastka', 'osushenie-dachnogo-uchastka', 'osushenie-glinistogo-uchastka', 'otvod-vody-s-uchastka', 'voda-posle-dozhdya-na-uchastke', 'proektirovanie-sistemy-osusheniya'),
+        'text' => '<p>Осушение участка нужно, когда вода стоит после дождя, грунт не просыхает, газон вымокает, а посадки и дорожки постоянно страдают от сырости. Для участков в Ярославской области чаще всего комбинируем дренаж, отвод воды, планировку уклонов и локальные решения по проблемным зонам.</p><p>В блоке ниже собраны услуги для заболоченных, глинистых и дачных участков, территорий с высокими грунтовыми водами и мест, где вода скапливается после дождя. Начинаем с осмотра и схемы, чтобы не переплачивать за лишние работы.</p>',
+      ),
+      91 => array(
+        'title' => 'Ливневая канализация на участке',
+        'button' => 'Все услуги по ливневой канализации',
+        'slugs' => array('cena-livnevoy-kanalizatsii', 'montazh-livnevoy-kanalizatsii', 'livnevka-vokrug-doma', 'livnevka-na-uchastke', 'dozhdepriemniki-i-lotki', 'lineynyy-vodootvod', 'drenazh-i-livnevaya-kanalizatsiya', 'otvod-vody-s-kryshi', 'remont-livnevoy-kanalizatsii'),
+        'text' => '<p>Ливневая канализация отводит дождевую и талую воду с крыши, отмостки, дорожек, парковки и двора, чтобы покрытие не проседало, а фундамент не получал лишнюю влагу. Проектируем ливневку вокруг дома и на участке с учетом точек сбора воды, уклонов и места сброса.</p><p>Для частных домов чаще всего нужны дождеприемники, лотки, линейный водоотвод, подземные трубы и связка ливневки с дренажом. На страницах услуг можно посмотреть отдельные решения и понять, какой вариант подходит под ваш участок.</p>',
+      ),
+      88 => array(
+        'title' => 'Отмостка вокруг дома',
+        'button' => 'Все услуги по отмостке',
+        'slugs' => array('cena', 'betonnaya-otmostka', 'myagkaya-otmostka', 'uteplennaya-otmostka', 'otmostka-iz-plitki', 'podgotovka-osnovaniya', 'varianty', 'zalivka', 'remont-staroy'),
+        'text' => '<p>Отмостка вокруг дома защищает фундамент от дождевой и талой воды, связывает дом с дорожками и помогает аккуратно организовать водоотвод. Делаем бетонную, мягкую, утепленную отмостку и отмостку из тротуарной плитки под условия участка.</p><p>Для результата важны подготовка основания, уклон, подушка, примыкание к цоколю и связка с ливневой канализацией или дренажом. В разделе можно выбрать тип отмостки, посмотреть состав работ и ориентиры по цене.</p>',
+      ),
+      89 => array(
+        'title' => 'Укладка тротуарной плитки',
+        'button' => 'Все услуги по тротуарной плитке',
+        'slugs' => array('cena-ukladki-trotuarnoy-plitki', 'podgotovka-osnovaniya-pod-plitku', 'sadovye-dorozhki-iz-plitki', 'ploshchadka-pod-avto-iz-plitki', 'dvor-iz-trotuarnoy-plitki', 'ukladka-bruschatki', 'otmostka-iz-trotuarnoy-plitki', 'bordyury-i-vodootvod-dlya-plitki', 'remont-trotuarnoy-plitki'),
+        'text' => '<p>Укладка тротуарной плитки под ключ включает не только красивое покрытие, но и правильное основание, уклоны, бордюры и водоотвод. Делаем садовые дорожки, дворы, площадки под автомобиль, отмостку из плитки и мощение брусчаткой.</p><p>Для Ярославля и области особенно важны дренирующая подушка, защита от пучения и аккуратная работа с перепадами рельефа. Ниже собраны основные услуги, чтобы быстро перейти к нужному сценарию и расчету.</p>',
+      ),
+      92 => array(
+        'title' => 'Автополив на участке',
+        'button' => 'Все услуги по автополиву',
+        'slugs' => array('cena-avtopoliva-na-uchastke', 'montazh-avtopoliva', 'avtopoliv-gazona', 'kapelnyy-poliv', 'avtopoliv-sada', 'avtopoliv-teplitsy', 'proektirovanie-avtopoliva', 'nasos-i-emkost-dlya-poliva', 'obsluzhivanie-avtopoliva'),
+        'text' => '<p>Автополив на участке помогает поддерживать газон, сад, клумбы, теплицу и посадки без ручного полива и случайных пересушек. Проектируем зоны полива, подбираем спринклеры, капельные линии, насос, емкость, контроллер и клапаны.</p><p>Система автополива особенно полезна на благоустроенных участках, где важно сохранить газон и посадки после ландшафтных работ. Можно начать с проектирования, монтажа под ключ или обслуживания уже установленной системы.</p>',
+      ),
+    );
+  }
+}
+
+if (!function_exists('land76_home_section_category_id')) {
+  function land76_home_section_category_id($section) {
+    if (empty($section['category'])) {
+      return 0;
+    }
+    if (is_object($section['category']) && !empty($section['category']->term_id)) {
+      return (int) $section['category']->term_id;
+    }
+    if (is_array($section['category']) && !empty($section['category']['term_id'])) {
+      return (int) $section['category']['term_id'];
+    }
+    return (int) $section['category'];
+  }
+}
+
+$home_default_sections = land76_home_default_category_sections();
+$home_sections = function_exists('get_field') ? get_field('home_category_sections', 'option') : array();
+if (empty($home_sections) || !is_array($home_sections)) {
+  $home_sections = array();
+  foreach ($home_default_sections as $cat_id => $section) {
+    $section['category'] = $cat_id;
+    $home_sections[] = $section;
+  }
+}
+
+if (!empty($home_sections) && is_array($home_sections)):
+  $section_index = 0;
+  foreach ($home_sections as $section):
+    $sec_cat_id = land76_home_section_category_id($section);
+    $sec_default = isset($home_default_sections[$sec_cat_id]) ? $home_default_sections[$sec_cat_id] : array();
+    $sec_title = !empty($section['title']) ? $section['title'] : (!empty($sec_default['title']) ? $sec_default['title'] : '');
+    $sec_text = !empty($section['text']) ? $section['text'] : (!empty($sec_default['text']) ? $sec_default['text'] : '');
+    $sec_button = !empty($section['button']) ? $section['button'] : (!empty($sec_default['button']) ? $sec_default['button'] : '');
+    $cat_term = $sec_cat_id ? get_term($sec_cat_id, 'category') : null;
+    $sec_cat_url = ($cat_term && !is_wp_error($cat_term)) ? get_term_link($cat_term) : '';
+    $sec_cat_name = ($cat_term && !is_wp_error($cat_term)) ? $cat_term->name : '';
+
+    $sec_posts = array();
+    if ($sec_cat_id) {
+      $query_args = array(
+        'numberposts' => 9,
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'suppress_filters' => true,
+        'tax_query' => array(
+          'relation' => 'AND',
+          array(
+            'taxonomy' => 'category',
+            'field' => 'term_id',
+            'terms' => array($sec_cat_id),
+          ),
+          array(
+            'taxonomy' => 'category',
+            'field' => 'term_id',
+            'terms' => array(74),
+          ),
+        ),
+      );
+
+      if (!empty($sec_default['slugs'])) {
+        $query_args['post_name__in'] = $sec_default['slugs'];
+        $query_args['orderby'] = 'post_name__in';
+      } else {
+        $query_args['orderby'] = 'date';
+        $query_args['order'] = 'DESC';
+      }
+
+      $sec_posts = get_posts($query_args);
+    }
+
+    if (empty($sec_posts) && empty($sec_title) && empty($sec_text)) {
+      continue;
+    }
+?>
+<section class="home-cat-section wrapper<?php echo ($section_index % 2 === 1) ? ' home-cat-section--alt' : ''; ?>">
+  <?php if ($sec_title): ?>
+    <h2 class="services__title"><?php echo esc_html($sec_title); ?></h2>
+  <?php endif; ?>
+
+  <?php if (!empty($sec_posts)): ?>
+  <div class="home-cat-slider-wrap" data-aos="fade-up" data-aos-duration="500">
+    <div class="home-cat-slider home-cat-slider-<?php echo $section_index; ?> swiper-container">
+      <div class="swiper-wrapper">
+        <?php foreach ($sec_posts as $post):
+          setup_postdata($post);
+          $card_img = function_exists('land76_get_card_image_url')
+            ? land76_get_card_image_url(get_the_ID(), 'medium')
+            : get_the_post_thumbnail_url(get_the_ID(), 'medium');
+          if (!$card_img) $card_img = 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp';
+          $card_alt = function_exists('land76_get_card_image_alt')
+            ? land76_get_card_image_alt(get_the_ID())
+            : get_the_title();
+        ?>
+        <div class="swiper-slide">
+          <div class="service">
+            <div class="service__img-wrap">
+              <img class="service__img" src="<?php echo esc_url($card_img); ?>" alt="<?php echo esc_attr($card_alt); ?>" loading="lazy" />
+            </div>
+            <div class="service__text-wrap">
+              <h3 class="service__title"><?php the_title(); ?></h3>
+              <?php the_excerpt(); ?>
+              <div class="service__link-wrap">
+                <a class="service__link" href="<?php the_permalink(); ?>">Подробнее</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <?php endforeach; wp_reset_postdata(); ?>
+      </div>
+      <div class="home-cat-pagination swiper-pagination"></div>
+    </div>
+  </div>
+  <?php endif; ?>
+
+  <?php if ($sec_text): ?>
+  <div class="home-cat-text seo-text">
+    <?php echo wp_kses_post($sec_text); ?>
+  </div>
+  <?php endif; ?>
+
+  <?php if ($sec_cat_url): ?>
+  <div class="home-cat-link-wrap">
+    <a href="<?php echo esc_url($sec_cat_url); ?>" class="btn--primary-custom"><?php echo esc_html($sec_button ? $sec_button : 'Все услуги ' . $sec_cat_name); ?></a>
+  </div>
+  <?php endif; ?>
+</section>
+<?php
+    $section_index++;
+  endforeach;
+endif;
+?>
 
 <section class="services wrapper">
   <h2 class="services__title">Услуги </h2>
@@ -70,6 +245,104 @@ Template Name: Главная страница
   @media only screen and (max-width: 767px) {
     .case .case__img-wrap {
       height: 300px !important;
+    }
+  }
+
+  /* ── Секции категорий на главной ── */
+  .home-cat-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    overflow-x: hidden;
+  }
+  .home-cat-section--alt {
+    background: #f7faf6;
+  }
+  .home-cat-slider-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .home-cat-slider {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 10px 34px;
+    overflow: hidden !important;
+    box-sizing: border-box;
+  }
+  .home-cat-slider .swiper-wrapper {
+    box-sizing: border-box;
+  }
+  .home-cat-slider .swiper-slide {
+    height: auto;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+  .home-cat-slider .service {
+    height: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .home-cat-text {
+    max-width: 860px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 18px;
+    line-height: 1.65;
+    color: #555;
+  }
+  .home-cat-text p {
+    margin: 0 0 16px;
+  }
+  .home-cat-text p:last-child {
+    margin-bottom: 0;
+  }
+  .home-cat-link-wrap {
+    text-align: center;
+    margin-top: 25px;
+  }
+
+  .home-cat-pagination {
+    position: static;
+    text-align: center;
+    margin-top: 18px;
+  }
+  .home-cat-pagination .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: #ccc;
+    opacity: 1;
+    margin: 0 5px;
+  }
+  .home-cat-pagination .swiper-pagination-bullet-active {
+    background: #0a9215;
+  }
+
+  .home-cat-link-wrap .btn--primary-custom {
+    display: inline-block;
+    padding: 14px 28px;
+    background: #0a9215;
+    color: #fff;
+    border: 2px solid #0a9215;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .home-cat-link-wrap .btn--primary-custom:hover {
+    background: #0a7b12;
+    border-color: #0a7b12;
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .home-cat-section {
+      padding-top: 35px;
+      padding-bottom: 35px;
     }
   }
 </style>

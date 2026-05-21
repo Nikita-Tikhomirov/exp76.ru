@@ -267,3 +267,61 @@ if ( function_exists('acf_add_options_page') ) {
       'redirect'		=> false
     ));
 }
+
+// ACF: Секции категорий на главной (repeater на странице Настройка темы)
+add_action('acf/init', 'land76_register_home_category_sections_acf');
+function land76_register_home_category_sections_acf() {
+  if (!function_exists('acf_add_local_field_group')) return;
+
+  acf_add_local_field_group(array(
+    'key' => 'group_home_category_sections',
+    'title' => 'Секции категорий на главной',
+    'fields' => array(
+      array(
+        'key' => 'field_home_category_sections',
+        'label' => 'Секции',
+        'name' => 'home_category_sections',
+        'type' => 'repeater',
+        'layout' => 'block',
+        'button_label' => 'Добавить секцию категории',
+        'sub_fields' => array(
+          array(
+            'key' => 'field_home_sec_title',
+            'label' => 'Заголовок секции (H2)',
+            'name' => 'title',
+            'type' => 'text',
+          ),
+          array(
+            'key' => 'field_home_sec_text',
+            'label' => 'Текстовый блок',
+            'name' => 'text',
+            'type' => 'wysiwyg',
+            'tabs' => 'visual',
+            'media_upload' => 1,
+          ),
+          array(
+            'key' => 'field_home_sec_cat',
+            'label' => 'Категория услуг',
+            'name' => 'category',
+            'type' => 'taxonomy',
+            'taxonomy' => 'category',
+            'field_type' => 'select',
+            'return_format' => 'id',
+          ),
+        ),
+      ),
+    ),
+    'location' => array(
+      array(
+        array(
+          'param' => 'options_page',
+          'operator' => '==',
+          'value' => 'theme-general-settings',
+        ),
+      ),
+    ),
+    'position' => 'normal',
+    'style' => 'default',
+    'label_placement' => 'top',
+  ));
+}

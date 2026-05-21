@@ -1,0 +1,97 @@
+[
+  {
+    "key": "group_home_category_sections",
+    "title": "Секции категорий на главной",
+    "fields": [
+      {
+        "key": "field_home_category_sections",
+        "label": "Секции",
+        "name": "home_category_sections",
+        "type": "repeater",
+        "instructions": "Добавляйте по одной секции на каждую категорию услуг. Порядок секций на главной соответствует порядку строк.",
+        "required": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "block",
+        "button_label": "Добавить секцию категории",
+        "sub_fields": [
+          {
+            "key": "field_home_sec_title",
+            "label": "Заголовок секции (H2)",
+            "name": "title",
+            "type": "text",
+            "instructions": "Например: Дренаж участка под ключ",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+          },
+          {
+            "key": "field_home_sec_text",
+            "label": "Текстовый блок",
+            "name": "text",
+            "type": "wysiwyg",
+            "instructions": "Текст под слайдером с услугами. Можно использовать форматирование, списки, заголовки.",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "default_value": "",
+            "tabs": "visual",
+            "media_upload": 1,
+            "toolbar": "full",
+            "delay": 0
+          },
+          {
+            "key": "field_home_sec_cat",
+            "label": "Категория услуг",
+            "name": "category",
+            "type": "taxonomy",
+            "instructions": "Выберите категорию, посты которой показывать в слайдере. Посты берутся из связки «выбранная категория + Услуги (ID 74)».",
+            "required": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "taxonomy": "category",
+            "field_type": "select",
+            "allow_null": 1,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+          }
+        ]
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "options_page",
+          "operator": "==",
+          "value": "theme-general-settings"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Секции категорий на главной странице. Заголовок, swiper с услугами, текстовый блок. Редактируется в Настройка темы.",
+    "show_in_rest": 0
+  }
+]
