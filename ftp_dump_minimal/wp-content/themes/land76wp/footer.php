@@ -33,6 +33,10 @@
       new Swiper(el, {
         slidesPerView: 1,
         spaceBetween: 20,
+        loop: false,
+        watchOverflow: true,
+        observer: true,
+        observeParents: true,
         pagination: {
           el: pagEl,
           clickable: true,

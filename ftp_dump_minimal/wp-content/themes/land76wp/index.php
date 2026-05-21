@@ -130,7 +130,7 @@ if (!empty($home_sections) && is_array($home_sections)):
 
   <?php if (!empty($sec_posts)): ?>
   <div class="home-cat-slider-wrap" data-aos="fade-up" data-aos-duration="500">
-    <div class="home-cat-slider home-cat-slider-<?php echo $section_index; ?> swiper-container">
+    <div class="home-cat-slider home-cat-slider-<?php echo $section_index; ?> swiper">
       <div class="swiper-wrapper">
         <?php foreach ($sec_posts as $post):
           setup_postdata($post);
@@ -242,6 +242,14 @@ endif;
 </section>
 
 <style>
+  html,
+  body,
+  .page-content,
+  .main {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   @media only screen and (max-width: 767px) {
     .case .case__img-wrap {
       height: 300px !important;
@@ -260,8 +268,8 @@ endif;
   .home-cat-slider-wrap {
     position: relative;
     width: 100%;
-    max-width: 100%;
-    margin: 0;
+    max-width: 1320px;
+    margin: 0 auto;
     overflow: hidden;
     box-sizing: border-box;
   }
@@ -275,15 +283,26 @@ endif;
   .home-cat-slider .swiper-wrapper {
     box-sizing: border-box;
   }
+  .home-cat-slider:not(.swiper-initialized) .swiper-wrapper {
+    display: flex;
+    gap: 30px;
+  }
   .home-cat-slider .swiper-slide {
     height: auto;
     flex-shrink: 0;
     box-sizing: border-box;
   }
+  .home-cat-slider:not(.swiper-initialized) .swiper-slide {
+    width: calc((100% - 60px) / 3);
+  }
   .home-cat-slider .service {
     height: 100%;
     max-width: 100%;
     box-sizing: border-box;
+  }
+  .home-cat-section .swiper-button-next,
+  .home-cat-section .swiper-button-prev {
+    display: none !important;
   }
   .home-cat-text {
     max-width: 860px;
@@ -343,6 +362,18 @@ endif;
     .home-cat-section {
       padding-top: 35px;
       padding-bottom: 35px;
+    }
+    .home-cat-slider:not(.swiper-initialized) .swiper-slide {
+      width: calc((100% - 20px) / 2);
+    }
+  }
+
+  @media (max-width: 599px) {
+    .home-cat-slider:not(.swiper-initialized) .swiper-wrapper {
+      gap: 0;
+    }
+    .home-cat-slider:not(.swiper-initialized) .swiper-slide {
+      width: 100%;
     }
   }
 </style>
