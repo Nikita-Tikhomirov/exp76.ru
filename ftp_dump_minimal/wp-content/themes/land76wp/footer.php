@@ -24,6 +24,82 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script> 
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
   <script src="<?php bloginfo('template_directory'); ?>/js/main.js?v=20260511"></script>
+  <?php if (is_front_page()): ?>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var carousels = document.querySelectorAll('.home-cat-carousel');
+
+    carousels.forEach(function(carousel) {
+      var viewport = carousel.querySelector('.home-cat-viewport');
+      var track = carousel.querySelector('.home-cat-track');
+      var slides = Array.prototype.slice.call(carousel.querySelectorAll('.home-cat-slide'));
+      var prev = carousel.querySelector('.home-cat-arrow--prev');
+      var next = carousel.querySelector('.home-cat-arrow--next');
+      var pagination = carousel.querySelector('.home-cat-pagination');
+      var index = 0;
+      var perView = 1;
+      var maxIndex = 0;
+
+      function getPerView() {
+        if (window.innerWidth < 600) return 1;
+        if (window.innerWidth <= 768) return 2;
+        return 3;
+      }
+
+      function buildPagination() {
+        pagination.innerHTML = '';
+        for (var i = 0; i <= maxIndex; i++) {
+          var dot = document.createElement('button');
+          dot.type = 'button';
+          dot.setAttribute('aria-label', 'Показать услуги ' + (i + 1));
+          dot.addEventListener('click', function(page) {
+            return function() {
+              index = page;
+              update();
+            };
+          }(i));
+          pagination.appendChild(dot);
+        }
+      }
+
+      function update() {
+        perView = getPerView();
+        maxIndex = Math.max(0, slides.length - perView);
+        index = Math.min(index, maxIndex);
+
+        var slide = slides[0];
+        var gap = slides[1] ? slides[1].offsetLeft - slide.offsetLeft - slide.offsetWidth : 0;
+        var offset = index * (slide.offsetWidth + gap);
+        track.style.transform = 'translate3d(-' + offset + 'px, 0, 0)';
+
+        prev.classList.toggle('is-disabled', index === 0);
+        next.classList.toggle('is-disabled', index >= maxIndex);
+
+        if (pagination.children.length !== maxIndex + 1) {
+          buildPagination();
+        }
+
+        Array.prototype.forEach.call(pagination.children, function(dot, dotIndex) {
+          dot.classList.toggle('is-active', dotIndex === index);
+        });
+      }
+
+      prev.addEventListener('click', function() {
+        index = Math.max(0, index - 1);
+        update();
+      });
+
+      next.addEventListener('click', function() {
+        index = Math.min(maxIndex, index + 1);
+        update();
+      });
+
+      window.addEventListener('resize', update);
+      update();
+    });
+  });
+  </script>
+  <?php endif; ?>
 <!-- Yandex.Metrika counter --> <script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter42305934 = new Ya.Metrika({ id:42305934, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/42305934" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
   <?php wp_footer(); ?>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">

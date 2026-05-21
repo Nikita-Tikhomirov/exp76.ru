@@ -129,8 +129,10 @@ if (!empty($home_sections) && is_array($home_sections)):
   <?php endif; ?>
 
   <?php if (!empty($sec_posts)): ?>
-  <div class="home-cat-cards-wrap" data-aos="fade-up" data-aos-duration="500">
-    <div class="home-cat-cards">
+  <div class="home-cat-carousel" data-aos="fade-up" data-aos-duration="500">
+    <button class="home-cat-arrow home-cat-arrow--prev" type="button" aria-label="Предыдущие услуги"></button>
+    <div class="home-cat-viewport">
+      <div class="home-cat-track">
         <?php foreach ($sec_posts as $post):
           setup_postdata($post);
           $card_img = function_exists('land76_get_card_image_url')
@@ -141,7 +143,7 @@ if (!empty($home_sections) && is_array($home_sections)):
             ? land76_get_card_image_alt(get_the_ID())
             : get_the_title();
         ?>
-        <div class="home-cat-card">
+        <div class="home-cat-slide">
           <div class="service">
             <div class="service__img-wrap">
               <img class="service__img" src="<?php echo esc_url($card_img); ?>" alt="<?php echo esc_attr($card_alt); ?>" loading="lazy" />
@@ -158,6 +160,8 @@ if (!empty($home_sections) && is_array($home_sections)):
         <?php endforeach; wp_reset_postdata(); ?>
       </div>
     </div>
+    <button class="home-cat-arrow home-cat-arrow--next" type="button" aria-label="Следующие услуги"></button>
+    <div class="home-cat-pagination" aria-label="Навигация по услугам"></div>
   </div>
   <?php endif; ?>
 
@@ -264,34 +268,99 @@ endif;
   .home-cat-section--alt {
     background: #f7faf6;
   }
-  .home-cat-cards-wrap {
+  .home-cat-carousel {
     position: relative;
     width: 100%;
     max-width: 1320px;
     margin: 0 auto;
-    overflow: visible;
+    padding: 0 58px;
     box-sizing: border-box;
   }
-  .home-cat-cards {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 30px;
+  .home-cat-viewport {
     width: 100%;
     max-width: 100%;
-    padding: 10px 10px 34px;
+    overflow: hidden;
+    padding: 10px 10px 44px;
+    margin: 0 auto;
     box-sizing: border-box;
-    overflow: visible;
   }
-  .home-cat-card {
+  .home-cat-track {
+    display: flex;
+    gap: 30px;
+    will-change: transform;
+    transition: transform 0.35s ease;
+  }
+  .home-cat-slide {
+    flex: 0 0 calc((100% - 60px) / 3);
     height: auto;
     box-sizing: border-box;
     min-width: 0;
     padding-bottom: 24px;
   }
-  .home-cat-cards .service {
+  .home-cat-track .service {
     height: 100%;
     max-width: 100%;
     box-sizing: border-box;
+  }
+  .home-cat-arrow {
+    position: absolute;
+    top: 46%;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    border: 2px solid #ff5e00;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    transform: translateY(-50%);
+    transition: background 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  }
+  .home-cat-arrow::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border-top: 3px solid #ff5e00;
+    border-right: 3px solid #ff5e00;
+  }
+  .home-cat-arrow--prev {
+    left: 8px;
+  }
+  .home-cat-arrow--prev::before {
+    transform: translate(-38%, -50%) rotate(-135deg);
+  }
+  .home-cat-arrow--next {
+    right: 8px;
+  }
+  .home-cat-arrow--next::before {
+    transform: translate(-62%, -50%) rotate(45deg);
+  }
+  .home-cat-arrow:hover {
+    background: #fff7f1;
+    box-shadow: 0 6px 16px rgba(255, 94, 0, 0.22);
+  }
+  .home-cat-arrow.is-disabled {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .home-cat-pagination {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .home-cat-pagination button {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #c8c8c8;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .home-cat-pagination button.is-active {
+    background: #ff5e00;
+    transform: scale(1.25);
   }
   .home-cat-section .swiper-button-next,
   .home-cat-section .swiper-button-prev {
@@ -367,9 +436,14 @@ endif;
       padding-top: 35px;
       padding-bottom: 35px;
     }
-    .home-cat-cards {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .home-cat-carousel {
+      padding: 0 48px;
+    }
+    .home-cat-track {
       gap: 20px;
+    }
+    .home-cat-slide {
+      flex-basis: calc((100% - 20px) / 2);
     }
     .home-cat-text {
       font-size: 16px;
@@ -377,9 +451,24 @@ endif;
   }
 
   @media (max-width: 599px) {
-    .home-cat-cards {
-      grid-template-columns: 1fr;
+    .home-cat-carousel {
+      padding: 0;
+    }
+    .home-cat-viewport {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    .home-cat-track {
       gap: 0;
+    }
+    .home-cat-slide {
+      flex-basis: 100%;
+    }
+    .home-cat-arrow {
+      display: none;
+    }
+    .home-cat-pagination {
+      display: flex;
     }
   }
 </style>
