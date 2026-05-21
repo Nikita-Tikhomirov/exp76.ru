@@ -181,6 +181,7 @@ if (!empty($home_sections) && is_array($home_sections)):
 endif;
 ?>
 
+<?php if (false): ?>
 <section class="services wrapper">
   <h2 class="services__title">Услуги </h2>
   <div class="services__cards columns3">
@@ -240,6 +241,7 @@ endif;
   </div>
 
 </section>
+<?php endif; ?>
 
 <style>
   html,
