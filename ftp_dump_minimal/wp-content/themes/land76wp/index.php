@@ -129,9 +129,8 @@ if (!empty($home_sections) && is_array($home_sections)):
   <?php endif; ?>
 
   <?php if (!empty($sec_posts)): ?>
-  <div class="home-cat-slider-wrap" data-aos="fade-up" data-aos-duration="500">
-    <div class="home-cat-slider home-cat-slider-<?php echo $section_index; ?>" data-home-cat-slider>
-      <div class="home-cat-track">
+  <div class="home-cat-cards-wrap" data-aos="fade-up" data-aos-duration="500">
+    <div class="home-cat-cards">
         <?php foreach ($sec_posts as $post):
           setup_postdata($post);
           $card_img = function_exists('land76_get_card_image_url')
@@ -142,7 +141,7 @@ if (!empty($home_sections) && is_array($home_sections)):
             ? land76_get_card_image_alt(get_the_ID())
             : get_the_title();
         ?>
-        <div class="home-cat-slide">
+        <div class="home-cat-card">
           <div class="service">
             <div class="service__img-wrap">
               <img class="service__img" src="<?php echo esc_url($card_img); ?>" alt="<?php echo esc_attr($card_alt); ?>" loading="lazy" />
@@ -158,7 +157,6 @@ if (!empty($home_sections) && is_array($home_sections)):
         </div>
         <?php endforeach; wp_reset_postdata(); ?>
       </div>
-      <div class="home-cat-pagination" aria-hidden="true"></div>
     </div>
   </div>
   <?php endif; ?>
@@ -262,49 +260,35 @@ endif;
   .home-cat-section {
     padding-top: 50px;
     padding-bottom: 50px;
-    overflow-x: hidden;
   }
   .home-cat-section--alt {
     background: #f7faf6;
   }
-  .home-cat-slider-wrap {
+  .home-cat-cards-wrap {
     position: relative;
     width: 100%;
     max-width: 1320px;
     margin: 0 auto;
-    overflow: hidden;
+    overflow: visible;
     box-sizing: border-box;
   }
-  .home-cat-slider {
+  .home-cat-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
     width: 100%;
     max-width: 100%;
-    padding: 10px;
-    overflow: hidden !important;
+    padding: 10px 10px 34px;
     box-sizing: border-box;
+    overflow: visible;
   }
-  .home-cat-track {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: calc((100% - 60px) / 3);
-    gap: 30px;
-    box-sizing: border-box;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    max-width: 100%;
-  }
-  .home-cat-track::-webkit-scrollbar {
-    display: none;
-  }
-  .home-cat-slide {
+  .home-cat-card {
     height: auto;
     box-sizing: border-box;
-    scroll-snap-align: start;
     min-width: 0;
+    padding-bottom: 24px;
   }
-  .home-cat-slider .service {
+  .home-cat-cards .service {
     height: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -331,10 +315,6 @@ endif;
   .home-cat-link-wrap {
     text-align: center;
     margin-top: 28px;
-  }
-
-  .home-cat-pagination {
-    display: none;
   }
 
   .home-cat-link-wrap .btn--primary-custom {
@@ -366,8 +346,8 @@ endif;
       padding-top: 35px;
       padding-bottom: 35px;
     }
-    .home-cat-track {
-      grid-auto-columns: calc((100% - 20px) / 2);
+    .home-cat-cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
     }
     .home-cat-text {
@@ -378,8 +358,8 @@ endif;
   }
 
   @media (max-width: 599px) {
-    .home-cat-track {
-      grid-auto-columns: 100%;
+    .home-cat-cards {
+      grid-template-columns: 1fr;
       gap: 0;
     }
   }

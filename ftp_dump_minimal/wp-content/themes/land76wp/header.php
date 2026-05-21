@@ -12,7 +12,7 @@
 
 <?php wp_head();?>
   <?php if ( is_front_page() ): ?>
-      <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/index.css" />
+      <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/index.css?v=20260522" />
 
     <?php elseif ( is_page('Услуги') ): ?>
       <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/services.css" />
