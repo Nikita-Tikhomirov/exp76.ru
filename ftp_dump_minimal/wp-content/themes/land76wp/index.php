@@ -291,7 +291,7 @@ endif;
     gap: 30px;
     will-change: transform;
     transition: transform 0.35s ease;
-    align-items: flex-start;
+    align-items: stretch;
   }
   .home-cat-track.is-dragging {
     transition: none;
@@ -303,9 +303,11 @@ endif;
     box-sizing: border-box;
     min-width: 0;
     padding-bottom: 24px;
+    display: flex;
   }
   .home-cat-track .service {
-    height: 100%;
+    width: 100%;
+    height: auto;
     max-width: 100%;
     box-sizing: border-box;
   }
@@ -462,14 +464,16 @@ endif;
       padding: 0 44px;
     }
     .home-cat-viewport {
-      padding-left: 8px;
-      padding-right: 8px;
+      padding-left: 0;
+      padding-right: 0;
+      padding-bottom: 54px;
     }
     .home-cat-track {
       gap: 0;
     }
     .home-cat-slide {
       flex-basis: 100%;
+      padding-bottom: 26px;
     }
     .home-cat-track .service {
       height: auto;

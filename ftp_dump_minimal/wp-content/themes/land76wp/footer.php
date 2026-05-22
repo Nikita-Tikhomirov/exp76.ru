@@ -66,22 +66,36 @@
         }
       }
 
+      function normalizeCardHeights() {
+        var services = slides.map(function(slide) {
+          return slide.querySelector('.service');
+        }).filter(Boolean);
+
+        services.forEach(function(service) {
+          service.style.height = 'auto';
+        });
+
+        var maxServiceHeight = services.reduce(function(maxHeight, service) {
+          return Math.max(maxHeight, service.offsetHeight);
+        }, 0);
+
+        services.forEach(function(service) {
+          service.style.height = maxServiceHeight + 'px';
+        });
+
+        return maxServiceHeight;
+      }
+
       function update() {
         perView = getPerView();
         maxIndex = Math.max(0, slides.length - perView);
         index = Math.min(index, maxIndex);
 
-        var slide = slides[0];
-        var gap = slides[1] ? slides[1].offsetLeft - slide.offsetLeft - slide.offsetWidth : 0;
-        var offset = index * (slide.offsetWidth + gap);
+        var maxServiceHeight = normalizeCardHeights();
+        var offset = slides[index] ? slides[index].offsetLeft - slides[0].offsetLeft : 0;
         currentOffset = offset;
         track.style.transform = 'translate3d(-' + currentOffset + 'px, 0, 0)';
-
-        var activeSlides = slides.slice(index, index + perView);
-        var maxHeight = activeSlides.reduce(function(height, item) {
-          return Math.max(height, item.offsetHeight);
-        }, 0);
-        viewport.style.height = maxHeight ? (maxHeight + 54) + 'px' : '';
+        viewport.style.height = maxServiceHeight ? (maxServiceHeight + 80) + 'px' : '';
 
         prev.classList.toggle('is-disabled', index === 0);
         next.classList.toggle('is-disabled', index >= maxIndex);
