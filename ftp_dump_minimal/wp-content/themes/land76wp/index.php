@@ -283,12 +283,19 @@ endif;
     padding: 10px 10px 44px;
     margin: 0 auto;
     box-sizing: border-box;
+    transition: height 0.25s ease;
+    touch-action: pan-y;
   }
   .home-cat-track {
     display: flex;
     gap: 30px;
     will-change: transform;
     transition: transform 0.35s ease;
+    align-items: flex-start;
+  }
+  .home-cat-track.is-dragging {
+    transition: none;
+    cursor: grabbing;
   }
   .home-cat-slide {
     flex: 0 0 calc((100% - 60px) / 3);
@@ -452,7 +459,7 @@ endif;
 
   @media (max-width: 599px) {
     .home-cat-carousel {
-      padding: 0;
+      padding: 0 44px;
     }
     .home-cat-viewport {
       padding-left: 8px;
@@ -464,11 +471,28 @@ endif;
     .home-cat-slide {
       flex-basis: 100%;
     }
+    .home-cat-track .service {
+      height: auto;
+      min-height: 0;
+    }
     .home-cat-arrow {
-      display: none;
+      width: 34px;
+      height: 34px;
+      top: 45%;
+    }
+    .home-cat-arrow::before {
+      width: 10px;
+      height: 10px;
+    }
+    .home-cat-arrow--prev {
+      left: 4px;
+    }
+    .home-cat-arrow--next {
+      right: 4px;
     }
     .home-cat-pagination {
       display: flex;
+      margin-top: 0;
     }
   }
 </style>

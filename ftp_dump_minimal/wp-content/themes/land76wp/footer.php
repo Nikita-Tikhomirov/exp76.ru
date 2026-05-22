@@ -39,6 +39,10 @@
       var index = 0;
       var perView = 1;
       var maxIndex = 0;
+      var currentOffset = 0;
+      var dragStartX = 0;
+      var dragDeltaX = 0;
+      var dragging = false;
 
       function getPerView() {
         if (window.innerWidth < 600) return 1;
@@ -70,7 +74,14 @@
         var slide = slides[0];
         var gap = slides[1] ? slides[1].offsetLeft - slide.offsetLeft - slide.offsetWidth : 0;
         var offset = index * (slide.offsetWidth + gap);
-        track.style.transform = 'translate3d(-' + offset + 'px, 0, 0)';
+        currentOffset = offset;
+        track.style.transform = 'translate3d(-' + currentOffset + 'px, 0, 0)';
+
+        var activeSlides = slides.slice(index, index + perView);
+        var maxHeight = activeSlides.reduce(function(height, item) {
+          return Math.max(height, item.offsetHeight);
+        }, 0);
+        viewport.style.height = maxHeight ? (maxHeight + 54) + 'px' : '';
 
         prev.classList.toggle('is-disabled', index === 0);
         next.classList.toggle('is-disabled', index >= maxIndex);
@@ -94,7 +105,47 @@
         update();
       });
 
+      function clientX(event) {
+        return event.touches && event.touches.length ? event.touches[0].clientX : event.clientX;
+      }
+
+      function startDrag(event) {
+        dragging = true;
+        dragStartX = clientX(event);
+        dragDeltaX = 0;
+        track.classList.add('is-dragging');
+      }
+
+      function moveDrag(event) {
+        if (!dragging) return;
+        dragDeltaX = clientX(event) - dragStartX;
+        track.style.transform = 'translate3d(' + (-currentOffset + dragDeltaX) + 'px, 0, 0)';
+      }
+
+      function endDrag() {
+        if (!dragging) return;
+        dragging = false;
+        track.classList.remove('is-dragging');
+
+        if (Math.abs(dragDeltaX) > 45) {
+          index += dragDeltaX < 0 ? 1 : -1;
+          index = Math.max(0, Math.min(maxIndex, index));
+        }
+
+        update();
+      }
+
+      viewport.addEventListener('mousedown', startDrag);
+      viewport.addEventListener('mousemove', moveDrag);
+      viewport.addEventListener('mouseup', endDrag);
+      viewport.addEventListener('mouseleave', endDrag);
+      viewport.addEventListener('touchstart', startDrag, { passive: true });
+      viewport.addEventListener('touchmove', moveDrag, { passive: true });
+      viewport.addEventListener('touchend', endDrag);
+      viewport.addEventListener('touchcancel', endDrag);
+
       window.addEventListener('resize', update);
+      window.addEventListener('load', update);
       update();
     });
   });
