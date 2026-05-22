@@ -461,15 +461,15 @@ endif;
 
   @media (max-width: 599px) {
     .home-cat-carousel {
-      padding: 0 44px;
+      padding: 0;
     }
     .home-cat-viewport {
-      padding-left: 0;
-      padding-right: 0;
+      padding-left: 8px;
+      padding-right: 8px;
       padding-bottom: 54px;
     }
     .home-cat-track {
-      gap: 0;
+      gap: 16px;
     }
     .home-cat-slide {
       flex-basis: 100%;
@@ -480,19 +480,7 @@ endif;
       min-height: 0;
     }
     .home-cat-arrow {
-      width: 34px;
-      height: 34px;
-      top: 45%;
-    }
-    .home-cat-arrow::before {
-      width: 10px;
-      height: 10px;
-    }
-    .home-cat-arrow--prev {
-      left: 4px;
-    }
-    .home-cat-arrow--next {
-      right: 4px;
+      display: none;
     }
     .home-cat-pagination {
       display: flex;
