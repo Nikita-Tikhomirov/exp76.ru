@@ -2,11 +2,11 @@
     <div class="footer__services-wrap"><span class="footer__title">Услуги</span>
       <ul class="footer__services columns2">
         <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/landshaftnoe-proektirovanie/">Ландшафтное проектирование</a></li>
-        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/drenazh-uchastka-i-drenazh-fundamenta-doma/">Дренаж участка </a></li>
-        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/ukladka-trotuarnojj-plitki/">Укладка тротуарной плитки</a></li>
-        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/livnevaja-kanalizacija-livnevka/">Ливневая канализация</a></li>
+        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/category/drenazh-uchastka/">Дренаж участка </a></li>
+        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/category/ukladka-trotuarnoy-plitki/">Укладка тротуарной плитки</a></li>
+        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/category/livnevaya-kanalizatsiya/">Ливневая канализация</a></li>
         <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/posadka-derevev-i-kustarnikov/">Посадка деревьев и кустарников</a></li>
-        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/sistemy-avtomaticheskogo-poliva/">Системы автоматического полива</a></li>
+        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/category/avtopoliv-na-uchastke/">Системы автоматического полива</a></li>
       </ul>
     </div>
     <div class="footer__wrap"><a class="footer__number" href="tel:89159788809"><span class="footer__number">8(915)-978-88-09</span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="20" height="20">
@@ -109,6 +109,8 @@
         });
       }
 
+      carousel.land76Update = update;
+
       prev.addEventListener('click', function() {
         index = Math.max(0, index - 1);
         update();
@@ -161,6 +163,33 @@
       window.addEventListener('resize', update);
       window.addEventListener('load', update);
       update();
+    });
+
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.home-services-tabs__button'));
+    var panels = Array.prototype.slice.call(document.querySelectorAll('.home-cat-panel'));
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var tabIndex = tab.getAttribute('data-home-tab');
+
+        tabs.forEach(function(item) {
+          var isActive = item === tab;
+          item.classList.toggle('is-active', isActive);
+          item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        panels.forEach(function(panel) {
+          var isActive = panel.getAttribute('data-home-panel') === tabIndex;
+          panel.classList.toggle('is-active', isActive);
+
+          if (isActive) {
+            var carousel = panel.querySelector('.home-cat-carousel');
+            if (carousel && typeof carousel.land76Update === 'function') {
+              setTimeout(carousel.land76Update, 20);
+            }
+          }
+        });
+      });
     });
   });
   </script>

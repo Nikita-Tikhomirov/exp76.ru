@@ -75,6 +75,30 @@ if (empty($home_sections) || !is_array($home_sections)) {
 }
 
 if (!empty($home_sections) && is_array($home_sections)):
+?>
+<section class="home-services-tabs wrapper">
+  <h2 class="services__title">Основные направления работ</h2>
+  <div class="home-services-tabs__nav" role="tablist" aria-label="Направления услуг">
+    <?php
+    $nav_index = 0;
+    foreach ($home_sections as $nav_section):
+      $nav_cat_id = land76_home_section_category_id($nav_section);
+      $nav_default = isset($home_default_sections[$nav_cat_id]) ? $home_default_sections[$nav_cat_id] : array();
+      $nav_title = !empty($nav_section['title']) ? $nav_section['title'] : (!empty($nav_default['title']) ? $nav_default['title'] : '');
+      if (!$nav_title) {
+        continue;
+      }
+    ?>
+      <button class="home-services-tabs__button<?php echo $nav_index === 0 ? ' is-active' : ''; ?>" type="button" role="tab" aria-selected="<?php echo $nav_index === 0 ? 'true' : 'false'; ?>" data-home-tab="<?php echo esc_attr($nav_index); ?>">
+        <?php echo esc_html($nav_title); ?>
+      </button>
+    <?php
+      $nav_index++;
+    endforeach;
+    ?>
+  </div>
+  <div class="home-services-tabs__panels">
+<?php
   $section_index = 0;
   foreach ($home_sections as $section):
     $sec_cat_id = land76_home_section_category_id($section);
@@ -123,7 +147,7 @@ if (!empty($home_sections) && is_array($home_sections)):
       continue;
     }
 ?>
-<section class="home-cat-section wrapper<?php echo ($section_index % 2 === 1) ? ' home-cat-section--alt' : ''; ?>">
+<section class="home-cat-section home-cat-panel<?php echo ($section_index === 0) ? ' is-active' : ''; ?>" data-home-panel="<?php echo esc_attr($section_index); ?>" role="tabpanel">
   <?php if ($sec_title): ?>
     <h2 class="services__title"><?php echo esc_html($sec_title); ?></h2>
   <?php endif; ?>
@@ -180,6 +204,10 @@ if (!empty($home_sections) && is_array($home_sections)):
 <?php
     $section_index++;
   endforeach;
+?>
+  </div>
+</section>
+<?php
 endif;
 ?>
 
@@ -261,9 +289,46 @@ endif;
   }
 
   /* ── Секции категорий на главной ── */
-  .home-cat-section {
+  .home-services-tabs {
     padding-top: 50px;
     padding-bottom: 50px;
+    background: url(<?php echo get_template_directory_uri(); ?>/img/sb5.png) center/cover #6e564810;
+  }
+  .home-services-tabs > .services__title {
+    margin-bottom: 24px;
+  }
+  .home-services-tabs__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .home-services-tabs__button {
+    cursor: pointer;
+    padding: 10px 18px;
+    border: 2px solid #0a9215;
+    border-radius: 24px;
+    background: #fff;
+    color: #333;
+    font-size: 17px;
+    font-weight: 700;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .home-services-tabs__button.is-active,
+  .home-services-tabs__button:hover {
+    background: #0a9215;
+    color: #fff;
+  }
+  .home-cat-panel {
+    display: none;
+  }
+  .home-cat-panel.is-active {
+    display: block;
+  }
+  .home-cat-section {
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   .home-cat-section--alt {
     background: #f7faf6;

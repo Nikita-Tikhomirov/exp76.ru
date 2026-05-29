@@ -684,11 +684,11 @@ if ($cs87_location) {
       <span class="footer__title">Услуги</span>
       <ul class="footer__services columns2">
         <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/landshaftnoe-proektirovanie/">Ландшафтное проектирование</a></li>
-        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/drenazh-uchastka-i-drenazh-fundamenta-doma/">Дренаж участка</a></li>
-        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/ukladka-trotuarnojj-plitki/">Укладка тротуарной плитки</a></li>
-        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/livnevaja-kanalizacija-livnevka/">Ливневая канализация</a></li>
+        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/category/drenazh-uchastka/">Дренаж участка</a></li>
+        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/category/ukladka-trotuarnoy-plitki/">Укладка тротуарной плитки</a></li>
+        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/category/livnevaya-kanalizatsiya/">Ливневая канализация</a></li>
         <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/posadka-derevev-i-kustarnikov/">Посадка деревьев и кустарников</a></li>
-        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/sistemy-avtomaticheskogo-poliva/">Системы автоматического полива</a></li>
+        <li class="footer__item"><a class="footer__link" href="https://exp76.ru/category/avtopoliv-na-uchastke/">Системы автоматического полива</a></li>
       </ul>
     </div>
     <div class="footer__wrap">
