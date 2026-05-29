@@ -72,6 +72,11 @@ if (file_exists($land76_service_previews_import_file)) {
   require_once $land76_service_previews_import_file;
 }
 
+$land76_hidden_categories_file = __DIR__ . '/inc/hidden-categories.php';
+if (file_exists($land76_hidden_categories_file)) {
+  require_once $land76_hidden_categories_file;
+}
+
 function land76_region_page_slugs() {
   return array('yaroslavl', 'rybinsk', 'uglich', 'tutaev', 'pereslavl');
 }
