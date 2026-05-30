@@ -12,7 +12,7 @@
 
 <?php wp_head();?>
   <?php if ( is_front_page() ): ?>
-      <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/index.css?v=20260522" />
+      <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/index.css?v=20260530" />
 
     <?php elseif ( is_page('Услуги') ): ?>
       <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/services.css" />
@@ -114,7 +114,7 @@
         </div>
         <div class="hero__content wrapper">
           <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800">Ландшафтное проектирование и
-            благоустройство участков<p class="hero__description">в Рыбинске и Ярославской области</p>
+            благоустройство участков <span class="hero__description">в Рыбинске и Ярославской области</span>
           </h1><a class="hero__btn openPopup" data-modal="#popup" data-aos="fade-up" data-aos-duration="10000">Заказать
             звонок</a>
         </div>

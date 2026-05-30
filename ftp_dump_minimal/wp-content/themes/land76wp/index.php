@@ -557,7 +557,7 @@ endif;
 <section class="portfolio wrapper">
 
   <div class="portfolio__bg-left" data-aos="fade-right" data-aos-duration="600"><img
-      src="<?php echo get_template_directory_uri() ?>/img/bg-left.png"></div>
+      src="<?php echo get_template_directory_uri() ?>/img/bg-left.png" alt="" role="presentation"></div>
 
   <h2 class="portfolio__title" data-aos="fade-right" data-aos-duration="700">Наши работы </h2>
   <?php
@@ -578,10 +578,11 @@ endif;
           <?php foreach ($posts as $post):
             setup_postdata($post);
             $thumb = get_the_post_thumbnail_url($post, 'large');
+            $case_alt = sprintf('Пример работ по благоустройству участка: %s', get_the_title($post));
             ?>
             <div class="case swiper-slide">
               <div class="case__img-wrap">
-                <img class="case__img" src="<?php echo esc_url($thumb); ?>" alt="" role="presentation" />
+                <img class="case__img" src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($case_alt); ?>" />
               </div>
               <div class="case__content">
                 <p class="case__title"><?php the_title(); ?></p>
@@ -601,9 +602,10 @@ endif;
         <?php foreach ($posts as $post):
           setup_postdata($post);
           $thumb_small = get_the_post_thumbnail_url($post, 'thumbnail');
+          $case_thumb_alt = sprintf('Миниатюра работы: %s', get_the_title($post));
           ?>
           <div class="swiper-slide">
-            <img class="gallery-thumbs__img" src="<?php echo esc_url($thumb_small); ?>" alt="" role="presentation" />
+            <img class="gallery-thumbs__img" src="<?php echo esc_url($thumb_small); ?>" alt="<?php echo esc_attr($case_thumb_alt); ?>" />
           </div>
         <?php endforeach; ?>
       </div>

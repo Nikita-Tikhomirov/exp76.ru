@@ -255,6 +255,18 @@ add_filter('aioseo_description', function ($description) {
   return $seo_description ? $seo_description : $description;
 }, 20, 1);
 
+add_filter('aioseo_title', function ($title) {
+  return is_front_page()
+    ? 'Благоустройство участков под ключ в Рыбинске и Ярославской области'
+    : $title;
+}, 30, 1);
+
+add_filter('aioseo_description', function ($description) {
+  return is_front_page()
+    ? 'Комплексное благоустройство частных участков: дренаж, ливневая канализация, отмостка, тротуарная плитка, автополив, газон и проектирование.'
+    : $description;
+}, 30, 1);
+
 
 
 if ( function_exists('acf_add_options_page') ) {

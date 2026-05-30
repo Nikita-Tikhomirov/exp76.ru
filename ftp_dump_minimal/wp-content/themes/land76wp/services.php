@@ -19,13 +19,19 @@ add_filter('aioseo_title', function ($title) {
 
 add_filter('aioseo_description', function ($description) {
   return is_page_template('services.php')
-    ? 'Каталог услуг компании Эксперты: дренаж, осушение, ливневая канализация, отмостка, укладка тротуарной плитки, автополив, газоны, проектирование и комплексное благоустройство участков.'
+    ? 'Каталог услуг по благоустройству участков: дренаж, осушение, ливневая канализация, отмостка, плитка, автополив и проектирование.'
     : $description;
 });
 
 if (!function_exists('land76_services_url')) {
   function land76_services_url($path) {
     return esc_url(home_url($path));
+  }
+}
+
+if (!function_exists('land76_services_asset')) {
+  function land76_services_asset($path) {
+    return esc_url(home_url('/wp-content/uploads/seo-service-photos/' . ltrim($path, '/')));
   }
 }
 
@@ -46,6 +52,8 @@ $land76_services_groups = array(
       array(
         'title' => 'Дренаж участка',
         'url' => '/category/drenazh-uchastka/',
+        'image' => land76_services_asset('vysokie-gruntovye-vody.webp'),
+        'alt' => 'Дренаж участка под ключ в Ярославской области',
         'text' => 'Проектируем и монтируем дренаж участка под ключ: глубинные и поверхностные системы, дренаж вокруг дома, решения для глинистой почвы и высокого уровня грунтовых вод.',
         'links' => array(
           array('Цена дренажа участка', '/cena-drenazha-uchastka/'),
@@ -59,6 +67,8 @@ $land76_services_groups = array(
       array(
         'title' => 'Осушение участка',
         'url' => '/category/osushenie-uchastka/',
+        'image' => land76_services_asset('osushenie-zabolochennogo-uchastka.webp'),
+        'alt' => 'Осушение заболоченного участка в Ярославской области',
         'text' => 'Подбираем схему осушения для заболоченных, глинистых и дачных участков: дренаж, водоотвод, лотки, колодцы, уклоны и локальные решения по проблемным зонам.',
         'links' => array(
           array('Стоимость осушения участка', '/cena-osusheniya-uchastka/'),
@@ -71,6 +81,8 @@ $land76_services_groups = array(
       array(
         'title' => 'Ливневая канализация',
         'url' => '/category/livnevaya-kanalizatsiya/',
+        'image' => land76_services_asset('montazh-livnevoy-kanalizatsii.webp'),
+        'alt' => 'Ливневая канализация на участке под ключ',
         'text' => 'Собираем дождевую и талую воду с крыши, отмостки, дорожек, двора и парковки: дождеприемники, лотки, трубы, колодцы и линейный водоотвод.',
         'links' => array(
           array('Цена ливневой канализации', '/cena-livnevoy-kanalizatsii/'),
@@ -88,6 +100,8 @@ $land76_services_groups = array(
       array(
         'title' => 'Отмостка вокруг дома',
         'url' => '/category/otmostka-vokrug-doma/',
+        'image' => land76_services_asset('betonnaya-otmostka.webp'),
+        'alt' => 'Отмостка вокруг дома под ключ',
         'text' => 'Делаем бетонную, мягкую, утепленную и плиточную отмостку вокруг дома. Учитываем уклон, грунт, водоотвод, примыкание к цоколю и будущие дорожки.',
         'links' => array(
           array('Стоимость отмостки вокруг дома', '/cena/'),
@@ -100,6 +114,8 @@ $land76_services_groups = array(
       array(
         'title' => 'Укладка тротуарной плитки',
         'url' => '/category/ukladka-trotuarnoy-plitki/',
+        'image' => land76_services_asset('sadovye-dorozhki-iz-plitki.webp'),
+        'alt' => 'Укладка тротуарной плитки на участке',
         'text' => 'Укладываем плитку и брусчатку на дорожках, площадках, парковках и во дворе. Готовим основание, бордюры, уклоны и водоотвод, чтобы покрытие служило без просадок.',
         'links' => array(
           array('Стоимость укладки плитки', '/cena-ukladki-trotuarnoy-plitki/'),
@@ -117,6 +133,8 @@ $land76_services_groups = array(
       array(
         'title' => 'Автополив на участке',
         'url' => '/category/avtopoliv-na-uchastke/',
+        'image' => land76_services_asset('avtopoliv-gazona.webp'),
+        'alt' => 'Автополив газона и сада под ключ',
         'text' => 'Проектируем и монтируем автоматический полив газона, сада, клумб, теплиц и посадок: зоны полива, спринклеры, капельные линии, контроллер, насос и емкость.',
         'links' => array(
           array('Стоимость автополива', '/cena-avtopoliva-na-uchastke/'),
@@ -129,6 +147,8 @@ $land76_services_groups = array(
       array(
         'title' => 'Газон, посадки и уход',
         'url' => '/services/gazon-posevnojj-i-gazon-rulonnyjj/',
+        'image' => esc_url(get_template_directory_uri() . '/img/about7.jpg'),
+        'alt' => 'Газон, посадки и уход за участком',
         'text' => 'Устраиваем газоны, подбираем растения, высаживаем деревья и кустарники, ухаживаем за садом и помогаем поддерживать участок в аккуратном состоянии.',
         'links' => array(
           array('Посадка деревьев и кустарников', '/services/posadka-derevev-i-kustarnikov/'),
@@ -145,6 +165,8 @@ $land76_services_groups = array(
       array(
         'title' => 'Ландшафтное проектирование',
         'url' => '/services/landshaftnoe-proektirovanie/',
+        'image' => esc_url(get_template_directory_uri() . '/img/h11.jpg'),
+        'alt' => 'Ландшафтное проектирование и благоустройство участка',
         'text' => 'Готовим проект благоустройства участка: планировку, посадки, покрытия, освещение, водоотвод, автополив и очередность работ.',
         'links' => array(
           array('Планировка территории', '/services/planirovka-territorii/'),
@@ -190,6 +212,16 @@ $land76_price_rows = array(
           </div>
         </div>
 
+        <section class="services-hub__order">
+          <h2 class="services-hub__subtitle">С чего начать благоустройство участка</h2>
+          <p>Если на участке есть вода, уклоны, будущая отмостка, дорожки, газон и автополив, порядок работ важнее отдельной услуги. Сначала смотрим рельеф и водоотвод, потом основание и покрытия, после этого газон, посадки и полив.</p>
+          <ol>
+            <li><span>1</span><strong>Осмотр и схема</strong><em>Понимаем, куда уходит вода, где будут дорожки, дом, парковка и посадки.</em></li>
+            <li><span>2</span><strong>Инженерные работы</strong><em>Дренаж, ливневка, осушение, колодцы, лотки и уклоны делаются до финишных покрытий.</em></li>
+            <li><span>3</span><strong>Покрытия и озеленение</strong><em>Отмостка, плитка, газон, растения и автополив собираются в единую систему.</em></li>
+          </ol>
+        </section>
+
         <div class="services-hub__groups">
           <?php foreach ($land76_services_groups as $group) : ?>
             <section class="services-hub__group">
@@ -197,6 +229,11 @@ $land76_price_rows = array(
               <div class="services-hub__cards">
                 <?php foreach ($group['items'] as $item) : ?>
                   <article class="services-hub__card">
+                    <?php if (!empty($item['image'])) : ?>
+                      <a class="services-hub__card-image" href="<?php echo land76_services_url($item['url']); ?>">
+                        <img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr(!empty($item['alt']) ? $item['alt'] : $item['title']); ?>" loading="lazy">
+                      </a>
+                    <?php endif; ?>
                     <h3><a href="<?php echo land76_services_url($item['url']); ?>"><?php echo esc_html($item['title']); ?></a></h3>
                     <p><?php echo esc_html($item['text']); ?></p>
                     <?php if (!empty($item['links'])) : ?>
@@ -264,17 +301,37 @@ $land76_price_rows = array(
           background: #fff; border-left: 4px solid #ff5e00; color: #333;
           font-size: 18px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,.12);
         }
+        .services-hub__order {
+          max-width: 1120px; margin-top: 42px; padding: 32px;
+          background: rgba(255,255,255,.9); box-shadow: 0 5px 18px rgba(0,0,0,.12);
+          border-left: 4px solid #ff5e00;
+        }
+        .services-hub__order p { max-width: 920px; margin: 0 0 22px; font-size: 19px; line-height: 1.65; color: #555; }
+        .services-hub__order ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 0; padding: 0; list-style: none; }
+        .services-hub__order li {
+          display: grid; grid-template-columns: 44px 1fr; gap: 8px 14px; align-items: start;
+          padding: 18px; background: #fff; box-shadow: 0 3px 12px rgba(0,0,0,.08);
+        }
+        .services-hub__order span {
+          grid-row: span 2; display: inline-flex; align-items: center; justify-content: center;
+          width: 44px; height: 44px; border-radius: 50%; background: #0a9215; color: #fff; font-weight: 800;
+        }
+        .services-hub__order strong { color: #333; font-size: 18px; }
+        .services-hub__order em { color: #666; font-style: normal; line-height: 1.45; }
         .services-hub__cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .services-hub__card {
           display: flex; flex-direction: column; min-height: 100%;
-          padding: 26px; background: #fff; box-shadow: 0 5px 18px rgba(0,0,0,.15);
+          overflow: hidden; background: #fff; box-shadow: 0 5px 18px rgba(0,0,0,.15);
           border-top: 4px solid #0a9215;
         }
-        .services-hub__card h3 { margin: 0 0 14px; font-size: 25px; line-height: 1.2; color: #333; }
+        .services-hub__card-image { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: #eef2ed; }
+        .services-hub__card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; }
+        .services-hub__card:hover .services-hub__card-image img { transform: scale(1.04); }
+        .services-hub__card h3 { margin: 22px 26px 14px; font-size: 25px; line-height: 1.2; color: #333; }
         .services-hub__card h3 a { color: inherit; text-decoration: none; }
-        .services-hub__card p { margin: 0 0 18px; color: #666; font-size: 17px; line-height: 1.55; }
+        .services-hub__card p { margin: 0 26px 18px; color: #666; font-size: 17px; line-height: 1.55; }
         .services-hub__card ul,
-        .services-hub__complex ul { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 9px; }
+        .services-hub__complex ul { list-style: none; margin: 0 26px 22px; padding: 0; display: grid; gap: 9px; }
         .services-hub__card li,
         .services-hub__complex li { position: relative; padding-left: 24px; color: #555; line-height: 1.45; }
         .services-hub__card li:before,
@@ -283,7 +340,7 @@ $land76_price_rows = array(
           border: 2px solid #0a9215; border-radius: 50%; background: #fff;
         }
         .services-hub__card li a { color: #0a9215; text-decoration: none; }
-        .services-hub__more { margin-top: auto; align-self: flex-start; min-height: 38px; padding: 8px 18px; }
+        .services-hub__more { margin: auto 26px 26px; align-self: flex-start; min-height: 38px; padding: 8px 18px; }
         .services-hub__price-table { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .services-hub__price-row {
           display: flex; justify-content: space-between; gap: 16px; padding: 16px 18px;
@@ -295,6 +352,7 @@ $land76_price_rows = array(
         @media (max-width: 1100px) {
           .services-hub__cards { grid-template-columns: repeat(2, 1fr); }
           .services-hub__task-grid { grid-template-columns: repeat(2, 1fr); }
+          .services-hub__order ol { grid-template-columns: 1fr; }
         }
         @media (max-width: 700px) {
           .services-hub__cards,
@@ -559,6 +617,48 @@ $land76_price_rows = array(
             <p>Чаще всего связывают дренаж с ливневой канализацией, отмостку с водоотводом, плитку с бордюрами и лотками, газон с автополивом.</p>
           </article>
         </div>
+        <script type="application/ld+json">
+        <?php
+        echo wp_json_encode(array(
+          '@context' => 'https://schema.org',
+          '@type' => 'FAQPage',
+          'mainEntity' => array(
+            array(
+              '@type' => 'Question',
+              'name' => 'Можно заказать одну услугу?',
+              'acceptedAnswer' => array(
+                '@type' => 'Answer',
+                'text' => 'Да. Можно заказать отдельную работу: дренаж, отмостку, укладку тротуарной плитки, автополив, ливневую канализацию или другую услугу благоустройства.'
+              ),
+            ),
+            array(
+              '@type' => 'Question',
+              'name' => 'Можно делать благоустройство поэтапно?',
+              'acceptedAnswer' => array(
+                '@type' => 'Answer',
+                'text' => 'Да. Часто сначала делают дренаж, ливневую канализацию и планировку, затем отмостку, мощение, газон, посадки и автополив.'
+              ),
+            ),
+            array(
+              '@type' => 'Question',
+              'name' => 'Выезжаете на осмотр участка?',
+              'acceptedAnswer' => array(
+                '@type' => 'Answer',
+                'text' => 'Да. Для точного расчета важно увидеть уклоны, грунт, воду после дождя, подъезд техники, существующие постройки и место отвода воды.'
+              ),
+            ),
+            array(
+              '@type' => 'Question',
+              'name' => 'Какие работы лучше делать вместе?',
+              'acceptedAnswer' => array(
+                '@type' => 'Answer',
+                'text' => 'Чаще всего объединяют дренаж с ливневой канализацией, отмостку с водоотводом, плитку с бордюрами и лотками, газон с автополивом.'
+              ),
+            ),
+          ),
+        ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        ?>
+        </script>
       </section>
 
       <style>
