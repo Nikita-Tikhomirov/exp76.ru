@@ -119,6 +119,133 @@ if (!function_exists('land76_bloghub_excerpt')) {
     return wp_trim_words(wp_strip_all_tags($excerpt), 24, '...');
   }
 }
+
+if (!function_exists('land76_bloghub_asset_url')) {
+  function land76_bloghub_asset_url($filename) {
+    return home_url('/wp-content/uploads/seo-service-photos/' . ltrim($filename, '/'));
+  }
+}
+
+if (!function_exists('land76_bloghub_image_by_text')) {
+  function land76_bloghub_image_by_text($post_id, $post_topics = array()) {
+    $text = mb_strtolower(get_post_field('post_name', $post_id) . ' ' . get_the_title($post_id));
+    $topic_key = !empty($post_topics[0]) ? $post_topics[0] : '';
+    $topic_rules = array(
+      'drenazh' => array(
+        '/труб|trub/u' => 'glubinnyy.webp',
+        '/схем|план|shema|plan/u' => 's-uklonom.webp',
+        '/своими|svoimi|rukami/u' => 'glubinnyy.webp',
+        '/высок|грунтов|gruntov|vysok/u' => 'vysokie-gruntovye-vody.webp',
+        '/глин|glin/u' => 'glinistaya-pochva.webp',
+        '/поверх|poverh/u' => 'poverhnostnyy.webp',
+        '/глуб|glubin/u' => 'glubinnyy.webp',
+        '/уклон|uklon/u' => 's-uklonom.webp',
+        '/6-sotok|6-сот/u' => '6-sotok.webp',
+        '/10-sotok|10-сот/u' => '10-sotok.webp',
+      ),
+      'osushenie' => array(
+        '/болот|заболоч|bolot/u' => 'osushenie-zabolochennogo-uchastka.webp',
+        '/грязн|луж|после-дожд|posle-dozhd|gryaz/u' => 'voda-posle-dozhdya-na-uchastke.webp',
+        '/грунтов|высок|gruntov|vysok/u' => 'osushenie-pri-vysokih-gruntovyh-vodah.webp',
+        '/глин|glin/u' => 'osushenie-glinistogo-uchastka.webp',
+        '/дренаж|drenazh/u' => 'drenazh-dlya-osusheniya-uchastka.webp',
+        '/дач|dach/u' => 'osushenie-dachnogo-uchastka.webp',
+      ),
+      'livnevka' => array(
+        '/дождеприем|dozhdepriem/u' => 'dozhdepriemniki-i-lotki.webp',
+        '/линей|lineyn/u' => 'lineynyy-vodootvod.webp',
+        '/крыш|krysh/u' => 'otvod-vody-s-kryshi.webp',
+        '/ремонт|remont/u' => 'remont-livnevoy-kanalizatsii.webp',
+        '/дом|vokrug/u' => 'livnevka-vokrug-doma.webp',
+        '/ливнев|livnev/u' => 'livnevka-na-uchastke.webp',
+      ),
+      'otmostka' => array(
+        '/треш|tresh/u' => 'remont-staroy.webp',
+        '/просел|prosel/u' => 'podgotovka-osnovaniya.webp',
+        '/мягк|myag/u' => 'myagkaya-otmostka.webp',
+        '/бетон|beton/u' => 'betonnaya-otmostka.webp',
+        '/утепл|utepl/u' => 'uteplennaya-otmostka.webp',
+        '/плит|plit/u' => 'otmostka-iz-plitki.webp',
+        '/залив|montazh|монтаж/u' => 'zalivka.webp',
+      ),
+      'plitka' => array(
+        '/брусчат|bruschat/u' => 'ukladka-bruschatki.webp',
+        '/дорож|dorozh/u' => 'sadovye-dorozhki-iz-plitki.webp',
+        '/авто|парков|ploshch/u' => 'ploshchadka-pod-avto-iz-plitki.webp',
+        '/бордюр|водоотвод|bordyur/u' => 'bordyury-i-vodootvod-dlya-plitki.webp',
+        '/ремонт|remont/u' => 'remont-trotuarnoy-plitki.webp',
+        '/основан|podgotov/u' => 'podgotovka-osnovaniya-pod-plitku.webp',
+      ),
+      'avtopoliv' => array(
+        '/капель|kapeln/u' => 'kapelnyy-poliv.webp',
+        '/теплиц|teplits/u' => 'avtopoliv-teplitsy.webp',
+        '/газон|gazon/u' => 'avtopoliv-gazona.webp',
+        '/сад|дерев|derev|sada/u' => 'avtopoliv-sada.webp',
+        '/насос|емкост|оборуд|nasos/u' => 'nasos-i-emkost-dlya-poliva.webp',
+        '/не работает|ремонт|обслуж|remont/u' => 'obsluzhivanie-avtopoliva.webp',
+        '/схем|проект|plan|shema/u' => 'proektirovanie-avtopoliva.webp',
+        '/своими|svoimi|rukami/u' => 'montazh-avtopoliva.webp',
+        '/автополив|poliv/u' => 'montazh-avtopoliva.webp',
+      ),
+    );
+
+    if ($topic_key && !empty($topic_rules[$topic_key])) {
+      foreach ($topic_rules[$topic_key] as $pattern => $image) {
+        if (preg_match($pattern, $text)) {
+          return $image;
+        }
+      }
+    }
+
+    return '';
+  }
+}
+
+if (!function_exists('land76_bloghub_topic_images')) {
+  function land76_bloghub_topic_images() {
+    return array(
+      'drenazh' => array('vysokie-gruntovye-vody.webp', 'glinistaya-pochva.webp', 'glubinnyy.webp', 'poverhnostnyy.webp', 's-uklonom.webp', 'vokrug-doma.webp'),
+      'osushenie' => array('cena-osusheniya-uchastka.webp', 'osushenie-zabolochennogo-uchastka.webp', 'voda-posle-dozhdya-na-uchastke.webp', 'otvod-vody-s-uchastka.webp', 'osushenie-glinistogo-uchastka.webp'),
+      'livnevka' => array('montazh-livnevoy-kanalizatsii.webp', 'livnevka-na-uchastke.webp', 'livnevka-vokrug-doma.webp', 'dozhdepriemniki-i-lotki.webp', 'lineynyy-vodootvod.webp'),
+      'otmostka' => array('betonnaya-otmostka.webp', 'myagkaya-otmostka.webp', 'uteplennaya-otmostka.webp', 'otmostka-iz-plitki.webp', 'remont-staroy.webp', 'podgotovka-osnovaniya.webp'),
+      'plitka' => array('sadovye-dorozhki-iz-plitki.webp', 'ploshchadka-pod-avto-iz-plitki.webp', 'ukladka-bruschatki.webp', 'bordyury-i-vodootvod-dlya-plitki.webp', 'remont-trotuarnoy-plitki.webp'),
+      'avtopoliv' => array('avtopoliv-gazona.webp', 'montazh-avtopoliva.webp', 'kapelnyy-poliv.webp', 'avtopoliv-sada.webp', 'avtopoliv-teplitsy.webp', 'nasos-i-emkost-dlya-poliva.webp'),
+    );
+  }
+}
+
+if (!function_exists('land76_bloghub_card_image')) {
+  function land76_bloghub_card_image($post_id, $post_topics) {
+    $default_image_marker = '001-02-1';
+    $image_url = function_exists('land76_get_card_image_url') ? land76_get_card_image_url($post_id, 'medium') : get_the_post_thumbnail_url($post_id, 'medium');
+    $image_alt = function_exists('land76_get_card_image_alt') ? land76_get_card_image_alt($post_id, '') : '';
+
+    if ($image_url && strpos($image_url, $default_image_marker) === false) {
+      return array(
+        'url' => $image_url,
+        'alt' => $image_alt ? $image_alt : 'Статья: ' . get_the_title($post_id),
+      );
+    }
+
+    $image = land76_bloghub_image_by_text($post_id, $post_topics);
+    if (!$image) {
+      $topic_key = !empty($post_topics[0]) ? $post_topics[0] : 'drenazh';
+      $topic_images = land76_bloghub_topic_images();
+      $pool = !empty($topic_images[$topic_key]) ? $topic_images[$topic_key] : $topic_images['drenazh'];
+      $index = abs(crc32((string) get_post_field('post_name', $post_id))) % count($pool);
+      $image = $pool[$index];
+    }
+
+    $topics = land76_bloghub_topics();
+    $topic_key = !empty($post_topics[0]) ? $post_topics[0] : 'drenazh';
+    $topic_label = isset($topics[$topic_key]) ? $topics[$topic_key]['label'] : 'благоустройство участка';
+
+    return array(
+      'url' => land76_bloghub_asset_url($image),
+      'alt' => $topic_label . ': ' . get_the_title($post_id),
+    );
+  }
+}
 ?>
 <?php get_header('page'); ?>
 
@@ -278,7 +405,7 @@ if (!function_exists('land76_bloghub_excerpt')) {
           }
           .blog-hub__pagination {
             justify-content: center;
-            margin: 34px 0 0;
+            margin: 38px 0 46px;
           }
           .blog-hub__pagination:empty {
             display: none;
@@ -415,12 +542,11 @@ if (!function_exists('land76_bloghub_excerpt')) {
             $topics = land76_bloghub_topics();
             $first_topic = reset($post_topics);
             $topic_label = isset($topics[$first_topic]) ? $topics[$first_topic]['label'] : 'Благоустройство';
-            $image_url = function_exists('land76_get_card_image_url') ? land76_get_card_image_url($post_id, 'medium') : get_the_post_thumbnail_url($post_id, 'medium');
-            $image_alt = function_exists('land76_get_card_image_alt') ? land76_get_card_image_alt($post_id, 'Статья: ' . get_the_title()) : 'Статья: ' . get_the_title();
+            $image = land76_bloghub_card_image($post_id, $post_topics);
             ?>
             <article class="blog-card" data-blog-topics="<?php echo esc_attr(implode(' ', $post_topics)); ?>">
               <a class="blog-card__image-wrap" href="<?php the_permalink(); ?>">
-                <img class="blog-card__image" src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" loading="lazy">
+                <img class="blog-card__image" src="<?php echo esc_url($image['url']); ?>" alt="<?php echo esc_attr($image['alt']); ?>" loading="lazy">
               </a>
               <div class="blog-card__body">
                 <span class="blog-card__tag"><?php echo esc_html($topic_label); ?></span>
