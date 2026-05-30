@@ -161,13 +161,34 @@ if (!function_exists('land76_portfolio_case_groups')) {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-gap: 30px;
+      align-items: start;
       margin-top: 20px;
     }
     .case-container .case{
-      height: 100%;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      margin-bottom: 0;
     }
     .case-container .case .case__img-wrap{
       height: 250px;
+      flex: 0 0 auto;
+      width: 100%;
+      flex-basis: auto;
+    }
+    .case-container .case .case__img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .case-container .case .case__content{
+      display: flex;
+      flex: 0 0 auto;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 24px 28px 28px;
+      border-left: 4px solid #ff5e00ce;
+      border-top: 0;
     }
 
     .case__title{
@@ -178,21 +199,136 @@ if (!function_exists('land76_portfolio_case_groups')) {
     .case__description{
       font-size: 16px;
       line-height: 1.55;
+      margin-bottom: 18px;
+    }
+    .case-container .case .case__link{
+      position: relative !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 0;
+    }
+    .portfolio-case-pagination {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 34px 0 0;
+    }
+    .portfolio-case-pagination:empty {
+      display: none;
+    }
+    .portfolio-case-pagination__button {
+      min-width: 42px;
+      min-height: 42px;
+      padding: 7px 14px;
+      border-radius: 10px;
+      border: 2px solid #0a9215;
+      background: #fff;
+      color: #333;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0,0,0,.1);
+    }
+    .portfolio-case-pagination__button.is-active,
+    .portfolio-case-pagination__button:hover {
+      background: #0a9215;
+      color: #fff;
+    }
+    .portfolio-empty {
+      max-width: 760px;
+      margin: 24px 0 0;
+      padding: 18px 22px;
+      background: rgba(255,255,255,.92);
+      border-left: 4px solid #0a9215;
+      color: #555;
+      font-size: 17px;
+      line-height: 1.55;
+      box-shadow: 0 4px 14px rgba(0,0,0,.1);
     }
     .case.is-hidden {
       display: none;
     }
-    .portfolio-note {
+    .portfolio-empty.is-hidden {
+      display: none;
+    }
+    .portfolio-services,
+    .portfolio-seo-text {
       max-width: 980px;
-      margin: 34px 0 0;
+      margin: 46px 0 0;
+      padding: 28px 32px;
+      background: rgba(255,255,255,.94);
+      border-left: 4px solid #0a9215;
+      box-shadow: 0 5px 18px rgba(0,0,0,.12);
       color: #555;
       font-size: 17px;
       line-height: 1.65;
+    }
+    .portfolio-services__lead,
+    .portfolio-seo-text p {
+      margin: 0 0 18px;
+    }
+    .portfolio-services__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .portfolio-services__card {
+      display: block;
+      min-height: 116px;
+      padding: 18px 20px;
+      background: #fff;
+      border-left: 4px solid #ff5e00ce;
+      box-shadow: 0 4px 14px rgba(0,0,0,.12);
+      color: #555;
+      transition: .2s;
+    }
+    .portfolio-services__card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 18px rgba(0,0,0,.16);
+    }
+    .portfolio-services__card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #0a9215;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+    .portfolio-services__card span {
+      display: block;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .portfolio-seo-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 24px;
+      margin: 18px 0;
+      list-style: none;
+    }
+    .portfolio-seo-list li {
+      position: relative;
+      padding-left: 24px;
+    }
+    .portfolio-seo-list li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .7em;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #0a9215;
+      box-shadow: 0 0 0 4px rgba(10,146,21,.12);
     }
 		
     @media only screen and (max-width: 991px) {
       .case-container{
         grid-template-columns: 1fr 1fr;
+      }
+      .portfolio-services__grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 		@media only screen and (max-width: 768px) {
@@ -205,6 +341,13 @@ if (!function_exists('land76_portfolio_case_groups')) {
 			}
       .portfolio-seo-intro { padding: 24px 20px; }
       .portfolio-directions__title { font-size: 31px; }
+      .case-container .case .case__content { padding: 22px 20px 24px; }
+      .portfolio-services,
+      .portfolio-seo-text { padding: 24px 20px; }
+      .portfolio-services__grid,
+      .portfolio-seo-list {
+        grid-template-columns: 1fr;
+      }
 		}
 		
 	</style>
@@ -253,13 +396,58 @@ if ($query->have_posts()): ?>
     <?php endwhile; ?>
 
   </div>
+  <p class="portfolio-empty is-hidden">В этом разделе пока нет выбранных работ. Посмотрите все объекты или оставьте заявку, и мы подберем похожие примеры под вашу задачу.</p>
+  <div class="portfolio-case-pagination" aria-label="Навигация по примерам работ"></div>
 
 <?php endif;
 
 wp_reset_postdata();
 ?>
 
-  <p class="portfolio-note">Фотографии помогают быстро понять уровень работ и стиль объектов. Для расчета похожего участка лучше прислать фото территории, размеры и задачу: вода, дорожки, отмостка, газон, автополив или комплексное благоустройство.</p>
+  <section class="portfolio-services">
+    <h2 class="portfolio-directions__title">Услуги по благоустройству участка</h2>
+    <p class="portfolio-services__lead">Фотогалерея показывает готовые объекты, а для выбора решения лучше перейти в нужное направление услуг. Там собраны состав работ, варианты монтажа, цены, этапы и ответы на частые вопросы.</p>
+    <div class="portfolio-services__grid">
+      <a class="portfolio-services__card" href="/category/drenazh-uchastka/">
+        <strong>Дренаж участка</strong>
+        <span>Отвод грунтовых и дождевых вод, защита фундамента, газона, дорожек и посадок.</span>
+      </a>
+      <a class="portfolio-services__card" href="/category/osushenie-uchastka/">
+        <strong>Осушение участка</strong>
+        <span>Работы для сырых, заболоченных и низких участков, где вода долго стоит после дождя.</span>
+      </a>
+      <a class="portfolio-services__card" href="/category/livnevaya-kanalizatsiya/">
+        <strong>Ливневая канализация</strong>
+        <span>Лотки, дождеприемники и трубы для отвода воды с крыши, дорожек и площадок.</span>
+      </a>
+      <a class="portfolio-services__card" href="/category/otmostka-vokrug-doma/">
+        <strong>Отмостка вокруг дома</strong>
+        <span>Бетонная, мягкая и плиточная отмостка с уклоном, основанием и водоотводом.</span>
+      </a>
+      <a class="portfolio-services__card" href="/category/ukladka-trotuarnoy-plitki/">
+        <strong>Укладка тротуарной плитки</strong>
+        <span>Дорожки, площадки, парковки, бордюры, подготовка основания и водоотвод.</span>
+      </a>
+      <a class="portfolio-services__card" href="/category/avtopoliv-na-uchastke/">
+        <strong>Автополив на участке</strong>
+        <span>Автоматический полив газона, сада, теплицы, клумб и живой изгороди.</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="portfolio-seo-text">
+    <h2 class="portfolio-directions__title">Что видно по примерам работ</h2>
+    <p>Примеры работ помогают оценить не только внешний вид участка после благоустройства. По фотографиям можно понять, как решены уклоны, водоотвод, подготовка основания, мощение, озеленение и привязка дорожек к дому, забору, въезду и зонам отдыха.</p>
+    <ul class="portfolio-seo-list">
+      <li>какие материалы и покрытия подходят под стиль дома и нагрузку;</li>
+      <li>как дренаж и ливневая канализация защищают участок от воды;</li>
+      <li>где нужна отмостка, бордюр, лоток или дополнительный уклон;</li>
+      <li>как совмещаются тротуарная плитка, газон, посадки и автополив;</li>
+      <li>какие работы лучше делать вместе, чтобы не переделывать участок;</li>
+      <li>как выглядит результат после комплексного благоустройства под ключ.</li>
+    </ul>
+    <p>Работаем в Рыбинске, Ярославле и по Ярославской области. Для предварительного расчета можно прислать фото участка, размеры, адрес, задачу и примеры работ, которые вам близки по стилю.</p>
+  </section>
 
   <script type="application/ld+json">
   <?php
@@ -286,21 +474,105 @@ wp_reset_postdata();
   document.addEventListener('DOMContentLoaded', function() {
     var buttons = Array.prototype.slice.call(document.querySelectorAll('.portfolio-tabs__button'));
     var cards = Array.prototype.slice.call(document.querySelectorAll('.case-container .case'));
+    var pagination = document.querySelector('.portfolio-case-pagination');
+    var empty = document.querySelector('.portfolio-empty');
+    var casesTitle = document.getElementById('portfolio-cases');
+    var activeFilter = 'all';
+    var activePage = 1;
+
+    function getPerPage() {
+      return window.matchMedia('(max-width: 768px)').matches ? 6 : 9;
+    }
+
+    function cardMatchesFilter(card, filter) {
+      var groups = card.getAttribute('data-case-groups') || '';
+      return filter === 'all' || groups.indexOf(filter) !== -1;
+    }
+
+    function getFilteredCards() {
+      return cards.filter(function(card) {
+        return cardMatchesFilter(card, activeFilter);
+      });
+    }
+
+    function createPageButton(label, page, isActive) {
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'portfolio-case-pagination__button' + (isActive ? ' is-active' : '');
+      button.textContent = label;
+      button.setAttribute('aria-label', 'Страница ' + page);
+      button.addEventListener('click', function() {
+        activePage = page;
+        renderCases(true);
+      });
+      return button;
+    }
+
+    function renderPagination(totalPages) {
+      if (!pagination) {
+        return;
+      }
+
+      pagination.innerHTML = '';
+
+      if (totalPages <= 1) {
+        return;
+      }
+
+      for (var page = 1; page <= totalPages; page += 1) {
+        pagination.appendChild(createPageButton(String(page), page, page === activePage));
+      }
+    }
+
+    function renderCases(shouldScroll) {
+      var perPage = getPerPage();
+      var filteredCards = getFilteredCards();
+      var totalPages = Math.max(1, Math.ceil(filteredCards.length / perPage));
+
+      if (activePage > totalPages) {
+        activePage = totalPages;
+      }
+
+      var start = (activePage - 1) * perPage;
+      var end = start + perPage;
+
+      cards.forEach(function(card) {
+        card.classList.add('is-hidden');
+      });
+
+      filteredCards.slice(start, end).forEach(function(card) {
+        card.classList.remove('is-hidden');
+      });
+
+      if (empty) {
+        empty.classList.toggle('is-hidden', filteredCards.length > 0);
+      }
+
+      renderPagination(totalPages);
+
+      if (shouldScroll && casesTitle) {
+        casesTitle.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
 
     buttons.forEach(function(button) {
       button.addEventListener('click', function() {
-        var filter = button.getAttribute('data-case-filter');
+        activeFilter = button.getAttribute('data-case-filter') || 'all';
+        activePage = 1;
 
         buttons.forEach(function(item) {
           item.classList.toggle('is-active', item === button);
         });
 
-        cards.forEach(function(card) {
-          var groups = card.getAttribute('data-case-groups') || '';
-          card.classList.toggle('is-hidden', filter !== 'all' && groups.indexOf(filter) === -1);
-        });
+        renderCases(true);
       });
     });
+
+    window.addEventListener('resize', function() {
+      renderCases(false);
+    });
+
+    renderCases(false);
   });
   </script>
 
