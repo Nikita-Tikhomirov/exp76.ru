@@ -36,8 +36,14 @@ add_filter('aioseo_description', function ($description) {
           .calc-seo__faq {
             margin-bottom: 34px;
             padding: 26px 30px;
-            background: rgba(255,255,255,.94);
+            background: #fff;
             border-left: 4px solid #0a9215;
+            box-shadow: 0 5px 18px rgba(0,0,0,.12);
+          }
+          .calc .calc__total {
+            margin-bottom: 46px;
+            background: #fff;
+            border-bottom: 2px solid #ff5e00ce;
             box-shadow: 0 5px 18px rgba(0,0,0,.12);
           }
           .calc-seo__lead p,
