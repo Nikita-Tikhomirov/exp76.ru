@@ -22,6 +22,36 @@ add_filter('aioseo_description', function ($description) {
     ? 'Фото выполненных работ: дренаж участка, ливневая канализация, отмостка, тротуарная плитка, автополив, газон и благоустройство под ключ.'
     : $description;
 }, 30, 1);
+
+if (!function_exists('land76_portfolio_case_groups')) {
+  function land76_portfolio_case_groups($post_id) {
+    $text = mb_strtolower(
+      get_the_title($post_id) . ' ' .
+      get_the_excerpt($post_id) . ' ' .
+      wp_strip_all_tags(get_post_field('post_content', $post_id))
+    );
+    $groups = array();
+
+    if (preg_match('/дренаж|водоотвод|ливнев|осуш|канав|вода|лотк|дождеприем/u', $text)) {
+      $groups[] = 'vodootvod';
+    }
+    if (preg_match('/плитк|брусчат|мощен|дорожк|площадк|парковк|бордюр|слип/u', $text)) {
+      $groups[] = 'moshenie';
+    }
+    if (preg_match('/газон|посад|озелен|сад|пруд|водоем|дерев|кустар|цветник|растен/u', $text)) {
+      $groups[] = 'ozelenenie';
+    }
+    if (preg_match('/автополив|полив|спринклер|капельн/u', $text)) {
+      $groups[] = 'avtopoliv';
+    }
+
+    if (count($groups) > 1 || !$groups) {
+      $groups[] = 'complex';
+    }
+
+    return array_unique($groups);
+  }
+}
 ?>
 
 <?php get_header('page'); ?>
@@ -32,7 +62,7 @@ add_filter('aioseo_description', function ($description) {
       src="<?php echo get_template_directory_uri() ?>/img/bg-left.png" alt="" role="presentation"></div>
   <h2 class="portfolio__title" data-aos="fade-right" data-aos-duration="700">Фотогалерея выполненных работ</h2>
   <div class="portfolio-seo-intro" data-aos="fade-up" data-aos-duration="700">
-    <p>В этом разделе собраны реальные примеры работ компании «Эксперты» по благоустройству частных участков в Рыбинске, Ярославле и Ярославской области. По фотографиям можно посмотреть качество мощения, дренажа, ливневой канализации, отмостки, автополива, газона, планировки и комплексных работ на участках.</p>
+    <p>Реальные объекты компании «Эксперты» по благоустройству частных участков в Рыбинске, Ярославле и области: мощение, водоотвод, озеленение, автополив и комплексные работы.</p>
     <div class="portfolio-seo-intro__actions">
       <a href="/services/" class="portfolio-seo-btn">Каталог услуг</a>
       <a href="#portfolio-cases" class="portfolio-seo-btn portfolio-seo-btn--light">Смотреть работы</a>
@@ -41,14 +71,14 @@ add_filter('aioseo_description', function ($description) {
   </div>
 
   <section class="portfolio-directions">
-    <h2 class="portfolio-directions__title">Примеры работ по направлениям</h2>
-    <div class="portfolio-directions__grid">
-      <a href="/category/drenazh-uchastka/">Дренаж участка</a>
-      <a href="/category/osushenie-uchastka/">Осушение участка</a>
-      <a href="/category/livnevaya-kanalizatsiya/">Ливневая канализация</a>
-      <a href="/category/otmostka-vokrug-doma/">Отмостка вокруг дома</a>
-      <a href="/category/ukladka-trotuarnoy-plitki/">Укладка тротуарной плитки</a>
-      <a href="/category/avtopoliv-na-uchastke/">Автополив на участке</a>
+    <h2 class="portfolio-directions__title">Выберите тип работ</h2>
+    <div class="portfolio-tabs" aria-label="Фильтр примеров работ">
+      <button class="portfolio-tabs__button is-active" type="button" data-case-filter="all">Все работы</button>
+      <button class="portfolio-tabs__button" type="button" data-case-filter="moshenie">Мощение и дорожки</button>
+      <button class="portfolio-tabs__button" type="button" data-case-filter="vodootvod">Водоотвод</button>
+      <button class="portfolio-tabs__button" type="button" data-case-filter="ozelenenie">Озеленение</button>
+      <button class="portfolio-tabs__button" type="button" data-case-filter="avtopoliv">Автополив</button>
+      <button class="portfolio-tabs__button" type="button" data-case-filter="complex">Комплексные работы</button>
     </div>
   </section>
 
@@ -102,23 +132,30 @@ add_filter('aioseo_description', function ($description) {
       color: #333;
       text-shadow: 1px 2px 3px #00000036;
     }
-    .portfolio-directions__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .portfolio-directions__grid a {
+    .portfolio-tabs {
       display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .portfolio-tabs__button {
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
-      min-height: 70px;
-      padding: 16px 18px;
+      justify-content: center;
+      min-height: 44px;
+      padding: 9px 18px;
       background: #fff;
-      border-left: 4px solid #ff5e00;
+      border: 2px solid #0a9215;
+      border-radius: 24px;
       color: #333;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
-      text-decoration: none;
       box-shadow: 0 4px 14px rgba(0,0,0,.12);
+    }
+    .portfolio-tabs__button.is-active,
+    .portfolio-tabs__button:hover {
+      background: #0a9215;
+      color: #fff;
     }
     .case-container{
       display: grid;
@@ -140,44 +177,23 @@ add_filter('aioseo_description', function ($description) {
     }
     .case__description{
       font-size: 16px;
+      line-height: 1.55;
     }
-    .portfolio-seo-bottom {
-      margin-top: 42px;
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 28px;
-      align-items: start;
+    .case.is-hidden {
+      display: none;
     }
-    .portfolio-seo-bottom__box {
-      background: rgba(255,255,255,.92);
-      padding: 26px 30px;
-      box-shadow: 0 5px 18px rgba(0,0,0,.12);
-      border-top: 4px solid #0a9215;
-    }
-    .portfolio-seo-bottom h2 {
-      margin: 0 0 18px;
-      font-family: "Poiret One", cursive;
-      font-size: 36px;
-      font-weight: 800;
-      color: #333;
-    }
-    .portfolio-seo-bottom p,
-    .portfolio-seo-bottom li {
+    .portfolio-note {
+      max-width: 980px;
+      margin: 34px 0 0;
       color: #555;
       font-size: 17px;
-      line-height: 1.6;
-    }
-    .portfolio-seo-bottom ul {
-      margin: 0;
-      padding-left: 20px;
+      line-height: 1.65;
     }
 		
     @media only screen and (max-width: 991px) {
       .case-container{
         grid-template-columns: 1fr 1fr;
       }
-      .portfolio-directions__grid,
-      .portfolio-seo-bottom { grid-template-columns: 1fr; }
     }
 		@media only screen and (max-width: 768px) {
 			.case-container{
@@ -198,7 +214,7 @@ $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
 $query = new WP_Query(array(
   'post_type'      => 'page',
-  'posts_per_page' => 9,
+  'posts_per_page' => -1,
   'category__in'   => array(75),
   'orderby'        => 'date',
   'order'          => 'DESC',
@@ -211,9 +227,11 @@ if ($query->have_posts()): ?>
   <div class="case-container">
 
     <?php while ($query->have_posts()):
-      $query->the_post(); ?>
+      $query->the_post();
+      $case_groups = land76_portfolio_case_groups(get_the_ID());
+      ?>
 
-      <div class="case swiper-slide">
+      <div class="case swiper-slide" data-case-groups="<?php echo esc_attr(implode(' ', $case_groups)); ?>">
         <div class="case__img-wrap">
           <?php
           $thumb_large  = get_the_post_thumbnail_url(null, 'large');
@@ -227,7 +245,7 @@ if ($query->have_posts()): ?>
 
         <div class="case__content">
           <h3 class="case__title"><?php the_title(); ?></h3>
-          <div class="case__description"><?php the_excerpt(); ?></div>
+          <div class="case__description"><?php echo esc_html(wp_trim_words(get_the_excerpt(), 14, '...')); ?></div>
           <a class="case__link" href="<?php the_permalink(); ?>">Подробнее</a>
         </div>
       </div>
@@ -236,38 +254,12 @@ if ($query->have_posts()): ?>
 
   </div>
 
-  <!-- Пагинация -->
-  <div class="pagination">
-    <?php
-    echo paginate_links(array(
-      'total'     => $query->max_num_pages,
-      'current'   => $paged,
-      'prev_text' => '«',
-      'next_text' => '»',
-    ));
-    ?>
-  </div>
-
 <?php endif;
 
 wp_reset_postdata();
 ?>
 
-  <section class="portfolio-seo-bottom">
-    <div class="portfolio-seo-bottom__box">
-      <h2>Что показывают примеры работ</h2>
-      <p>Фотогалерея помогает оценить не только внешний вид участка после благоустройства, но и состав работ: подготовку основания, уклоны, водоотвод, мощение, газон, посадки, дренажные и ливневые системы. Для новых объектов мы подбираем решение под грунт, рельеф, дом, дорожки и будущую эксплуатацию участка.</p>
-    </div>
-    <div class="portfolio-seo-bottom__box">
-      <h2>Какие работы можно заказать</h2>
-      <ul>
-        <li>комплексное благоустройство участка под ключ;</li>
-        <li>дренаж, осушение и ливневая канализация;</li>
-        <li>отмостка, тротуарная плитка, дорожки и площадки;</li>
-        <li>газон, посадки, автополив и уход за участком.</li>
-      </ul>
-    </div>
-  </section>
+  <p class="portfolio-note">Фотографии помогают быстро понять уровень работ и стиль объектов. Для расчета похожего участка лучше прислать фото территории, размеры и задачу: вода, дорожки, отмостка, газон, автополив или комплексное благоустройство.</p>
 
   <script type="application/ld+json">
   <?php
@@ -288,6 +280,28 @@ wp_reset_postdata();
     ),
   ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
   ?>
+  </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('.portfolio-tabs__button'));
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.case-container .case'));
+
+    buttons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        var filter = button.getAttribute('data-case-filter');
+
+        buttons.forEach(function(item) {
+          item.classList.toggle('is-active', item === button);
+        });
+
+        cards.forEach(function(card) {
+          var groups = card.getAttribute('data-case-groups') || '';
+          card.classList.toggle('is-hidden', filter !== 'all' && groups.indexOf(filter) === -1);
+        });
+      });
+    });
+  });
   </script>
 
 
