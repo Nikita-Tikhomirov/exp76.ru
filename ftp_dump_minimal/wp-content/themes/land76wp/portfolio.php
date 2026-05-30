@@ -84,7 +84,8 @@ if (!function_exists('land76_portfolio_case_groups')) {
 
 	<style>
     .portfolio-seo-intro {
-      max-width: 1000px;
+      width: 100%;
+      max-width: none;
       margin-bottom: 36px;
       padding: 28px 32px;
       background: rgba(255,255,255,.92);
@@ -254,7 +255,8 @@ if (!function_exists('land76_portfolio_case_groups')) {
     }
     .portfolio-services,
     .portfolio-seo-text {
-      max-width: 980px;
+      width: 100%;
+      max-width: none;
       margin: 46px 0 0;
       padding: 28px 32px;
       background: rgba(255,255,255,.94);
