@@ -120,24 +120,24 @@ body,
 }
 
 .hero__title {
-  max-width: 860px;
+  max-width: 760px;
   margin: 0;
   color: #fff;
   font-family: "Poiret One", cursive;
-  font-size: clamp(42px, 5.1vw, 78px);
+  font-size: clamp(38px, 4.35vw, 64px);
   font-weight: 800;
-  line-height: 1.04;
+  line-height: 1.08;
   text-shadow: 2px 3px 4px #000;
 }
 
 .hero__description {
   display: block;
-  max-width: 850px;
-  margin: 24px 0 0;
+  max-width: 760px;
+  margin: 22px 0 0;
   color: #fff;
-  font-size: clamp(20px, 2.1vw, 31px);
+  font-size: clamp(18px, 1.65vw, 25px);
   font-weight: 600;
-  line-height: 1.38;
+  line-height: 1.42;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.75);
 }
 
@@ -258,9 +258,9 @@ body,
   margin: 0;
   color: #333;
   font-family: "Poiret One", cursive;
-  font-size: clamp(38px, 4.2vw, 56px);
+  font-size: clamp(34px, 3.45vw, 48px);
   font-weight: 800;
-  line-height: 1.12;
+  line-height: 1.16;
   text-shadow: 1px 2px 3px #00000030;
 }
 
@@ -647,6 +647,9 @@ body,
 
 .home-request__form .form__title {
   color: #333;
+  font-size: 34px;
+  line-height: 1.15;
+  margin-bottom: 30px;
 }
 
 @media (max-width: 1280px) {
@@ -739,11 +742,11 @@ body,
   }
 
   .hero__title {
-    font-size: 36px;
+    font-size: 32px;
   }
 
   .hero__description {
-    font-size: 21px;
+    font-size: 19px;
   }
 
   .home-task-grid,
@@ -776,7 +779,7 @@ body,
 
 @media (max-width: 480px) {
   .hero__title {
-    font-size: 33px;
+    font-size: 30px;
   }
 
   .home-hero__actions,
