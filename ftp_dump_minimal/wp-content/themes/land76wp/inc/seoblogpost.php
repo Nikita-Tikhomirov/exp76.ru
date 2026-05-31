@@ -35,13 +35,178 @@ if (!function_exists('land76_blogseo_image_url')) {
     }
 }
 
+if (!function_exists('land76_blogseo_asset_url')) {
+    function land76_blogseo_asset_url($filename)
+    {
+        return home_url('/wp-content/uploads/seo-service-photos/' . ltrim($filename, '/'));
+    }
+}
+
+if (!function_exists('land76_blogseo_post_topics')) {
+    function land76_blogseo_post_topics($post_id)
+    {
+        $post_categories = wp_get_post_categories($post_id);
+        $topics = array(
+            'drenazh' => 87,
+            'otmostka' => 88,
+            'plitka' => 89,
+            'osushenie' => 90,
+            'livnevka' => 91,
+            'avtopoliv' => 92,
+        );
+
+        foreach ($topics as $topic_key => $category_id) {
+            if (in_array((int) $category_id, $post_categories, true)) {
+                return array($topic_key);
+            }
+        }
+
+        $text = mb_strtolower(get_post_field('post_name', $post_id) . ' ' . get_the_title($post_id));
+        if (preg_match('/дренаж|грунтов|глинист|уклон|труб/u', $text)) {
+            return array('drenazh');
+        }
+        if (preg_match('/осуш|болот|сыр|низин|вода/u', $text)) {
+            return array('osushenie');
+        }
+        if (preg_match('/ливнев|дождеприем|лотк|водосток/u', $text)) {
+            return array('livnevka');
+        }
+        if (preg_match('/отмост/u', $text)) {
+            return array('otmostka');
+        }
+        if (preg_match('/плитк|мощен|брусчат|дорожк/u', $text)) {
+            return array('plitka');
+        }
+        if (preg_match('/автополив|полив|спринклер|капельн/u', $text)) {
+            return array('avtopoliv');
+        }
+
+        return array('drenazh');
+    }
+}
+
+if (!function_exists('land76_blogseo_topic_image_by_text')) {
+    function land76_blogseo_topic_image_by_text($post_id, $post_topics)
+    {
+        $text = mb_strtolower(get_post_field('post_name', $post_id) . ' ' . get_the_title($post_id));
+        $topic_key = !empty($post_topics[0]) ? $post_topics[0] : 'drenazh';
+        $topic_rules = array(
+            'drenazh' => array(
+                '/труб|trub/u' => 'glubinnyy.webp',
+                '/схем|план|shema|plan/u' => 's-uklonom.webp',
+                '/своими|svoimi|rukami/u' => 'glubinnyy.webp',
+                '/высок|грунтов|gruntov|vysok/u' => 'vysokie-gruntovye-vody.webp',
+                '/глин|glin/u' => 'glinistaya-pochva.webp',
+                '/поверх|poverh/u' => 'poverhnostnyy.webp',
+                '/глуб|glubin/u' => 'glubinnyy.webp',
+                '/уклон|uklon/u' => 's-uklonom.webp',
+                '/6-sotok|6-сот/u' => '6-sotok.webp',
+                '/10-sotok|10-сот/u' => '10-sotok.webp',
+            ),
+            'osushenie' => array(
+                '/болот|заболоч|bolot/u' => 'osushenie-zabolochennogo-uchastka.webp',
+                '/грязн|луж|после-дожд|posle-dozhd|gryaz/u' => 'voda-posle-dozhdya-na-uchastke.webp',
+                '/грунтов|высок|gruntov|vysok/u' => 'osushenie-pri-vysokih-gruntovyh-vodah.webp',
+                '/глин|glin/u' => 'osushenie-glinistogo-uchastka.webp',
+                '/дренаж|drenazh/u' => 'drenazh-dlya-osusheniya-uchastka.webp',
+                '/дач|dach/u' => 'osushenie-dachnogo-uchastka.webp',
+            ),
+            'livnevka' => array(
+                '/дождеприем|dozhdepriem/u' => 'dozhdepriemniki-i-lotki.webp',
+                '/линей|lineyn/u' => 'lineynyy-vodootvod.webp',
+                '/крыш|krysh/u' => 'otvod-vody-s-kryshi.webp',
+                '/ремонт|remont/u' => 'remont-livnevoy-kanalizatsii.webp',
+                '/дом|vokrug/u' => 'livnevka-vokrug-doma.webp',
+                '/ливнев|livnev/u' => 'livnevka-na-uchastke.webp',
+            ),
+            'otmostka' => array(
+                '/треш|tresh/u' => 'remont-staroy.webp',
+                '/просел|prosel/u' => 'podgotovka-osnovaniya.webp',
+                '/мягк|myag/u' => 'myagkaya-otmostka.webp',
+                '/бетон|beton/u' => 'betonnaya-otmostka.webp',
+                '/утепл|utepl/u' => 'uteplennaya-otmostka.webp',
+                '/плит|plit/u' => 'otmostka-iz-plitki.webp',
+                '/залив|montazh|монтаж/u' => 'zalivka.webp',
+            ),
+            'plitka' => array(
+                '/брусчат|bruschat/u' => 'ukladka-bruschatki.webp',
+                '/дорож|dorozh/u' => 'sadovye-dorozhki-iz-plitki.webp',
+                '/авто|парков|ploshch/u' => 'ploshchadka-pod-avto-iz-plitki.webp',
+                '/бордюр|водоотвод|bordyur/u' => 'bordyury-i-vodootvod-dlya-plitki.webp',
+                '/ремонт|remont/u' => 'remont-trotuarnoy-plitki.webp',
+                '/основан|podgotov/u' => 'podgotovka-osnovaniya-pod-plitku.webp',
+            ),
+            'avtopoliv' => array(
+                '/капель|kapeln/u' => 'kapelnyy-poliv.webp',
+                '/теплиц|teplits/u' => 'avtopoliv-teplitsy.webp',
+                '/газон|gazon/u' => 'avtopoliv-gazona.webp',
+                '/сад|дерев|derev|sada/u' => 'avtopoliv-sada.webp',
+                '/насос|емкост|оборуд|nasos/u' => 'nasos-i-emkost-dlya-poliva.webp',
+                '/не работает|ремонт|обслуж|remont/u' => 'obsluzhivanie-avtopoliva.webp',
+                '/схем|проект|plan|shema/u' => 'proektirovanie-avtopoliva.webp',
+                '/своими|svoimi|rukami/u' => 'montazh-avtopoliva.webp',
+                '/автополив|poliv/u' => 'montazh-avtopoliva.webp',
+            ),
+        );
+
+        if (!empty($topic_rules[$topic_key])) {
+            foreach ($topic_rules[$topic_key] as $pattern => $image) {
+                if (preg_match($pattern, $text)) {
+                    return $image;
+                }
+            }
+        }
+
+        $topic_images = array(
+            'drenazh' => array('vysokie-gruntovye-vody.webp', 'glinistaya-pochva.webp', 'glubinnyy.webp', 'poverhnostnyy.webp', 's-uklonom.webp', 'vokrug-doma.webp'),
+            'osushenie' => array('cena-osusheniya-uchastka.webp', 'osushenie-zabolochennogo-uchastka.webp', 'voda-posle-dozhdya-na-uchastke.webp', 'otvod-vody-s-uchastka.webp', 'osushenie-glinistogo-uchastka.webp'),
+            'livnevka' => array('montazh-livnevoy-kanalizatsii.webp', 'livnevka-na-uchastke.webp', 'livnevka-vokrug-doma.webp', 'dozhdepriemniki-i-lotki.webp', 'lineynyy-vodootvod.webp'),
+            'otmostka' => array('betonnaya-otmostka.webp', 'myagkaya-otmostka.webp', 'uteplennaya-otmostka.webp', 'otmostka-iz-plitki.webp', 'remont-staroy.webp', 'podgotovka-osnovaniya.webp'),
+            'plitka' => array('sadovye-dorozhki-iz-plitki.webp', 'ploshchadka-pod-avto-iz-plitki.webp', 'ukladka-bruschatki.webp', 'bordyury-i-vodootvod-dlya-plitki.webp', 'remont-trotuarnoy-plitki.webp'),
+            'avtopoliv' => array('avtopoliv-gazona.webp', 'montazh-avtopoliva.webp', 'kapelnyy-poliv.webp', 'avtopoliv-sada.webp', 'avtopoliv-teplitsy.webp', 'nasos-i-emkost-dlya-poliva.webp'),
+        );
+        $pool = !empty($topic_images[$topic_key]) ? $topic_images[$topic_key] : $topic_images['drenazh'];
+        $index = abs(crc32((string) get_post_field('post_name', $post_id))) % count($pool);
+
+        return $pool[$index];
+    }
+}
+
+if (!function_exists('land76_blogseo_default_image_alt')) {
+    function land76_blogseo_default_image_alt($post_id, $post_topics)
+    {
+        $labels = array(
+            'drenazh' => 'Дренаж участка',
+            'osushenie' => 'Осушение участка',
+            'livnevka' => 'Ливневая канализация',
+            'otmostka' => 'Отмостка вокруг дома',
+            'plitka' => 'Укладка тротуарной плитки',
+            'avtopoliv' => 'Автополив на участке',
+        );
+        $topic_key = !empty($post_topics[0]) ? $post_topics[0] : 'drenazh';
+        $label = isset($labels[$topic_key]) ? $labels[$topic_key] : 'Благоустройство участка';
+
+        return $label . ': ' . get_the_title($post_id);
+    }
+}
+
 $blogseo_title = land76_blogseo_field('blogseo_hero_title', get_the_title());
 $blogseo_subtitle = land76_blogseo_field('blogseo_hero_subtitle', get_the_excerpt());
 $blogseo_lead = land76_blogseo_field('blogseo_lead', get_the_excerpt());
 $blogseo_sections = land76_blogseo_field('blogseo_sections', array());
 $blogseo_main_image = land76_blogseo_field('blogseo_main_image', '');
-$blogseo_main_image_url = land76_blogseo_image_url($blogseo_main_image, land76_blogseo_field('blogseo_main_image_url', 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp'));
+$blogseo_main_image_url = land76_blogseo_image_url($blogseo_main_image, land76_blogseo_field('blogseo_main_image_url', ''));
 $blogseo_main_image_alt = land76_blogseo_field('blogseo_main_image_alt', $blogseo_title);
+$blogseo_topics = land76_blogseo_post_topics(get_the_ID());
+
+if (!$blogseo_main_image_url || strpos($blogseo_main_image_url, '001-02-1') !== false) {
+    $blogseo_main_image_url = land76_blogseo_asset_url(land76_blogseo_topic_image_by_text(get_the_ID(), $blogseo_topics));
+}
+
+if (!$blogseo_main_image_alt || $blogseo_main_image_alt === $blogseo_title) {
+    $blogseo_main_image_alt = land76_blogseo_default_image_alt(get_the_ID(), $blogseo_topics);
+}
+
 $blogseo_cta_title = land76_blogseo_field('blogseo_cta_title', 'Нужен расчет работ по участку?');
 $blogseo_cta_text = land76_blogseo_field('blogseo_cta_text', 'Посмотрим задачу, предложим понятную схему работ и рассчитаем стоимость.');
 $blogseo_cta_button_text = land76_blogseo_field('blogseo_cta_button_text', 'Получить консультацию');

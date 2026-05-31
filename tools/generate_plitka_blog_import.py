@@ -9,7 +9,7 @@ SEO_IMPORT_DIR = ROOT / "seo-content" / "ukladka-trotuarnoy-plitki" / "import"
 THEME_IMPORT_DIR = ROOT / "ftp_dump_minimal" / "wp-content" / "themes" / "land76wp" / "import"
 SEO_BLOG_IMPORT_PATH = SEO_IMPORT_DIR / "plitka-blog-import.json"
 THEME_BLOG_IMPORT_PATH = THEME_IMPORT_DIR / "plitka-blog-import.json"
-IMAGE_URL = "https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp"
+IMAGE_URL = "https://exp76.ru/wp-content/uploads/seo-service-photos/sadovye-dorozhki-iz-plitki.webp"
 
 
 def text(*paragraphs: str) -> str:
@@ -136,7 +136,7 @@ POSTS = [
                     "Контроль качества укладки",
                     text(
                         "Проверяют уклон, ровность рядов, плотность посадки, примыкания к бордюрам, люкам, крыльцу, отмостке и водоотводу. Хорошая технология видна не только в день сдачи, но и после дождей.",
-                        "Поэтому мы считаем материалы и работы вместе: клиент получает понятную смету, а не набор разрозненных операций."
+                        "Поэтому мы считаем материалы и работы вместе: вы получаете понятную смету, а не набор разрозненных операций."
                     ),
                 ),
             ],

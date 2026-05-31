@@ -9,7 +9,7 @@ SEO_IMPORT_DIR = ROOT / "seo-content" / "livnevaya-kanalizatsiya" / "import"
 THEME_IMPORT_DIR = ROOT / "ftp_dump_minimal" / "wp-content" / "themes" / "land76wp" / "import"
 SEO_BLOG_IMPORT_PATH = SEO_IMPORT_DIR / "livnevka-blog-import.json"
 THEME_BLOG_IMPORT_PATH = THEME_IMPORT_DIR / "livnevka-blog-import.json"
-IMAGE_URL = "https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp"
+IMAGE_URL = "https://exp76.ru/wp-content/uploads/seo-service-photos/livnevka-na-uchastke.webp"
 
 
 def text(*paragraphs: str) -> str:

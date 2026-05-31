@@ -13,7 +13,7 @@ SEO_BLOG_IMPORT_PATH = SEO_IMPORT_DIR / "drenazh-blog-import.json"
 THEME_BLOG_IMPORT_PATH = THEME_IMPORT_DIR / "drenazh-blog-import.json"
 
 
-IMAGE_URL = "https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp"
+IMAGE_URL = "https://exp76.ru/wp-content/uploads/seo-service-photos/vysokie-gruntovye-vody.webp"
 
 
 def text(*paragraphs: str) -> str:

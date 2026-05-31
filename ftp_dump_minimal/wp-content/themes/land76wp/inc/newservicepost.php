@@ -560,22 +560,142 @@ if (!function_exists('land76_newservice_selected_real_projects')) {
     }
 }
 
+if (!function_exists('land76_newservice_asset_url')) {
+    function land76_newservice_asset_url($filename)
+    {
+        return home_url('/wp-content/uploads/seo-service-photos/' . ltrim($filename, '/'));
+    }
+}
+
+if (!function_exists('land76_newservice_topic_key')) {
+    function land76_newservice_topic_key($post_id)
+    {
+        $categories = wp_get_post_categories($post_id);
+        $map = array(
+            87 => 'drenazh',
+            88 => 'otmostka',
+            89 => 'plitka',
+            90 => 'osushenie',
+            91 => 'livnevka',
+            92 => 'avtopoliv',
+        );
+
+        foreach ($map as $category_id => $topic_key) {
+            if (in_array((int) $category_id, $categories, true)) {
+                return $topic_key;
+            }
+        }
+
+        return 'drenazh';
+    }
+}
+
+if (!function_exists('land76_newservice_context_image')) {
+    function land76_newservice_context_image($post_id, $context = '')
+    {
+        $topic_key = land76_newservice_topic_key($post_id);
+        $text = mb_strtolower(get_post_field('post_name', $post_id) . ' ' . get_the_title($post_id) . ' ' . $context);
+        $rules = array(
+            'drenazh' => array(
+                '/цен|смет|стоим|cena/u' => 'cena-drenazha-uchastka.webp',
+                '/высок|грунтов|grunt/u' => 'vysokie-gruntovye-vody.webp',
+                '/глин|glin/u' => 'glinistaya-pochva.webp',
+                '/дом|vokrug/u' => 'vokrug-doma.webp',
+                '/глуб|glubin/u' => 'glubinnyy.webp',
+                '/поверх|poverh/u' => 'poverhnostnyy.webp',
+                '/6-сот|6-sotok/u' => '6-sotok.webp',
+                '/10-сот|10-sotok/u' => '10-sotok.webp',
+                '/уклон|uklon/u' => 's-uklonom.webp',
+            ),
+            'otmostka' => array(
+                '/цен|смет|стоим|cena/u' => 'cena.webp',
+                '/бетон|beton/u' => 'betonnaya-otmostka.webp',
+                '/мягк|myag/u' => 'myagkaya-otmostka.webp',
+                '/утепл|utepl/u' => 'uteplennaya-otmostka.webp',
+                '/плит|plit/u' => 'otmostka-iz-plitki.webp',
+                '/основан|podgotov/u' => 'podgotovka-osnovaniya.webp',
+                '/вариант|tip|тип/u' => 'varianty.webp',
+                '/залив|монтаж|montazh/u' => 'zalivka.webp',
+                '/ремонт|просел|трещ|remont/u' => 'remont-staroy.webp',
+            ),
+            'plitka' => array(
+                '/цен|смет|стоим|cena/u' => 'cena-ukladki-trotuarnoy-plitki.webp',
+                '/основан|podgotov/u' => 'podgotovka-osnovaniya-pod-plitku.webp',
+                '/дорож|dorozh/u' => 'sadovye-dorozhki-iz-plitki.webp',
+                '/авто|парков/u' => 'ploshchadka-pod-avto-iz-plitki.webp',
+                '/двор/u' => 'dvor-iz-trotuarnoy-plitki.webp',
+                '/брусчат|bruschat/u' => 'ukladka-bruschatki.webp',
+                '/бордюр|водоотвод/u' => 'bordyury-i-vodootvod-dlya-plitki.webp',
+                '/ремонт/u' => 'remont-trotuarnoy-plitki.webp',
+            ),
+            'osushenie' => array(
+                '/цен|смет|стоим|cena/u' => 'cena-osusheniya-uchastka.webp',
+                '/дренаж|drenazh/u' => 'drenazh-dlya-osusheniya-uchastka.webp',
+                '/грунтов|высок/u' => 'osushenie-pri-vysokih-gruntovyh-vodah.webp',
+                '/болот|заболоч/u' => 'osushenie-zabolochennogo-uchastka.webp',
+                '/дач/u' => 'osushenie-dachnogo-uchastka.webp',
+                '/глин/u' => 'osushenie-glinistogo-uchastka.webp',
+                '/вода|дожд/u' => 'voda-posle-dozhdya-na-uchastke.webp',
+                '/проект|схем/u' => 'proektirovanie-sistemy-osusheniya.webp',
+            ),
+            'livnevka' => array(
+                '/цен|смет|стоим|cena/u' => 'cena-livnevoy-kanalizatsii.webp',
+                '/монтаж/u' => 'montazh-livnevoy-kanalizatsii.webp',
+                '/дом|vokrug/u' => 'livnevka-vokrug-doma.webp',
+                '/участ/u' => 'livnevka-na-uchastke.webp',
+                '/дождеприем|лотк/u' => 'dozhdepriemniki-i-lotki.webp',
+                '/линей/u' => 'lineynyy-vodootvod.webp',
+                '/крыша|крыш/u' => 'otvod-vody-s-kryshi.webp',
+                '/ремонт/u' => 'remont-livnevoy-kanalizatsii.webp',
+            ),
+            'avtopoliv' => array(
+                '/цен|смет|стоим|cena/u' => 'cena-avtopoliva-na-uchastke.webp',
+                '/монтаж/u' => 'montazh-avtopoliva.webp',
+                '/газон/u' => 'avtopoliv-gazona.webp',
+                '/капель/u' => 'kapelnyy-poliv.webp',
+                '/сад|дерев/u' => 'avtopoliv-sada.webp',
+                '/теплиц/u' => 'avtopoliv-teplitsy.webp',
+                '/проект|схем/u' => 'proektirovanie-avtopoliva.webp',
+                '/насос|емкост/u' => 'nasos-i-emkost-dlya-poliva.webp',
+                '/обслуж|ремонт/u' => 'obsluzhivanie-avtopoliva.webp',
+            ),
+        );
+
+        foreach ($rules[$topic_key] as $pattern => $image) {
+            if (preg_match($pattern, $text)) {
+                return land76_newservice_asset_url($image);
+            }
+        }
+
+        $defaults = array(
+            'drenazh' => 'vysokie-gruntovye-vody.webp',
+            'otmostka' => 'betonnaya-otmostka.webp',
+            'plitka' => 'sadovye-dorozhki-iz-plitki.webp',
+            'osushenie' => 'otvod-vody-s-uchastka.webp',
+            'livnevka' => 'livnevka-na-uchastke.webp',
+            'avtopoliv' => 'montazh-avtopoliva.webp',
+        );
+
+        return land76_newservice_asset_url($defaults[$topic_key]);
+    }
+}
+
 if (empty($ns87_problem_items) || !is_array($ns87_problem_items)) {
     $ns87_problem_items = array(
         array(
             'title' => 'Есть задача на участке',
             'text' => 'Нужно подобрать рабочее решение под конкретный участок, рельеф, покрытия и сценарий использования.',
-            'image' => 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp',
+            'image' => land76_newservice_context_image(get_the_ID(), 'задача на участке'),
         ),
         array(
             'title' => 'Нужна понятная смета',
             'text' => 'Важно заранее понимать состав работ, материалы, сроки и итоговую стоимость без лишних позиций.',
-            'image' => 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp',
+            'image' => land76_newservice_context_image(get_the_ID(), 'стоимость смета'),
         ),
         array(
             'title' => 'Важен аккуратный монтаж',
             'text' => 'Работы должны вписаться в существующее благоустройство и не создавать новых проблем на участке.',
-            'image' => 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp',
+            'image' => land76_newservice_context_image(get_the_ID(), 'монтаж'),
         ),
     );
 }
@@ -662,7 +782,7 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
           }
       }
       if (empty($ns87_problem_img)) {
-          $ns87_problem_img = 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp';
+          $ns87_problem_img = land76_newservice_context_image(get_the_ID(), !empty($ns87_problem_item['title']) ? $ns87_problem_item['title'] : '');
       }
     ?>
     <div class="problem-item" data-aos="fade-up" data-aos-duration="<?php echo esc_attr(700 + ($index * 100)); ?>">
@@ -726,7 +846,7 @@ Poiret One
           ? land76_get_card_image_url($post_id, 'medium')
           : get_the_post_thumbnail_url($post_id, 'medium');
         if (!$project_image) {
-          $project_image = 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp';
+          $project_image = land76_newservice_context_image(get_the_ID(), 'пример работ');
         }
         $project_title = function_exists('get_field') ? get_field('cs87_hero_title', $post_id) : '';
         if (!$project_title) {
