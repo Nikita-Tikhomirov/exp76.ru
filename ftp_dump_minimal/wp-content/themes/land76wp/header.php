@@ -52,7 +52,6 @@
         alt="" role="presentation" /></a>
     <nav class="menu">
       <ul class="menu__list">
-        <li class="menu__item"><a class="menu__link" href="<?php echo get_home_url(); ?>">Главная</a></li>
         <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(921); ?>">Услуги</a></li>
         <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(160); ?>">Работы</a></li>
         <li class="menu__about-list-wrap"><a class="menu__about-link hover-link" href="<?php echo get_permalink(181); ?>">О компании</a>
