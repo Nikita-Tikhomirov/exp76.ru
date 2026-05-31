@@ -6,769 +6,278 @@ Template Name: Главная страница
 <?php get_header(); ?>
 
 <?php
-if (!function_exists('land76_home_default_category_sections')) {
-  function land76_home_default_category_sections() {
-    return array(
-      87 => array(
-        'title' => 'Дренаж участка под ключ',
-        'button' => 'Все услуги по дренажу',
-        'slugs' => array('cena-drenazha-uchastka', 'vysokie-gruntovye-vody', 'glinistaya-pochva', 'vokrug-doma', 'glubinnyy', 'poverhnostnyy', '10-sotok', '6-sotok', 's-uklonom'),
-        'text' => '<p>Делаем дренаж участка под ключ, когда вода подходит к фундаменту, стоит на газоне, размывает дорожки или не уходит с глинистой почвы. Перед монтажом смотрим рельеф, уровень воды, место сброса и будущую планировку участка.</p><ul><li>Глубинный и поверхностный дренаж под реальные условия участка.</li><li>Защита фундамента, цоколя, газона, дорожек и посадок от переувлажнения.</li><li>Расчет схемы, материалов и стоимости до начала работ.</li></ul>',
-      ),
-      90 => array(
-        'title' => 'Осушение участка и отвод воды',
-        'button' => 'Все услуги по осушению участка',
-        'slugs' => array('cena-osusheniya-uchastka', 'drenazh-dlya-osusheniya-uchastka', 'osushenie-pri-vysokih-gruntovyh-vodah', 'osushenie-zabolochennogo-uchastka', 'osushenie-dachnogo-uchastka', 'osushenie-glinistogo-uchastka', 'otvod-vody-s-uchastka', 'voda-posle-dozhdya-na-uchastke', 'proektirovanie-sistemy-osusheniya'),
-        'text' => '<p>Осушение участка нужно, если земля долго остается сырой, вода скапливается после дождя, низины заболачиваются, а газон и посадки страдают от переувлажнения. Мы не просто копаем траншеи, а ищем причину воды и собираем рабочую схему отвода.</p><ul><li>Решения для заболоченных, глинистых и дачных участков.</li><li>Дренаж, водоотвод, колодцы, лотки, канавы и корректировка уклонов.</li><li>План работ под участок без лишних земляных работ.</li></ul>',
-      ),
-      91 => array(
-        'title' => 'Ливневая канализация на участке',
-        'button' => 'Все услуги по ливневой канализации',
-        'slugs' => array('cena-livnevoy-kanalizatsii', 'montazh-livnevoy-kanalizatsii', 'livnevka-vokrug-doma', 'livnevka-na-uchastke', 'dozhdepriemniki-i-lotki', 'lineynyy-vodootvod', 'drenazh-i-livnevaya-kanalizatsiya', 'otvod-vody-s-kryshi', 'remont-livnevoy-kanalizatsii'),
-        'text' => '<p>Ливневая канализация собирает дождевую и талую воду с крыши, отмостки, двора, дорожек и парковки. Это помогает сохранить покрытие, защитить фундамент и убрать лужи в местах, где вода раньше растекалась по участку.</p><ul><li>Дождеприемники, лотки, линейный водоотвод, трубы и колодцы.</li><li>Отвод воды с крыши, отмостки, въезда, дорожек и площадок.</li><li>Связка ливневки с дренажом, если на участке несколько источников воды.</li></ul>',
-      ),
-      88 => array(
-        'title' => 'Отмостка вокруг дома',
-        'button' => 'Все услуги по отмостке',
-        'slugs' => array('cena', 'betonnaya-otmostka', 'myagkaya-otmostka', 'uteplennaya-otmostka', 'otmostka-iz-plitki', 'podgotovka-osnovaniya', 'varianty', 'zalivka', 'remont-staroy'),
-        'text' => '<p>Отмостка вокруг дома отводит воду от фундамента, защищает цоколь и делает аккуратный переход от дома к дорожкам. Подбираем конструкцию под грунт, уклон, отделку дома и систему водоотвода.</p><ul><li>Бетонная, мягкая, утепленная отмостка и отмостка из плитки.</li><li>Подготовка основания, подушка, уклон и правильное примыкание к дому.</li><li>Связка с ливневой канализацией или дренажом вокруг дома.</li></ul>',
-      ),
-      89 => array(
-        'title' => 'Укладка тротуарной плитки',
-        'button' => 'Все услуги по тротуарной плитке',
-        'slugs' => array('cena-ukladki-trotuarnoy-plitki', 'podgotovka-osnovaniya-pod-plitku', 'sadovye-dorozhki-iz-plitki', 'ploshchadka-pod-avto-iz-plitki', 'dvor-iz-trotuarnoy-plitki', 'ukladka-bruschatki', 'otmostka-iz-trotuarnoy-plitki', 'bordyury-i-vodootvod-dlya-plitki', 'remont-trotuarnoy-plitki'),
-        'text' => '<p>Укладываем тротуарную плитку под ключ для дорожек, дворов, парковок, площадок и отмосток. Сначала продумываем основание, уклоны, бордюры и водоотвод, чтобы покрытие не проседало и не собирало воду.</p><ul><li>Подготовка основания под плитку с учетом грунта и нагрузки.</li><li>Мощение дорожек, дворов, въездов, парковок и площадок.</li><li>Бордюры, водоотвод и ремонт старого плиточного покрытия.</li></ul>',
-      ),
-      92 => array(
-        'title' => 'Автополив на участке',
-        'button' => 'Все услуги по автополиву',
-        'slugs' => array('cena-avtopoliva-na-uchastke', 'montazh-avtopoliva', 'avtopoliv-gazona', 'kapelnyy-poliv', 'avtopoliv-sada', 'avtopoliv-teplitsy', 'proektirovanie-avtopoliva', 'nasos-i-emkost-dlya-poliva', 'obsluzhivanie-avtopoliva'),
-        'text' => '<p>Автополив помогает сохранить газон, сад, клумбы, теплицу и живую изгородь без ежедневного ручного полива. Проектируем систему по зонам, чтобы разные растения получали нужный объем воды по расписанию.</p><ul><li>Спринклеры для газона и капельные линии для посадок.</li><li>Насос, емкость, трубы, клапаны, контроллер и настройка зон.</li><li>Монтаж под ключ, запуск, сезонное обслуживание и ремонт.</li></ul>',
-      ),
-    );
-  }
-}
-
-if (!function_exists('land76_home_section_category_id')) {
-  function land76_home_section_category_id($section) {
-    if (empty($section['category'])) {
-      return 0;
-    }
-    if (is_object($section['category']) && !empty($section['category']->term_id)) {
-      return (int) $section['category']->term_id;
-    }
-    if (is_array($section['category']) && !empty($section['category']['term_id'])) {
-      return (int) $section['category']['term_id'];
-    }
-    return (int) $section['category'];
-  }
-}
-
-$home_default_sections = land76_home_default_category_sections();
-$home_sections = function_exists('get_field') ? get_field('home_category_sections', 'option') : array();
-if (empty($home_sections) || !is_array($home_sections)) {
-  $home_sections = array();
-  foreach ($home_default_sections as $cat_id => $section) {
-    $section['category'] = $cat_id;
-    $home_sections[] = $section;
-  }
-}
-
-if (!empty($home_sections) && is_array($home_sections)):
-?>
-<section class="home-services-tabs wrapper">
-  <h2 class="services__title">Основные направления работ</h2>
-  <div class="home-services-tabs__nav" role="tablist" aria-label="Направления услуг">
-    <?php
-    $nav_index = 0;
-    foreach ($home_sections as $nav_section):
-      $nav_cat_id = land76_home_section_category_id($nav_section);
-      $nav_default = isset($home_default_sections[$nav_cat_id]) ? $home_default_sections[$nav_cat_id] : array();
-      $nav_title = !empty($nav_section['title']) ? $nav_section['title'] : (!empty($nav_default['title']) ? $nav_default['title'] : '');
-      if (!$nav_title) {
-        continue;
+if (!function_exists('land76_home_term_link')) {
+  function land76_home_term_link($term_id, $fallback) {
+    $term = get_term((int) $term_id, 'category');
+    if ($term && !is_wp_error($term)) {
+      $url = get_term_link($term);
+      if (!is_wp_error($url)) {
+        return $url;
       }
-    ?>
-      <button class="home-services-tabs__button<?php echo $nav_index === 0 ? ' is-active' : ''; ?>" type="button" role="tab" aria-selected="<?php echo $nav_index === 0 ? 'true' : 'false'; ?>" data-home-tab="<?php echo esc_attr($nav_index); ?>">
-        <?php echo esc_html($nav_title); ?>
-      </button>
-    <?php
-      $nav_index++;
-    endforeach;
-    ?>
+    }
+    return home_url($fallback);
+  }
+}
+
+if (!function_exists('land76_home_media_url')) {
+  function land76_home_media_url($file_name) {
+    return home_url('/wp-content/uploads/seo-service-photos/' . ltrim($file_name, '/'));
+  }
+}
+
+$services_page = get_permalink(921);
+$works_page = get_permalink(160);
+$calc_page = get_permalink(9973);
+$contacts_page = get_permalink(227);
+
+$task_cards = array(
+  array('title' => 'На участке стоит вода', 'text' => 'Подберем дренаж, осушение или ливневую канализацию, чтобы убрать лужи, сырость и воду у фундамента.', 'url' => land76_home_term_link(87, '/category/drenazh-uchastka/')),
+  array('title' => 'Нужно защитить фундамент', 'text' => 'Сделаем отмостку, водоотвод и примыкания так, чтобы вода уходила от дома, а не под основание.', 'url' => land76_home_term_link(88, '/category/otmostka-vokrug-doma/')),
+  array('title' => 'Нужны дорожки и площадки', 'text' => 'Продумываем основание, уклоны, бордюры и покрытие для дорожек, двора, парковки и входной зоны.', 'url' => land76_home_term_link(89, '/category/ukladka-trotuarnoy-plitki/')),
+  array('title' => 'Нужно отвести воду с крыши', 'text' => 'Собираем дождевую воду через лотки, дождеприемники, трубы и колодцы без размыва участка.', 'url' => land76_home_term_link(91, '/category/livnevaya-kanalizatsiya/')),
+  array('title' => 'Нужен полив без ручной работы', 'text' => 'Проектируем автополив газона, сада, теплицы и посадок с зонами, клапанами и контроллером.', 'url' => land76_home_term_link(92, '/category/avtopoliv-na-uchastke/')),
+  array('title' => 'Нужен понятный план работ', 'text' => 'Сначала смотрим рельеф, воду, подъезд и будущие покрытия, потом собираем этапы и смету.', 'url' => $services_page),
+);
+
+$service_cards = array(
+  array('title' => 'Дренаж участка', 'text' => 'Глубинный и поверхностный дренаж, решения для глинистой почвы, высоких грунтовых вод, воды у дома и участков с уклоном.', 'url' => land76_home_term_link(87, '/category/drenazh-uchastka/'), 'image' => land76_home_media_url('cena-drenazha-uchastka.webp'), 'alt' => 'Дренаж участка под ключ в Ярославской области'),
+  array('title' => 'Осушение участка', 'text' => 'Работы для сырых, заболоченных и низких участков: дренаж, водоотвод, колодцы, лотки, канавы и корректировка уклонов.', 'url' => land76_home_term_link(90, '/category/osushenie-uchastka/'), 'image' => land76_home_media_url('osushenie-zabolochennogo-uchastka.webp'), 'alt' => 'Осушение участка и отвод воды'),
+  array('title' => 'Ливневая канализация', 'text' => 'Дождеприемники, лотки, трубы и колодцы для отвода воды с крыши, отмостки, дорожек, парковки и двора.', 'url' => land76_home_term_link(91, '/category/livnevaya-kanalizatsiya/'), 'image' => land76_home_media_url('livnevka-na-uchastke.webp'), 'alt' => 'Ливневая канализация на участке'),
+  array('title' => 'Отмостка вокруг дома', 'text' => 'Бетонная, мягкая, утепленная и плиточная отмостка с уклоном, основанием, примыканием и связкой с водоотводом.', 'url' => land76_home_term_link(88, '/category/otmostka-vokrug-doma/'), 'image' => land76_home_media_url('otmostka-iz-plitki.webp'), 'alt' => 'Отмостка вокруг дома под ключ'),
+  array('title' => 'Укладка тротуарной плитки', 'text' => 'Дорожки, двор, парковка, площадки и бордюры с подготовкой основания, уклонами и водоотводом.', 'url' => land76_home_term_link(89, '/category/ukladka-trotuarnoy-plitki/'), 'image' => land76_home_media_url('cena-ukladki-trotuarnoy-plitki.webp'), 'alt' => 'Укладка тротуарной плитки на участке'),
+  array('title' => 'Автополив на участке', 'text' => 'Спринклеры, капельные линии, насос, емкость, клапаны и контроллер для газона, сада, теплицы и посадок.', 'url' => land76_home_term_link(92, '/category/avtopoliv-na-uchastke/'), 'image' => land76_home_media_url('montazh-avtopoliva.webp'), 'alt' => 'Монтаж автополива на участке'),
+);
+
+$works = get_posts(array(
+  'numberposts' => 6,
+  'category' => 75,
+  'orderby' => 'date',
+  'order' => 'DESC',
+  'post_type' => 'page',
+  'post_status' => 'publish',
+  'suppress_filters' => true,
+));
+?>
+
+<section class="home-section home-problems wrapper" id="tasks">
+  <div class="home-section__head">
+    <span class="home-eyebrow">С чего начинается работа</span>
+    <h2>С какой задачей к нам обращаются</h2>
+    <p>На частном участке редко бывает одна изолированная работа. Вода, уклоны, основание, дорожки и посадки связаны между собой, поэтому мы сначала разбираемся в задаче, а потом предлагаем состав работ.</p>
   </div>
-  <div class="home-services-tabs__panels">
-<?php
-  $section_index = 0;
-  foreach ($home_sections as $section):
-    $sec_cat_id = land76_home_section_category_id($section);
-    $sec_default = isset($home_default_sections[$sec_cat_id]) ? $home_default_sections[$sec_cat_id] : array();
-    $sec_title = !empty($section['title']) ? $section['title'] : (!empty($sec_default['title']) ? $sec_default['title'] : '');
-    $sec_text = !empty($section['text']) ? $section['text'] : (!empty($sec_default['text']) ? $sec_default['text'] : '');
-    $sec_button = !empty($section['button']) ? $section['button'] : (!empty($sec_default['button']) ? $sec_default['button'] : '');
-    $cat_term = $sec_cat_id ? get_term($sec_cat_id, 'category') : null;
-    $sec_cat_url = ($cat_term && !is_wp_error($cat_term)) ? get_term_link($cat_term) : '';
-    $sec_cat_name = ($cat_term && !is_wp_error($cat_term)) ? $cat_term->name : '';
+  <div class="home-task-grid">
+    <?php foreach ($task_cards as $card): ?>
+      <a class="home-task-card" href="<?php echo esc_url($card['url']); ?>">
+        <h3><?php echo esc_html($card['title']); ?></h3>
+        <p><?php echo esc_html($card['text']); ?></p>
+      </a>
+    <?php endforeach; ?>
+  </div>
+</section>
 
-    $sec_posts = array();
-    if ($sec_cat_id) {
-      $query_args = array(
-        'numberposts' => 9,
-        'post_type' => 'post',
-        'post_status' => 'publish',
-        'suppress_filters' => true,
-        'tax_query' => array(
-          'relation' => 'AND',
-          array(
-            'taxonomy' => 'category',
-            'field' => 'term_id',
-            'terms' => array($sec_cat_id),
-          ),
-          array(
-            'taxonomy' => 'category',
-            'field' => 'term_id',
-            'terms' => array(74),
-          ),
-        ),
-      );
-
-      if (!empty($sec_default['slugs'])) {
-        $query_args['post_name__in'] = $sec_default['slugs'];
-        $query_args['orderby'] = 'post_name__in';
-      } else {
-        $query_args['orderby'] = 'date';
-        $query_args['order'] = 'DESC';
-      }
-
-      $sec_posts = get_posts($query_args);
-    }
-
-    if (empty($sec_posts) && empty($sec_title) && empty($sec_text)) {
-      continue;
-    }
-?>
-<section class="home-cat-section home-cat-panel<?php echo ($section_index === 0) ? ' is-active' : ''; ?>" data-home-panel="<?php echo esc_attr($section_index); ?>" role="tabpanel">
-  <?php if ($sec_title): ?>
-    <h2 class="services__title"><?php echo esc_html($sec_title); ?></h2>
-  <?php endif; ?>
-
-  <?php if (!empty($sec_posts)): ?>
-  <div class="home-cat-carousel" data-aos="fade-up" data-aos-duration="500">
-    <button class="home-cat-arrow home-cat-arrow--prev" type="button" aria-label="Предыдущие услуги"></button>
-    <div class="home-cat-viewport">
-      <div class="home-cat-track">
-        <?php foreach ($sec_posts as $post):
-          setup_postdata($post);
-          $card_img = function_exists('land76_get_card_image_url')
-            ? land76_get_card_image_url(get_the_ID(), 'medium')
-            : get_the_post_thumbnail_url(get_the_ID(), 'medium');
-          if (!$card_img) $card_img = 'https://exp76.ru/wp-content/uploads/2020/02/001-02-1.webp';
-          $card_alt = function_exists('land76_get_card_image_alt')
-            ? land76_get_card_image_alt(get_the_ID())
-            : get_the_title();
-        ?>
-        <div class="home-cat-slide">
-          <div class="service">
-            <div class="service__img-wrap">
-              <img class="service__img" src="<?php echo esc_url($card_img); ?>" alt="<?php echo esc_attr($card_alt); ?>" loading="lazy" />
-            </div>
-            <div class="service__text-wrap">
-              <h3 class="service__title"><?php the_title(); ?></h3>
-              <?php the_excerpt(); ?>
-              <div class="service__link-wrap">
-                <a class="service__link" href="<?php the_permalink(); ?>">Подробнее</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <?php endforeach; wp_reset_postdata(); ?>
-      </div>
+<section class="home-section home-services wrapper" id="services">
+  <div class="home-section__head home-section__head--split">
+    <div>
+      <span class="home-eyebrow">Каталог направлений</span>
+      <h2>Услуги по благоустройству участка</h2>
     </div>
-    <button class="home-cat-arrow home-cat-arrow--next" type="button" aria-label="Следующие услуги"></button>
-    <div class="home-cat-pagination" aria-label="Навигация по услугам"></div>
+    <p>На главной собраны основные направления. Внутри каждой рубрики есть отдельные SEO-страницы по цене, видам работ, проблемам участка и условиям монтажа.</p>
   </div>
-  <?php endif; ?>
-
-  <?php if ($sec_text): ?>
-  <div class="home-cat-text seo-text">
-    <?php echo wp_kses_post($sec_text); ?>
-  </div>
-  <?php endif; ?>
-
-  <?php if ($sec_cat_url): ?>
-  <div class="home-cat-link-wrap">
-    <a href="<?php echo esc_url($sec_cat_url); ?>" class="btn--primary-custom"><?php echo esc_html($sec_button ? $sec_button : 'Все услуги ' . $sec_cat_name); ?></a>
-  </div>
-  <?php endif; ?>
-</section>
-<?php
-    $section_index++;
-  endforeach;
-?>
+  <div class="home-service-grid">
+    <?php foreach ($service_cards as $card): ?>
+      <article class="home-service-card">
+        <a class="home-service-card__image" href="<?php echo esc_url($card['url']); ?>">
+          <img src="<?php echo esc_url($card['image']); ?>" alt="<?php echo esc_attr($card['alt']); ?>" loading="lazy" />
+        </a>
+        <div class="home-service-card__body">
+          <h3><a href="<?php echo esc_url($card['url']); ?>"><?php echo esc_html($card['title']); ?></a></h3>
+          <p><?php echo esc_html($card['text']); ?></p>
+          <a class="home-inline-link" href="<?php echo esc_url($card['url']); ?>">Перейти в раздел</a>
+        </div>
+      </article>
+    <?php endforeach; ?>
   </div>
 </section>
-<?php
-endif;
-?>
 
-<?php if (false): ?>
-<section class="services wrapper">
-  <h2 class="services__title">Услуги </h2>
-  <div class="services__cards columns3">
+<section class="home-section home-logic wrapper">
+  <div class="home-section__head">
+    <span class="home-eyebrow">Правильная последовательность</span>
+    <h2>Почему сначала вода, уклоны и основание</h2>
+    <p>Красивое покрытие быстро теряет вид, если под ним стоит вода или неправильно собран пирог основания. Поэтому инженерные решения мы увязываем с мощением, отмосткой, газоном и посадками.</p>
+  </div>
+  <div class="home-logic-grid">
+    <article>
+      <h3>Вода</h3>
+      <p>Проверяем, куда уходит дождевая и талая вода, где высокий уровень грунтовых вод, где нужен дренаж или ливневка.</p>
+    </article>
+    <article>
+      <h3>Основание</h3>
+      <p>Подбираем глубину выемки, щебень, песок, геотекстиль, уклоны и бордюры под грунт и будущую нагрузку.</p>
+    </article>
+    <article>
+      <h3>Финиш</h3>
+      <p>После инженерной подготовки делаем отмостку, дорожки, площадки, газон, посадки и автополив без лишних переделок.</p>
+    </article>
+  </div>
+</section>
 
-    <?php
-
-    $posts = get_posts(array(
-      'numberposts' => -1,
-      'category' => 74,
-      'orderby' => 'date',
-      'order' => 'DESC',
-      'include' => array(),
-      'exclude' => array(),
-      'meta_key' => '',
-      'meta_value' => '',
-      'post_type' => 'page',
-      'suppress_filters' => true, // подавление работы фильтров изменения SQL запроса
-    ));
-
-    foreach ($posts as $post) {
-      setup_postdata($post);
-      // формат вывода the_title() ...
-    
-
-
-      ?>
-      <div class="service" data-aos="fade-up" data-aos-duration="400">
-
-        <div class="service__img-wrap">
-          <img class="service__img" src="<?php the_post_thumbnail_url(); ?>" alt="" role="presentation" />
-        </div>
-
-        <div class="service__text-wrap">
-
-          <h5 class="service__title"><?php the_title() ?></h5>
-
-          <?php the_excerpt() ?>
-
-        </div>
-
-        <div class="service__link-wrap">
-          <a class="service__link" href="<?php the_permalink() ?>">Подробнее</a>
-        </div>
-
-      </div>
-
-
-      <?php
-    }
-
-    wp_reset_postdata(); // сброс
-    
+<?php if ($works): ?>
+<section class="home-section home-works wrapper" id="works">
+  <div class="home-section__head home-section__head--split">
+    <div>
+      <span class="home-eyebrow">Реальные объекты</span>
+      <h2>Выполненные работы</h2>
+    </div>
+    <p>В работах видно не только внешний вид участка, но и качество подготовки: уклоны, водоотвод, мощение, газон, посадки и связка разных этапов.</p>
+  </div>
+  <div class="home-work-grid">
+    <?php foreach ($works as $post): setup_postdata($post);
+      $thumb = get_the_post_thumbnail_url($post, 'large');
+      if (!$thumb) {
+        $thumb = get_template_directory_uri() . '/img/foto1.jpg';
+      }
+      $work_alt = sprintf('Выполненные работы по благоустройству участка: %s', get_the_title($post));
     ?>
-
-
-
+      <article class="home-work-card">
+        <a class="home-work-card__image" href="<?php the_permalink(); ?>">
+          <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($work_alt); ?>" loading="lazy" />
+        </a>
+        <div class="home-work-card__body">
+          <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+          <p><?php echo esc_html(wp_trim_words(get_the_excerpt(), 24, '...')); ?></p>
+          <a class="home-inline-link" href="<?php the_permalink(); ?>">Смотреть работу</a>
+        </div>
+      </article>
+    <?php endforeach; wp_reset_postdata(); ?>
   </div>
-
+  <div class="home-actions">
+    <a class="home-btn home-btn--primary" href="<?php echo esc_url($works_page); ?>">Все работы</a>
+    <a class="home-btn home-btn--outline" href="#request">Обсудить участок</a>
+  </div>
 </section>
 <?php endif; ?>
 
-<style>
-  html,
-  body,
-  .page-content,
-  .main {
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-
-  @media only screen and (max-width: 767px) {
-    .case .case__img-wrap {
-      height: 300px !important;
-    }
-  }
-
-  /* ── Секции категорий на главной ── */
-  .home-services-tabs {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    background: url(<?php echo get_template_directory_uri(); ?>/img/sb5.png) center/cover #6e564810;
-  }
-  .home-services-tabs > .services__title {
-    margin-bottom: 24px;
-  }
-  .home-services-tabs__nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 28px;
-  }
-  .home-services-tabs__button {
-    cursor: pointer;
-    padding: 10px 18px;
-    border: 2px solid #0a9215;
-    border-radius: 24px;
-    background: #fff;
-    color: #333;
-    font-size: 17px;
-    font-weight: 700;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
-    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  }
-  .home-services-tabs__button.is-active,
-  .home-services-tabs__button:hover {
-    background: #0a9215;
-    color: #fff;
-  }
-  .home-cat-panel {
-    display: none;
-  }
-  .home-cat-panel.is-active {
-    display: block;
-  }
-  .home-cat-section {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .home-cat-section--alt {
-    background: #f7faf6;
-  }
-  .home-cat-carousel {
-    position: relative;
-    width: 100%;
-    max-width: 1320px;
-    margin: 0 auto;
-    padding: 0 58px;
-    box-sizing: border-box;
-  }
-  .home-cat-viewport {
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-    padding: 10px 10px 44px;
-    margin: 0 auto;
-    box-sizing: border-box;
-    transition: height 0.25s ease;
-    touch-action: pan-y;
-  }
-  .home-cat-track {
-    display: flex;
-    gap: 30px;
-    will-change: transform;
-    transition: transform 0.35s ease;
-    align-items: stretch;
-  }
-  .home-cat-track.is-dragging {
-    transition: none;
-    cursor: grabbing;
-  }
-  .home-cat-slide {
-    flex: 0 0 calc((100% - 60px) / 3);
-    height: auto;
-    box-sizing: border-box;
-    min-width: 0;
-    padding-bottom: 24px;
-    display: flex;
-  }
-  .home-cat-track .service {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-  .home-cat-arrow {
-    position: absolute;
-    top: 46%;
-    z-index: 2;
-    width: 42px;
-    height: 42px;
-    border: 2px solid #ff5e00;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
-    transform: translateY(-50%);
-    transition: background 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-  }
-  .home-cat-arrow::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 12px;
-    height: 12px;
-    border-top: 3px solid #ff5e00;
-    border-right: 3px solid #ff5e00;
-  }
-  .home-cat-arrow--prev {
-    left: 8px;
-  }
-  .home-cat-arrow--prev::before {
-    transform: translate(-38%, -50%) rotate(-135deg);
-  }
-  .home-cat-arrow--next {
-    right: 8px;
-  }
-  .home-cat-arrow--next::before {
-    transform: translate(-62%, -50%) rotate(45deg);
-  }
-  .home-cat-arrow:hover {
-    background: #fff7f1;
-    box-shadow: 0 6px 16px rgba(255, 94, 0, 0.22);
-  }
-  .home-cat-arrow.is-disabled {
-    opacity: 0.35;
-    pointer-events: none;
-  }
-  .home-cat-pagination {
-    display: none;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 10px;
-  }
-  .home-cat-pagination button {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #c8c8c8;
-    transition: background 0.2s ease, transform 0.2s ease;
-  }
-  .home-cat-pagination button.is-active {
-    background: #ff5e00;
-    transform: scale(1.25);
-  }
-  .home-cat-section .swiper-button-next,
-  .home-cat-section .swiper-button-prev {
-    display: none !important;
-  }
-  .home-cat-text {
-    max-width: 940px;
-    margin-top: 32px;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 18px;
-    line-height: 1.65;
-    color: #555;
-  }
-  .home-cat-text p {
-    margin: 0 0 18px;
-  }
-  .home-cat-text ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 12px;
-  }
-  .home-cat-text li {
-    position: relative;
-    padding-left: 28px;
-    color: #4f4f4f;
-  }
-  .home-cat-text li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.65em;
-    width: 10px;
-    height: 10px;
-    border: 2px solid #0a9215;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(10, 146, 21, 0.12);
-  }
-  .home-cat-link-wrap {
-    text-align: center;
-    margin-top: 28px;
-  }
-
-  .home-cat-link-wrap .btn--primary-custom {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 50px;
-    padding: 12px 30px;
-    background: #0a9215;
-    color: #fff;
-    border: 2px solid #0a9215;
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 16px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(10, 146, 21, 0.24);
-  }
-  .home-cat-link-wrap .btn--primary-custom:hover {
-    background: #087812;
-    border-color: #087812;
-    color: #fff;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(10, 146, 21, 0.3);
-  }
-
-  @media (max-width: 768px) {
-    .home-cat-section {
-      padding-top: 35px;
-      padding-bottom: 35px;
-    }
-    .home-cat-carousel {
-      padding: 0 48px;
-    }
-    .home-cat-track {
-      gap: 20px;
-    }
-    .home-cat-slide {
-      flex-basis: calc((100% - 20px) / 2);
-    }
-    .home-cat-text {
-      font-size: 16px;
-    }
-  }
-
-  @media (max-width: 599px) {
-    .home-cat-carousel {
-      padding: 0;
-    }
-    .home-cat-viewport {
-      padding-left: 8px;
-      padding-right: 8px;
-      padding-bottom: 54px;
-    }
-    .home-cat-track {
-      gap: 16px;
-    }
-    .home-cat-slide {
-      flex-basis: 100%;
-      padding-bottom: 26px;
-    }
-    .home-cat-track .service {
-      height: auto;
-      min-height: 0;
-    }
-    .home-cat-arrow {
-      display: none;
-    }
-    .home-cat-pagination {
-      display: flex;
-      margin-top: 0;
-    }
-  }
-</style>
-
-<section class="portfolio wrapper">
-
-  <div class="portfolio__bg-left" data-aos="fade-right" data-aos-duration="600"><img
-      src="<?php echo get_template_directory_uri() ?>/img/bg-left.png" alt="" role="presentation"></div>
-
-  <h2 class="portfolio__title" data-aos="fade-right" data-aos-duration="700">Наши работы </h2>
-  <?php
-  $posts = get_posts([
-    'numberposts' => -1,
-    'category' => 75,
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'post_type' => 'page',
-    'suppress_filters' => true,
-  ]);
-
-  if ($posts): ?>
-
-    <div class="cont">
-      <div class="portfolio-slider gallery-top">
-        <div class="swiper-wrapper">
-          <?php foreach ($posts as $post):
-            setup_postdata($post);
-            $thumb = get_the_post_thumbnail_url($post, 'large');
-            $case_alt = sprintf('Пример работ по благоустройству участка: %s', get_the_title($post));
-            ?>
-            <div class="case swiper-slide">
-              <div class="case__img-wrap">
-                <img class="case__img" src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($case_alt); ?>" />
-              </div>
-              <div class="case__content">
-                <p class="case__title"><?php the_title(); ?></p>
-                <div class="case__description"><?php the_excerpt(); ?></div>
-                <a class="case__link" href="<?php the_permalink(); ?>">Подробнее</a>
-              </div>
-            </div>
-          <?php endforeach; ?>
-        </div>
-      </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-    </div>
-
-    <div class="gallery-thumbs">
-      <div class="swiper-wrapper">
-        <?php foreach ($posts as $post):
-          setup_postdata($post);
-          $thumb_small = get_the_post_thumbnail_url($post, 'thumbnail');
-          $case_thumb_alt = sprintf('Миниатюра работы: %s', get_the_title($post));
-          ?>
-          <div class="swiper-slide">
-            <img class="gallery-thumbs__img" src="<?php echo esc_url($thumb_small); ?>" alt="<?php echo esc_attr($case_thumb_alt); ?>" />
-          </div>
-        <?php endforeach; ?>
-      </div>
-    </div>
-
-    <?php
-    wp_reset_postdata();
-  endif;
-  ?>
-
-
-  <a class="portfolio__link" href="#">Посмотреть все работы</a>
+<section class="home-section home-process wrapper">
+  <div class="home-section__head">
+    <span class="home-eyebrow">Этапы</span>
+    <h2>Как проходит работа</h2>
+  </div>
+  <ol class="home-process-list">
+    <li><span>01</span><h3>Осмотр участка</h3><p>Смотрим рельеф, воду, грунт, готовые строения, подъезд техники и места будущих дорожек.</p></li>
+    <li><span>02</span><h3>Схема и смета</h3><p>Предлагаем состав работ, материалы, очередность этапов и понятный расчет без лишних позиций.</p></li>
+    <li><span>03</span><h3>Подготовка</h3><p>Делаем разметку, земляные работы, основание, дренаж, ливневку и уклоны под будущие покрытия.</p></li>
+    <li><span>04</span><h3>Монтаж и сдача</h3><p>Выполняем финишные работы, проверяем водоотвод, показываем результат и даем рекомендации по эксплуатации.</p></li>
+  </ol>
 </section>
 
-<section class="about wrapper">
-  <h2 class="about__title" data-aos="fade-right" data-aos-duration="600">О нас</h2>
-  <div class="about__wrap">
-    <p class="about__text" data-aos="fade-right" data-aos-duration="800">Мы поможем вам сформировать уникальную
-      концепцию в соответствии с особенностями территории или участка, поможем в закупке растений, создадим зону
-      отдыха, разобьем цветник или рокарий, посадим зелёный газон, построим беседку и барбекю комплекс, оформим
-      патио, построим водоём, проведём систему автоматического полива и подключим освещение участка. Скажите нам,
-      каким вы видите свой сад, и мы сделаем его таким! В нашей компании «ЭКСПЕРТЫ» трудятся специалисты разных
-      направлений, благодаря чему мы можем сделать ландшафтный дизайн под ключ, от разработки до воплощения,
-      включая прокладку дренажей и ливневых систем, строительство фундамента, возведение отмостки вокруг строений,
-      оформление парковок и въездов на участок, возведение заборов, ограждений, въездных групп, садовых дорожек.
-    </p>
-    <div class="about__logo-wrap" data-aos="fade-up" data-aos-duration="1000">
-      <img class="about__logo" src="<?php echo get_template_directory_uri() ?>/img/al2.png" alt=""
-        role="presentation" />
-      <div class="about__logo-text">
-        <p class="about__name">ЭКСПЕРТЫ</p>
-        <p class="about__logo-desc">Ландшафтно-строительная компания</p>
-      </div>
+<section class="home-section home-cost wrapper" id="prices">
+  <div class="home-cost__content">
+    <span class="home-eyebrow">Смета</span>
+    <h2>От чего зависит стоимость благоустройства</h2>
+    <p>Стоимость нельзя честно назвать только по площади. На цену влияет вода на участке, уклоны, грунт, глубина подготовки, выбранные материалы и то, нужно ли делать работы поэтапно.</p>
+    <ul class="home-check-list">
+      <li>площадь участка, длина трасс и объем земляных работ;</li>
+      <li>тип грунта, уровень воды, уклон и место сброса;</li>
+      <li>материалы: трубы, щебень, геотекстиль, лотки, плитка, бордюр;</li>
+      <li>наличие дома, забора, дорожек, посадок и других ограничений;</li>
+      <li>связка работ: дренаж, ливневка, отмостка, плитка, газон и автополив.</li>
+    </ul>
+    <div class="home-actions home-actions--left">
+      <a class="home-btn home-btn--primary" href="<?php echo esc_url($calc_page); ?>">Открыть расчет</a>
+      <a class="home-btn home-btn--outline" href="#request">Получить смету</a>
     </div>
   </div>
-  <div class="about__how">
-    <div class="about__step">
-      <div class="about__svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" height="512" viewBox="0 0 64 64" width="512">
-          <path class="active-path"
-            d="M36 11.05V5a3 3 0 00-3-3H5a3 3 0 00-3 3v54a3 3 0 003 3h28a3 3 0 003-3v-6.05a20.97 20.97 0 000-41.9zM28.72 4l-.31 1.24a1 1 0 01-.97.76H10.56a1 1 0 01-.97-.76L9.28 4zM34 59a1 1 0 01-1 1H5a1 1 0 01-1-1V5a1 1 0 011-1h2.22l.43 1.73A3 3 0 0010.56 8h16.88a3 3 0 002.91-2.27L30.78 4H33a1 1 0 011 1v6.05a20.97 20.97 0 000 41.9zm12-11.54a18.86 18.86 0 01-22 0V34a1 1 0 011-1h1.62a13.2 13.2 0 0016.76 0H45a1 1 0 011 1zm2-1.64V34a3 3 0 00-3-3h-2a1 1 0 00-.68.27 11.18 11.18 0 01-14.64 0A1 1 0 0027 31h-2a3 3 0 00-3 3v11.82a19 19 0 1126 0z"
-            data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
-          <path class="active-path"
-            d="M10 56h18v2H10zM6 56h2v2H6zM30 56h2v2h-2zM40 9.52l1.03-3.86 1.93.52-1.03 3.86zM45.64 11.59l2-3.47 1.73 1-2 3.47zM50.55 15.03l2.83-2.82 1.41 1.4-2.83 2.84zM54.42 19.63l3.46-2 1 1.73-3.46 2zM56.97 25.08l3.86-1.04.52 1.93-3.87 1.04zM58 31h4v2h-4zM56.97 38.92l.51-1.94 3.87 1.04-.52 1.93zM54.42 44.37l1-1.73 3.46 2-1 1.73zM50.55 48.97l1.41-1.41 2.83 2.82-1.42 1.42zM45.63 52.42l1.74-1 2 3.46-1.74 1zM40 54.48l1.93-.52 1.03 3.86-1.93.52zM35 15a9 9 0 109 9 9.01 9.01 0 00-9-9zm0 16a7 7 0 117-7 7 7 0 01-7 7z"
-            data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
-        </svg></div>
-      <p class="about__step-description">Звонок / Заявка</p>
-    </div>
-    <div class="about__arrow"></div>
-    <div class="about__step">
-      <div class="about__svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="512"
-          height="512">
-          <path class="active-path"
-            d="M478 67l-24-32a8 8 0 00-12 0l-24 32-2 5v376a32 32 0 0064 0V72l-2-5zm-14 381a16 16 0 11-32 0v-16h32v16zm0-32h-32v-16h32v16zm0-32h-32V96h32v288zm0-304h-32v-5l16-22 16 22v5zM392 0H40c-4 0-8 4-8 8v137c-19 4-32 20-32 39v256c0 22 18 40 40 40h288l6-2 64-64 1-3h1V8c0-4-4-8-8-8zM240 440c0 13-11 24-24 24H40c-13 0-24-11-24-24V184c0-13 11-24 24-24h176c13 0 24 11 24 24v256zM136 96v48H80V96h56zM80 80V48h56v32H80zm128 16v48h-56V96h56zm-56-16V48h56v32h-56zm72 65V96h56v112h-24v-24c0-19-13-35-32-39zm0-65V48h56v32h-56zm112 373v-37h37l-37 37zm48-53h-56c-4 0-8 4-8 8v56h-72c5-7 8-15 8-24V224h104c4 0 8-4 8-8V40c0-4-4-8-8-8H72c-4 0-8 4-8 8v104H48V16h336v384zM352 96v112h-56V96h56zm-56-16V48h56v32h-56z"
-            data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
-          <path class="active-path"
-            d="M216 184H40c-4 0-8 4-8 8v48c0 4 4 8 8 8h176c4 0 8-4 8-8v-48c0-4-4-8-8-8zm-8 48H48v-32h160v32zM224 328h-48c-4 0-8 4-8 8v96c0 4 4 8 8 8h48c4 0 8-4 8-8v-96c0-4-4-8-8-8zm-8 96h-32v-80h32v80zM224 264h-48c-4 0-8 4-8 8v32c0 4 4 8 8 8h48c4 0 8-4 8-8v-32c0-4-4-8-8-8zm-8 32h-32v-16h32v16zM152 328h-48c-4 0-8 4-8 8v32c0 4 4 8 8 8h48c4 0 8-4 8-8v-32c0-4-4-8-8-8zm-8 32h-32v-16h32v16zM152 264h-48c-4 0-8 4-8 8v32c0 4 4 8 8 8h48c4 0 8-4 8-8v-32c0-4-4-8-8-8zm-8 32h-32v-16h32v16zM80 328H32c-4 0-8 4-8 8v32c0 4 4 8 8 8h48c4 0 8-4 8-8v-32c0-4-4-8-8-8zm-8 32H40v-16h32v16zM80 264H32c-4 0-8 4-8 8v32c0 4 4 8 8 8h48c4 0 8-4 8-8v-32c0-4-4-8-8-8zm-8 32H40v-16h32v16zM152 392h-48c-4 0-8 4-8 8v32c0 4 4 8 8 8h48c4 0 8-4 8-8v-32c0-4-4-8-8-8zm-8 32h-32v-16h32v16zM80 392H32c-4 0-8 4-8 8v32c0 4 4 8 8 8h48c4 0 8-4 8-8v-32c0-4-4-8-8-8zm-8 32H40v-16h32v16z"
-            data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
-        </svg></div>
-      <p class="about__step-description">Расчет</p>
-    </div>
-    <div class="about__arrow"></div>
-    <div class="about__step">
-      <div class="about__svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" height="512"
-          width="512">
-          <path class="active-path"
-            d="M373 20L78 0C68 0 60 7 59 17l-2 34H17C8 51 0 59 0 69v425c0 10 8 18 17 18h227c2 0 4-1 5-3l34-33h1l58 4c10 0 18-7 19-17l28-424c1-10-6-18-16-19zM251 486v-52c0-1 1-3 3-3h52zm95-24c0 2-1 3-3 3l-46-4 32-31 2-5V69c0-10-8-18-17-18h-78c-10 0-10 15 0 15h78c1 0 2 1 2 3v347h-62c-10 0-18 8-18 18v63H18c-2 0-3-1-3-3V69c0-2 1-3 3-3h178c9 0 9-15 0-15H72l2-33c0-2 1-3 3-3l295 20c2 0 2 1 2 3z"
-            data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
-          <path class="active-path"
-            d="M268 237H63a8 8 0 000 15h205a7 7 0 100-15zM268 289H63a8 8 0 000 15h205a7 7 0 100-15zM56 192c0 4 3 8 7 8h205a7 7 0 100-15H63c-4 0-7 3-7 7zM92 140c0 4 3 7 7 7h133a8 8 0 000-15H99c-4 0-7 4-7 8zM195 439a36391 36391 0 01-54 0c-9 0-14-2-16-11-1-7-12-6-14 0-6 17-14 10-19-1s-6-23-8-35c-2-8-15-6-15 2 0 11-1 22-4 32l-11 31c-4 9 11 13 14 4l11-27c5 12 15 26 31 18l7-6c8 9 20 8 31 8h47c9 0 9-15 0-15zM506 246c-4-3-9-5-15-6h-5v-10c0-7-4-14-10-17v-15c0-31-48-31-48 0v15c-6 4-10 10-10 17v11c-25 2-25 40 0 41v101c0 9 15 10 15 0V282h38v161c0 24-38 24-38-1v-13c1-10-14-11-15-1v13c0 11 4 20 10 27 1 15 8 30 19 42 3 3 7 2 10-1 12-11 18-26 19-42 5-5 9-10 9-27l1-68c12 3 26-7 26-20v-91c0-5-2-11-6-15zm-73-5v-11c0-2 2-4 4-5h30a5 5 0 014 5v11zm19-52c5 0 9 4 9 9v12h-18v-12c0-5 4-9 9-9zm0 304c-4-5-6-11-7-17a33 33 0 0014 0c-1 6-3 12-7 17zm45-141c0 7-11 7-11 0v-78c0-4-4-7-8-7h-58c-8 0-7-11 0-11l71-1c4 1 6 3 6 6v91z"
-            data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
-        </svg></div>
-      <p class="about__step-description">Договор</p>
-    </div>
-    <div class="about__arrow"></div>
-    <div class="about__step">
-      <div class="about__svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512"
-          height="512">
-          <path class="active-path"
-            d="M377 453h-3a120 120 0 00-119-85h-5-2l-2 1h-5l-2 1h-2l-2 1h-3l-2 1h-2l-2 1h-2l-2 1-3 1 1-3 13-63 28 6-1 7a38 38 0 0038 42c16 0 32-10 37-27l1-6 28 6-10 49a8 8 0 0015 3l12-56a8 8 0 00-6-9l-34-8 2-6a8 8 0 00-6-9l-22-5-20-4 43-205 5 2 2 1h3a73 73 0 008 2h3l-40 184a7 7 0 1015 3l40-188c18-2 34-11 46-26h1a7 7 0 000-1l1-1v-1l6-28c1-5-2-9-6-9L307 0c-4-1-8 2-9 6l-6 28v2a7 7 0 000 2h1c5 18 16 33 31 43l-44 208-7-2a8 8 0 00-9 7l-1 6-34-7c-4-1-8 1-9 5l-15 71-2 13a124 124 0 00-15 10l-2 1-2 1-1 2-2 1-2 2-1 1-2 2-2 1-1 2-2 2-1 1-2 2-1 1-2 2-1 2-2 3h-1l-2 4-1 1-2 3-1 2-1 2-1 2-1 2-1 2-1 2-1 2-1 2h-2c-34 0-62 28-62 62 0 5 3 8 7 8h330c4 0 7-3 7-8 0-28-23-51-51-51zM309 30l3-14 100 22-3 13-100-21zm3 16l87 19a58 58 0 01-38 12h-1-2l-3-1h-1a60 60 0 01-5-1h-1l-3-1-3-1-3-1v-1h-2l-1-1c-10-5-19-14-24-24zm-37 278l3-20 32 6 9 3 7 1-6 19c-3 11-15 18-27 16-11-2-19-14-18-25zM99 497c4-22 22-39 44-40l-4 25a8 8 0 1015 1 105 105 0 01105-100c49 0 91 33 103 80 1 4 4 6 8 5h7c17 0 32 12 35 29H99z"
-            data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
-        </svg></div>
-      <p class="about__step-description">Работа</p>
-    </div>
-    <div class="about__arrow"></div>
-    <div class="about__step">
-      <div class="about__svg-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 497.2 497.2" width="512"
-          height="512">
-          <path class="active-path"
-            d="M466 240c-33 0-64-17-83-44l-6-10-7 10c-19 27-50 44-83 44h-30v128c0 31 14 60 37 80H129v-32h104V272H65v64H17V16h352v144h16V0H1v347l116 117h201l59 33 67-38c33-19 53-53 53-91V240h-31zM113 437l-85-85h85v85zM81 336v-48h136v112h-88v-64H81zm400 32c0 32-17 61-45 77l-59 34-60-34a88 88 0 01-44-77V256h14c35 0 68-16 90-43 21 27 54 43 89 43h15v112z"
-            data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
-          <path class="active-path"
-            d="M449 320v48c0 20-11 39-29 49l8 14c23-13 37-37 37-63v-48h-16zM49 32v48h288V32H49zm272 32H65V48h256v16zM443 274L337 381l-27-27-11 12 38 37 117-117zM97 304h104v16H97zM145 336h56v16h-56zM145 368h56v16h-56zM49 112h256v16H49zM49 144h256v16H49zM49 176h256v16H49zM49 208h152v16H49zM49 240h152v16H49zM321 112h16v16h-16zM321 144h16v16h-16zM321 176h16v16h-16zM217 208h16v16h-16zM217 240h16v16h-16z"
-            data-original="#000000" data-old_color="#000000" fill="#0A9215"></path>
-        </svg></div>
-      <p class="about__step-description">Акт</p>
-    </div>
+</section>
+
+<section class="home-section home-trust wrapper">
+  <div class="home-section__head">
+    <span class="home-eyebrow">Подход</span>
+    <h2>Почему нам доверяют благоустройство участков</h2>
   </div>
-  <h3 class="about__how-title" data-aos="fade-up" data-aos-duration="1200">Заказать ландшафтный дизайн и
-    благоустройство территории</h3>
-  <div class="about__wrap">
-    <div class="about__text-wrap">
-      <p class="about__text" data-aos="fade-right" data-aos-duration="1300">Для того чтобы заказать ландшафтный
-        проект и благоустройство территории в Рыбинске и Ярославской области достаточно связаться с нами по
-        указанным на сайте телефонам или воспользоваться обратным звонком. Если у вас возникнут какие-либо вопросы
-        — наш специалист готов предоставить подробную информацию по ландшафтному проектированию, обустройству
-        территории, озеленению или прокладке инженерных систем. Вы можете задать свой вопрос по телефону,
-        связаться с нами (viber, whatsapp) или воспользоваться электронной почтой.</p>
-      <p class="about__text" data-aos="fade-right" data-aos-duration="1400">Сотрудничество с компанией «ЭКСПЕРТЫ»
-        начинается с вашего желания сделать вид вокруг себя красивее и уютнее. Решив, что именно Вам хочется
-        видеть на приусадебном участке – свободное пространство для детских игр, раскидистые деревья, беседки для
-        спокойного отдыха, цветники или водоемы, строгий порядок, хаотичность или сад малого ухода – можно
-        обращаться к нашим специалистам. При заключении договора выезд дизайнера бесплатный.</p>
-    </div>
-    <div class="about__img-wrap" data-aos="fade-up" data-aos-duration="1500">
-      <img class="about__img-about" src="<?php echo get_template_directory_uri() ?>/img/about7.jpg" alt=""
-        role="presentation" />
-    </div>
+  <div class="home-trust-grid">
+    <article><h3>Работаем комплексно</h3><p>Не разделяем участок на случайные работы: вода, основание, покрытие, газон и полив должны работать вместе.</p></article>
+    <article><h3>Считаем до начала монтажа</h3><p>Объясняем состав работ, варианты материалов и места, где экономия приведет к переделке.</p></article>
+    <article><h3>Учитываем эксплуатацию</h3><p>Делаем так, чтобы по участку было удобно ходить, заезжать, обслуживать водоотвод и ухаживать за посадками.</p></article>
   </div>
-  <div class="about__wrap">
-    <div class="formWrapper" id="form" data-aos="fade-up" data-aos-duration="1600">
-      <form class="form">
-        <p class="form__title">Остались вопросы?</p><label class="form__label">
-          <p>Имя или название организации *</p><input class="form__input" type="text" name="name" placeholder=""
-            required="required" />
-        </label><label class="form__label">
-          <p>Контактный телефон *</p><input class="form__input" type="text" name="phone" placeholder=""
-            required="required" />
+</section>
+
+<section class="home-section home-geo wrapper">
+  <div class="home-section__head">
+    <span class="home-eyebrow">География</span>
+    <h2>Работаем в Рыбинске, Ярославле и области</h2>
+    <p>Выезжаем на частные участки в Рыбинске, Ярославле, Угличе, Тутаеве, Переславле-Залесском и других населенных пунктах Ярославской области. Для удаленных объектов заранее согласуем осмотр, логистику и этапность работ.</p>
+  </div>
+</section>
+
+<section class="home-section home-faq wrapper">
+  <div class="home-section__head">
+    <span class="home-eyebrow">Вопросы</span>
+    <h2>FAQ по благоустройству участка</h2>
+  </div>
+  <div class="home-faq-list">
+    <details>
+      <summary>Можно заказать только одну услугу?</summary>
+      <p>Да. Можно заказать отдельный дренаж, отмостку, ливневку, плитку, автополив или газон. Если работы связаны между собой, мы покажем, что лучше предусмотреть сразу.</p>
+    </details>
+    <details>
+      <summary>Нужно ли начинать с проекта?</summary>
+      <p>Для небольших задач часто достаточно осмотра, схемы и сметы. Для комплексного благоустройства лучше сначала согласовать план работ, уклоны, покрытия и инженерные системы.</p>
+    </details>
+    <details>
+      <summary>Можно ли делать благоустройство поэтапно?</summary>
+      <p>Да. Главное заранее заложить дренаж, ливневку, выводы под автополив и уровни покрытий, чтобы следующий этап не ломал уже выполненные работы.</p>
+    </details>
+    <details>
+      <summary>Вы рассчитываете стоимость по фото?</summary>
+      <p>Предварительный ориентир можно дать по фото, размерам и описанию проблемы. Точную смету готовим после осмотра участка или подробной схемы.</p>
+    </details>
+  </div>
+</section>
+
+<section class="home-section home-request wrapper" id="request">
+  <div class="home-request__text">
+    <span class="home-eyebrow">Заявка</span>
+    <h2>Рассчитать благоустройство участка</h2>
+    <p>Опишите, что нужно сделать: убрать воду, сделать дорожки, отмостку, ливневку, автополив, газон или комплекс работ. Мы свяжемся, уточним задачу и подскажем следующий шаг.</p>
+  </div>
+  <div class="formWrapper home-request__form" id="form">
+    <form class="form">
+      <p class="form__title">Оставить заявку</p>
+      <label class="form__label">
+        <p>Имя или название организации *</p>
+        <input class="form__input" type="text" name="name" required="required" />
+      </label>
+      <label class="form__label">
+        <p>Контактный телефон *</p>
+        <input class="form__input" type="text" name="phone" required="required" />
+      </label>
+      <div class="formConsent">
+        <label class="formConsent__container">
+          <input class="formConsent__input" type="checkbox" required="required" />
+          <span class="formConsent__checkbox">
+            <svg class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px">
+              <path d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265  c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386  c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928  C170.827,363.533,162.165,366.839,153.504,366.839z" fill="#B22917"></path>
+            </svg>
+          </span>
         </label>
-        <div class="formConsent"><label class="formConsent__container"><input class="formConsent__input" type="checkbox"
-              required="required" /><span class="formConsent__checkbox"><svg class="formConsent__icon"
-                viewBox="0 0 426.67 426.67" width="24px" height="24px">
-                <path
-                  d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265  c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386  c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928  C170.827,363.533,162.165,366.839,153.504,366.839z"
-                  fill="#B22917"></path>
-              </svg></span></label>
-          <p class="formConsent__text">Я ознакомлен и согласен с <a href="privacy.html">политикой
-              конфиденциальности </a>оператора, подтверждаю свое <a href="consent.html">согласие </a>на обработку
-            введенных мною персональных данных</p>
-        </div><button class="form__btn btn" type="submit">Отправить</button>
-      </form>
-      <div class="ajaxMessage">
-        <div class="ajaxMessage__success">
-          <div class="ajaxMessage__title">
-            <p>Спасибо!</p>
-            <p>Ваша заявка принята</p>
-          </div>
-          <div class="ajaxMessage__text">Мы свяжемся с вами в ближайшее время, что бы обсудить детали и ответить
-            на вопросы</div>
-        </div>
-        <div class="ajaxMessage__error">
-          <div class="ajaxMessage__title">Ошибка при отправке!</div>
-          <div class="ajaxMessage__text">Попробуйте позднее</div>
-        </div><button class="ajaxMessage__btn btn closeModal" type="button">закрыть</button>
+        <p class="formConsent__text">Я согласен с политикой конфиденциальности и обработкой персональных данных.</p>
       </div>
-    </div>
-    <div class="about__text-wrap" data-aos="fade-right" data-aos-duration="1700">
-      <h3 class="about__local">Работаем в Рыбинске и Ярославской области</h3>
-      <p class="about__text">Создаем ландшафтный дизайн и облагораживаем территорию в городах и населенных пунктах
-        Ярославской области: Ярославль, Рыбинск, Углич, Мышкин, Брейтово, Тутаев, Пошехонье, Арефино, Большое
-        Село, Ростов, Гаврилов-Ям, Борок. А так же работаем в городе Череповец, Вологодская область.</p>
+      <button class="form__btn btn" type="submit">Отправить</button>
+    </form>
+    <div class="ajaxMessage">
+      <div class="ajaxMessage__success">
+        <div class="ajaxMessage__title"><p>Спасибо!</p><p>Ваша заявка принята</p></div>
+        <div class="ajaxMessage__text">Мы свяжемся с вами в ближайшее время.</div>
+      </div>
+      <div class="ajaxMessage__error">
+        <div class="ajaxMessage__title">Ошибка при отправке!</div>
+        <div class="ajaxMessage__text">Попробуйте позднее</div>
+      </div>
+      <button class="ajaxMessage__btn btn closeModal" type="button">закрыть</button>
     </div>
   </div>
 </section>
+
 </main>
 </div>
 

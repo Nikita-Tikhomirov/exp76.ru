@@ -12,7 +12,7 @@
 
 <?php wp_head();?>
   <?php if ( is_front_page() ): ?>
-      <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/index.css?v=20260530" />
+      <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/index.css?v=20260531" />
 
     <?php elseif ( is_page('Услуги') ): ?>
       <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/services.css" />
@@ -39,7 +39,7 @@
 
 <meta property = "og:type" content = "website" />
 <meta property = "og:url" content = "<?php echo get_permalink(); ?>" />
-<meta property = "og:image" content = "https://exp76.ru/wp-content/themes/land76wp/img/h11.jpg" />
+<meta property = "og:image" content = "https://exp76.ru/wp-content/themes/land76wp/img/h11.webp" />
 	
 
 	
@@ -54,15 +54,14 @@
       <ul class="menu__list">
         <li class="menu__item"><a class="menu__link" href="<?php echo get_home_url(); ?>">Главная</a></li>
         <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(921); ?>">Услуги</a></li>
-        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(160); ?>">Фотогалерея</a></li>
-        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(9973); ?>">Калькулятор услуг</a></li>
-        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(9962); ?>">Полезное</a></li>
-        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(227); ?>">Контакты</a></li>
-        <li class="menu__about-list-wrap"><a class="menu__about-link hover-link" href="<?php echo get_permalink(181); ?>">О нас</a>
+        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(160); ?>">Работы</a></li>
+        <li class="menu__about-list-wrap"><a class="menu__about-link hover-link" href="<?php echo get_permalink(181); ?>">О компании</a>
           <ul class="menu__about-list">
             <li class="menu__about-item hover-link1"><a class="menu__about-link" href="<?php echo get_permalink(7679); ?>">Вакансии</a></li>
           </ul>
         </li>
+        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(9973); ?>">Цены / Расчет</a></li>
+        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(227); ?>">Контакты</a></li>
       </ul>
     </nav>
 
@@ -98,6 +97,7 @@
           </svg><span class="header__link-name">ВКонтакте</span></a>
           
 </div>
+      <a class="header__cta" href="<?php echo is_front_page() ? '#request' : get_home_url() . '/#request'; ?>">Рассчитать участок</a>
       </div>
       
       <button class="burger" aria-label="open"><span class="burger__icon"></span></button>
@@ -108,15 +108,25 @@
   <div class="page-content">
     <main class="main">
 
-      <section class="hero">
+      <section class="hero home-hero">
         <div class="hero__scene" id="scene">
           <div class="hero__bg" data-depth="0.4"></div>
         </div>
         <div class="hero__content wrapper">
-          <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800">Ландшафтное проектирование и
-            благоустройство участков <span class="hero__description">в Рыбинске и Ярославской области</span>
-          </h1><a class="hero__btn openPopup" data-modal="#popup" data-aos="fade-up" data-aos-duration="10000">Заказать
-            звонок</a>
+          <div class="home-hero__text" data-aos="fade-right" data-aos-duration="800">
+            <p class="home-hero__eyebrow">Ландшафтно-строительная компания «Эксперты»</p>
+            <h1 class="hero__title">Благоустройство участков под ключ в Рыбинске и Ярославской области</h1>
+            <p class="hero__description">Проектируем и выполняем дренаж, ливневую канализацию, отмостку, тротуарную плитку, газон, автополив и озеленение на частных участках.</p>
+            <div class="home-hero__actions">
+              <a class="hero__btn" href="#request">Рассчитать участок</a>
+              <a class="hero__btn hero__btn--ghost" href="<?php echo get_permalink(160); ?>">Посмотреть работы</a>
+            </div>
+            <ul class="home-hero__points">
+              <li>осмотр участка и понятный состав работ;</li>
+              <li>инженерные системы до финишного покрытия;</li>
+              <li>работаем в Рыбинске, Ярославле и области.</li>
+            </ul>
+          </div>
         </div>
 
         <div class="animation-wrap"><img class="animation-wrap__img" src="<?php echo get_template_directory_uri() ?>/img/mouse.png" alt=""
