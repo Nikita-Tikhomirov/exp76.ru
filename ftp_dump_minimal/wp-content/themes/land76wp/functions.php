@@ -123,7 +123,9 @@ add_action('template_redirect', function () {
 function style_theme() {
 
   // wp_enqueue_style('style1', get_template_directory_uri() . '/css/index.css');
-  wp_enqueue_style('style2', get_template_directory_uri() . '/css/styles.css');
+  $main_styles_path = get_template_directory() . '/css/styles.css';
+  $main_styles_version = file_exists($main_styles_path) ? filemtime($main_styles_path) : null;
+  wp_enqueue_style('style2', get_template_directory_uri() . '/css/styles.css', array(), $main_styles_version);
   if (is_singular('post') && has_category(72, get_queried_object_id())) {
     wp_enqueue_style('land76-services', get_template_directory_uri() . '/css/services.css', array(), null);
     wp_enqueue_style('land76-seoblog', get_template_directory_uri() . '/css/seoblog.css', array('land76-services'), null);

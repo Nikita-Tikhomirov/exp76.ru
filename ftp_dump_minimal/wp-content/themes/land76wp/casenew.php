@@ -348,7 +348,7 @@ if ($cs87_location) {
   <!-- ═══ HEADER ═══════════════════════════════════════════ -->
   <header class="header wrapper">
     <a class="header__logo-wrap" href="<?php echo get_home_url(); ?>">
-      <img class="header__logo" src="<?php echo get_template_directory_uri(); ?>/img/logo4.png" alt="" role="presentation" />
+      <img class="header__logo" src="<?php echo get_template_directory_uri(); ?>/img/logo4.webp" alt="" role="presentation" />
     </a>
     <nav class="menu">
       <ul class="menu__list">
@@ -681,7 +681,7 @@ if ($cs87_location) {
 
   <!-- ═══ FOOTER ══════════════════════════════════════════ -->
   <footer class="footer wrapper">
-    <img class="footer__logo" src="<?php echo get_template_directory_uri(); ?>/img/logo4.png" alt="" role="presentation" />
+    <img class="footer__logo" src="<?php echo get_template_directory_uri(); ?>/img/logo4.webp" alt="" role="presentation" />
     <div class="footer__services-wrap">
       <span class="footer__title">Услуги</span>
       <ul class="footer__services columns2">
