@@ -283,6 +283,14 @@ function land76_is_case_seo_template() {
   return is_page_template('casenew.php') && function_exists('get_field');
 }
 
+function land76_schema_is_case_template() {
+  return is_page_template(array('casenew.php', 'portfoliopost.php'));
+}
+
+function land76_schema_is_service_page_template() {
+  return is_page_template('servicepost.php');
+}
+
 add_filter('aioseo_title', function ($title) {
   if (!land76_is_case_seo_template()) {
     return $title;
@@ -677,12 +685,19 @@ function land76_schema_breadcrumb_node($current_url) {
 function land76_schema_service_node($current_url) {
   $service_categories = land76_schema_service_categories();
   $service_term_id = land76_schema_current_service_category_id();
+  $is_legacy_service_page = land76_schema_is_service_page_template();
 
-  if (!$service_term_id || empty($service_categories[$service_term_id])) {
+  if (!$service_term_id && !$is_legacy_service_page) {
     return null;
   }
 
-  $service = $service_categories[$service_term_id];
+  $service = $service_term_id && !empty($service_categories[$service_term_id])
+    ? $service_categories[$service_term_id]
+    : array(
+      'name' => 'Благоустройство участка',
+      'serviceType' => 'Благоустройство участка под ключ',
+      'description' => 'Ландшафтные, инженерные и строительные работы на частном участке: подготовка, монтаж, благоустройство и уход.',
+    );
   $name = $service['name'];
   $description = $service['description'];
 
@@ -717,14 +732,14 @@ function land76_schema_service_node($current_url) {
 }
 
 function land76_schema_article_node($current_url) {
-  if (!is_singular('post') || !has_category(72, get_the_ID())) {
+  if (!is_singular('post') || land76_schema_current_service_category_id()) {
     return null;
   }
 
   $image = land76_schema_image_object(get_the_ID());
 
   return array_filter(array(
-    '@type' => 'BlogPosting',
+    '@type' => has_category(72, get_the_ID()) ? 'BlogPosting' : 'Article',
     '@id' => trailingslashit($current_url) . '#article',
     'headline' => land76_schema_strip(get_the_title()),
     'description' => land76_schema_description(),
@@ -742,7 +757,7 @@ function land76_schema_article_node($current_url) {
 }
 
 function land76_schema_case_node($current_url) {
-  if (!land76_is_case_seo_template()) {
+  if (!land76_schema_is_case_template()) {
     return null;
   }
 
@@ -847,6 +862,62 @@ function land76_schema_front_faq_node($current_url) {
   );
 }
 
+function land76_schema_faq_entities($items) {
+  if (empty($items) || !is_array($items)) {
+    return array();
+  }
+
+  $entities = array();
+  foreach ($items as $item) {
+    $question = isset($item['question']) ? land76_schema_strip($item['question']) : '';
+    $answer = isset($item['answer']) ? land76_schema_strip($item['answer']) : '';
+
+    if ($question === '' || $answer === '') {
+      continue;
+    }
+
+    $entities[] = array(
+      '@type' => 'Question',
+      'name' => $question,
+      'acceptedAnswer' => array(
+        '@type' => 'Answer',
+        'text' => $answer,
+      ),
+    );
+  }
+
+  return $entities;
+}
+
+function land76_schema_acf_faq_node($current_url) {
+  if (!function_exists('get_field') || is_front_page()) {
+    return null;
+  }
+
+  $items = array();
+
+  if (is_category()) {
+    $term_id = (int) get_queried_object_id();
+    $service_categories = land76_schema_service_categories();
+    if (isset($service_categories[$term_id])) {
+      $items = get_field('cat87_faq_items', 'category_' . $term_id);
+    }
+  } elseif (is_singular('post') && land76_schema_current_service_category_id()) {
+    $items = get_field('ns87_faq_items', get_the_ID());
+  }
+
+  $entities = land76_schema_faq_entities($items);
+  if (empty($entities)) {
+    return null;
+  }
+
+  return array(
+    '@type' => 'FAQPage',
+    '@id' => trailingslashit($current_url) . '#faq',
+    'mainEntity' => $entities,
+  );
+}
+
 function land76_schema_page_node($current_url, $main_entity_id = '') {
   $page_type = 'WebPage';
 
@@ -892,6 +963,7 @@ function land76_output_structured_data() {
   $case_node = land76_schema_case_node($current_url);
   $calculator_node = land76_schema_calculator_node($current_url);
   $services_item_list_node = land76_schema_services_item_list_node($current_url);
+  $faq_node = is_front_page() ? land76_schema_front_faq_node($current_url) : land76_schema_acf_faq_node($current_url);
 
   if ($article_node) {
     $main_entity_id = $article_node['@id'];
@@ -907,7 +979,7 @@ function land76_output_structured_data() {
 
   $graph[] = land76_schema_page_node($current_url, $main_entity_id);
 
-  foreach (array($service_node, $article_node, $case_node, $calculator_node, $services_item_list_node, land76_schema_breadcrumb_node($current_url), land76_schema_front_faq_node($current_url)) as $node) {
+  foreach (array($service_node, $article_node, $case_node, $calculator_node, $services_item_list_node, land76_schema_breadcrumb_node($current_url), $faq_node) as $node) {
     if ($node) {
       $graph[] = $node;
     }
