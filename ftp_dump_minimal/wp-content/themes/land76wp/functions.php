@@ -267,6 +267,617 @@ add_filter('aioseo_description', function ($description) {
     : $description;
 }, 30, 1);
 
+function land76_schema_strip($value) {
+  return trim(wp_strip_all_tags((string) $value));
+}
+
+function land76_schema_limit($value, $limit = 320) {
+  $value = land76_schema_strip($value);
+  if ($value === '') {
+    return '';
+  }
+
+  return function_exists('mb_substr') && function_exists('mb_strlen') && mb_strlen($value, 'UTF-8') > $limit
+    ? rtrim(mb_substr($value, 0, $limit - 1, 'UTF-8')) . '…'
+    : $value;
+}
+
+function land76_schema_current_url() {
+  if (is_front_page()) {
+    return home_url('/');
+  }
+
+  if (is_singular()) {
+    return get_permalink();
+  }
+
+  if (is_category()) {
+    $term_link = get_category_link(get_queried_object_id());
+    return is_wp_error($term_link) ? home_url('/') : $term_link;
+  }
+
+  if (is_home()) {
+    return get_permalink((int) get_option('page_for_posts'));
+  }
+
+  if (is_search()) {
+    return get_search_link();
+  }
+
+  global $wp;
+  $request = isset($wp->request) ? $wp->request : '';
+  return $request ? home_url('/' . trim($request, '/') . '/') : home_url('/');
+}
+
+function land76_schema_description() {
+  if (is_front_page()) {
+    return 'Ландшафтно-строительная компания «Эксперты» выполняет благоустройство участков под ключ в Рыбинске, Ярославле и Ярославской области: дренаж, ливневая канализация, отмостка, плитка, газон, автополив и озеленение.';
+  }
+
+  if (is_singular()) {
+    if (function_exists('get_field')) {
+      $acf_description = get_field('blogseo_seo_description', get_the_ID());
+      if (!$acf_description && land76_is_case_seo_template()) {
+        $acf_description = get_field('cs87_seo_description', get_the_ID());
+      }
+      if ($acf_description) {
+        return land76_schema_limit($acf_description);
+      }
+    }
+
+    if (is_page()) {
+      $region_description = get_post_meta(get_the_ID(), '_land76_region_description', true);
+      if ($region_description) {
+        return land76_schema_limit($region_description);
+      }
+    }
+
+    $excerpt = get_the_excerpt();
+    if ($excerpt) {
+      return land76_schema_limit($excerpt);
+    }
+
+    return land76_schema_limit(get_post_field('post_content', get_the_ID()));
+  }
+
+  if (is_category()) {
+    $term = get_queried_object();
+    if ($term && !empty($term->description)) {
+      return land76_schema_limit($term->description);
+    }
+  }
+
+  return land76_schema_limit(get_bloginfo('description'));
+}
+
+function land76_schema_area_served() {
+  $cities = array('Рыбинск', 'Ярославль', 'Углич', 'Тутаев', 'Переславль-Залесский', 'Ярославская область');
+  $places = array();
+
+  foreach ($cities as $city) {
+    $places[] = array(
+      '@type' => 'Place',
+      'name' => $city,
+    );
+  }
+
+  return $places;
+}
+
+function land76_schema_service_categories() {
+  return array(
+    87 => array(
+      'name' => 'Дренаж участка',
+      'serviceType' => 'Дренаж участка под ключ',
+      'description' => 'Проектирование и монтаж дренажа участка: глубинный и поверхностный дренаж, отвод воды от дома, дорожек, газона и зон посадок.',
+    ),
+    88 => array(
+      'name' => 'Отмостка вокруг дома',
+      'serviceType' => 'Отмостка вокруг дома под ключ',
+      'description' => 'Устройство бетонной, мягкой, утепленной и плиточной отмостки вокруг дома с подготовкой основания, уклоном и водоотводом.',
+    ),
+    89 => array(
+      'name' => 'Укладка тротуарной плитки',
+      'serviceType' => 'Укладка тротуарной плитки под ключ',
+      'description' => 'Укладка тротуарной плитки, дорожек, площадок, парковок и бордюров с подготовкой основания и водоотводом.',
+    ),
+    90 => array(
+      'name' => 'Осушение участка',
+      'serviceType' => 'Осушение участка под ключ',
+      'description' => 'Осушение сырого, заболоченного или низкого участка: дренаж, канавы, лотки, колодцы, водоотвод и корректировка уклонов.',
+    ),
+    91 => array(
+      'name' => 'Ливневая канализация',
+      'serviceType' => 'Ливневая канализация на участке под ключ',
+      'description' => 'Монтаж ливневой канализации, дождеприемников, лотков, труб и колодцев для отвода воды с крыши, дорожек, парковки и двора.',
+    ),
+    92 => array(
+      'name' => 'Автополив на участке',
+      'serviceType' => 'Автоматический полив участка под ключ',
+      'description' => 'Проектирование и монтаж автоматического полива газона, сада, клумб, теплиц и посадок: зоны, трубы, спринклеры, клапаны, контроллер и насосное оборудование.',
+    ),
+  );
+}
+
+function land76_schema_region_template_map() {
+  return array(
+    'page-drenazh-region.php' => 87,
+    'page-otmostka-region.php' => 88,
+    'page-plitka-region.php' => 89,
+    'page-osushenie-region.php' => 90,
+    'page-livnevka-region.php' => 91,
+    'page-autopoliv-region.php' => 92,
+  );
+}
+
+function land76_schema_current_service_category_id() {
+  $service_categories = land76_schema_service_categories();
+
+  if (is_category()) {
+    $term_id = (int) get_queried_object_id();
+    return isset($service_categories[$term_id]) ? $term_id : 0;
+  }
+
+  if (is_singular('post')) {
+    if (has_category(72, get_the_ID()) && !has_category(74, get_the_ID())) {
+      return 0;
+    }
+
+    foreach (array_keys($service_categories) as $term_id) {
+      if (has_category($term_id, get_the_ID())) {
+        return (int) $term_id;
+      }
+    }
+  }
+
+  if (is_page()) {
+    foreach (land76_schema_region_template_map() as $template => $term_id) {
+      if (is_page_template($template)) {
+        return (int) $term_id;
+      }
+    }
+  }
+
+  return 0;
+}
+
+function land76_schema_is_named_page($template, $page_ids = array()) {
+  if (is_page_template($template)) {
+    return true;
+  }
+
+  return is_page() && in_array((int) get_queried_object_id(), array_map('intval', $page_ids), true);
+}
+
+function land76_schema_is_services_page() {
+  return land76_schema_is_named_page('services.php', array(921));
+}
+
+function land76_schema_is_blog_page() {
+  return land76_schema_is_named_page('blog.php', array(9962));
+}
+
+function land76_schema_is_portfolio_page() {
+  return land76_schema_is_named_page('portfolio.php', array(160));
+}
+
+function land76_schema_is_calculator_page() {
+  return land76_schema_is_named_page('calc.php', array(9973));
+}
+
+function land76_schema_is_contacts_page() {
+  return land76_schema_is_named_page('contacts.php', array(227));
+}
+
+function land76_schema_is_about_page() {
+  return land76_schema_is_named_page('about.php', array(119));
+}
+
+function land76_schema_image_object($post_id = 0, $fallback_url = '') {
+  $image_url = '';
+  $alt = '';
+
+  if ($post_id && has_post_thumbnail($post_id)) {
+    $image_url = get_the_post_thumbnail_url($post_id, 'full');
+    $thumbnail_id = get_post_thumbnail_id($post_id);
+    $alt = $thumbnail_id ? get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true) : '';
+  }
+
+  if (!$image_url && $post_id) {
+    $image_url = land76_get_card_image_url($post_id, 'full', false);
+    $alt = land76_get_card_image_alt($post_id, get_the_title($post_id));
+  }
+
+  if (!$image_url && $fallback_url) {
+    $image_url = $fallback_url;
+  }
+
+  if (!$image_url) {
+    return null;
+  }
+
+  return array_filter(array(
+    '@type' => 'ImageObject',
+    'url' => esc_url_raw($image_url),
+    'caption' => land76_schema_strip($alt),
+  ));
+}
+
+function land76_schema_organization_node() {
+  $theme_uri = get_template_directory_uri();
+
+  return array(
+    '@type' => array('Organization', 'LocalBusiness', 'HomeAndConstructionBusiness'),
+    '@id' => home_url('/#organization'),
+    'name' => 'Эксперты',
+    'alternateName' => 'Ландшафтно-строительная компания «Эксперты»',
+    'url' => home_url('/'),
+    'logo' => array(
+      '@type' => 'ImageObject',
+      'url' => $theme_uri . '/img/logo4.webp',
+    ),
+    'image' => $theme_uri . '/img/h11.webp',
+    'telephone' => '+7-915-978-88-09',
+    'priceRange' => '₽₽',
+    'address' => array(
+      '@type' => 'PostalAddress',
+      'addressLocality' => 'Рыбинск',
+      'addressRegion' => 'Ярославская область',
+      'addressCountry' => 'RU',
+    ),
+    'areaServed' => land76_schema_area_served(),
+    'sameAs' => array('https://vk.com/exp_76'),
+  );
+}
+
+function land76_schema_website_node() {
+  return array(
+    '@type' => 'WebSite',
+    '@id' => home_url('/#website'),
+    'url' => home_url('/'),
+    'name' => 'Эксперты',
+    'description' => 'Благоустройство участков под ключ в Рыбинске, Ярославле и Ярославской области.',
+    'publisher' => array('@id' => home_url('/#organization')),
+    'inLanguage' => 'ru-RU',
+  );
+}
+
+function land76_schema_breadcrumb_node($current_url) {
+  if (is_front_page()) {
+    return null;
+  }
+
+  $items = array(
+    array(
+      '@type' => 'ListItem',
+      'position' => 1,
+      'name' => 'Главная',
+      'item' => home_url('/'),
+    ),
+  );
+
+  if (is_category()) {
+    $term = get_queried_object();
+    if ($term) {
+      $items[] = array(
+        '@type' => 'ListItem',
+        'position' => count($items) + 1,
+        'name' => $term->name,
+        'item' => $current_url,
+      );
+    }
+  } elseif (is_singular('post')) {
+    $service_term_id = land76_schema_current_service_category_id();
+    if ($service_term_id) {
+      $term = get_category($service_term_id);
+      $term_url = get_category_link($service_term_id);
+      if ($term && !is_wp_error($term_url)) {
+        $items[] = array(
+          '@type' => 'ListItem',
+          'position' => count($items) + 1,
+          'name' => $term->name,
+          'item' => $term_url,
+        );
+      }
+    } elseif (has_category(72, get_the_ID())) {
+      $blog_url = get_permalink(9962);
+      $items[] = array(
+        '@type' => 'ListItem',
+        'position' => count($items) + 1,
+        'name' => 'Полезное',
+        'item' => $blog_url ? $blog_url : home_url('/'),
+      );
+    }
+
+    $items[] = array(
+      '@type' => 'ListItem',
+      'position' => count($items) + 1,
+      'name' => get_the_title(),
+      'item' => $current_url,
+    );
+  } elseif (is_page()) {
+    $ancestors = array_reverse(get_post_ancestors(get_the_ID()));
+    foreach ($ancestors as $ancestor_id) {
+      $items[] = array(
+        '@type' => 'ListItem',
+        'position' => count($items) + 1,
+        'name' => get_the_title($ancestor_id),
+        'item' => get_permalink($ancestor_id),
+      );
+    }
+
+    $items[] = array(
+      '@type' => 'ListItem',
+      'position' => count($items) + 1,
+      'name' => get_the_title(),
+      'item' => $current_url,
+    );
+  } else {
+    $items[] = array(
+      '@type' => 'ListItem',
+      'position' => count($items) + 1,
+      'name' => wp_get_document_title(),
+      'item' => $current_url,
+    );
+  }
+
+  return count($items) > 1 ? array(
+    '@type' => 'BreadcrumbList',
+    '@id' => trailingslashit($current_url) . '#breadcrumb',
+    'itemListElement' => $items,
+  ) : null;
+}
+
+function land76_schema_service_node($current_url) {
+  $service_categories = land76_schema_service_categories();
+  $service_term_id = land76_schema_current_service_category_id();
+
+  if (!$service_term_id || empty($service_categories[$service_term_id])) {
+    return null;
+  }
+
+  $service = $service_categories[$service_term_id];
+  $name = $service['name'];
+  $description = $service['description'];
+
+  if (is_singular()) {
+    $name = get_the_title();
+    $description = land76_schema_description();
+  } elseif (is_category()) {
+    $term = get_queried_object();
+    if ($term && !empty($term->name)) {
+      $name = $term->name;
+    }
+    $category_description = land76_schema_description();
+    if ($category_description) {
+      $description = $category_description;
+    }
+  } elseif (is_page()) {
+    $name = get_the_title();
+    $description = land76_schema_description();
+  }
+
+  return array_filter(array(
+    '@type' => 'Service',
+    '@id' => trailingslashit($current_url) . '#service',
+    'name' => land76_schema_strip($name),
+    'serviceType' => $service['serviceType'],
+    'description' => land76_schema_limit($description),
+    'provider' => array('@id' => home_url('/#organization')),
+    'areaServed' => land76_schema_area_served(),
+    'url' => $current_url,
+    'category' => $service['name'],
+  ));
+}
+
+function land76_schema_article_node($current_url) {
+  if (!is_singular('post') || !has_category(72, get_the_ID())) {
+    return null;
+  }
+
+  $image = land76_schema_image_object(get_the_ID());
+
+  return array_filter(array(
+    '@type' => 'BlogPosting',
+    '@id' => trailingslashit($current_url) . '#article',
+    'headline' => land76_schema_strip(get_the_title()),
+    'description' => land76_schema_description(),
+    'image' => $image,
+    'datePublished' => get_the_date(DATE_W3C, get_the_ID()),
+    'dateModified' => get_the_modified_date(DATE_W3C, get_the_ID()),
+    'author' => array(
+      '@type' => 'Organization',
+      '@id' => home_url('/#organization'),
+    ),
+    'publisher' => array('@id' => home_url('/#organization')),
+    'mainEntityOfPage' => array('@id' => trailingslashit($current_url) . '#webpage'),
+    'inLanguage' => 'ru-RU',
+  ));
+}
+
+function land76_schema_case_node($current_url) {
+  if (!land76_is_case_seo_template()) {
+    return null;
+  }
+
+  return array_filter(array(
+    '@type' => 'CreativeWork',
+    '@id' => trailingslashit($current_url) . '#case',
+    'name' => land76_schema_strip(get_the_title()),
+    'description' => land76_schema_description(),
+    'image' => land76_schema_image_object(get_the_ID()),
+    'creator' => array('@id' => home_url('/#organization')),
+    'provider' => array('@id' => home_url('/#organization')),
+    'url' => $current_url,
+    'inLanguage' => 'ru-RU',
+  ));
+}
+
+function land76_schema_calculator_node($current_url) {
+  if (!land76_schema_is_calculator_page()) {
+    return null;
+  }
+
+  return array(
+    '@type' => 'WebApplication',
+    '@id' => trailingslashit($current_url) . '#calculator',
+    'name' => 'Калькулятор стоимости благоустройства участка',
+    'applicationCategory' => 'BusinessApplication',
+    'operatingSystem' => 'Web',
+    'url' => $current_url,
+    'provider' => array('@id' => home_url('/#organization')),
+    'inLanguage' => 'ru-RU',
+  );
+}
+
+function land76_schema_services_item_list_node($current_url) {
+  if (!land76_schema_is_services_page()) {
+    return null;
+  }
+
+  $items = array();
+  foreach (land76_schema_service_categories() as $term_id => $service) {
+    $url = get_category_link((int) $term_id);
+    if (is_wp_error($url)) {
+      continue;
+    }
+
+    $items[] = array(
+      '@type' => 'ListItem',
+      'position' => count($items) + 1,
+      'url' => $url,
+      'name' => $service['name'],
+    );
+  }
+
+  return array(
+    '@type' => 'ItemList',
+    '@id' => trailingslashit($current_url) . '#services-list',
+    'name' => 'Каталог услуг по благоустройству участка',
+    'itemListElement' => $items,
+  );
+}
+
+function land76_schema_front_faq_node($current_url) {
+  if (!is_front_page()) {
+    return null;
+  }
+
+  $faq_items = array(
+    array(
+      'question' => 'Можно заказать только одну услугу?',
+      'answer' => 'Да, можно заказать отдельную работу: дренаж, ливневую канализацию, отмостку, укладку плитки, автополив, газон или озеленение. Если задачи связаны между собой, мы заранее объясняем, какие работы лучше объединить.',
+    ),
+    array(
+      'question' => 'Нужно ли начинать с проекта?',
+      'answer' => 'Для небольших работ иногда достаточно осмотра и схемы. Для комплексного благоустройства, дренажа, ливневки, мощения и автополива проект помогает не ошибиться с уклонами, материалами и очередностью этапов.',
+    ),
+    array(
+      'question' => 'Можно ли делать благоустройство поэтапно?',
+      'answer' => 'Да, работы можно разделить на этапы. Важно сразу заложить общую логику участка: водоотвод, основание, дорожки, зоны посадок, газон и полив, чтобы потом не переделывать готовые покрытия.',
+    ),
+    array(
+      'question' => 'Вы рассчитываете стоимость по фото?',
+      'answer' => 'По фото можно дать предварительную оценку и список вопросов. Точную смету обычно считаем после осмотра участка, потому что на цену влияют грунт, уклоны, вода, подъезд техники, материалы и объем земляных работ.',
+    ),
+  );
+
+  $entities = array();
+  foreach ($faq_items as $item) {
+    $entities[] = array(
+      '@type' => 'Question',
+      'name' => $item['question'],
+      'acceptedAnswer' => array(
+        '@type' => 'Answer',
+        'text' => $item['answer'],
+      ),
+    );
+  }
+
+  return array(
+    '@type' => 'FAQPage',
+    '@id' => trailingslashit($current_url) . '#faq',
+    'mainEntity' => $entities,
+  );
+}
+
+function land76_schema_page_node($current_url, $main_entity_id = '') {
+  $page_type = 'WebPage';
+
+  if (is_category() || land76_schema_is_portfolio_page() || land76_schema_is_blog_page() || land76_schema_is_services_page()) {
+    $page_type = 'CollectionPage';
+  } elseif (land76_schema_is_contacts_page()) {
+    $page_type = 'ContactPage';
+  } elseif (land76_schema_is_about_page()) {
+    $page_type = 'AboutPage';
+  }
+
+  $page = array_filter(array(
+    '@type' => $page_type,
+    '@id' => trailingslashit($current_url) . '#webpage',
+    'url' => $current_url,
+    'name' => land76_schema_strip(wp_get_document_title()),
+    'description' => land76_schema_description(),
+    'isPartOf' => array('@id' => home_url('/#website')),
+    'about' => array('@id' => home_url('/#organization')),
+    'publisher' => array('@id' => home_url('/#organization')),
+    'breadcrumb' => !is_front_page() ? array('@id' => trailingslashit($current_url) . '#breadcrumb') : null,
+    'mainEntity' => $main_entity_id ? array('@id' => $main_entity_id) : null,
+    'inLanguage' => 'ru-RU',
+  ));
+
+  return $page;
+}
+
+function land76_output_structured_data() {
+  if (is_admin() || is_404()) {
+    return;
+  }
+
+  $current_url = land76_schema_current_url();
+  $graph = array(
+    land76_schema_organization_node(),
+    land76_schema_website_node(),
+  );
+
+  $main_entity_id = '';
+  $service_node = land76_schema_service_node($current_url);
+  $article_node = land76_schema_article_node($current_url);
+  $case_node = land76_schema_case_node($current_url);
+  $calculator_node = land76_schema_calculator_node($current_url);
+  $services_item_list_node = land76_schema_services_item_list_node($current_url);
+
+  if ($article_node) {
+    $main_entity_id = $article_node['@id'];
+  } elseif ($service_node) {
+    $main_entity_id = $service_node['@id'];
+  } elseif ($case_node) {
+    $main_entity_id = $case_node['@id'];
+  } elseif ($calculator_node) {
+    $main_entity_id = $calculator_node['@id'];
+  } elseif ($services_item_list_node) {
+    $main_entity_id = $services_item_list_node['@id'];
+  }
+
+  $graph[] = land76_schema_page_node($current_url, $main_entity_id);
+
+  foreach (array($service_node, $article_node, $case_node, $calculator_node, $services_item_list_node, land76_schema_breadcrumb_node($current_url), land76_schema_front_faq_node($current_url)) as $node) {
+    if ($node) {
+      $graph[] = $node;
+    }
+  }
+
+  $schema = array(
+    '@context' => 'https://schema.org',
+    '@graph' => $graph,
+  );
+
+  echo "\n<script type=\"application/ld+json\" class=\"land76-schema\">";
+  echo wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+  echo "</script>\n";
+}
+add_action('wp_head', 'land76_output_structured_data', 30);
+
 
 
 if ( function_exists('acf_add_options_page') ) {
