@@ -858,7 +858,10 @@ body {
   display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 22
 }
 
 .header__socials {
@@ -1016,7 +1019,45 @@ body {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   color: #fff;
-  position: relative
+  position: relative;
+  gap: 18px;
+  align-items: center
+}
+
+.menu__link,
+.menu__about-link,
+.header__phone,
+.header__number,
+.header__time {
+  white-space: nowrap
+}
+
+.header__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 16px;
+  border: 2px solid #ff5e00;
+  border-radius: 24px;
+  background: #ff5e00;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(255, 94, 0, .26);
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+  position: relative;
+  z-index: 24
+}
+
+.header__cta:hover {
+  background: #e45200;
+  border-color: #e45200;
+  color: #fff;
+  transform: translateY(-1px)
 }
 
 .menu__item {

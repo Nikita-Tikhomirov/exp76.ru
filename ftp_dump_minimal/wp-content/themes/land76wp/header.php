@@ -40,10 +40,10 @@
 <meta property = "og:type" content = "website" />
 <meta property = "og:url" content = "<?php echo get_permalink(); ?>" />
 <meta property = "og:image" content = "https://exp76.ru/wp-content/themes/land76wp/img/h11.webp" />
-	
 
-	
-	
+
+
+
 </head>
 
 <body>
@@ -94,14 +94,16 @@
               d="M48.9 0a48.9 48.9 0 100 97.8 48.9 48.9 0 000-97.8zm24.8 54.2c2.2 2.2 4.7 4.3 6.7 6.7 1 1.1 1.8 2.2 2.4 3.5 1 1.8.1 3.8-1.5 3.9h-10c-2.6.2-4.7-.8-6.4-2.6l-4-4.4a9.4 9.4 0 00-1.8-1.6c-1.4-.9-2.6-.6-3.3.8-.8 1.5-1 3-1.1 4.7-.1 2.4-.8 3-3.2 3a25.6 25.6 0 01-24-12c-5.1-7-9-14.7-12.7-22.6-.8-1.8-.2-2.8 1.8-2.8h9.8c1.3 0 2.2.8 2.7 2 1.8 4.4 4 8.5 6.7 12.3.7 1 1.4 2 2.5 2.8 1.1.8 2 .5 2.6-.8a38.6 38.6 0 00.4-11.6C41 33.6 40 32.4 38 32c-1-.1-.8-.5-.4-1 .8-1 1.6-1.6 3.1-1.6h11.3c1.8.4 2.2 1.2 2.4 3v12.5c0 .7.4 2.8 1.6 3.3 1 .3 1.7-.5 2.3-1.2 2.7-2.8 4.6-6.2 6.4-9.7l2-4.8c.5-1.2 1.3-1.8 2.6-1.8h10.9l1 .1c1.8.3 2.3 1.1 1.7 2.9-.9 2.8-2.6 5.2-4.3 7.5l-5.6 7.5c-1.6 2.3-1.5 3.5.6 5.5z"
               data-original="#000000" data-old_color="#000000" fill="#a2f9a9"></path>
           </svg><span class="header__link-name">ВКонтакте</span></a>
-          
+
 </div>
-      <a class="header__cta" href="<?php echo is_front_page() ? '#request' : get_home_url() . '/#request'; ?>">Рассчитать участок</a>
+            <a class="header__cta openPopup" href="#header-popup" data-modal="#header-popup">Рассчитать участок</a>
       </div>
-      
+
       <button class="burger" aria-label="open"><span class="burger__icon"></span></button>
 
   </header>
+  <?php if (function_exists('land76_render_header_popup')) { land76_render_header_popup(); } ?>
+
 
 
   <div class="page-content">

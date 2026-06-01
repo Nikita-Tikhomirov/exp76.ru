@@ -215,6 +215,50 @@ function land76_get_card_image_alt($post_id = null, $fallback = '') {
   return $fallback;
 }
 
+function land76_render_header_popup() {
+  ?>
+  <div class="formWrapper" id="header-popup">
+    <form class="form">
+      <p class="form__title">Оставить заявку</p>
+      <label class="form__label">
+        <p>Имя или название организации *</p>
+        <input class="form__input" type="text" name="name" placeholder="" required="required" />
+      </label>
+      <label class="form__label">
+        <p>Контактный телефон *</p>
+        <input class="form__input" type="text" name="phone" placeholder="" required="required" />
+      </label>
+      <div class="formConsent">
+        <label class="formConsent__container">
+          <input class="formConsent__input" type="checkbox" required="required" />
+          <span class="formConsent__checkbox">
+            <svg class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px">
+              <path d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928C170.827,363.533,162.165,366.839,153.504,366.839z" fill="#B22917"></path>
+            </svg>
+          </span>
+        </label>
+        <p class="formConsent__text">Я ознакомлен и согласен с <a href="<?php echo esc_url(home_url('/privacy/')); ?>">политикой конфиденциальности</a> оператора, подтверждаю свое согласие на обработку введенных мною персональных данных</p>
+      </div>
+      <button class="form__btn btn" type="submit">Отправить</button>
+    </form>
+    <div class="ajaxMessage">
+      <div class="ajaxMessage__success">
+        <div class="ajaxMessage__title">
+          <p>Спасибо!</p>
+          <p>Ваша заявка принята</p>
+        </div>
+        <div class="ajaxMessage__text">Мы свяжемся с вами в ближайшее время, чтобы обсудить детали и ответить на вопросы</div>
+      </div>
+      <div class="ajaxMessage__error">
+        <div class="ajaxMessage__title">Ошибка при отправке!</div>
+        <div class="ajaxMessage__text">Попробуйте позднее</div>
+      </div>
+      <button class="ajaxMessage__btn btn closeModal" type="button">закрыть</button>
+    </div>
+  </div>
+  <?php
+}
+
 add_filter('aioseo_title', function ($title) {
   if (!is_singular('post') || !in_category(72) || !function_exists('get_field')) {
     return $title;

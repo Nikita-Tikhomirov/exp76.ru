@@ -352,18 +352,15 @@ if ($cs87_location) {
     </a>
     <nav class="menu">
       <ul class="menu__list">
-        <li class="menu__item"><a class="menu__link" href="<?php echo get_home_url(); ?>">Главная</a></li>
         <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(921); ?>">Услуги</a></li>
-        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(160); ?>">Фотогалерея</a></li>
-        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(9973); ?>">Калькулятор услуг</a></li>
-        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(9962); ?>">Полезное</a></li>
-        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(227); ?>">Контакты</a></li>
-        <li class="menu__about-list-wrap">
-          <a class="menu__about-link hover-link" href="<?php echo get_permalink(181); ?>">О нас</a>
+        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(160); ?>">Работы</a></li>
+        <li class="menu__about-list-wrap"><a class="menu__about-link hover-link" href="<?php echo get_permalink(181); ?>">О компании</a>
           <ul class="menu__about-list">
             <li class="menu__about-item hover-link1"><a class="menu__about-link" href="<?php echo get_permalink(7679); ?>">Вакансии</a></li>
           </ul>
         </li>
+        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(9973); ?>">Цены / Расчет</a></li>
+        <li class="menu__item"><a class="menu__link" href="<?php echo get_permalink(227); ?>">Контакты</a></li>
       </ul>
     </nav>
     <div class="header__links">
@@ -392,9 +389,14 @@ if ($cs87_location) {
           <span class="header__link-name">ВКонтакте</span>
         </a>
       </div>
-    </div>
+
+      <a class="header__cta openPopup" href="#header-popup" data-modal="#header-popup">Рассчитать участок</a>
+      </div>
+
     <button class="burger" aria-label="open"><span class="burger__icon"></span></button>
   </header>
+  <?php if (function_exists('land76_render_header_popup')) { land76_render_header_popup(); } ?>
+
 
   <div class="page-content">
     <main class="main">
