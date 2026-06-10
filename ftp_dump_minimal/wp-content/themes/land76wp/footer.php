@@ -24,6 +24,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script> 
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
   <script src="<?php bloginfo('template_directory'); ?>/js/main.js?v=20260511"></script>
+  <script src="<?php bloginfo('template_directory'); ?>/js/mobile-card-slider.js?v=<?php echo filemtime(get_template_directory() . '/js/mobile-card-slider.js'); ?>"></script>
   <?php if (is_front_page()): ?>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
