@@ -180,6 +180,7 @@ if ($cs87_location) {
       padding: 40px;
       border-radius: 10px;
       margin-bottom: 40px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.1);
     }
     .cs-block--challenge {
       background: #f9f9f9;
@@ -191,12 +192,72 @@ if ($cs87_location) {
     }
     .cs-block h3 {
       font-family: "Poiret One", cursive;
-      font-size: 28px;
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1.2;
       margin-bottom: 20px;
+      text-shadow: 1px 2px 3px #00000024;
     }
     .cs-block--challenge h3 { color: #ff5e00; }
     .cs-block--solution h3  { color: #0a9215; }
     .cs-block p { line-height: 1.8; color: #333; font-size: 16px; }
+    .seo-text {
+      max-width: 980px;
+      margin: 0 auto 34px !important;
+      padding: 32px 36px;
+      background: rgba(255,255,255,.88);
+      border-left: 4px solid #0a9215;
+      box-shadow: 0 5px 18px rgba(0,0,0,.12);
+      color: #333;
+      text-shadow: none;
+    }
+    .seo-text h2,
+    .seo-text h3,
+    .seo-text h4 {
+      margin: 0 0 16px;
+      font-family: "Poiret One", cursive;
+      font-weight: 900;
+      line-height: 1.22;
+      color: #0a9215;
+      text-shadow: 1px 2px 3px #00000024;
+    }
+    .seo-text h2 { font-size: 34px; }
+    .seo-text h3 { font-size: 28px; }
+    .seo-text h4 { font-size: 24px; }
+    .seo-text p {
+      margin: 0 0 14px;
+      color: #333;
+      font-size: 17px;
+      line-height: 1.72;
+      text-shadow: none;
+    }
+    .seo-text ul,
+    .seo-text ol {
+      display: grid;
+      gap: 9px;
+      margin: 16px 0 20px;
+      padding-left: 0;
+      list-style: none;
+    }
+    .seo-text li {
+      position: relative;
+      padding-left: 26px;
+      color: #333;
+      font-size: 16px;
+      line-height: 1.65;
+      text-shadow: none;
+    }
+    .seo-text li:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .65em;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #0a9215;
+      box-shadow: 0 0 0 4px rgba(10,146,21,.12);
+    }
     .case-seo-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -212,8 +273,12 @@ if ($cs87_location) {
     }
     .case-seo-card h3 {
       color: #0a9215;
-      font-size: 24px;
+      font-family: "Poiret One", cursive;
+      font-size: 29px;
+      font-weight: 900;
+      line-height: 1.22;
       margin-bottom: 14px;
+      text-shadow: 1px 2px 3px #00000022;
     }
     .case-seo-card p, .case-seo-card li {
       color: #333;
@@ -306,8 +371,11 @@ if ($cs87_location) {
       text-align: center;
       color: #0a9215;
       font-family: "Poiret One", cursive;
-      font-size: 35px;
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.2;
       margin-bottom: 40px;
+      text-shadow: 1px 2px 3px #00000024;
     }
 
     /* ── Media ────────────────────────────── */
@@ -329,17 +397,22 @@ if ($cs87_location) {
       .cs-block { padding: 25px; }
       .case-facts { grid-template-columns: 1fr 1fr; }
       .case-seo-grid { grid-template-columns: 1fr; }
+      .seo-text { padding: 26px 22px; }
       .cta-form { flex-direction: column; align-items: center; }
       .cta-form input { width: 100%; min-width: auto; }
       .btn--primary-custom { width: 100%; }
-      .section-title { font-size: 28px; }
+      .section-title { font-size: 31px; }
     }
     @media (max-width: 480px) {
       .hero__title { font-size: 24px; line-height: 1.2; }
       .hero__subtitle { font-size: 16px; line-height: 1.4; }
       .case-facts { grid-template-columns: 1fr; }
       .cs-block { padding: 20px; }
-      .cs-block h3 { font-size: 22px; }
+      .cs-block h3 { font-size: 28px; }
+      .seo-text { padding: 24px 18px; }
+      .seo-text h2 { font-size: 29px; }
+      .seo-text h3,
+      .case-seo-card h3 { font-size: 25px; }
     }
   </style>
 </head>
