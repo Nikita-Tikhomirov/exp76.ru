@@ -114,7 +114,7 @@ if (!function_exists('land76_portfolio_case_groups')) {
       border-radius: 24px;
       background: #0a9215;
       color: #fff;
-      font-weight: 700;
+      font-weight: 600;
       text-decoration: none;
       box-shadow: 0 5px 14px rgba(10,146,21,.2);
     }
@@ -129,7 +129,7 @@ if (!function_exists('land76_portfolio_case_groups')) {
       margin: 0 0 22px;
       font-family: "Poiret One", cursive;
       font-size: 38px;
-      font-weight: 800;
+      font-weight: 600;
       color: #333;
       text-shadow: 1px 2px 3px #00000036;
     }
@@ -150,7 +150,7 @@ if (!function_exists('land76_portfolio_case_groups')) {
       border-radius: 24px;
       color: #333;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 600;
       box-shadow: 0 4px 14px rgba(0,0,0,.12);
     }
     .portfolio-tabs__button.is-active,
@@ -228,7 +228,7 @@ if (!function_exists('land76_portfolio_case_groups')) {
       border: 2px solid #0a9215;
       background: #fff;
       color: #333;
-      font-weight: 700;
+      font-weight: 600;
       box-shadow: 0 4px 12px rgba(0,0,0,.1);
     }
     .portfolio-case-pagination__button.is-active,

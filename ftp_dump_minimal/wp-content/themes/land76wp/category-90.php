@@ -54,7 +54,7 @@ Template Name: Категория Осушение участка
     margin-bottom: 50px;
     font-family: "Poiret One",cursive;
     font-size: 50px;
-    font-weight: 800;
+    font-weight: 600;
     color: #333;
     text-shadow: 1px 2px 3px #00000036
 }
@@ -94,7 +94,7 @@ Template Name: Категория Осушение участка
 .advantages__step p {
     text-align: center;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 600;
     color: #333
 }
 
@@ -152,7 +152,7 @@ Template Name: Категория Осушение участка
     margin-bottom: 30px;
     font-family: "Poiret One",cursive;
     font-size: 40px;
-    font-weight: 800;
+    font-weight: 600;
     color: #0a9215;
     text-shadow: 1px 2px 3px #00000036
 }
@@ -161,7 +161,7 @@ Template Name: Категория Осушение участка
     margin-bottom: 30px;
     font-family: "Poiret One",cursive;
     font-size: 35px;
-    font-weight: 800;
+    font-weight: 600;
     color: #0a9215;
     text-shadow: 1px 2px 3px #00000036
 }
@@ -179,7 +179,7 @@ Template Name: Категория Осушение участка
   margin-bottom: 20px;
   font-family: "Poiret One",cursive;
   font-size: 35px;
-  font-weight: 800;
+  font-weight: 600;
   color: #0a9215;
   text-shadow: 1px 2px 3px #00000036;
 }
@@ -262,7 +262,7 @@ Template Name: Категория Осушение участка
   margin-bottom: 20px;
   font-family: "Poiret One",cursive;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   color: #333;
 }
 .price-example ul{
@@ -280,14 +280,14 @@ Template Name: Категория Осушение участка
 .price-example ul li:before{
   content: "•";
   color: #0a9215;
-  font-weight: bold;
+  font-weight: 600;
   position: absolute;
   left: 0;
   font-size: 18px;
 }
 .price-example ul li strong{
   color: #0a9215;
-  font-weight: 700;
+  font-weight: 600;
 }
 .faq-toggle{
   margin: 0;
@@ -295,7 +295,7 @@ Template Name: Категория Осушение участка
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  font-weight: 700;
+  font-weight: 600;
 }
 .faq-toggle span{
   font-size: 24px;
@@ -303,7 +303,7 @@ Template Name: Категория Осушение участка
   flex-shrink: 0;
 }
 .cta-title{
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 35px;
 }
 
@@ -800,9 +800,9 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #fff;">
           <thead>
             <tr style="background: #f5f5f5;">
-              <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 700; font-size: 16px;">Услуга</th>
-              <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 700; font-size: 16px;">Цена за метр</th>
-              <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 700; font-size: 16px;">Сроки</th>
+              <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Услуга</th>
+              <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Цена за метр</th>
+              <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Сроки</th>
             </tr>
           </thead>
           <tbody>

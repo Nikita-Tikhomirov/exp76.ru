@@ -299,7 +299,7 @@ if (!function_exists('land76_bloghub_card_image')) {
             border-radius: 24px;
             background: #fff;
             color: #0a9215;
-            font-weight: 700;
+            font-weight: 600;
             box-shadow: 0 4px 12px rgba(0,0,0,.1);
             cursor: pointer;
           }
@@ -321,7 +321,7 @@ if (!function_exists('land76_bloghub_card_image')) {
             margin: 0 0 20px;
             font-family: "Poiret One", cursive;
             font-size: 38px;
-            font-weight: 800;
+            font-weight: 600;
             color: #333;
             text-shadow: 1px 2px 3px #00000036;
           }
@@ -371,7 +371,7 @@ if (!function_exists('land76_bloghub_card_image')) {
             background: rgba(10,146,21,.1);
             color: #0a9215;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 600;
           }
           .blog-card__title {
             margin: 0 0 12px;
@@ -396,7 +396,7 @@ if (!function_exists('land76_bloghub_card_image')) {
             color: #0a9215;
             font-size: 17px;
             font-family: "Poiret One", cursive;
-            font-weight: 800;
+            font-weight: 600;
             box-shadow: 0 2px 2px rgba(0,0,0,.2);
           }
           .blog-card__button:hover {

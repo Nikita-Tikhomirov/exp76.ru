@@ -171,7 +171,7 @@ if ($cs87_location) {
     }
     .case-fact__value {
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 600;
       color: #333;
     }
 
@@ -193,7 +193,7 @@ if ($cs87_location) {
     .cs-block h3 {
       font-family: "Poiret One", cursive;
       font-size: 34px;
-      font-weight: 900;
+      font-weight: 600;
       line-height: 1.2;
       margin-bottom: 20px;
       text-shadow: 1px 2px 3px #00000024;
@@ -216,7 +216,7 @@ if ($cs87_location) {
     .seo-text h4 {
       margin: 0 0 16px;
       font-family: "Poiret One", cursive;
-      font-weight: 900;
+      font-weight: 600;
       line-height: 1.22;
       color: #0a9215;
       text-shadow: 1px 2px 3px #00000024;
@@ -275,7 +275,7 @@ if ($cs87_location) {
       color: #0a9215;
       font-family: "Poiret One", cursive;
       font-size: 29px;
-      font-weight: 900;
+      font-weight: 600;
       line-height: 1.22;
       margin-bottom: 14px;
       text-shadow: 1px 2px 3px #00000022;
@@ -301,7 +301,7 @@ if ($cs87_location) {
       display: inline-block;
       margin-top: 18px;
       color: #0a9215;
-      font-weight: 700;
+      font-weight: 600;
       text-decoration: underline;
     }
 
@@ -325,7 +325,7 @@ if ($cs87_location) {
       padding: 40px;
       border-radius: 10px;
     }
-    .cta-block h2 { font-weight: 700; margin-bottom: 35px; }
+    .cta-block h2 { font-weight: 600; margin-bottom: 35px; }
     .cta-block p  { margin-bottom: 30px; }
     .cta-form {
       display: flex;
@@ -361,7 +361,7 @@ if ($cs87_location) {
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      font-weight: 700;
+      font-weight: 600;
     }
     .faq-toggle span { font-size: 24px; margin-left: 20px; flex-shrink: 0; }
     .faq-answer { background: #fff; padding: 20px; border-top: 1px solid #ddd; }
@@ -372,7 +372,7 @@ if ($cs87_location) {
       color: #0a9215;
       font-family: "Poiret One", cursive;
       font-size: 40px;
-      font-weight: 900;
+      font-weight: 600;
       line-height: 1.2;
       margin-bottom: 40px;
       text-shadow: 1px 2px 3px #00000024;

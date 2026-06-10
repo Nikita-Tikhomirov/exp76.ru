@@ -170,7 +170,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .faq-toggle span {
@@ -896,11 +896,11 @@ Poiret One
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #fff;">
       <thead>
         <tr style="background: #f5f5f5;">
-          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 700; font-size: 16px;">Услуга
+          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Услуга
           </th>
-          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 700; font-size: 16px;">Цена
+          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Цена
             за метр</th>
-          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 700; font-size: 16px;">Сроки
+          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Сроки
           </th>
         </tr>
       </thead>
@@ -958,15 +958,27 @@ Poiret One
 <!-- 10. CTA -->
 <section class="advantages wrapper">
   <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
-    <h2 style="font-weight: 700; margin-bottom: 35px;">Получите расчет по услуге за 1 день</h2>
+    <h2 style="font-weight: 600; margin-bottom: 35px;">Получите расчет по услуге за 1 день</h2>
     <p style="margin-bottom: 30px;">Оставьте заявку и наш специалист свяжется с вами для бесплатной консультации и
       точного расчета стоимости</p>
-    <form class="cta-form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-      <input type="text" placeholder="Ваше имя" required
+    <form class="cta-form form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+      <input type="text" name="name" placeholder="Ваше имя" required
         style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
-      <input type="tel" placeholder="Ваш телефон" required
+      <input type="tel" name="phone" placeholder="Ваш телефон" required
         style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
+      <div class="formConsent" style="flex-basis: 100%; text-align: center; margin-top: 10px;"><label class="formConsent__container"><input class="formConsent__input" type="checkbox" required="required" /><span class="formConsent__checkbox"><svg class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px"><path d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928C170.827,363.533,162.165,366.839,153.504,366.839z" fill="#B22917"></path></svg></span></label><span class="formConsent__text" style="font-size: 12px;">Я согласен с обработкой персональных данных</span></div>
       <button type="submit" class="btn--primary-custom">Получить расчет</button>
     </form>
+    <div class="ajaxMessage" style="display:none;">
+      <div class="ajaxMessage__success">
+        <div class="ajaxMessage__title"><p>Спасибо!</p><p>Ваша заявка принята</p></div>
+        <div class="ajaxMessage__text">Мы свяжемся с вами в ближайшее время</div>
+      </div>
+      <div class="ajaxMessage__error">
+        <div class="ajaxMessage__title">Ошибка при отправке!</div>
+        <div class="ajaxMessage__text">Попробуйте позднее</div>
+      </div>
+      <button class="ajaxMessage__btn btn closeModal" type="button">закрыть</button>
+    </div>
   </div>
 </section>

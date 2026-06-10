@@ -86,7 +86,7 @@ add_filter('aioseo_description', function ($description) {
             border: 2px solid #0a9215;
             border-radius: 25px;
             color: #0a9215;
-            font-weight: 700;
+            font-weight: 600;
             text-align: center;
           }
           .calc-seo__button:hover {
@@ -97,7 +97,7 @@ add_filter('aioseo_description', function ($description) {
             margin: 0 0 20px;
             font-family: "Poiret One", cursive;
             font-size: 38px;
-            font-weight: 800;
+            font-weight: 600;
             color: #333;
             text-shadow: 1px 2px 3px #00000036;
           }
@@ -167,7 +167,7 @@ add_filter('aioseo_description', function ($description) {
             display: block;
             padding: 18px 56px 18px 20px;
             color: #0a9215;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 19px;
             line-height: 1.3;
             cursor: pointer;
@@ -187,7 +187,7 @@ add_filter('aioseo_description', function ($description) {
             border-radius: 50%;
             color: #0a9215;
             font-size: 22px;
-            font-weight: 700;
+            font-weight: 600;
             line-height: 24px;
             text-align: center;
             transform: translateY(-50%);
@@ -351,12 +351,13 @@ add_filter('aioseo_description', function ($description) {
             <p class="calc__calc-title">Оставьте контактные данные, мы свяжемся с вами в ближайшее время и начнем
               разработку проекта</p>
             <form class="form"><label class="form__label">
-                <p>Имя *</p><input class="form__input" type="text" name="name" placeholder="Ваше имя"
+                <p>Имя или название организации *</p><input class="form__input" type="text" name="name" placeholder="Ваше имя"
                   required="required" />
               </label><label class="form__label">
                 <p>Контактный телефон *</p><input class="form__input" type="text" name="phone"
                   placeholder="Ваш номер телефона" required="required" />
-              </label><button class="form__btn btn" type="submit">Отправить</button></form>
+              </label>
+            <div class="formConsent"><label class="formConsent__container"><input class="formConsent__input" type="checkbox" required="required" /><span class="formConsent__checkbox"><svg class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px"><path d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928C170.827,363.533,162.165,366.839,153.504,366.839z" fill="#B22917"></path></svg></span></label><p class="formConsent__text">Я ознакомлен и согласен с <a href="privacy.html">политикой конфиденциальности</a> оператора, подтверждаю свое <a href="consent.html">согласие</a> на обработку введенных мною персональных данных</p></div><button class="form__btn btn" type="submit">Отправить</button></form>
             <p class="calc__info">Стоимость работ является оценочной. Точную стоимость можно узнать по телефону или
               заказав выезд нашего специалиста на участок.</p>
             <div class="ajaxMessage">

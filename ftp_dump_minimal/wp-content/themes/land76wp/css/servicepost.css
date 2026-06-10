@@ -35,7 +35,7 @@
 .hero__title {
   color: #fff;
   font-size: 60px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 110%;
   text-shadow: 2px 3px 4px #000;
   font-family: "Poiret One", cursive;
@@ -124,7 +124,7 @@
 .servicepost h2 {
   font-family: "Poiret One", cursive;
   font-size: 45px;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 30px;
   color: #0a9215;
   text-shadow: 1px 2px 3px #00000036;
@@ -132,7 +132,7 @@
 .servicepost h3 {
   font-family: "Poiret One", cursive;
   font-size: 40px;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 30px;
   color: #0a9215;
   text-shadow: 1px 2px 3px #00000036;
@@ -141,7 +141,7 @@
 .servicepost h4 {
   font-family: "Poiret One", cursive;
   font-size: 25px;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 30px;
   color: #0a9215;
   text-shadow: 1px 2px 3px #00000036;
@@ -150,7 +150,7 @@
 .servicepost h5 {
   font-family: "Poiret One", cursive;
   font-size: 25px;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 30px;
   color: #0a9215;
   text-shadow: 1px 2px 3px #00000036;
@@ -211,7 +211,7 @@
 .solution-block h3 {
   color: #0a9215 !important;
   font-size: 30px !important;
-  font-weight: 800 !important;
+  font-weight: 600 !important;
   line-height: 1.25;
   text-shadow: 1px 2px 3px #00000024;
 }
@@ -219,7 +219,7 @@
   color: #0a9215 !important;
   font-family: "Poiret One", cursive !important;
   font-size: 27px !important;
-  font-weight: 800 !important;
+  font-weight: 600 !important;
   line-height: 1.25;
   margin-bottom: 12px !important;
   text-shadow: 1px 2px 3px #00000020;
@@ -245,7 +245,7 @@
   margin: 0 0 16px;
   color: #333;
   font-family: "Poiret One", cursive;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.25;
   text-align: left;
   text-shadow: 1px 2px 3px #00000026;

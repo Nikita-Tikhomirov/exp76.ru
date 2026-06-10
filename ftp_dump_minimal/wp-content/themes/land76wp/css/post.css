@@ -35,7 +35,7 @@
 .hero__title {
   color: #fff;
   font-size: 60px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 110%;
   text-shadow: 2px 3px 4px #000;
   font-family: "Poiret One", cursive;
@@ -137,7 +137,7 @@
 .post h2 {
   font-family: "Poiret One", cursive;
   font-size: 45px;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 30px;
   color: #0a9215;
   text-shadow: 1px 2px 3px #00000036;
@@ -145,7 +145,7 @@
 .post h3 {
   font-family: "Poiret One", cursive;
   font-size: 40px;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 30px;
   color: #0a9215;
   text-shadow: 1px 2px 3px #00000036;

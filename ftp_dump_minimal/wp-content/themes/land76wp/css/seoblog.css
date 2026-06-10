@@ -53,7 +53,7 @@
 
 .seoblog__toc-title {
   margin: 0 0 12px;
-  font-weight: 700;
+  font-weight: 600;
   color: #0a9215;
 }
 
@@ -84,7 +84,7 @@
   color: #0a9215;
   font-family: "Poiret One", cursive;
   font-size: 40px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.2;
 }
 
@@ -173,7 +173,7 @@
 }
 
 .seoblog__related-card span {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .seoblog__faq-item {

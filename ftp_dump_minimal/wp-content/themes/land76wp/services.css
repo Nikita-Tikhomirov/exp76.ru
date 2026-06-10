@@ -35,7 +35,7 @@
 .hero__title {
   color: #fff;
   font-size: 60px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 110%;
   text-shadow: 2px 3px 4px #000;
   font-family: "Poiret One", cursive;
@@ -112,7 +112,7 @@
   margin-bottom: 50px;
   font-family: "Poiret One", cursive;
   font-size: 50px;
-  font-weight: 800;
+  font-weight: 600;
   color: #333;
   text-shadow: 1px 2px 3px #00000036;
 }
@@ -124,7 +124,7 @@
   font-weight: 500;
 }
 .calc__total-wrap {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 26px;
   margin-bottom: 20px;
 }
@@ -184,7 +184,7 @@
 }
 .tabs__rs-title, .tabs__square-title, .tabs__type {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 20px;
   color: #333;
 }
@@ -231,7 +231,7 @@
 }
 .tabs__project-total-wrap {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
   margin-top: 25px;
 }
 .tabs__project-total {
@@ -327,7 +327,7 @@
   margin-bottom: 50px;
   font-family: "Poiret One", cursive;
   font-size: 50px;
-  font-weight: 800;
+  font-weight: 600;
   color: #333;
   text-shadow: 1px 2px 3px #00000036;
 }
@@ -363,7 +363,7 @@
 .advantages__step p {
   text-align: center;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   color: #333;
 }
 .advantages__svg-wrap {
@@ -411,7 +411,7 @@
   margin-bottom: 30px;
   font-family: "Poiret One", cursive;
   font-size: 40px;
-  font-weight: 800;
+  font-weight: 600;
   color: #0a9215;
   text-shadow: 1px 2px 3px #00000036;
 }
@@ -419,7 +419,7 @@
   margin-bottom: 30px;
   font-family: "Poiret One", cursive;
   font-size: 35px;
-  font-weight: 800;
+  font-weight: 600;
   color: #0a9215;
   text-shadow: 1px 2px 3px #00000036;
 }
@@ -431,7 +431,7 @@
 .services__title {
   font-family: "Poiret One", cursive;
   font-size: 50px;
-  font-weight: 800;
+  font-weight: 600;
   margin-bottom: 50px;
   color: #333;
   text-shadow: 1px 2px 3px #00000036;

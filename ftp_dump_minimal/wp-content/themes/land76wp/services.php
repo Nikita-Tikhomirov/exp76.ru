@@ -287,19 +287,19 @@ $land76_price_rows = array(
           display: inline-flex; align-items: center; justify-content: center;
           min-height: 44px; padding: 10px 24px; border-radius: 24px;
           background: #0a9215; border: 2px solid #0a9215; color: #fff;
-          font-weight: 700; text-decoration: none; box-shadow: 0 5px 14px rgba(10,146,21,.2);
+          font-weight: 600; text-decoration: none; box-shadow: 0 5px 14px rgba(10,146,21,.2);
         }
         .services-hub__btn--light { background: #fff; color: #0a9215; }
         .services-hub__subtitle,
         .services-hub__group-title {
-          font-family: "Poiret One", cursive; font-size: 38px; font-weight: 800;
+          font-family: "Poiret One", cursive; font-size: 38px; font-weight: 600;
           margin: 38px 0 24px; color: #333; text-shadow: 1px 2px 3px #00000024;
         }
         .services-hub__task-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
         .services-hub__task {
           display: flex; align-items: center; min-height: 74px; padding: 18px 20px;
           background: #fff; border-left: 4px solid #ff5e00; color: #333;
-          font-size: 18px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,.12);
+          font-size: 18px; font-weight: 600; text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,.12);
         }
         .services-hub__order {
           max-width: 1120px; margin-top: 42px; padding: 32px;
@@ -314,7 +314,7 @@ $land76_price_rows = array(
         }
         .services-hub__order span {
           grid-row: span 2; display: inline-flex; align-items: center; justify-content: center;
-          width: 44px; height: 44px; border-radius: 50%; background: #0a9215; color: #fff; font-weight: 800;
+          width: 44px; height: 44px; border-radius: 50%; background: #0a9215; color: #fff; font-weight: 600;
         }
         .services-hub__order strong { color: #333; font-size: 18px; }
         .services-hub__order em { color: #666; font-style: normal; line-height: 1.45; }
@@ -530,12 +530,13 @@ $land76_price_rows = array(
             <p class="calc__calc-title">Оставьте контактные данные, мы свяжемся с вами в ближайшее время и начнем
               разработку проекта</p>
             <form class="form"><label class="form__label">
-                <p>Имя *</p><input class="form__input" type="text" name="name" placeholder="Ваше имя"
+                <p>Имя или название организации *</p><input class="form__input" type="text" name="name" placeholder="Ваше имя"
                   required="required" />
               </label><label class="form__label">
                 <p>Контактный телефон *</p><input class="form__input" type="text" name="phone"
                   placeholder="Ваш номер телефона" required="required" />
-              </label><button class="form__btn btn" type="submit">Отправить</button></form>
+              </label>
+            <div class="formConsent"><label class="formConsent__container"><input class="formConsent__input" type="checkbox" required="required" /><span class="formConsent__checkbox"><svg class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px"><path d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928C170.827,363.533,162.165,366.839,153.504,366.839z" fill="#B22917"></path></svg></span></label><p class="formConsent__text">Я ознакомлен и согласен с <a href="privacy.html">политикой конфиденциальности</a> оператора, подтверждаю свое <a href="consent.html">согласие</a> на обработку введенных мною персональных данных</p></div><button class="form__btn btn" type="submit">Отправить</button></form>
             <p class="calc__info">Стоимость работ является оценочной. Точную стоимость можно узнать по телефону или
               заказав выезд нашего специалиста на участок.</p>
             <div class="ajaxMessage">

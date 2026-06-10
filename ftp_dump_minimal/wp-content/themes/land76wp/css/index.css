@@ -48,7 +48,7 @@ body,
   background: #ff5e00;
   color: #fff;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.1;
   text-decoration: none;
   box-shadow: 0 6px 16px rgba(255, 94, 0, 0.26);
@@ -115,7 +115,7 @@ body,
   margin: 0 0 18px;
   color: #a2f9a9;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
   text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
 }
 
@@ -125,7 +125,7 @@ body,
   color: #fff;
   font-family: "Poiret One", cursive;
   font-size: clamp(38px, 4.35vw, 64px);
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.08;
   text-shadow: 2px 3px 4px #000;
 }
@@ -159,7 +159,7 @@ body,
   background: #ff5e00;
   color: #fff;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
   text-shadow: none;
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
@@ -249,7 +249,7 @@ body,
   margin-bottom: 12px;
   color: #0a9215;
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -259,7 +259,7 @@ body,
   color: #333;
   font-family: "Poiret One", cursive;
   font-size: clamp(34px, 3.45vw, 48px);
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.16;
   text-shadow: 1px 2px 3px #00000030;
 }
@@ -268,7 +268,7 @@ body,
   margin: 0;
   color: #252525;
   font-size: 24px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.16;
 }
 
@@ -450,7 +450,7 @@ body,
   padding-top: 22px;
   color: #0a9215;
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 600;
   text-decoration: none;
 }
 
@@ -506,7 +506,7 @@ body,
   border: 2px solid #0a9215;
   border-radius: 26px;
   font-size: 17px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.15;
   text-decoration: none;
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
@@ -549,7 +549,7 @@ body,
   margin-bottom: 18px;
   color: #0a9215;
   font-size: 30px;
-  font-weight: 900;
+  font-weight: 600;
 }
 
 .home-process-list p {
@@ -642,7 +642,7 @@ body,
   padding: 22px 26px;
   color: #252525;
   font-size: 21px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .home-faq-list details p {
@@ -856,7 +856,7 @@ body,
     background: #fff;
     color: #ff5e00;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 600;
     line-height: 1;
     box-shadow: 0 5px 14px rgba(0, 0, 0, 0.14);
     transition: background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
