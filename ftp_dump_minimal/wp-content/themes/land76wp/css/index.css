@@ -466,6 +466,7 @@ body,
 
 .home-logic-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 42px;
 }
 
 .home-logic-grid article,
