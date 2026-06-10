@@ -208,6 +208,85 @@
   display: block;
   margin: 50px auto auto;
 }
+.solution-block h3 {
+  color: #0a9215 !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 1.25;
+  text-shadow: 1px 2px 3px #00000024;
+}
+.solution-block h4 {
+  color: #0a9215 !important;
+  font-family: "Poiret One", cursive !important;
+  font-size: 27px !important;
+  font-weight: 800 !important;
+  line-height: 1.25;
+  margin-bottom: 12px !important;
+  text-shadow: 1px 2px 3px #00000020;
+}
+.solution-block {
+  margin-bottom: 18px !important;
+}
+.solution-block + .services {
+  padding-top: 12px !important;
+}
+.seo-text {
+  max-width: 980px;
+  margin: 0 auto 40px !important;
+  padding: 30px 34px;
+  background: rgba(255, 255, 255, .86);
+  border-left: 4px solid #0a9215;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .12);
+  color: #555;
+  line-height: 1.72 !important;
+}
+.seo-text h2,
+.seo-text h3 {
+  margin: 0 0 16px;
+  color: #333;
+  font-family: "Poiret One", cursive;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: left;
+  text-shadow: 1px 2px 3px #00000026;
+}
+.seo-text h2 {
+  font-size: 34px;
+}
+.seo-text h3 {
+  font-size: 27px;
+  color: #0a9215;
+}
+.seo-text p {
+  margin: 0 0 14px;
+  font-size: 17px;
+  line-height: 1.7;
+}
+.seo-text ul,
+.seo-text ol {
+  display: grid;
+  gap: 9px;
+  margin: 16px 0 20px;
+  padding-left: 0;
+  list-style: none;
+}
+.seo-text li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.seo-text li:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .65em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #0a9215;
+  box-shadow: 0 0 0 4px rgba(10, 146, 21, .12);
+}
 .slider {
   overflow: hidden;
   padding: 30px;
@@ -430,6 +509,24 @@ aside {
 .border-b__img-wrap::before {
   bottom: -10px;
   right: -10px;
+}
+.solution-block h3 {
+  font-size: 27px !important;
+}
+.solution-block h4 {
+  font-size: 23px !important;
+}
+.seo-text {
+  padding: 24px 18px;
+}
+.seo-text h2 {
+  font-size: 29px;
+}
+.seo-text h3 {
+  font-size: 24px;
+}
+.seo-text p {
+  font-size: 16px;
 }
 }@media only screen and (max-width:991px) and (min-width:768px) {
   .hero__content {

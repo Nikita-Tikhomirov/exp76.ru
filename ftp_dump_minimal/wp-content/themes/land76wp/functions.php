@@ -130,6 +130,11 @@ function style_theme() {
     wp_enqueue_style('land76-services', get_template_directory_uri() . '/css/services.css', array(), null);
     wp_enqueue_style('land76-seoblog', get_template_directory_uri() . '/css/seoblog.css', array('land76-services'), null);
   }
+  if (is_singular('post') && has_category(74, get_queried_object_id())) {
+    $servicepost_styles_path = get_template_directory() . '/css/servicepost.css';
+    $servicepost_styles_version = file_exists($servicepost_styles_path) ? filemtime($servicepost_styles_path) : null;
+    wp_enqueue_style('land76-servicepost', get_template_directory_uri() . '/css/servicepost.css', array('style2'), $servicepost_styles_version);
+  }
 
 }
 
