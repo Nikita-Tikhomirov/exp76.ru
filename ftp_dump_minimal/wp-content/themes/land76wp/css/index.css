@@ -314,9 +314,10 @@ body,
 }
 
 .home-task-card {
-  display: block;
-  min-height: 210px;
-  padding: 28px;
+  display: flex;
+  min-height: 100%;
+  overflow: hidden;
+  flex-direction: column;
   border-left: 4px solid #ff5e00;
   background: rgba(255, 255, 255, 0.94);
   color: inherit;
@@ -328,6 +329,32 @@ body,
 .home-task-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.14);
+}
+
+.home-task-card__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 8.8;
+  overflow: hidden;
+  background: #e9eee6;
+}
+
+.home-task-card__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.home-task-card:hover .home-task-card__image img {
+  transform: scale(1.04);
+}
+
+.home-task-card__body {
+  display: block;
+  flex: 1;
+  padding: 24px;
 }
 
 .home-task-card p {
@@ -759,7 +786,7 @@ body,
     grid-template-columns: 1fr;
   }
 
-  .home-task-card,
+  .home-task-card__body,
   .home-service-card__body,
   .home-work-card__body,
   .home-logic-grid article,

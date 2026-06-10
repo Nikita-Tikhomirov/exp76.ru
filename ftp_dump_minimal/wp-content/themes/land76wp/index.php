@@ -31,12 +31,12 @@ $calc_page = get_permalink(9973);
 $contacts_page = get_permalink(227);
 
 $task_cards = array(
-  array('title' => 'На участке стоит вода', 'text' => 'Подберем дренаж, осушение или ливневую канализацию, чтобы убрать лужи, сырость и воду у фундамента.', 'url' => land76_home_term_link(87, '/category/drenazh-uchastka/')),
-  array('title' => 'Нужно защитить фундамент', 'text' => 'Сделаем отмостку, водоотвод и примыкания так, чтобы вода уходила от дома, а не под основание.', 'url' => land76_home_term_link(88, '/category/otmostka-vokrug-doma/')),
-  array('title' => 'Нужны дорожки и площадки', 'text' => 'Продумываем основание, уклоны, бордюры и покрытие для дорожек, двора, парковки и входной зоны.', 'url' => land76_home_term_link(89, '/category/ukladka-trotuarnoy-plitki/')),
-  array('title' => 'Нужно отвести воду с крыши', 'text' => 'Собираем дождевую воду через лотки, дождеприемники, трубы и колодцы без размыва участка.', 'url' => land76_home_term_link(91, '/category/livnevaya-kanalizatsiya/')),
-  array('title' => 'Нужен полив без ручной работы', 'text' => 'Проектируем автополив газона, сада, теплицы и посадок с зонами, клапанами и контроллером.', 'url' => land76_home_term_link(92, '/category/avtopoliv-na-uchastke/')),
-  array('title' => 'Нужен понятный план работ', 'text' => 'Сначала смотрим рельеф, воду, подъезд и будущие покрытия, потом собираем этапы и смету.', 'url' => $services_page),
+  array('title' => 'На участке стоит вода', 'text' => 'Подберем дренаж, осушение или ливневую канализацию, чтобы убрать лужи, сырость и воду у фундамента.', 'url' => land76_home_term_link(87, '/category/drenazh-uchastka/'), 'image' => land76_home_media_url('vysokie-gruntovye-vody.webp'), 'alt' => 'Дренаж и осушение участка с водой после дождя'),
+  array('title' => 'Нужно защитить фундамент', 'text' => 'Сделаем отмостку, водоотвод и примыкания так, чтобы вода уходила от дома, а не под основание.', 'url' => land76_home_term_link(88, '/category/otmostka-vokrug-doma/'), 'image' => land76_home_media_url('otmostka-iz-plitki.webp'), 'alt' => 'Отмостка и водоотвод для защиты фундамента'),
+  array('title' => 'Нужны дорожки и площадки', 'text' => 'Продумываем основание, уклоны, бордюры и покрытие для дорожек, двора, парковки и входной зоны.', 'url' => land76_home_term_link(89, '/category/ukladka-trotuarnoy-plitki/'), 'image' => land76_home_media_url('sadovye-dorozhki-iz-plitki.webp'), 'alt' => 'Садовые дорожки и площадки из тротуарной плитки'),
+  array('title' => 'Нужно отвести воду с крыши', 'text' => 'Собираем дождевую воду через лотки, дождеприемники, трубы и колодцы без размыва участка.', 'url' => land76_home_term_link(91, '/category/livnevaya-kanalizatsiya/'), 'image' => land76_home_media_url('dozhdepriemniki-i-lotki.webp'), 'alt' => 'Ливневая канализация и отвод воды с крыши'),
+  array('title' => 'Нужен полив без ручной работы', 'text' => 'Проектируем автополив газона, сада, теплицы и посадок с зонами, клапанами и контроллером.', 'url' => land76_home_term_link(92, '/category/avtopoliv-na-uchastke/'), 'image' => land76_home_media_url('montazh-avtopoliva.webp'), 'alt' => 'Автоматический полив газона и посадок на участке'),
+  array('title' => 'Нужен понятный план работ', 'text' => 'Сначала смотрим рельеф, воду, подъезд и будущие покрытия, потом собираем этапы и смету.', 'url' => $services_page, 'image' => land76_home_media_url('proektirovanie-avtopoliva.webp'), 'alt' => 'План работ по благоустройству участка перед расчетом'),
 );
 
 $service_cards = array(
@@ -68,8 +68,13 @@ $works = get_posts(array(
   <div class="home-task-grid">
     <?php foreach ($task_cards as $card): ?>
       <a class="home-task-card" href="<?php echo esc_url($card['url']); ?>">
-        <h3><?php echo esc_html($card['title']); ?></h3>
-        <p><?php echo esc_html($card['text']); ?></p>
+        <span class="home-task-card__image">
+          <img src="<?php echo esc_url($card['image']); ?>" alt="<?php echo esc_attr($card['alt']); ?>" loading="lazy" />
+        </span>
+        <span class="home-task-card__body">
+          <h3><?php echo esc_html($card['title']); ?></h3>
+          <p><?php echo esc_html($card['text']); ?></p>
+        </span>
       </a>
     <?php endforeach; ?>
   </div>
