@@ -50,57 +50,77 @@ add_filter('aioseo_description', function ($description) {
             width: 100%;
             max-width: 100%;
             margin: 0;
-            padding: 34px 30px;
+            padding: 34px 30px 30px;
           }
           .calc #form1 .calc-contact-form {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(220px, .9fr) auto;
-            gap: 18px 28px;
-            align-items: end;
+            display: grid !important;
+            grid-template-columns: minmax(250px, 1fr) minmax(250px, 1fr) minmax(160px, auto);
+            gap: 20px 26px;
+            align-items: start;
             width: 100%;
+            margin-top: 26px;
           }
           .calc #form1 .calc-contact-form .form__label {
-            display: grid;
-            grid-template-columns: auto minmax(0, 1fr);
-            align-items: center;
-            gap: 12px;
+            display: block !important;
             margin: 0;
             text-align: left;
+            line-height: 1.35;
           }
           .calc #form1 .calc-contact-form .form__label p {
-            margin: 0;
+            margin: 0 0 9px;
             color: #222;
-            line-height: 1.2;
-            white-space: normal;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.35;
           }
           .calc #form1 .calc-contact-form .form__input {
-            width: 100%;
+            width: 100% !important;
+            height: 42px;
             min-width: 0;
-            margin: 0;
+            margin: 0 !important;
+            padding: 8px 14px;
+            border: 1px solid rgba(255, 94, 0, .55);
+            border-radius: 0;
+            font-size: 16px;
           }
           .calc #form1 .calc-contact-form .formConsent {
-            display: grid;
+            grid-column: 1 / 3;
+            display: grid !important;
             grid-template-columns: 18px minmax(0, 1fr);
-            gap: 8px;
+            gap: 10px;
             align-items: start;
-            margin: 0;
+            max-width: 760px;
+            margin: 2px 0 0;
           }
           .calc #form1 .calc-contact-form .formConsent__container {
-            margin: 2px 0 0;
+            min-width: 18px;
+            margin: 3px 0 0 !important;
+          }
+          .calc #form1 .calc-contact-form .formConsent__input {
+            width: auto !important;
           }
           .calc #form1 .calc-contact-form .formConsent__text {
             margin: 0;
-            font-size: 12px;
-            line-height: 1.35;
+            max-width: 720px;
+            font-size: 13px;
+            line-height: 1.45;
             text-align: left;
+            color: #444;
           }
           .calc #form1 .calc-contact-form .form__btn {
-            align-self: center;
-            margin: 0;
-            min-width: 128px;
+            grid-column: 3;
+            grid-row: 2;
+            justify-self: end;
+            align-self: start;
+            min-width: 160px;
+            margin: 0 !important;
+            padding: 8px 28px;
+            font-size: 18px;
           }
           .calc #form1 .calc__info {
-            margin-top: 30px;
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(0,0,0,.25);
           }
           .calc-seo__lead p,
           .calc-seo__panel p,
@@ -271,7 +291,9 @@ add_filter('aioseo_description', function ($description) {
             }
             .calc #form1 .calc-contact-form .form__btn {
               grid-column: 1 / -1;
+              grid-row: auto;
               justify-self: center;
+              margin: 0 !important;
             }
             .calc-seo__actions,
             .calc-seo__grid,
@@ -294,6 +316,7 @@ add_filter('aioseo_description', function ($description) {
               text-align: left;
             }
             .calc #form1 .calc-contact-form .form__btn {
+              grid-row: auto;
               width: 100%;
             }
             .calc-seo__lead,
