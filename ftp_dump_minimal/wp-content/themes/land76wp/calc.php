@@ -152,21 +152,56 @@ add_filter('aioseo_description', function ($description) {
             background: #0a9215;
             box-shadow: 0 0 0 4px rgba(10,146,21,.12);
           }
-          .calc-seo__faq-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
           .calc-seo__faq-item {
-            padding: 18px 20px;
+            overflow: hidden;
             background: #fff;
+            border-left: 4px solid #ff5e00ce;
             box-shadow: 0 4px 14px rgba(0,0,0,.1);
+            transition: box-shadow .2s, transform .2s;
           }
-          .calc-seo__faq-item h3 {
-            margin: 0 0 10px;
+          .calc-seo__faq-item[open] {
+            box-shadow: 0 7px 18px rgba(0,0,0,.14);
+          }
+          .calc-seo__faq-question {
+            position: relative;
+            display: block;
+            padding: 18px 56px 18px 20px;
             color: #0a9215;
+            font-weight: 700;
             font-size: 19px;
             line-height: 1.3;
+            cursor: pointer;
+            list-style: none;
           }
-          .calc-seo__faq-item p {
+          .calc-seo__faq-question::-webkit-details-marker {
+            display: none;
+          }
+          .calc-seo__faq-question:after {
+            content: "+";
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            width: 28px;
+            height: 28px;
+            border: 2px solid #0a9215;
+            border-radius: 50%;
+            color: #0a9215;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 24px;
+            text-align: center;
+            transform: translateY(-50%);
+            transition: .2s;
+          }
+          .calc-seo__faq-item[open] .calc-seo__faq-question:after {
+            content: "-";
+            color: #fff;
+            background: #0a9215;
+          }
+          .calc-seo__faq-answer {
+            padding: 0 20px 20px;
+          }
+          .calc-seo__faq-answer p {
             margin: 0;
             font-size: 16px;
           }
@@ -194,6 +229,13 @@ add_filter('aioseo_description', function ($description) {
             }
             .calc-seo__title {
               font-size: 31px;
+            }
+            .calc-seo__faq-question {
+              padding: 16px 48px 16px 16px;
+              font-size: 17px;
+            }
+            .calc-seo__faq-answer {
+              padding: 0 16px 18px;
             }
           }
         </style>
@@ -375,33 +417,63 @@ add_filter('aioseo_description', function ($description) {
         <div class="calc-seo__faq">
           <h2 class="calc-seo__title">Вопросы по расчету стоимости</h2>
           <div class="calc-seo__faq-grid">
-            <div class="calc-seo__faq-item">
-              <h3>Можно ли точно рассчитать стоимость онлайн?</h3>
-              <p>Нет, онлайн-калькулятор дает ориентир. Точная цена зависит от грунта, уклонов, материалов, доступа к участку и схемы работ.</p>
-            </div>
-            <div class="calc-seo__faq-item">
-              <h3>Какие работы сейчас считает калькулятор?</h3>
-              <p>Сейчас доступны проектирование, дренаж, мощение и газон. По остальным направлениям стоимость считаем индивидуально после уточнения задачи и вводных по участку.</p>
-            </div>
-            <div class="calc-seo__faq-item">
-              <h3>Можно ли рассчитать отмостку, ливневку или автополив?</h3>
-              <p>Да, но пока через заявку. Для этих работ нужно больше вводных: площадь, точки воды, трассы, уклоны, оборудование и материалы.</p>
-            </div>
-            <div class="calc-seo__faq-item">
-              <h3>Что отправить для предварительной оценки?</h3>
-              <p>Подойдут фото участка, примерные размеры, описание проблемы, адрес или населенный пункт и пожелания по срокам.</p>
-            </div>
-            <div class="calc-seo__faq-item">
-              <h3>Вы работаете по Ярославской области?</h3>
-              <p>Да, выезжаем по Рыбинску, Ярославлю, Угличу, Тутаеву, Переславлю и другим населенным пунктам области.</p>
-            </div>
-            <div class="calc-seo__faq-item">
-              <h3>Почему цена может измениться после осмотра?</h3>
-              <p>На объекте могут выявиться высокий уровень воды, сложный грунт, ограничения по технике, готовые покрытия или необходимость другой схемы.</p>
-            </div>
+            <details class="calc-seo__faq-item">
+              <summary class="calc-seo__faq-question">Можно ли точно рассчитать стоимость онлайн?</summary>
+              <div class="calc-seo__faq-answer">
+                <p>Нет, онлайн-калькулятор дает ориентир. Точная цена зависит от грунта, уклонов, материалов, доступа к участку и схемы работ.</p>
+              </div>
+            </details>
+            <details class="calc-seo__faq-item">
+              <summary class="calc-seo__faq-question">Какие работы сейчас считает калькулятор?</summary>
+              <div class="calc-seo__faq-answer">
+                <p>Сейчас доступны проектирование, дренаж, мощение и газон. По остальным направлениям стоимость считаем индивидуально после уточнения задачи и вводных по участку.</p>
+              </div>
+            </details>
+            <details class="calc-seo__faq-item">
+              <summary class="calc-seo__faq-question">Можно ли рассчитать отмостку, ливневку или автополив?</summary>
+              <div class="calc-seo__faq-answer">
+                <p>Да, но пока через заявку. Для этих работ нужно больше вводных: площадь, точки воды, трассы, уклоны, оборудование и материалы.</p>
+              </div>
+            </details>
+            <details class="calc-seo__faq-item">
+              <summary class="calc-seo__faq-question">Что отправить для предварительной оценки?</summary>
+              <div class="calc-seo__faq-answer">
+                <p>Подойдут фото участка, примерные размеры, описание проблемы, адрес или населенный пункт и пожелания по срокам.</p>
+              </div>
+            </details>
+            <details class="calc-seo__faq-item">
+              <summary class="calc-seo__faq-question">Вы работаете по Ярославской области?</summary>
+              <div class="calc-seo__faq-answer">
+                <p>Да, выезжаем по Рыбинску, Ярославлю, Угличу, Тутаеву, Переславлю и другим населенным пунктам области.</p>
+              </div>
+            </details>
+            <details class="calc-seo__faq-item">
+              <summary class="calc-seo__faq-question">Почему цена может измениться после осмотра?</summary>
+              <div class="calc-seo__faq-answer">
+                <p>На объекте могут выявиться высокий уровень воды, сложный грунт, ограничения по технике, готовые покрытия или необходимость другой схемы.</p>
+              </div>
+            </details>
           </div>
         </div>
       </section>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var faqItems = document.querySelectorAll('.calc-seo__faq-item');
+          faqItems.forEach(function (item) {
+            item.addEventListener('toggle', function () {
+              if (!item.open) {
+                return;
+              }
+              faqItems.forEach(function (other) {
+                if (other !== item) {
+                  other.open = false;
+                }
+              });
+            });
+          });
+        });
+      </script>
 
       <script type="application/ld+json">
       {
