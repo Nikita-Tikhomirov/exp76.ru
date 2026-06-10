@@ -183,16 +183,26 @@ def city_from_title(title: str) -> str:
 def title_for_case(item: dict, category: str) -> str:
     meta = CATEGORIES[category]
     location = city_from_title(item["title"])
-    return f"{meta['work_type']}: кейс {location}"
+    return f"{meta['work_type']}: {location}"
 
 
 def excerpt(item: dict, category: str) -> str:
     meta = CATEGORIES[category]
     location = city_from_title(item["title"])
     return (
-        f"{meta['work_type']} в локации {location}: {item['description']}. "
-        "Показываем задачу, ход работ, результат и детали, которые важны для расчета похожего проекта."
+        f"{meta['work_type']} на объекте {location}: {item['description']}. "
+        "Ниже — задача, состав работ и результат: по ним проще понять, как подбирается решение для участка с похожими условиями."
     )
+
+
+def case_work_summary(work_type: str, details: str) -> str:
+    work_lower = work_type.lower()
+    details_lower = details.lower()
+    if details_lower == work_lower:
+        return work_lower
+    if "благоустройство" in work_lower and "благоустройство" in details_lower:
+        return details_lower
+    return f"{work_lower}: {details}"
 
 
 def build_case_payload(item: dict, category: str, all_cases_by_url: dict) -> dict:
@@ -201,6 +211,7 @@ def build_case_payload(item: dict, category: str, all_cases_by_url: dict) -> dic
     location = item["title"]
     work_type = meta["work_type"]
     details = item["description"].rstrip(".")
+    work_summary = case_work_summary(work_type, details)
     related = [
         url for url, payload in all_cases_by_url.items()
         if payload["primary_category"] == category and url != norm_url(item["url"])
@@ -226,36 +237,32 @@ def build_case_payload(item: dict, category: str, all_cases_by_url: dict) -> dic
             "cs87_budget": "",
             "cs87_intro_title": f"{work_type} на объекте {location}",
             "cs87_intro_text": (
-                f"Этот кейс показывает, как мы решали задачу по направлению «{work_type.lower()}» "
-                f"на конкретном участке. По объекту: {details}. Для SEO-страницы важны не только фото, "
-                "но и понятное описание работ: что было на участке, почему выбрали именно такую схему "
-                "и какой результат получил заказчик."
+                f"На объекте {location} выполняли {work_summary}. "
+                "Работы подбирали под фактический рельеф, грунт, существующие строения и дальнейшее использование участка."
             ),
-            "cs87_challenge_title": "Задача на объекте",
+            "cs87_challenge_title": "Что нужно было сделать",
             "cs87_challenge_text": meta["problem"],
-            "cs87_solution_title": "Как выполнили работы",
+            "cs87_solution_title": "Что сделали",
             "cs87_solution_text": (
-                f"{meta['technology']} На этом объекте учитывали исходные условия: {details}. "
-                "Поэтому решение подбиралось не шаблонно, а под фактический рельеф, грунт, существующие строения и будущую эксплуатацию участка."
+                f"{meta['technology']} Решение привязали к объекту {location}: учли доступ техники, существующие строения, будущие дорожки, посадки и обслуживание."
             ),
-            "cs87_technology_title": "Технология и важные нюансы",
+            "cs87_technology_title": "Как выполняли работы",
             "cs87_technology_text": meta["technology"],
-            "cs87_result_title": "Результат для участка",
+            "cs87_result_title": "Что получил заказчик",
             "cs87_result_text": meta["result"],
-            "cs87_scope_title": "Что важно при заказе похожих работ",
+            "cs87_scope_title": "Что учитываем в расчете",
             "cs87_scope_items": [
-                {"item": "Осмотреть участок и определить, откуда приходит вода или где будет основная нагрузка."},
-                {"item": "Согласовать схему работ до начала благоустройства, чтобы не переделывать готовые покрытия."},
-                {"item": "Подобрать материалы и конструкцию под грунт, рельеф, дом, дорожки и посадки."},
-                {"item": "Сразу заложить обслуживание: ревизии, доступ к узлам, понятный отвод воды или удобную эксплуатацию."},
+                {"item": "Оцениваем рельеф, грунт, воду и существующие строения до выбора схемы работ."},
+                {"item": "Согласуем состав работ заранее: подготовку, основание, водоотведение, покрытия и финишные элементы."},
+                {"item": "Подбираем материалы и конструкцию под нагрузку, доступ техники, дом, дорожки и посадки."},
+                {"item": "Сразу предусматриваем обслуживание: ревизии, доступ к узлам, отвод воды и удобную эксплуатацию."},
             ],
             "cs87_price_note": (
-                "Точную стоимость похожего проекта считаем после осмотра: на цену влияют объем, доступ техники, "
-                "материалы, грунт, уклоны, длина трасс и подготовка основания."
+                "Стоимость работ считаем после осмотра участка. На смету влияют объем, материалы, подготовка основания, грунт, уклоны, длина трасс, доступ техники и связка с соседними этапами благоустройства."
             ),
             "cs87_related_case_urls": related,
             "cs87_related_cases": [],
-            "cs87_faq_title": f"Вопросы по проекту «{work_type.lower()}»",
+            "cs87_faq_title": f"Вопросы по работе: {work_type.lower()}",
             "cs87_faq_items": [
                 {"question": question, "answer": answer}
                 for question, answer in meta["faq"]

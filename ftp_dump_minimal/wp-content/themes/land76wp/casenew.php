@@ -134,16 +134,29 @@ if ($cs87_location) {
       text-shadow: 1px 1px 3px #000;
     }
     .hero__content { align-items: flex-start; justify-content: center; }
-    .hero__buttons { margin-top: 40px; }
+    .hero__buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 34px;
+    }
+    .hero__buttons .hero__btn {
+      margin-left: 0 !important;
+    }
     .hero__breadcramps {
       color: #fff;
-      position: absolute;
-      bottom: 30px;
-      text-align: right;
+      position: static;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 6px;
+      max-width: 100%;
+      margin-top: 18px;
+      text-align: left;
       font-size: 16px;
+      line-height: 1.35;
       padding: 4px 10px;
       background-color: #0000004d;
-      align-self: start;
+      align-self: flex-start;
     }
     .hero__active-page { border-bottom: 2px solid #a2f9a9; }
 
@@ -380,9 +393,14 @@ if ($cs87_location) {
 
     /* ── Media ────────────────────────────── */
     @media (max-width: 768px) {
-      .hero__breadcramps { flex-wrap: wrap; }
+      .hero__breadcramps {
+        justify-content: center;
+        text-align: center;
+        font-size: 14px;
+        max-width: 100%;
+      }
       .hero__buttons { display: grid; grid-gap: 10px; width: 100%; }
-      .hero__buttons .openPopup { margin-left: auto !important; }
+      .hero__buttons .openPopup { margin-left: 0 !important; }
       .hero__title { font-size: 38px; }
       .hero__subtitle { font-size: 20px; text-align: center; }
       .hero { height: 80vh; }
@@ -406,6 +424,11 @@ if ($cs87_location) {
     @media (max-width: 480px) {
       .hero__title { font-size: 24px; line-height: 1.2; }
       .hero__subtitle { font-size: 16px; line-height: 1.4; }
+      .hero__breadcramps {
+        display: block;
+        font-size: 13px;
+        line-height: 1.25;
+      }
       .case-facts { grid-template-columns: 1fr; }
       .cs-block { padding: 20px; }
       .cs-block h3 { font-size: 28px; }
@@ -604,13 +627,6 @@ if ($cs87_location) {
         <?php endif; ?>
       </section>
 
-      <!-- ═══ 4. PROJECT DESCRIPTION (the_content) ═════ -->
-      <section class="services wrapper">
-        <div class="seo-text" style="line-height:1.8; margin-bottom:40px;" data-aos="fade-up">
-          <?php the_content(); ?>
-        </div>
-      </section>
-
       <?php if ($cs87_intro_title || $cs87_intro_text || $cs87_technology_text || $cs87_result_text || $cs87_scope_items || $cs87_price_note) : ?>
       <section class="services wrapper">
         <?php if ($cs87_intro_title || $cs87_intro_text) : ?>
@@ -655,7 +671,7 @@ if ($cs87_location) {
 
           <?php if ($cs87_price_note) : ?>
           <div class="case-seo-card" data-aos="fade-up">
-            <h3>Цена и расчет похожего проекта</h3>
+            <h3>Как считается стоимость</h3>
             <p><?php echo esc_html($cs87_price_note); ?></p>
             <?php if ($cs87_service_url) : ?>
               <a class="case-service-link" href="<?php echo esc_url($cs87_service_url); ?>">Перейти к услуге</a>
