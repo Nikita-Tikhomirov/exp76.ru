@@ -349,10 +349,99 @@ $land76_price_rows = array(
         }
         .services-hub__price-row strong { color: #666; font-weight: 600; text-align: right; }
         .services-hub__complex { max-width: 980px; }
+        .services-contact-form#form1 {
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          padding: 34px 30px 30px;
+        }
+        .services-contact-form#form1 .calc-contact-form {
+          display: grid !important;
+          grid-template-columns: minmax(250px, 1fr) minmax(250px, 1fr) minmax(160px, auto);
+          gap: 20px 26px;
+          align-items: start;
+          width: 100%;
+          margin-top: 26px;
+        }
+        .services-contact-form#form1 .calc-contact-form .form__label {
+          display: block !important;
+          margin: 0;
+          text-align: left;
+          line-height: 1.35;
+        }
+        .services-contact-form#form1 .calc-contact-form .form__label p {
+          margin: 0 0 9px;
+          color: #222;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 1.35;
+        }
+        .services-contact-form#form1 .calc-contact-form .form__input {
+          width: 100% !important;
+          height: 42px;
+          min-width: 0;
+          margin: 0 !important;
+          padding: 8px 14px;
+          border: 1px solid rgba(255, 94, 0, .55);
+          border-radius: 0;
+          font-size: 16px;
+        }
+        .services-contact-form#form1 .calc-contact-form .formConsent {
+          grid-column: 1 / 3;
+          display: grid !important;
+          grid-template-columns: 18px minmax(0, 1fr);
+          gap: 10px;
+          align-items: start;
+          max-width: 760px;
+          margin: 2px 0 0;
+        }
+        .services-contact-form#form1 .calc-contact-form .formConsent__container {
+          min-width: 18px;
+          margin: 3px 0 0 !important;
+        }
+        .services-contact-form#form1 .calc-contact-form .formConsent__input {
+          width: auto !important;
+        }
+        .services-contact-form#form1 .calc-contact-form .formConsent__text {
+          margin: 0;
+          max-width: 720px;
+          font-size: 13px;
+          line-height: 1.45;
+          text-align: left;
+          color: #444;
+        }
+        .services-contact-form#form1 .calc-contact-form .form__btn {
+          grid-column: 3;
+          grid-row: 2;
+          justify-self: end;
+          align-self: start;
+          min-width: 160px;
+          margin: 0 !important;
+          padding: 8px 28px;
+          font-size: 18px;
+        }
+        .services-contact-form#form1 .calc__info {
+          margin-top: 24px;
+          padding-top: 18px;
+          border-top: 1px solid rgba(0,0,0,.25);
+        }
         @media (max-width: 1100px) {
           .services-hub__cards { grid-template-columns: repeat(2, 1fr); }
           .services-hub__task-grid { grid-template-columns: repeat(2, 1fr); }
           .services-hub__order ol { grid-template-columns: 1fr; }
+          .services-contact-form#form1 .calc-contact-form {
+            grid-template-columns: 1fr 1fr;
+            align-items: start;
+          }
+          .services-contact-form#form1 .calc-contact-form .formConsent {
+            grid-column: 1 / -1;
+          }
+          .services-contact-form#form1 .calc-contact-form .form__btn {
+            grid-column: 1 / -1;
+            grid-row: auto;
+            justify-self: center;
+            margin: 0 !important;
+          }
         }
         @media (max-width: 700px) {
           .services-hub__cards,
@@ -362,6 +451,22 @@ $land76_price_rows = array(
           .services-hub__price-row strong { text-align: left; }
           .services-hub__subtitle,
           .services-hub__group-title { font-size: 31px; }
+          .services-contact-form#form1 {
+            padding: 26px 20px;
+          }
+          .services-contact-form#form1 .calc-contact-form {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+          .services-contact-form#form1 .calc-contact-form .form__label {
+            grid-template-columns: 1fr;
+            gap: 8px;
+            text-align: left;
+          }
+          .services-contact-form#form1 .calc-contact-form .form__btn {
+            grid-row: auto;
+            width: 100%;
+          }
         }
       </style>
 
@@ -526,10 +631,10 @@ $land76_price_rows = array(
           </div>
         </div>
         <div class="calc__total">
-          <div class="formWrapper" id="form1">
+          <div class="formWrapper services-contact-form" id="form1">
             <p class="calc__calc-title">Оставьте контактные данные, мы свяжемся с вами в ближайшее время и начнем
               разработку проекта</p>
-            <form class="form"><label class="form__label">
+            <form class="form calc-contact-form"><label class="form__label">
                 <p>Имя или название организации *</p><input class="form__input" type="text" name="name" placeholder="Ваше имя"
                   required="required" />
               </label><label class="form__label">
