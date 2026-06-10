@@ -169,14 +169,65 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
     width: 100%;
+    flex: 1 1 auto;
     font-weight: 600;
+    line-height: 1.25;
+    min-width: 0;
   }
 
-  .faq-toggle span {
+  .service-faq-section {
+    overflow-x: hidden;
+  }
+
+  .service-faq-title {
+    text-align: center;
+    color: #0a9215;
+    font-family: "Poiret One", cursive;
+    font-size: 35px;
+    line-height: 1.25;
+    margin: 0 0 40px;
+    overflow-wrap: anywhere;
+  }
+
+  .service-faq-list {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .service-faq-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .service-faq-question {
+    background: #f5f5f5;
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .faq-question-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 22px;
+    color: #333;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .faq-icon {
+    flex: 0 0 auto;
     font-size: 24px;
-    margin-left: 20px;
-    flex-shrink: 0;
+    color: #0a9215;
+    line-height: 1;
   }
 
   .faq-answer {
@@ -391,9 +442,8 @@
       font-size: 16px !important;
     }
 
-    .faq-toggle span {
+    .faq-question-text {
       font-size: 20px !important;
-      width: fit-content;
     }
   }
 
@@ -487,6 +537,28 @@
       font-size: 28px !important;
     }
 
+    .service-faq-section {
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+
+    .service-faq-title {
+      font-size: 28px;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      padding: 0 8px;
+    }
+
+    .service-faq-list {
+      gap: 14px;
+      margin-bottom: 0;
+    }
+
+    .service-faq-question {
+      padding: 14px 16px;
+      align-items: flex-start;
+    }
+
     /* Tech items responsive */
     .tech-item {
       padding: 15px;
@@ -503,10 +575,25 @@
     /* FAQ responsive */
     .faq-toggle {
       font-size: 14px !important;
+      gap: 10px;
     }
 
-    .faq-toggle span {
+    .faq-question-text {
       font-size: 18px !important;
+    }
+
+    .faq-icon {
+      font-size: 22px !important;
+      margin-top: 2px;
+    }
+
+    .faq-answer {
+      padding: 14px 16px;
+    }
+
+    .faq-answer p {
+      font-size: 15px;
+      line-height: 1.55;
     }
   }
 </style>
@@ -932,21 +1019,17 @@ Poiret One
 </section>
 
 <!-- 8. Мини FAQ -->
-<section class="services wrapper">
-  <h2 style="text-align: center; color: #0a9215; font-family: 
-'
-, cursive; font-size: 35px; margin-bottom: 40px;"><?php echo esc_html($ns87_faq_title ? $ns87_faq_title : 'Ответы на вопросы'); ?></h2>
+<section class="services wrapper service-faq-section">
+  <h2 class="service-faq-title"><?php echo esc_html($ns87_faq_title ? $ns87_faq_title : 'Ответы на вопросы'); ?></h2>
 
-  <div style="margin-bottom: 30px;">
+  <div class="service-faq-list">
     <?php foreach ($ns87_faq_items as $ns87_faq_item) : ?>
-    <div style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
-      <div style="background: #f5f5f5; padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="var answer = this.nextElementSibling; answer.style.display = answer.style.display === 'block' ? 'none' : 'block'; this.querySelector('.faq-icon').textContent = this.querySelector('.faq-icon').textContent === '+' ? '-' : '+';">
+    <div class="service-faq-item">
+      <div class="service-faq-question" onclick="var answer = this.nextElementSibling; answer.style.display = answer.style.display === 'block' ? 'none' : 'block'; this.querySelector('.faq-icon').textContent = this.querySelector('.faq-icon').textContent === '+' ? '-' : '+';">
         <h3 class="faq-toggle" style="margin: 0;">
-          <span style="display: none;">+</span>
-          <span style="display: none;">-</span>
-          <span><?php echo esc_html(!empty($ns87_faq_item['question']) ? $ns87_faq_item['question'] : ''); ?></span>
+          <span class="faq-question-text"><?php echo esc_html(!empty($ns87_faq_item['question']) ? $ns87_faq_item['question'] : ''); ?></span>
         </h3>
-        <span class="faq-icon" style="font-size: 24px; color: #0a9215;">+</span>
+        <span class="faq-icon">+</span>
       </div>
       <div class="faq-answer" style="display: none;">
         <p><?php echo esc_html(!empty($ns87_faq_item['answer']) ? $ns87_faq_item['answer'] : ''); ?></p>
