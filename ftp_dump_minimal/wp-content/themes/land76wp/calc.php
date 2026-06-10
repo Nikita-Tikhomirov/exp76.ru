@@ -46,6 +46,62 @@ add_filter('aioseo_description', function ($description) {
             border-bottom: 2px solid #ff5e00ce;
             box-shadow: 0 5px 18px rgba(0,0,0,.12);
           }
+          .calc #form1 {
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 34px 30px;
+          }
+          .calc #form1 .calc-contact-form {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(220px, .9fr) auto;
+            gap: 18px 28px;
+            align-items: end;
+            width: 100%;
+          }
+          .calc #form1 .calc-contact-form .form__label {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr);
+            align-items: center;
+            gap: 12px;
+            margin: 0;
+            text-align: left;
+          }
+          .calc #form1 .calc-contact-form .form__label p {
+            margin: 0;
+            color: #222;
+            line-height: 1.2;
+            white-space: normal;
+          }
+          .calc #form1 .calc-contact-form .form__input {
+            width: 100%;
+            min-width: 0;
+            margin: 0;
+          }
+          .calc #form1 .calc-contact-form .formConsent {
+            display: grid;
+            grid-template-columns: 18px minmax(0, 1fr);
+            gap: 8px;
+            align-items: start;
+            margin: 0;
+          }
+          .calc #form1 .calc-contact-form .formConsent__container {
+            margin: 2px 0 0;
+          }
+          .calc #form1 .calc-contact-form .formConsent__text {
+            margin: 0;
+            font-size: 12px;
+            line-height: 1.35;
+            text-align: left;
+          }
+          .calc #form1 .calc-contact-form .form__btn {
+            align-self: center;
+            margin: 0;
+            min-width: 128px;
+          }
+          .calc #form1 .calc__info {
+            margin-top: 30px;
+          }
           .calc-seo__lead p,
           .calc-seo__panel p,
           .calc-seo__links p,
@@ -206,6 +262,17 @@ add_filter('aioseo_description', function ($description) {
             font-size: 16px;
           }
           @media only screen and (max-width: 991px) {
+            .calc #form1 .calc-contact-form {
+              grid-template-columns: 1fr 1fr;
+              align-items: start;
+            }
+            .calc #form1 .calc-contact-form .formConsent {
+              grid-column: 1 / -1;
+            }
+            .calc #form1 .calc-contact-form .form__btn {
+              grid-column: 1 / -1;
+              justify-self: center;
+            }
             .calc-seo__actions,
             .calc-seo__grid,
             .calc-seo__price-grid,
@@ -214,6 +281,21 @@ add_filter('aioseo_description', function ($description) {
             }
           }
           @media only screen and (max-width: 767px) {
+            .calc #form1 {
+              padding: 26px 20px;
+            }
+            .calc #form1 .calc-contact-form {
+              grid-template-columns: 1fr;
+              gap: 16px;
+            }
+            .calc #form1 .calc-contact-form .form__label {
+              grid-template-columns: 1fr;
+              gap: 8px;
+              text-align: left;
+            }
+            .calc #form1 .calc-contact-form .form__btn {
+              width: 100%;
+            }
             .calc-seo__lead,
             .calc-seo__panel,
             .calc-seo__links,
@@ -350,7 +432,7 @@ add_filter('aioseo_description', function ($description) {
           <div class="formWrapper" id="form1">
             <p class="calc__calc-title">Оставьте контактные данные, мы свяжемся с вами в ближайшее время и начнем
               разработку проекта</p>
-            <form class="form"><label class="form__label">
+            <form class="form calc-contact-form"><label class="form__label">
                 <p>Имя или название организации *</p><input class="form__input" type="text" name="name" placeholder="Ваше имя"
                   required="required" />
               </label><label class="form__label">
