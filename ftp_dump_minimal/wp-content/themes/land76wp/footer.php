@@ -204,6 +204,17 @@
 	.hero__breadcramps{
 		z-index:99999
 	}
+
+  @media only screen and (max-width: 767px) {
+    [data-aos],
+    [data-aos][data-aos][data-aos-delay],
+    [data-aos][data-aos][data-aos-duration] {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
 </style>
 
 </body>
