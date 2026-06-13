@@ -49,6 +49,12 @@
     margin-right: 0 !important;
   }
 
+  .land76-mobile-slider-shell.is-active [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+
   .land76-mobile-slider-shell.is-active .service {
     height: 100%;
     margin-bottom: 24px !important;

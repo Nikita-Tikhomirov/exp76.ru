@@ -129,6 +129,9 @@ function style_theme() {
   $mobile_card_slider_path = get_template_directory() . '/css/mobile-card-slider.css';
   $mobile_card_slider_version = file_exists($mobile_card_slider_path) ? filemtime($mobile_card_slider_path) : null;
   wp_enqueue_style('land76-mobile-card-slider', get_template_directory_uri() . '/css/mobile-card-slider.css', array('style2'), $mobile_card_slider_version);
+  $mobile_card_slider_script_path = get_template_directory() . '/js/mobile-card-slider.js';
+  $mobile_card_slider_script_version = file_exists($mobile_card_slider_script_path) ? filemtime($mobile_card_slider_script_path) : null;
+  wp_enqueue_script('land76-mobile-card-slider', get_template_directory_uri() . '/js/mobile-card-slider.js', array(), $mobile_card_slider_script_version, true);
   if (is_singular('post') && has_category(72, get_queried_object_id())) {
     wp_enqueue_style('land76-services', get_template_directory_uri() . '/css/services.css', array(), null);
     wp_enqueue_style('land76-seoblog', get_template_directory_uri() . '/css/seoblog.css', array('land76-services'), null);
