@@ -228,8 +228,8 @@
       z-index: 1;
       pointer-events: none;
       background:
-        linear-gradient(180deg, rgba(255, 255, 255, .18) 0%, rgba(255, 255, 255, .05) 42%, rgba(0, 0, 0, .18) 100%),
-        linear-gradient(90deg, rgba(255, 255, 255, .14) 0%, rgba(255, 255, 255, 0) 100%);
+        linear-gradient(180deg, rgba(0, 0, 0, .14) 0%, rgba(0, 0, 0, .18) 45%, rgba(0, 0, 0, .32) 100%),
+        linear-gradient(90deg, rgba(0, 0, 0, .28) 0%, rgba(0, 0, 0, .08) 58%, rgba(0, 0, 0, .12) 100%);
     }
 
     .hero__scene {
@@ -248,22 +248,21 @@
     .hero__subtitle,
     .hero__description {
       max-width: 100%;
-      color: #222 !important;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, .85) !important;
+      color: #fff !important;
+      text-shadow: 0 2px 9px rgba(0, 0, 0, .85) !important;
     }
 
     .hero__title {
-      display: inline-block;
-      width: auto;
+      display: block;
+      width: 100%;
       margin-right: auto !important;
       margin-left: auto !important;
-      padding: 8px 12px 9px;
-      border: 1px solid rgba(10, 146, 21, .28);
-      border-left: 3px solid #0a9215;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, .76);
-      box-shadow: 0 8px 26px rgba(0, 0, 0, .18);
-      backdrop-filter: blur(2px);
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
       font-size: 30px !important;
       line-height: 1.12 !important;
       font-weight: 500 !important;
@@ -272,12 +271,12 @@
 
     .hero__subtitle,
     .hero__description {
-      padding: 10px 12px;
-      border: 1px solid rgba(10, 146, 21, .22);
-      border-radius: 6px;
-      background: rgba(255, 255, 255, .74);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, .16);
-      backdrop-filter: blur(2px);
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
       font-size: 18px !important;
       line-height: 1.35 !important;
       font-weight: 500 !important;
@@ -306,13 +305,13 @@
       text-align: center !important;
       font-size: 11.5px !important;
       line-height: 1.25;
-      padding: 6px 9px !important;
-      background: rgba(255, 255, 255, .78) !important;
-      border: 1px solid rgba(10, 146, 21, .26);
-      border-radius: 6px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, .16);
-      color: #2b2b2b !important;
-      text-shadow: none !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      color: #fff !important;
+      text-shadow: 0 2px 7px rgba(0, 0, 0, .85) !important;
       align-self: center !important;
     }
 
@@ -320,8 +319,8 @@
     .hero__breadcramps .hero__active-page {
       display: inline;
       max-width: 100%;
-      color: #2b2b2b !important;
-      text-shadow: none !important;
+      color: #fff !important;
+      text-shadow: 0 2px 7px rgba(0, 0, 0, .85) !important;
       white-space: normal;
     }
 
