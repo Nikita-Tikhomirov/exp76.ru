@@ -232,9 +232,22 @@
         linear-gradient(90deg, rgba(18, 30, 16, .18) 0%, rgba(18, 30, 16, .06) 62%, rgba(18, 30, 16, .08) 100%);
     }
 
+    .home-hero::before {
+      display: none !important;
+    }
+
     .hero__scene {
       position: relative;
       z-index: 0;
+    }
+
+    .home-hero .hero__bg {
+      height: 100% !important;
+      width: 100% !important;
+      margin: 0 !important;
+      background-image: url("<?php echo esc_url(get_template_directory_uri()); ?>/generated/home-hero-mobile.webp") !important;
+      background-position: center center !important;
+      background-size: cover !important;
     }
 
     .hero__content {

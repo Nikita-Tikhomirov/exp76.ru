@@ -95,7 +95,7 @@ body,
   width: 120%;
   margin-left: -10%;
   margin-top: -5%;
-  background: url(../img/h11.webp) center center/cover;
+  background: url(../generated/home-hero-rich.webp) center center/cover;
 }
 
 .hero__content {
@@ -772,8 +772,12 @@ body,
 
   .home-hero::after {
     background:
-      linear-gradient(180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.12) 46%, rgba(0, 0, 0, 0.24) 100%),
-      linear-gradient(90deg, rgba(18, 30, 16, 0.22) 0%, rgba(18, 30, 16, 0.08) 62%, rgba(18, 30, 16, 0.08) 100%);
+      linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.1) 48%, rgba(0, 0, 0, 0.2) 100%),
+      linear-gradient(90deg, rgba(18, 30, 16, 0.18) 0%, rgba(18, 30, 16, 0.06) 62%, rgba(18, 30, 16, 0.06) 100%);
+  }
+
+  .home-hero::before {
+    display: none !important;
   }
 
   .hero__content {
@@ -786,6 +790,15 @@ body,
   .hero__scene {
     position: absolute;
     inset: 0;
+  }
+
+  .home-hero .hero__bg {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    background-image: url(../generated/home-hero-mobile.webp);
+    background-position: center center;
+    background-size: cover;
   }
 
   .hero__title {
