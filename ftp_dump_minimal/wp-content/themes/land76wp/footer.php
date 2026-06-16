@@ -228,8 +228,8 @@
       z-index: 1;
       pointer-events: none;
       background:
-        linear-gradient(180deg, rgba(0, 0, 0, .14) 0%, rgba(0, 0, 0, .18) 45%, rgba(0, 0, 0, .32) 100%),
-        linear-gradient(90deg, rgba(0, 0, 0, .28) 0%, rgba(0, 0, 0, .08) 58%, rgba(0, 0, 0, .12) 100%);
+        linear-gradient(180deg, rgba(0, 0, 0, .06) 0%, rgba(0, 0, 0, .11) 46%, rgba(0, 0, 0, .22) 100%),
+        linear-gradient(90deg, rgba(18, 30, 16, .18) 0%, rgba(18, 30, 16, .06) 62%, rgba(18, 30, 16, .08) 100%);
     }
 
     .hero__scene {
@@ -249,7 +249,7 @@
     .hero__description {
       max-width: 100%;
       color: #fff !important;
-      text-shadow: 0 2px 9px rgba(0, 0, 0, .85) !important;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, .58) !important;
     }
 
     .hero__title {
@@ -263,9 +263,11 @@
       background: transparent;
       box-shadow: none;
       backdrop-filter: none;
-      font-size: 30px !important;
-      line-height: 1.12 !important;
+      font-family: inherit !important;
+      font-size: clamp(28px, 8vw, 36px) !important;
+      line-height: 1.14 !important;
       font-weight: 500 !important;
+      letter-spacing: 0 !important;
       text-align: center !important;
     }
 
@@ -277,8 +279,8 @@
       background: transparent;
       box-shadow: none;
       backdrop-filter: none;
-      font-size: 18px !important;
-      line-height: 1.35 !important;
+      font-size: 16px !important;
+      line-height: 1.44 !important;
       font-weight: 500 !important;
       text-align: center !important;
     }
@@ -311,7 +313,7 @@
       border-radius: 0;
       box-shadow: none;
       color: #fff !important;
-      text-shadow: 0 2px 7px rgba(0, 0, 0, .85) !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, .62) !important;
       align-self: center !important;
     }
 
@@ -320,7 +322,7 @@
       display: inline;
       max-width: 100%;
       color: #fff !important;
-      text-shadow: 0 2px 7px rgba(0, 0, 0, .85) !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, .62) !important;
       white-space: normal;
     }
 
