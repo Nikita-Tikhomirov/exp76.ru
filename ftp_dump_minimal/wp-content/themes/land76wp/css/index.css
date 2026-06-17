@@ -777,7 +777,12 @@ body,
   }
 
   .home-hero::before {
-    display: none !important;
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: block !important;
+    background: url(../generated/home-hero-mobile.webp) center center / cover no-repeat;
   }
 
   .hero__content {
@@ -787,18 +792,8 @@ body,
     padding-bottom: 80px;
   }
 
-  .hero__scene {
-    position: absolute;
-    inset: 0;
-  }
-
-  .home-hero .hero__bg {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    background-image: url(../generated/home-hero-mobile.webp);
-    background-position: center center;
-    background-size: cover;
+  .home-hero .hero__scene {
+    display: none;
   }
 
   .hero__title {

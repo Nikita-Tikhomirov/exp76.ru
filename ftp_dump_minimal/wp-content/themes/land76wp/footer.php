@@ -233,7 +233,13 @@
     }
 
     .home-hero::before {
-      display: none !important;
+      content: "" !important;
+      position: absolute !important;
+      inset: 0 !important;
+      z-index: 0 !important;
+      display: block !important;
+      pointer-events: none !important;
+      background: url("<?php echo esc_url(get_template_directory_uri()); ?>/generated/home-hero-mobile.webp") center center / cover no-repeat !important;
     }
 
     .hero__scene {
@@ -241,13 +247,8 @@
       z-index: 0;
     }
 
-    .home-hero .hero__bg {
-      height: 100% !important;
-      width: 100% !important;
-      margin: 0 !important;
-      background-image: url("<?php echo esc_url(get_template_directory_uri()); ?>/generated/home-hero-mobile.webp") !important;
-      background-position: center center !important;
-      background-size: cover !important;
+    .home-hero .hero__scene {
+      display: none !important;
     }
 
     .hero__content {
