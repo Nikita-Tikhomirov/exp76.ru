@@ -35,6 +35,8 @@ Template Name: Кейс
             <?php endif; ?>
           <?php endwhile; ?>
         </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
       </div>
 
 
@@ -55,10 +57,6 @@ Template Name: Кейс
         </div>
       </div>
     <?php endif; ?>
-
-
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
 
     <?php the_content(); ?>
   </article>

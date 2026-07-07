@@ -344,6 +344,165 @@
       border-bottom: 0;
     }
   }
+
+  /* land76 mobile hero and card fixes */
+  @media only screen and (max-width: 767px) {
+    .hero__buttons,
+    .hero__btn {
+      margin-bottom: 0 !important;
+    }
+
+    .hero__breadcramps {
+      position: static !important;
+      inset: auto !important;
+      transform: none !important;
+      width: min(100%, 340px) !important;
+      max-width: calc(100vw - 28px) !important;
+      margin: 12px auto 0 !important;
+      padding: 6px 8px !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 3px 5px !important;
+      box-sizing: border-box !important;
+      overflow: visible !important;
+      color: #fff !important;
+      font-size: 13px !important;
+      line-height: 1.25 !important;
+      text-align: center !important;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, .62) !important;
+      background: rgba(0, 0, 0, .2) !important;
+      border: 0 !important;
+      border-radius: 8px !important;
+      box-shadow: none !important;
+      z-index: 4 !important;
+    }
+
+    .hero__breadcramps .hero__home,
+    .hero__breadcramps .hero__active-page,
+    .hero__breadcramps a,
+    .hero__breadcramps span {
+      display: inline !important;
+      max-width: 100% !important;
+      color: #fff !important;
+      font-size: 13px !important;
+      line-height: 1.25 !important;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, .62) !important;
+    }
+
+    .faq-toggle {
+      display: flex !important;
+      align-items: flex-start !important;
+      justify-content: space-between !important;
+      gap: 12px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      font-size: 20px !important;
+      line-height: 1.25 !important;
+      text-align: left !important;
+      white-space: normal !important;
+      overflow: visible !important;
+    }
+
+    .faq-toggle span:first-child {
+      min-width: 0 !important;
+      flex: 1 1 auto !important;
+      max-width: 100% !important;
+      font-size: inherit !important;
+      line-height: inherit !important;
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+      word-break: normal !important;
+    }
+
+    .faq-toggle .faq-icon {
+      flex: 0 0 auto !important;
+      margin-left: 0 !important;
+    }
+
+    .faq-answer,
+    .faq-answer p {
+      max-width: 100% !important;
+      overflow-wrap: anywhere !important;
+      word-break: normal !important;
+    }
+  }
+
+  .slider2Top {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .slider2Top .swiper-button-next,
+  .slider2Top .swiper-button-prev {
+    width: 42px !important;
+    height: 42px !important;
+    top: 50% !important;
+    margin-top: -21px !important;
+    border: 2px solid #ff5e00 !important;
+    border-radius: 50% !important;
+    background-color: rgba(255, 255, 255, .94) !important;
+    background-image: none !important;
+    color: #ff5e00 !important;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, .18) !important;
+    z-index: 6 !important;
+  }
+
+  .slider2Top .swiper-button-next {
+    right: 14px !important;
+  }
+
+  .slider2Top .swiper-button-prev {
+    left: 14px !important;
+    transform: none !important;
+  }
+
+  .slider2Top .swiper-button-next::after,
+  .slider2Top .swiper-button-prev::after {
+    content: "" !important;
+    display: none !important;
+  }
+
+  .slider2Top .swiper-button-next::before,
+  .slider2Top .swiper-button-prev::before {
+    content: "" !important;
+    display: block !important;
+    width: 12px !important;
+    height: 12px !important;
+    border-top: 3px solid currentColor !important;
+    border-right: 3px solid currentColor !important;
+  }
+
+  .slider2Top .swiper-button-next::before {
+    transform: rotate(45deg) translate(-1px, 1px) !important;
+  }
+
+  .slider2Top .swiper-button-prev::before {
+    transform: rotate(225deg) translate(-1px, 1px) !important;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .slider2Top .swiper-button-next,
+    .slider2Top .swiper-button-prev {
+      width: 36px !important;
+      height: 36px !important;
+      margin-top: -18px !important;
+    }
+
+    .slider2Top .swiper-button-next {
+      right: 8px !important;
+    }
+
+    .slider2Top .swiper-button-prev {
+      left: 8px !important;
+    }
+  }
 </style>
 
 </body>
