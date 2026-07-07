@@ -138,6 +138,9 @@ if ($cs87_location) {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
       margin-top: 34px;
     }
     .hero__buttons .hero__btn {
@@ -546,6 +549,27 @@ if ($cs87_location) {
     }
 
     @media (max-width: 768px) {
+      .hero__content {
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      .hero__buttons {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        width: 100% !important;
+        margin: 18px auto 0 !important;
+      }
+
+      .hero__buttons .hero__btn,
+      .hero__buttons .openPopup {
+        width: min(100%, 300px) !important;
+        margin: 0 auto !important;
+      }
+
       .hero__breadcramps {
         width: min(100%, 340px) !important;
         max-width: calc(100vw - 28px) !important;
@@ -580,6 +604,54 @@ if ($cs87_location) {
 
       .slider2Top .swiper-button-next { right: 8px !important; }
       .slider2Top .swiper-button-prev { left: 8px !important; }
+    }
+
+    .slider2Top .case-gallery-next,
+    .slider2Top .case-gallery-prev {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: rgba(255, 255, 255, .96) !important;
+      background-image: none !important;
+      color: #ff5e00 !important;
+      font-size: 0 !important;
+      line-height: 0 !important;
+      text-indent: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .slider2Top .case-gallery-next .swiper-navigation-icon,
+    .slider2Top .case-gallery-prev .swiper-navigation-icon {
+      display: none !important;
+    }
+
+    .slider2Top .case-gallery-next::after,
+    .slider2Top .case-gallery-prev::after {
+      content: "" !important;
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      opacity: 0 !important;
+      font-size: 0 !important;
+    }
+
+    .slider2Top .case-gallery-next::before,
+    .slider2Top .case-gallery-prev::before {
+      content: "" !important;
+      display: block !important;
+      width: 12px !important;
+      height: 12px !important;
+      border-top: 3px solid currentColor !important;
+      border-right: 3px solid currentColor !important;
+      background: transparent !important;
+    }
+
+    .slider2Top .case-gallery-next::before {
+      transform: rotate(45deg) translate(-1px, 1px) !important;
+    }
+
+    .slider2Top .case-gallery-prev::before {
+      transform: rotate(225deg) translate(-1px, 1px) !important;
     }
   </style>
 </head>
@@ -746,8 +818,8 @@ if ($cs87_location) {
             <?php endif;
             endwhile; ?>
           </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next case-gallery-next"></div>
+          <div class="swiper-button-prev case-gallery-prev"></div>
         </div>
 
         <?php if (function_exists('reset_rows')) reset_rows(); ?>
