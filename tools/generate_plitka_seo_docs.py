@@ -230,6 +230,7 @@ SERVICE_PAGES = [
     },
     {
         "slug": "otmostka-iz-trotuarnoy-plitki",
+        "post_title": "Мощение отмостки тротуарной плиткой вокруг дома",
         "h1": "Отмостка из тротуарной плитки вокруг дома",
         "description": "Делаем отмостку из тротуарной плитки: основание, уклон от дома, водоотвод, бордюр, укладка и примыкания.",
         "hero_title": "Отмостка из тротуарной плитки",
@@ -326,7 +327,7 @@ def build_category_payload() -> dict:
 def build_post_payload(page: dict) -> dict:
     return {
         "slug": page["slug"],
-        "post_title": page["h1"],
+        "post_title": page.get("post_title", page["h1"]),
         "post_content": render_content(page),
         "post_excerpt": page["description"],
         "categories": [CATEGORY_ID, SERVICE_CATEGORY_ID],
