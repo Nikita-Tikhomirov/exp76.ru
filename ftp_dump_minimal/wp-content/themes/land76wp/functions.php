@@ -77,6 +77,11 @@ if (file_exists($land76_seo_category_indexing_file)) {
   require_once $land76_seo_category_indexing_file;
 }
 
+$land76_indexnow_file = __DIR__ . '/inc/indexnow.php';
+if (file_exists($land76_indexnow_file)) {
+  require_once $land76_indexnow_file;
+}
+
 function land76_region_page_slugs() {
   return array('yaroslavl', 'rybinsk', 'uglich', 'tutaev', 'pereslavl');
 }
