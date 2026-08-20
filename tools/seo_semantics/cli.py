@@ -16,6 +16,7 @@ from .classify import (
     classify_query,
     exclusion_evidence,
     infer_service_id,
+    infer_primary_service_id,
     load_seed_owners,
 )
 from .ingest import load_source_csv, merge_records
@@ -234,18 +235,22 @@ def _classify(
     seed_owners = load_seed_owners(scope_path.with_name("seeds.json"))
     rows = _read_keyword_rows(input_path)
     service_urls = {service.current_url: service.service_id for service in scope.services}
+    canonical_reviews = _canonical_service_reviews(rows, seed_owners, service_urls)
     clean_rows: list[dict[str, str]] = []
     frozen_rows: list[dict[str, str]] = []
     minus_evidence: dict[tuple[str, str, str, str], set[str]] = {}
 
     for row in rows:
+        normalized_query = normalize_query(row["query_normalized"])
+        canonical_owner = canonical_reviews.get(normalized_query, "")
         service_hint = (
             service_urls.get(row.get("current_url", ""), "")
+            or canonical_owner
             or seed_owners.get(normalize_query(row.get("seed", "")), "")
             or infer_service_id(row["query_normalized"])
         )
         decision = classify_query(row["query_raw"], service_hint, scope)
-        classified_row = _classified_row(row, decision)
+        classified_row = _classified_row(row, decision, canonical_owner)
         target = frozen_rows if decision.frozen_collision else clean_rows
         target.append(classified_row)
         for word in exclusion_evidence(row["query_raw"], decision.exclusion_reason):
@@ -291,7 +296,11 @@ def _read_keyword_rows(path: Path) -> list[dict[str, str]]:
     return rows
 
 
-def _classified_row(row: dict[str, str], decision: QueryClassification) -> dict[str, str]:
+def _classified_row(
+    row: dict[str, str],
+    decision: QueryClassification,
+    canonical_owner: str = "",
+) -> dict[str, str]:
     classified = {
         "keyword_id": row["keyword_id"],
         "query_raw": row["query_raw"],
@@ -318,11 +327,21 @@ def _classified_row(row: dict[str, str], decision: QueryClassification) -> dict[
         "current_url": row.get("current_url", ""),
         "collected_at": row.get("collected_at", ""),
     }
-    classified.update(_review_fields(row, decision))
+    classified.update(_review_fields(row, decision, canonical_owner))
     return classified
 
 
-def _review_fields(row: dict[str, str], decision: QueryClassification) -> dict[str, str]:
+def _review_fields(
+    row: dict[str, str],
+    decision: QueryClassification,
+    canonical_owner: str = "",
+) -> dict[str, str]:
+    if canonical_owner and decision.relevance == "relevant" and not decision.frozen_collision:
+        return {
+            "review_status": "reviewed",
+            "final_decision": "canonical_service_owner",
+            "review_reason": f"earliest_service_phrase:{canonical_owner}",
+        }
     clicked = _positive_integer(row.get("clicks", ""))
     if not (clicked or decision.relevance == "manual_review" or decision.frozen_collision):
         return {"review_status": "", "final_decision": "", "review_reason": ""}
@@ -368,6 +387,59 @@ def _validate_partition(
     ]
     if any(row["review_status"] != "reviewed" or not row["final_decision"] for row in reviewed_rows):
         raise ValueError("review-required classification requires a final decision")
+    eligible_rows = [
+        row
+        for row in clean_rows
+        if row["relevance"] == "relevant"
+        and row["intent"] in {"transactional", "commercial_research", "informational", "product_only"}
+    ]
+    rows_by_query: dict[str, list[dict[str, str]]] = {}
+    for row in eligible_rows:
+        rows_by_query.setdefault(row["query_normalized"], []).append(row)
+    for query, query_rows in rows_by_query.items():
+        if len({row["service_id"] for row in query_rows}) <= 1:
+            continue
+        if all(
+            row["review_status"] == "reviewed" and row["final_decision"] == "manual_service_owner"
+            for row in query_rows
+        ):
+            continue
+        raise ValueError(f"eligible query has multiple service owners without manual decision: {query}")
+
+
+def _canonical_service_reviews(
+    rows: list[dict[str, str]],
+    seed_owners: dict[str, str],
+    service_urls: dict[str, str],
+) -> dict[str, str]:
+    rows_by_query: dict[str, list[dict[str, str]]] = {}
+    for row in rows:
+        rows_by_query.setdefault(normalize_query(row["query_normalized"]), []).append(row)
+
+    decisions: dict[str, str] = {}
+    for query, query_rows in rows_by_query.items():
+        provenance_owners = {
+            owner
+            for row in query_rows
+            if (
+                owner := service_urls.get(row.get("current_url", ""), "")
+                or seed_owners.get(normalize_query(row.get("seed", "")), "")
+            )
+        }
+        if len(provenance_owners) <= 1:
+            continue
+        current_owners = {
+            service_urls[row["current_url"]]
+            for row in query_rows
+            if row.get("current_url", "") in service_urls
+        }
+        if len(current_owners) > 1:
+            raise ValueError(f"query has multiple existing current URL owners: {query}")
+        canonical_owner = next(iter(current_owners), "") or infer_primary_service_id(query)
+        if not canonical_owner:
+            raise ValueError(f"query owner conflict requires a manual decision: {query}")
+        decisions[query] = canonical_owner
+    return decisions
 
 
 def _write_dict_rows(path: Path, columns: tuple[str, ...], rows: list[dict[str, str]]) -> None:

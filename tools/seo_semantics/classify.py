@@ -97,6 +97,9 @@ _LEGAL_MUNICIPAL_TERMS: tuple[Term, ...] = (
     ("красная", "линия"), ("линейного", "объекта"),
     ("населенных", "пунктов"), ("городских", "территорий"),
     ("городских", "поселений"),
+    ("градостроительные", "планы"), ("градостроительства",), ("сбцп",),
+    ("кадастровый", "номер"), ("кадастрового", "номера"),
+    ("кадастровому", "номеру"),
 )
 _ZONING_TERMS: tuple[Term, ...] = (
     ("зонирование",), ("зонирования",), ("зонированию",),
@@ -161,6 +164,11 @@ _FROZEN_OWNERS: tuple[tuple[str, str, tuple[Term, ...]], ...] = (
             ("дренажный",), ("дренажная",), ("дренажной",), ("дренажные",),
             ("дренажную",), ("дренажным",), ("дренажными",), ("дренажных",),
             ("дренированию",), ("грунтовые", "воды"), ("грунтовых", "вод"),
+            ("водоотводная", "канава"), ("водоотводной", "канавы"),
+            ("водоотводную", "канаву"), ("водоотводной", "канаве"),
+            ("водоотводной", "канавой"), ("водоотводные", "канавы"),
+            ("водоотводных", "канав"), ("водоотводным", "канавам"),
+            ("водоотводными", "канавами"), ("водоотводных", "канавах"),
         ),
     ),
     (
@@ -338,11 +346,24 @@ def classify_query(query: str, service_hint: str, scope: ScopeConfig) -> QueryCl
 
 
 def infer_service_id(query: str) -> str:
-    """Return the first service whose explicit phrase matches the query."""
+    """Return the first configured service whose explicit phrase matches."""
     tokens = tuple(normalize_query(query).split())
     for service_id, terms in _SERVICE_TERMS:
         if _contains_any(tokens, terms):
             return service_id
+    return _infer_service_context(tokens)
+
+
+def infer_primary_service_id(query: str) -> str:
+    """Return the owner of the earliest explicit service phrase in the query."""
+    tokens = tuple(normalize_query(query).split())
+    candidates: list[tuple[int, int, str]] = []
+    for priority, (service_id, terms) in enumerate(_SERVICE_TERMS):
+        indexes = [index for term in terms if (index := _phrase_index(tokens, term)) is not None]
+        if indexes:
+            candidates.append((min(indexes), priority, service_id))
+    if candidates:
+        return min(candidates)[2]
     return _infer_service_context(tokens)
 
 

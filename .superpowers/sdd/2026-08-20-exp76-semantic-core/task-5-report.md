@@ -2,10 +2,11 @@
 
 ## Status
 
-`DONE`. Task 5 and review round 1 are implemented on `codex/semantic-core`.
+`DONE`. Task 5 and review rounds 1-2 are implemented on `codex/semantic-core`.
 The original implementation is commit `8b29151` (`feat: classify semantic search intent`);
-the review fixes are in the separate `fix: refine semantic classification review`
-commit reported in the handoff (a commit cannot contain its own content-derived SHA).
+round 1 is commit `db6f896` (`fix: refine semantic classification review`).
+Round 2 is in the separate `fix: close semantic owner audit gaps` commit reported
+in its handoff (a commit cannot contain its own content-derived SHA).
 
 The implementation is limited to S1-S8 and the six immutable frozen owners. It
 performs no live-site, browser, Yandex, FTP, WordPress, canonical, redirect,
@@ -47,45 +48,52 @@ The review fixes were implemented through additional RED-to-GREEN cycles:
 6. The former S4 `корчевание` phrases now fail into explicit `out_of_scope`.
 7. A final review caught automotive `автосалон` noise and generic `проектные
    работы`; both were reproduced in tests before being excluded.
+8. Round 2 reproduced K003172 as a missed frozen collision. Complete phrases for
+   observed `водоотводная канава` inflections now map to the immutable drainage
+   owner without substring matching.
+9. Round 2 added narrow legal evidence for `градостроительные планы`,
+   `градостроительства`, `сбцп`, and cadastral-number planning. It also added a
+   corpus invariant: an eligible normalized query cannot have multiple S1-S8
+   owners without an explicit manual decision.
 
-Final Task 5 suite: 21 behavior tests, including real CSV CLI tests. Matching is
+Final Task 5 suite: 24 behavior tests, including real CSV CLI tests. Matching is
 performed on normalized complete tokens and complete phrases, never naive
 substrings. The frozen contract is documented accurately: the earliest complete
 phrase owns, with declaration order used only for an equal-position tie.
 
 ## Output counts
 
-Input: 7,818 rows. Output: 7,259 clean rows and 559 frozen rows.
+Input: 7,818 rows. Output: 7,258 clean rows and 560 frozen rows.
 
 | service | total | transactional | commercial_research | informational | product_only | brand_navigation | irrelevant | relevant | manual_review | frozen_collision | excluded |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| S1 | 580 | 43 | 453 | 32 | 1 | 11 | 40 | 534 | 6 | 0 | 40 |
+| S1 | 581 | 43 | 454 | 32 | 1 | 11 | 40 | 535 | 6 | 0 | 40 |
 | S2 | 347 | 149 | 152 | 17 | 29 | 0 | 0 | 342 | 5 | 0 | 0 |
 | S3 | 1,540 | 15 | 1,330 | 94 | 53 | 0 | 48 | 1,490 | 2 | 0 | 48 |
 | S4 | 970 | 24 | 859 | 20 | 50 | 0 | 17 | 953 | 0 | 0 | 17 |
-| S5 | 2,556 | 110 | 1,839 | 86 | 13 | 0 | 508 | 2,045 | 3 | 0 | 508 |
+| S5 | 2,555 | 110 | 1,831 | 86 | 13 | 0 | 515 | 2,037 | 3 | 0 | 515 |
 | S6 | 79 | 21 | 45 | 9 | 2 | 0 | 2 | 77 | 0 | 0 | 2 |
 | S7 | 231 | 8 | 189 | 16 | 6 | 0 | 12 | 218 | 1 | 0 | 12 |
-| S8 | 457 | 58 | 320 | 57 | 18 | 0 | 4 | 445 | 8 | 0 | 4 |
+| S8 | 457 | 58 | 320 | 57 | 18 | 0 | 4 | 444 | 9 | 0 | 4 |
 | Unassigned | 1,058 | 147 | 357 | 29 | 1 | 0 | 524 | 0 | 0 | 534 | 524 |
 
-Global intent totals: `transactional=575`, `commercial_research=5,544`,
+Global intent totals: `transactional=575`, `commercial_research=5,537`,
 `informational=360`, `product_only=173`, `brand_navigation=11`, and
-`irrelevant=1,155`.
+`irrelevant=1,162`.
 
-Global relevance totals: `relevant=6,104`, `manual_review=25`,
-`frozen_collision=534`, and `excluded=1,155`. Exclusion reasons are
-`out_of_scope=786`, `legal_municipal_planning=365`, `training=3`, and `jobs=1`.
+Global relevance totals: `relevant=6,096`, `manual_review=26`,
+`frozen_collision=534`, and `excluded=1,162`. Exclusion reasons are
+`out_of_scope=785`, `legal_municipal_planning=373`, `training=3`, and `jobs=1`.
 Every excluded row has a reason.
 
-Frozen-owner totals are drainage 157, blind area 79, paving 260, dewatering 10,
+Frozen-owner totals are drainage 158, blind area 79, paving 260, dewatering 10,
 storm sewer 36, and irrigation 17.
 
 ## S5 sense audit and disputed legacy exclusions
 
 Source seed/current-URL hints are retained as provenance but cannot alone make a
-query relevant. The final S5 audit contains 2,045 relevant rows, 365 explicit
-`legal_municipal_planning` exclusions, and 143 other `out_of_scope` exclusions.
+query relevant. The final S5 audit contains 2,037 relevant rows, 373 explicit
+`legal_municipal_planning` exclusions, and 142 other `out_of_scope` exclusions.
 The legal rule requires planning plus legal/municipal markers, project plus
 territory, or zoning plus municipal/territory context. Genuine examples such as
 `планировка участка с уклоном`, `аренда трактора для планировки участка`, and
@@ -110,13 +118,26 @@ relevance, owner URL, and final decision. Every selected row has persistent
 - clicked rows: 157/157 reviewed (72 clean, 85 frozen);
 - clicked final decisions: 52 `keep_for_clustering`, 20 `exclude`, and 85
   `frozen_owner` (one is also mixed/manual);
-- mixed `manual_review`: 25/25 reviewed and resolved to an immutable owner;
-- all frozen rows: 559/559 reviewed and resolved to an immutable owner;
-- unique review union: 631/631; missing decisions: 0;
-- union decisions: `frozen_owner=559`, `keep_for_clustering=52`, `exclude=20`;
+- mixed `manual_review`: 26/26 reviewed and resolved to an immutable owner;
+- all frozen rows: 560/560 reviewed and resolved to an immutable owner;
+- unique review union: 632/632; missing decisions: 0;
+- union decisions: `frozen_owner=560`, `keep_for_clustering=52`, `exclude=20`;
 - canonical review digest over sorted
   `keyword_id|service_id|intent|relevance|exclusion_reason|owner_url|review_status|final_decision|review_reason`:
-  `8bbc030ade691a02e7ba4113a41a79326665b31dd70c76de8c64c0fbf1f12c79`.
+  `d5a81794109a8c56ca416edae5a88c76bebf52c27a25775cbcada34f5ca0e58f`.
+
+Round 2 changed exactly 12 classifications. K003172 is the only new member of
+the required review union; it was re-inspected as S8 plus drainage,
+`manual_review`, `final_decision=frozen_owner`, reason
+`mixed_frozen_collision`. K003929-K003933, K004546, K006385, and adjacent K006386
+are legal exclusions. No other union row changed.
+
+K002235-K002237 share `ландшафтный дизайн планировка участка`. The semantic
+primary is S1 because the complete phrase `ландшафтный дизайн` occurs before
+`планировка участка`. All three now persist `reviewed`,
+`final_decision=canonical_service_owner`, and
+`review_reason=earliest_service_phrase:S1`. Corpus audit found zero eligible
+normalized queries with multiple S1-S8 owners.
 
 Blank service/owner is a valid reviewed exclusion, not an unassigned decision:
 20 clicked rows use it and all 20 have `final_decision=exclude`. Named reviewer
@@ -161,9 +182,9 @@ The gate is calculated after cleaning/routing. Eligible rows are clean
 `informational`, or `product_only`; frozen, manual, excluded, and brand rows are
 not candidates.
 
-- eligible clean rows: 6,093;
-- distinct `(service_id, query_normalized, intent)` candidates: 4,242;
-- decision: `4,242 > 250`; the paid/API gate is crossed.
+- eligible clean rows: 6,085;
+- distinct `(service_id, query_normalized, intent)` candidates: 4,236;
+- decision: `4,236 > 250`; the paid/API gate is crossed.
 
 No paid API was activated and no SERP capture was performed.
 
@@ -171,7 +192,7 @@ No paid API was activated and no SERP capture was performed.
 
 Fresh final verification:
 
-- `python -m unittest tools.test_semantic_scope tools.test_semantic_normalize tools.test_semantic_ingest tools.test_semantic_manifest tools.test_semantic_classify -v`: 40 tests, 0 failures;
+- `python -m unittest tools.test_semantic_scope tools.test_semantic_normalize tools.test_semantic_ingest tools.test_semantic_manifest tools.test_semantic_classify -v`: 43 tests, 0 failures;
 - deterministic second regeneration: identical output hashes;
 - `C:\Users\user\.codex\scripts\harness.cmd smoke`: exit 0, `CLOUD_ONLY`, no Ollama invocation;
 - `git diff --check`: exit 0;
@@ -179,8 +200,8 @@ Fresh final verification:
 
 Final derivative hashes:
 
-- `keywords_clean.csv`: `87cc7c6ed58da9c7367453ae08bda6b4a86531218dedf7f5a1a8ad31bf7befc2`;
-- `frozen_collisions.csv`: `46140e1ba5e1a984d8ace16c6d63b0e83e5514d4ffa298a13f09106327c29b40`;
+- `keywords_clean.csv`: `d23b8d931cff42bd8ebc66aa347c454f7f4bcb0bbc34862d4ba9a61f02fceb2f`;
+- `frozen_collisions.csv`: `468428d88bdd030240c9d2425e6fc252f4b9adcb14255c47d1d5500dd13a3eb9`;
 - `minus_words.csv`: `0fc1e87e678022be4c3f547f70cb793396c6e6fb0b9b4638e14247f5b7f52268`.
 
 ## Concerns

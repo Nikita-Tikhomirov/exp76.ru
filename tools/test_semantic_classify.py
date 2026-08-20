@@ -4,7 +4,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tools.seo_semantics.classify import classify_query, infer_service_id, load_seed_owners
+from tools.seo_semantics.classify import (
+    classify_query,
+    infer_primary_service_id,
+    infer_service_id,
+    load_seed_owners,
+)
 from tools.seo_semantics.cli import main
 from tools.seo_semantics.scope import load_scope
 
@@ -116,10 +121,29 @@ class SemanticClassifyTest(unittest.TestCase):
         self.assertEqual((s3.service_id, s3.relevance), ("S3", "manual_review"))
         self.assertTrue(s3.owner_url.endswith("/category/osushenie-uchastka/"))
 
+    def test_routes_observed_water_ditch_forms_to_drainage_owner(self):
+        examples = (
+            "обустройство водоотводной канавы и въезда на участок ярославль",
+            "ремонт водоотводной канавы",
+            "устройство водоотводной канавы",
+            "прочистка водоотводных канав",
+        )
+
+        for query in examples:
+            with self.subTest(query=query):
+                result = classify_query(query, "S8" if "въезда" in query else "", SCOPE)
+                self.assertTrue(result.frozen_collision)
+                self.assertTrue(result.owner_url.endswith("/category/drenazh-uchastka/"))
+        mixed = classify_query(examples[0], "S8", SCOPE)
+        self.assertEqual((mixed.service_id, mixed.relevance), ("S8", "manual_review"))
+
     def test_infers_reviewed_service_phrases(self):
         self.assertEqual(infer_service_id("благоустройство в рыбинске"), "S1")
         self.assertEqual(infer_service_id("найти садовника на участок"), "S4")
         self.assertEqual(infer_service_id("сделать въезд в канаву"), "S8")
+
+    def test_infers_owner_from_earliest_explicit_service_phrase(self):
+        self.assertEqual(infer_primary_service_id("ландшафтный дизайн планировка участка"), "S1")
 
     def test_routes_contextual_outdoor_tile_but_not_indoor_tile(self):
         outdoor = classify_query("переложить старую плитку на дорожке", "", SCOPE)
@@ -165,6 +189,13 @@ class SemanticClassifyTest(unittest.TestCase):
         )
         disputed = classify_query("корчевание деревьев ярославль", "S4", SCOPE)
 
+        legal_forms = (
+            "планировка территории градостроительные планы земельного участка",
+            "планировка территории градостроительства",
+            "сбцп планировка территории",
+            "планировка участка по кадастровому номеру",
+        )
+
         self.assertEqual((legal.relevance, legal.exclusion_reason), ("excluded", "legal_municipal_planning"))
         self.assertEqual((municipal.relevance, municipal.exclusion_reason), ("excluded", "legal_municipal_planning"))
         self.assertEqual((arbitrary.relevance, arbitrary.exclusion_reason), ("excluded", "out_of_scope"))
@@ -180,6 +211,54 @@ class SemanticClassifyTest(unittest.TestCase):
             ("excluded", "legal_municipal_planning"),
         )
         self.assertEqual((disputed.relevance, disputed.exclusion_reason), ("excluded", "out_of_scope"))
+        for query in legal_forms:
+            with self.subTest(query=query):
+                result = classify_query(query, "S5", SCOPE)
+                self.assertEqual(
+                    (result.relevance, result.exclusion_reason),
+                    ("excluded", "legal_municipal_planning"),
+                )
+
+    def test_generated_output_closes_round_two_and_has_single_eligible_owner(self):
+        clean = self._read_csv(
+            ROOT / "seo-data/2026-08-exp76-services/processed/keywords_clean.csv"
+        )
+        frozen = self._read_csv(
+            ROOT / "seo-data/2026-08-exp76-services/processed/frozen_collisions.csv"
+        )
+        rows = clean + frozen
+        by_id = {row["keyword_id"]: row for row in rows}
+
+        mixed = by_id["K003172"]
+        self.assertEqual((mixed["service_id"], mixed["relevance"]), ("S8", "manual_review"))
+        self.assertTrue(mixed["owner_url"].endswith("/category/drenazh-uchastka/"))
+        self.assertEqual((mixed["review_status"], mixed["final_decision"]), ("reviewed", "frozen_owner"))
+
+        for keyword_id in ("K003929", "K003930", "K003931", "K003932", "K003933", "K004546", "K006385"):
+            with self.subTest(keyword_id=keyword_id):
+                row = by_id[keyword_id]
+                self.assertEqual(
+                    (row["relevance"], row["exclusion_reason"]),
+                    ("excluded", "legal_municipal_planning"),
+                )
+
+        canonical_rows = [by_id[keyword_id] for keyword_id in ("K002235", "K002236", "K002237")]
+        self.assertEqual({row["service_id"] for row in canonical_rows}, {"S1"})
+        self.assertEqual({row["review_status"] for row in canonical_rows}, {"reviewed"})
+        self.assertEqual({row["final_decision"] for row in canonical_rows}, {"canonical_service_owner"})
+        self.assertEqual({row["review_reason"] for row in canonical_rows}, {"earliest_service_phrase:S1"})
+
+        eligible = [
+            row
+            for row in clean
+            if row["relevance"] == "relevant"
+            and row["intent"] in {"transactional", "commercial_research", "informational", "product_only"}
+        ]
+        owners_by_query: dict[str, set[str]] = {}
+        for row in eligible:
+            owners_by_query.setdefault(row["query_normalized"], set()).add(row["service_id"])
+        conflicts = {query: owners for query, owners in owners_by_query.items() if len(owners) > 1}
+        self.assertEqual(conflicts, {})
 
     def test_excludes_reviewed_noisy_frozen_token_contexts(self):
         queries = (
