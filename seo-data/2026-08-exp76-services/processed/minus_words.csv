@@ -1,0 +1,3 @@
+scope,service_id,word,reason,source_query_ids,status
+global,,обучение,training,K002321|K002322,accepted_repeated_evidence
+global,,работа,jobs,K000212|K004787|K005981|K005982|K005983|K005984|K005985|K006306|K006311|K006554,accepted_repeated_evidence

@@ -11,6 +11,7 @@ from dataclasses import replace
 from pathlib import Path
 from typing import Sequence
 
+from .classify import QueryClassification, classify_query, exclusion_evidence, infer_service_id
 from .ingest import load_source_csv, merge_records
 from .manifest import register_source
 from .models import KeywordRecord
@@ -37,6 +38,39 @@ _OUTPUT_COLUMNS = (
     "collected_at",
 )
 
+_CLASSIFIED_OUTPUT_COLUMNS = (
+    "keyword_id",
+    "query_raw",
+    "query_normalized",
+    "service_id",
+    "intent",
+    "relevance",
+    "exclusion_reason",
+    "geo",
+    "entities",
+    "frozen_collision",
+    "owner_url",
+    "sources",
+    "region",
+    "device",
+    "broad_frequency",
+    "phrase_frequency",
+    "exact_frequency",
+    "impressions",
+    "clicks",
+    "avg_position",
+    "current_url",
+)
+
+_MINUS_OUTPUT_COLUMNS = (
+    "scope",
+    "service_id",
+    "word",
+    "reason",
+    "source_query_ids",
+    "status",
+)
+
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m tools.seo_semantics.cli")
@@ -55,6 +89,13 @@ def _build_parser() -> argparse.ArgumentParser:
     ingest.add_argument("--scope", required=True, type=Path)
     ingest.add_argument("--manifest", required=True, type=Path)
     ingest.add_argument("--output", required=True, type=Path)
+
+    classify = commands.add_parser("classify")
+    classify.add_argument("--scope", required=True, type=Path)
+    classify.add_argument("--input", required=True, type=Path)
+    classify.add_argument("--output", required=True, type=Path)
+    classify.add_argument("--frozen-output", required=True, type=Path)
+    classify.add_argument("--minus-output", required=True, type=Path)
     return parser
 
 
@@ -71,6 +112,18 @@ def main(argv: Sequence[str] | None = None) -> int:
         elif args.command == "ingest":
             count = _ingest(args.scope, args.manifest, args.output)
             print(f"ingested {count} keyword rows")
+        elif args.command == "classify":
+            clean_count, frozen_count, minus_count = _classify(
+                args.scope,
+                args.input,
+                args.output,
+                args.frozen_output,
+                args.minus_output,
+            )
+            print(
+                f"classified {clean_count + frozen_count} keyword rows: "
+                f"clean={clean_count}, frozen={frozen_count}, minus={minus_count}"
+            )
         return 0
     except (OSError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)
@@ -156,6 +209,133 @@ def _ingest(scope_path: Path, manifest_path: Path, output_path: Path) -> int:
     merged = merge_records(records)
     _write_keyword_csv(output_path, merged)
     return len(merged)
+
+
+def _classify(
+    scope_path: Path,
+    input_path: Path,
+    output_path: Path,
+    frozen_output_path: Path,
+    minus_output_path: Path,
+) -> tuple[int, int, int]:
+    scope = load_scope(scope_path)
+    rows = _read_keyword_rows(input_path)
+    service_urls = {service.current_url: service.service_id for service in scope.services}
+    clean_rows: list[dict[str, str]] = []
+    frozen_rows: list[dict[str, str]] = []
+    minus_evidence: dict[tuple[str, str, str, str], set[str]] = {}
+
+    for row in rows:
+        service_hint = (
+            service_urls.get(row.get("current_url", ""), "")
+            or infer_service_id(row.get("seed", ""))
+            or infer_service_id(row["query_normalized"])
+        )
+        decision = classify_query(row["query_raw"], service_hint, scope)
+        if _positive_integer(row.get("clicks", "")) and not decision.service_id and not decision.owner_url:
+            decision = replace(decision, service_id="S1")
+        classified_row = _classified_row(row, decision)
+        target = frozen_rows if decision.frozen_collision else clean_rows
+        target.append(classified_row)
+        for word in exclusion_evidence(row["query_raw"], decision.exclusion_reason):
+            key = ("global", "", word, decision.exclusion_reason)
+            minus_evidence.setdefault(key, set()).add(row["keyword_id"])
+
+    _validate_partition(rows, clean_rows, frozen_rows)
+    minus_rows = [
+        {
+            "scope": scope_name,
+            "service_id": service_id,
+            "word": word,
+            "reason": reason,
+            "source_query_ids": "|".join(sorted(query_ids)),
+            "status": "accepted_repeated_evidence",
+        }
+        for (scope_name, service_id, word, reason), query_ids in sorted(minus_evidence.items())
+        if len(query_ids) >= 2
+    ]
+    _write_dict_rows(output_path, _CLASSIFIED_OUTPUT_COLUMNS, clean_rows)
+    _write_dict_rows(frozen_output_path, _CLASSIFIED_OUTPUT_COLUMNS, frozen_rows)
+    _write_dict_rows(minus_output_path, _MINUS_OUTPUT_COLUMNS, minus_rows)
+    return len(clean_rows), len(frozen_rows), len(minus_rows)
+
+
+def _read_keyword_rows(path: Path) -> list[dict[str, str]]:
+    try:
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            headers = reader.fieldnames or []
+            required = {"keyword_id", "query_raw", "query_normalized", "sources"}
+            missing = sorted(required - set(headers))
+            if missing:
+                raise ValueError(f"{path.name}: missing columns: {', '.join(missing)}")
+            rows = list(reader)
+    except OSError as exc:
+        raise ValueError(f"unable to read keyword input {path}: {exc}") from exc
+    keyword_ids = [row["keyword_id"] for row in rows]
+    if any(not keyword_id for keyword_id in keyword_ids):
+        raise ValueError(f"{path.name}: keyword_id must not be empty")
+    if len(keyword_ids) != len(set(keyword_ids)):
+        raise ValueError(f"{path.name}: duplicate keyword_id")
+    return rows
+
+
+def _classified_row(row: dict[str, str], decision: QueryClassification) -> dict[str, str]:
+    return {
+        "keyword_id": row["keyword_id"],
+        "query_raw": row["query_raw"],
+        "query_normalized": row["query_normalized"],
+        "service_id": decision.service_id,
+        "intent": decision.intent,
+        "relevance": decision.relevance,
+        "exclusion_reason": decision.exclusion_reason,
+        "geo": decision.geo,
+        "entities": "|".join(decision.entities),
+        "frozen_collision": str(decision.frozen_collision).lower(),
+        "owner_url": decision.owner_url,
+        "sources": row.get("sources", ""),
+        "region": row.get("region", ""),
+        "device": row.get("device", ""),
+        "broad_frequency": row.get("broad_frequency", ""),
+        "phrase_frequency": row.get("phrase_frequency", ""),
+        "exact_frequency": row.get("exact_frequency", ""),
+        "impressions": row.get("impressions", ""),
+        "clicks": row.get("clicks", ""),
+        "avg_position": row.get("avg_position", ""),
+        "current_url": row.get("current_url", ""),
+    }
+
+
+def _validate_partition(
+    source_rows: list[dict[str, str]],
+    clean_rows: list[dict[str, str]],
+    frozen_rows: list[dict[str, str]],
+) -> None:
+    source_ids = [row["keyword_id"] for row in source_rows]
+    output_ids = [row["keyword_id"] for row in clean_rows + frozen_rows]
+    if len(output_ids) != len(set(output_ids)):
+        raise ValueError("classification outputs contain duplicate keyword IDs")
+    if set(output_ids) != set(source_ids) or len(output_ids) != len(source_ids):
+        raise ValueError("classification outputs do not partition input exactly once")
+    if any(row["relevance"] == "excluded" and not row["exclusion_reason"] for row in clean_rows):
+        raise ValueError("excluded classification requires an explicit reason")
+
+
+def _write_dict_rows(path: Path, columns: tuple[str, ...], rows: list[dict[str, str]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=columns)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def _positive_integer(value: str) -> bool:
+    if not value.strip():
+        return False
+    try:
+        return int(float(value.replace(",", "."))) > 0
+    except ValueError as exc:
+        raise ValueError(f"clicks must be a non-negative number: {value!r}") from exc
 
 
 def _load_manifest_entries(manifest_path: Path) -> list[dict[str, object]]:
