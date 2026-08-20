@@ -75,13 +75,15 @@ The native XLSX export succeeded for S1 and is preserved unchanged. For the othe
 
 Native CSV exports and complete request routing are stored in `raw/wordstat/`:
 
-- broad: all 45 seeds for Yaroslavl and Yaroslavl Oblast, 90 requests, 74 exports, 16 zero-result responses;
-- phrase and exact: eight principal heads in both regions, 32 requests, 28 exports, four zero-result responses;
+- broad: all 45 seeds for Yaroslavl and Yaroslavl Oblast, 90 requests, 74 exports, 16 routes without a suggestion-table export;
+- phrase and exact: eight principal heads in both regions, 32 requests, 28 exports, four routes without a suggestion-table export;
 - dynamics: eight principal heads in both regions, 16 exports covering August 2024 through July 2026;
-- explicit Rybinsk, Tutayev, Uglich, and Pereslavl-Zalessky variants: all 45 seeds, 180 requests, four exports, 176 zero-result responses;
+- explicit Rybinsk, Tutayev, Uglich, and Pereslavl-Zalessky variants: all 45 seeds, 180 requests, four exports and 176 routes without a suggestion-table export;
 - Russia discovery: eight principal heads, eight exports, routed as `Russia_discovery`.
 
 The 114 top-query exports contain 6,220 source rows. The 16 dynamics exports contain 384 monthly rows and are retained for later seasonality work; they are not ingested as keywords. `coverage.csv` and `dynamics-coverage.csv` provide the seed, service, region, mode, source URL, status, and raw filename for every request.
+
+The immutable `coverage.csv` uses the historical status `zero_results` when the UI produced no suggestion table/export. It does not mean that the queried head had zero demand: `row_hint` is the observed head frequency. In particular, 22 of the 180 city-route heads have positive demand, including 18 routes without an export. Ingestion emits all city-route heads from `query_expr` plus `row_hint`, and emits every phrase/exact head from the same fields. Counts inside native export bodies describe broad suggestions, so they remain broad observations rather than phrase/exact frequencies.
 
 All 147 raw files have exactly one entry in `raw/source-manifest.json`. The source URLs in coverage files are the current capture URLs. No cookies, passwords, tokens, competitor snippets, or page content are stored.
 
@@ -93,6 +95,6 @@ Run the stable UTF-8 ingestion from the project root:
 python -m tools.seo_semantics.cli ingest --scope seo-data/2026-08-exp76-services/scope.json --manifest seo-data/2026-08-exp76-services/raw/source-manifest.json --output seo-data/2026-08-exp76-services/processed/keywords_raw.csv
 ```
 
-The command verifies every registered byte count and SHA-256, applies explicit source schemas, ignores coverage/dynamics/XLSX evidence as keyword rows, and writes 7,637 rows sorted by normalized query, region, device, and current URL. It does not sum metrics from incompatible methodologies.
+The command verifies every registered byte count and SHA-256, applies explicit source schemas, uses Wordstat coverage only for operator/city head observations, ignores dynamics/XLSX evidence as keyword rows, and writes 7,818 rows sorted by normalized query, region, device, and current URL. It does not sum metrics from incompatible methodologies.
 
 The 250-query paid SERP/API decision gate remains provisional until Task 5 cleaning and frozen routing determine how many candidates actually require SERP checks. No paid API or Yandex Cloud product was activated.

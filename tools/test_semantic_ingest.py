@@ -249,3 +249,92 @@ class SemanticIngestTest(unittest.TestCase):
             self.assertEqual(wordstat_row["region"], "Ярославль")
             self.assertEqual(wordstat_row["broad_frequency"], "15")
             self.assertEqual(wordstat_row["seed"], "газон под ключ")
+
+    def test_cli_uses_coverage_hints_for_operator_and_geo_heads(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            wordstat_dir = root / "raw" / "wordstat"
+            wordstat_dir.mkdir(parents=True)
+            exports = {
+                "top-001.csv": ("газон цена", 189),
+                "top-002.csv": ("газон недорого", 77),
+                "top-003.csv": ("выравнивание земли тутаев", 33),
+            }
+            for filename, (query, frequency) in exports.items():
+                (wordstat_dir / filename).write_text(
+                    "Запросы со словами;Число запросов;Описание\n"
+                    f"{query};{frequency};\n",
+                    encoding="utf-8-sig",
+                )
+
+            coverage = wordstat_dir / "coverage.csv"
+            fieldnames = [
+                "service_id", "seed", "query_expr", "region", "kind", "status",
+                "row_hint", "download_seq", "raw_file", "source_url",
+                "collected_at", "error",
+            ]
+            routes = [
+                {
+                    "service_id": "S2", "seed": "газон под ключ",
+                    "query_expr": '"газон под ключ"', "region": "Ярославль",
+                    "kind": "phrase", "status": "exported", "row_hint": "5",
+                    "raw_file": "top-001.csv",
+                },
+                {
+                    "service_id": "S2", "seed": "газон под ключ",
+                    "query_expr": '"!газон !под !ключ"', "region": "Ярославль",
+                    "kind": "exact", "status": "exported", "row_hint": "0",
+                    "raw_file": "top-002.csv",
+                },
+                {
+                    "service_id": "S4", "seed": "обрезка деревьев",
+                    "query_expr": "обрезка деревьев рыбинск",
+                    "region": "Ярославская область", "kind": "geo_рыбинск",
+                    "status": "zero_results", "row_hint": "7", "raw_file": "",
+                },
+                {
+                    "service_id": "S5", "seed": "планировка участка",
+                    "query_expr": "планировка участка тутаев",
+                    "region": "Ярославская область", "kind": "geo_тутаев",
+                    "status": "exported", "row_hint": "11",
+                    "raw_file": "top-003.csv",
+                },
+            ]
+            with coverage.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fieldnames)
+                writer.writeheader()
+                for route in routes:
+                    writer.writerow(
+                        {
+                            **route,
+                            "source_url": "https://wordstat.yandex.ru/",
+                            "collected_at": "2026-08-20T12:00:00+03:00",
+                            "error": "",
+                        }
+                    )
+
+            manifest = root / "raw" / "source-manifest.json"
+            for path in [coverage, *(wordstat_dir / name for name in exports)]:
+                register_source(path, "wordstat", "2026-08-20T12:00:00+03:00", manifest)
+            output = root / "processed" / "keywords_raw.csv"
+
+            result = main(
+                [
+                    "ingest", "--scope", str(SCOPE), "--manifest", str(manifest),
+                    "--output", str(output),
+                ]
+            )
+
+            self.assertEqual(result, 0)
+            with output.open("r", encoding="utf-8-sig", newline="") as handle:
+                rows = {row["query_normalized"]: row for row in csv.DictReader(handle)}
+            operator_head = rows["газон под ключ"]
+            self.assertEqual(operator_head["phrase_frequency"], "5")
+            self.assertEqual(operator_head["exact_frequency"], "0")
+            self.assertEqual(operator_head["broad_frequency"], "")
+            self.assertEqual(rows["газон цена"]["broad_frequency"], "189")
+            self.assertEqual(rows["газон цена"]["phrase_frequency"], "")
+            self.assertEqual(rows["газон недорого"]["broad_frequency"], "77")
+            self.assertEqual(rows["обрезка деревьев рыбинск"]["broad_frequency"], "7")
+            self.assertEqual(rows["планировка участка тутаев"]["broad_frequency"], "11")
+            self.assertEqual(rows["выравнивание земли тутаев"]["broad_frequency"], "33")

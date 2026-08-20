@@ -14,6 +14,7 @@ from typing import Sequence
 from .ingest import load_source_csv, merge_records
 from .manifest import register_source
 from .models import KeywordRecord
+from .normalize import normalize_query
 from .scope import load_scope
 
 
@@ -79,7 +80,13 @@ def main(argv: Sequence[str] | None = None) -> int:
 def _ingest(scope_path: Path, manifest_path: Path, output_path: Path) -> int:
     load_scope(scope_path)
     entries = _load_manifest_entries(manifest_path)
-    wordstat_context = _load_wordstat_context(manifest_path.parent / "wordstat" / "coverage.csv")
+    wordstat_coverage_path = (manifest_path.parent / "wordstat" / "coverage.csv").resolve()
+    wordstat_routes = _load_wordstat_routes(wordstat_coverage_path)
+    wordstat_context = {
+        row["raw_file"]: row
+        for row in wordstat_routes
+        if row.get("raw_file")
+    }
     wordcraft_context = _load_wordcraft_context(manifest_path.parent / "wordcraft" / "coverage.csv")
     records: list[KeywordRecord] = []
 
@@ -100,15 +107,16 @@ def _ingest(scope_path: Path, manifest_path: Path, output_path: Path) -> int:
                 },
             )
             records.extend(replace(record, collected_at=entry["collected_at"]) for record in loaded)
+        elif source == "wordstat" and path == wordstat_coverage_path:
+            records.extend(_wordstat_head_records(wordstat_routes, path))
         elif source == "wordstat" and path.name.startswith("top-"):
             context = wordstat_context.get(path.name)
             if context is None:
                 raise ValueError(f"{path.name}: missing Wordstat coverage entry")
-            metric = _wordstat_metric(context["kind"])
             loaded = load_source_csv(
                 path,
                 source,
-                {"query": "Запросы со словами", metric: "Число запросов"},
+                {"query": "Запросы со словами", "broad_frequency": "Число запросов"},
             )
             records.extend(
                 replace(
@@ -172,16 +180,15 @@ def _verify_registered_file(path: Path, entry: dict[str, object]) -> None:
         raise ValueError(f"{path.name}: SHA-256 differs from source manifest")
 
 
-def _load_csv_by_key(path: Path, key: str) -> dict[str, dict[str, str]]:
+def _load_csv_rows(path: Path) -> list[dict[str, str]]:
     if not path.is_file():
-        return {}
+        return []
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
-        rows = list(csv.DictReader(handle))
-    return {row[key]: row for row in rows if row.get(key)}
+        return list(csv.DictReader(handle))
 
 
-def _load_wordstat_context(path: Path) -> dict[str, dict[str, str]]:
-    return _load_csv_by_key(path, "raw_file")
+def _load_wordstat_routes(path: Path) -> list[dict[str, str]]:
+    return _load_csv_rows(path)
 
 
 def _load_wordcraft_context(path: Path) -> dict[str, dict[str, str]]:
@@ -195,12 +202,53 @@ def _load_wordcraft_context(path: Path) -> dict[str, dict[str, str]]:
     }
 
 
-def _wordstat_metric(kind: str) -> str:
+def _wordstat_head_metric(kind: str) -> str | None:
     if kind == "phrase":
         return "phrase_frequency"
     if kind == "exact":
         return "exact_frequency"
-    return "broad_frequency"
+    if kind.startswith("geo_"):
+        return "broad_frequency"
+    return None
+
+
+def _wordstat_head_records(
+    routes: list[dict[str, str]],
+    coverage_path: Path,
+) -> list[KeywordRecord]:
+    records: list[KeywordRecord] = []
+    for row_number, route in enumerate(routes, start=2):
+        metric = _wordstat_head_metric(route.get("kind", ""))
+        if metric is None:
+            continue
+        query_expr = route.get("query_expr", "").strip()
+        if not query_expr:
+            raise ValueError(f"{coverage_path.name}:{row_number}: query_expr must not be empty")
+        row_hint = _parse_wordstat_row_hint(coverage_path, row_number, route.get("row_hint", ""))
+        records.append(
+            KeywordRecord(
+                query_raw=query_expr,
+                query_normalized=normalize_query(query_expr),
+                source="wordstat",
+                seed=route.get("seed", ""),
+                region=route.get("region", ""),
+                device="all",
+                collected_at=route.get("collected_at", ""),
+                **{metric: row_hint},
+            )
+        )
+    return records
+
+
+def _parse_wordstat_row_hint(path: Path, row_number: int, value: str) -> int:
+    normalized = value.strip().replace(" ", "").replace("\u00a0", "")
+    try:
+        number = int(normalized)
+    except ValueError as exc:
+        raise ValueError(f"{path.name}:{row_number}: row_hint must be a non-negative integer") from exc
+    if number < 0:
+        raise ValueError(f"{path.name}:{row_number}: row_hint must be a non-negative integer")
+    return number
 
 
 def _wordcraft_key(filename: str) -> str:
