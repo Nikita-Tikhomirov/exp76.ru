@@ -28,4 +28,12 @@ These six existing directions and their child content are immutable in this phas
 
 Raw source files are immutable. This phase never writes to WordPress, FTP, Yandex settings, or published URLs. Secrets, credentials, and tokens are prohibited in this directory.
 
-Later tasks add read-only CLI commands for collection, normalization, clustering, URL mapping, and QA; those commands must preserve this boundary.
+Later tasks add these read-only CLI commands, which must preserve this boundary:
+
+- `validate-scope`
+- `register-source`
+- `ingest`
+- `classify`
+- `cluster`
+- `export`
+- `qa`
