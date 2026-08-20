@@ -1,0 +1,29 @@
+{
+  "site": "https://exp76.ru/",
+  "services": [
+    {"service_id": "S1", "name": "Ландшафтное проектирование", "current_url": "https://exp76.ru/services/landshaftnoe-proektirovanie/"},
+    {"service_id": "S2", "name": "Газон посевной и рулонный", "current_url": "https://exp76.ru/services/gazon-posevnojj-i-gazon-rulonnyjj/"},
+    {"service_id": "S3", "name": "Посадка деревьев и кустарников", "current_url": "https://exp76.ru/services/posadka-derevev-i-kustarnikov/"},
+    {"service_id": "S4", "name": "Уход за садом", "current_url": "https://exp76.ru/services/ukhod-za-sadom/"},
+    {"service_id": "S5", "name": "Планировка территории", "current_url": "https://exp76.ru/services/planirovka-territorii/"},
+    {"service_id": "S6", "name": "Подпорные стенки", "current_url": "https://exp76.ru/services/podpornye-stenki/"},
+    {"service_id": "S7", "name": "Уличное и ландшафтное освещение участка", "current_url": "https://exp76.ru/services/ulichnoe-osveshhenie-uchastka/"},
+    {"service_id": "S8", "name": "Въезд и заезд на участок через канаву", "current_url": "https://exp76.ru/services/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch/"}
+  ],
+  "frozen_urls": [
+    "https://exp76.ru/category/drenazh-uchastka/",
+    "https://exp76.ru/category/otmostka-vokrug-doma/",
+    "https://exp76.ru/category/ukladka-trotuarnoy-plitki/",
+    "https://exp76.ru/category/osushenie-uchastka/",
+    "https://exp76.ru/category/livnevaya-kanalizatsiya/",
+    "https://exp76.ru/category/avtopoliv-na-uchastke/"
+  ],
+  "regions": [
+    {"name": "Ярославль", "wordstat_id": 16, "priority": 1},
+    {"name": "Ярославская область", "wordstat_id": 10841, "priority": 2},
+    {"name": "Рыбинск", "wordstat_id": null, "priority": 3},
+    {"name": "Тутаев", "wordstat_id": null, "priority": 4},
+    {"name": "Углич", "wordstat_id": null, "priority": 5},
+    {"name": "Переславль-Залесский", "wordstat_id": null, "priority": 6}
+  ]
+}
