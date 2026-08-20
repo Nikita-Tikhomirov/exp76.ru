@@ -11,7 +11,13 @@ from dataclasses import replace
 from pathlib import Path
 from typing import Sequence
 
-from .classify import QueryClassification, classify_query, exclusion_evidence, infer_service_id
+from .classify import (
+    QueryClassification,
+    classify_query,
+    exclusion_evidence,
+    infer_service_id,
+    load_seed_owners,
+)
 from .ingest import load_source_csv, merge_records
 from .manifest import register_source
 from .models import KeywordRecord
@@ -51,6 +57,7 @@ _CLASSIFIED_OUTPUT_COLUMNS = (
     "frozen_collision",
     "owner_url",
     "sources",
+    "seed",
     "region",
     "device",
     "broad_frequency",
@@ -58,8 +65,13 @@ _CLASSIFIED_OUTPUT_COLUMNS = (
     "exact_frequency",
     "impressions",
     "clicks",
+    "ctr",
     "avg_position",
     "current_url",
+    "collected_at",
+    "review_status",
+    "final_decision",
+    "review_reason",
 )
 
 _MINUS_OUTPUT_COLUMNS = (
@@ -219,6 +231,7 @@ def _classify(
     minus_output_path: Path,
 ) -> tuple[int, int, int]:
     scope = load_scope(scope_path)
+    seed_owners = load_seed_owners(scope_path.with_name("seeds.json"))
     rows = _read_keyword_rows(input_path)
     service_urls = {service.current_url: service.service_id for service in scope.services}
     clean_rows: list[dict[str, str]] = []
@@ -228,12 +241,10 @@ def _classify(
     for row in rows:
         service_hint = (
             service_urls.get(row.get("current_url", ""), "")
-            or infer_service_id(row.get("seed", ""))
+            or seed_owners.get(normalize_query(row.get("seed", "")), "")
             or infer_service_id(row["query_normalized"])
         )
         decision = classify_query(row["query_raw"], service_hint, scope)
-        if _positive_integer(row.get("clicks", "")) and not decision.service_id and not decision.owner_url:
-            decision = replace(decision, service_id="S1")
         classified_row = _classified_row(row, decision)
         target = frozen_rows if decision.frozen_collision else clean_rows
         target.append(classified_row)
@@ -281,7 +292,7 @@ def _read_keyword_rows(path: Path) -> list[dict[str, str]]:
 
 
 def _classified_row(row: dict[str, str], decision: QueryClassification) -> dict[str, str]:
-    return {
+    classified = {
         "keyword_id": row["keyword_id"],
         "query_raw": row["query_raw"],
         "query_normalized": row["query_normalized"],
@@ -294,6 +305,7 @@ def _classified_row(row: dict[str, str], decision: QueryClassification) -> dict[
         "frozen_collision": str(decision.frozen_collision).lower(),
         "owner_url": decision.owner_url,
         "sources": row.get("sources", ""),
+        "seed": row.get("seed", ""),
         "region": row.get("region", ""),
         "device": row.get("device", ""),
         "broad_frequency": row.get("broad_frequency", ""),
@@ -301,8 +313,36 @@ def _classified_row(row: dict[str, str], decision: QueryClassification) -> dict[
         "exact_frequency": row.get("exact_frequency", ""),
         "impressions": row.get("impressions", ""),
         "clicks": row.get("clicks", ""),
+        "ctr": row.get("ctr", ""),
         "avg_position": row.get("avg_position", ""),
         "current_url": row.get("current_url", ""),
+        "collected_at": row.get("collected_at", ""),
+    }
+    classified.update(_review_fields(row, decision))
+    return classified
+
+
+def _review_fields(row: dict[str, str], decision: QueryClassification) -> dict[str, str]:
+    clicked = _positive_integer(row.get("clicks", ""))
+    if not (clicked or decision.relevance == "manual_review" or decision.frozen_collision):
+        return {"review_status": "", "final_decision": "", "review_reason": ""}
+    if decision.frozen_collision:
+        reason = "mixed_frozen_collision" if decision.relevance == "manual_review" else "frozen_collision"
+        return {
+            "review_status": "reviewed",
+            "final_decision": "frozen_owner",
+            "review_reason": reason,
+        }
+    if decision.relevance == "excluded":
+        return {
+            "review_status": "reviewed",
+            "final_decision": "exclude",
+            "review_reason": f"clicked_{decision.exclusion_reason}",
+        }
+    return {
+        "review_status": "reviewed",
+        "final_decision": "keep_for_clustering",
+        "review_reason": "clicked_relevant",
     }
 
 
@@ -319,6 +359,15 @@ def _validate_partition(
         raise ValueError("classification outputs do not partition input exactly once")
     if any(row["relevance"] == "excluded" and not row["exclusion_reason"] for row in clean_rows):
         raise ValueError("excluded classification requires an explicit reason")
+    reviewed_rows = [
+        row
+        for row in clean_rows + frozen_rows
+        if _positive_integer(row.get("clicks", ""))
+        or row["relevance"] == "manual_review"
+        or row["frozen_collision"] == "true"
+    ]
+    if any(row["review_status"] != "reviewed" or not row["final_decision"] for row in reviewed_rows):
+        raise ValueError("review-required classification requires a final decision")
 
 
 def _write_dict_rows(path: Path, columns: tuple[str, ...], rows: list[dict[str, str]]) -> None:

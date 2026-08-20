@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
+from pathlib import Path
 
 from .normalize import normalize_query
 from .scope import ScopeConfig
@@ -50,8 +52,8 @@ _EXCLUSION_TERMS: tuple[tuple[str, tuple[Term, ...]], ...] = (
     (
         "jobs",
         (
-            ("вакансия",), ("вакансии",), ("работа",), ("зарплата",),
-            ("зарплаты",), ("резюме",),
+            ("вакансия",), ("вакансии",), ("вакансий",), ("вакансию",),
+            ("зарплата",), ("зарплаты",), ("зарплатой",), ("резюме",),
         ),
     ),
     (
@@ -62,19 +64,63 @@ _EXCLUSION_TERMS: tuple[tuple[str, tuple[Term, ...]], ...] = (
     ),
 )
 
-# Priority is intentional: specific engineering owners win before the broader
-# drainage/dewatering terms when a query names more than one frozen direction.
+_DISPUTED_LEGACY_TERMS: tuple[Term, ...] = (
+    ("корчевание",), ("корчевания",), ("корчеванию",), ("корчеванием",),
+    ("корчевка",), ("корчевки",), ("корчевку",), ("корчевкой",),
+)
+_NOISY_OUT_OF_SCOPE_TERMS: tuple[Term, ...] = (
+    ("грузоперевозки",), ("автосалон",), ("градирен",), ("внутрицеховая",),
+    ("промышленной",), ("цеху",), ("цены", "на", "заболоченный", "участок"),
+)
+_PLANNING_TERMS: tuple[Term, ...] = (
+    ("планировка",), ("планировки",), ("планировке",), ("планировку",),
+    ("планированию",),
+)
+_PROJECT_TERMS: tuple[Term, ...] = (
+    ("проект",), ("проекта",), ("проекту",), ("проектом",), ("проекты",),
+    ("проектов",),
+)
+_TERRITORY_TERMS: tuple[Term, ...] = (
+    ("территория",), ("территории",), ("территорию",), ("территорий",),
+)
+_LEGAL_MUNICIPAL_TERMS: tuple[Term, ...] = (
+    ("документ",), ("документы",), ("документами",), ("документация",),
+    ("документации",), ("документацией",), ("дпт",), ("градостроительный",),
+    ("градостроительная",), ("градостроительное",), ("градостроительного",),
+    ("градостроительных",), ("грк",), ("кодекс",), ("кодекса",), ("закон",),
+    ("закону",), ("межевание",), ("межевания",), ("межеванию",),
+    ("утверждение",),
+    ("утверждения",), ("утверждению",), ("утверждении",), ("утвердить",),
+    ("постановление",), ("постановления",), ("приказ",), ("администрация",),
+    ("администрации",), ("муниципальный",), ("муниципального",),
+    ("муниципальная",), ("муниципальных",), ("территориального", "планирования"),
+    ("красная", "линия"), ("линейного", "объекта"),
+    ("населенных", "пунктов"), ("городских", "территорий"),
+    ("городских", "поселений"),
+)
+_ZONING_TERMS: tuple[Term, ...] = (
+    ("зонирование",), ("зонирования",), ("зонированию",),
+)
+_MUNICIPAL_CONTEXT_TERMS: tuple[Term, ...] = (
+    ("территориальное",), ("территориального",), ("градостроительное",),
+    ("градостроительного",), ("муниципальное",), ("муниципального",),
+)
+
+# The earliest complete phrase owns a multi-topic query. This declaration order
+# is the deterministic tie-break only when owners match at the same token index.
 _FROZEN_OWNERS: tuple[tuple[str, str, tuple[Term, ...]], ...] = (
     (
         "storm_sewer",
         "https://exp76.ru/category/livnevaya-kanalizatsiya/",
         (
-            ("ливневка",), ("ливневки",), ("ливневую",), ("ливневая", "канализация"),
+            ("ливневка",), ("ливневки",), ("ливневке",), ("ливневку",),
+            ("ливневкой",), ("ливневую",), ("ливневая", "канализация"),
             ("ливневой", "канализации"), ("ливневые", "канализации"),
             ("ливневый", "дренаж"),
             ("дождеприемник",), ("дождеприемники",), ("ливнеприемник",),
             ("линейный", "водоотвод"), ("линейного", "водоотвода"),
             ("лотки", "водоотведения"), ("лотков", "водоотведения"),
+            ("водоотводы", "ливневые"), ("ливневых", "колодцев"),
         ),
     ),
     (
@@ -90,7 +136,10 @@ _FROZEN_OWNERS: tuple[tuple[str, str, tuple[Term, ...]], ...] = (
     (
         "blind_area",
         "https://exp76.ru/category/otmostka-vokrug-doma/",
-        (("отмостка",), ("отмостки",), ("отмостку",), ("отмосткой",)),
+        (
+            ("отмостка",), ("отмостки",), ("отмостку",), ("отмосткой",),
+            ("отмостке",), ("отмосток",),
+        ),
     ),
     (
         "paving",
@@ -110,7 +159,7 @@ _FROZEN_OWNERS: tuple[tuple[str, str, tuple[Term, ...]], ...] = (
         (
             ("дренаж",), ("дренажа",), ("дренажу",), ("дренажом",),
             ("дренажный",), ("дренажная",), ("дренажной",), ("дренажные",),
-            ("дренажную",), ("дренажным",), ("дренажных",),
+            ("дренажную",), ("дренажным",), ("дренажными",), ("дренажных",),
             ("дренированию",), ("грунтовые", "воды"), ("грунтовых", "вод"),
         ),
     ),
@@ -120,6 +169,7 @@ _FROZEN_OWNERS: tuple[tuple[str, str, tuple[Term, ...]], ...] = (
         (
             ("осушение",), ("осушения",), ("осушению",),
             ("заболоченный",), ("заболоченного",), ("заболоченном",),
+            ("заболоченная",), ("заболоченные",), ("заболоченных",),
         ),
     ),
 )
@@ -133,6 +183,7 @@ _SERVICE_TERMS: tuple[tuple[str, tuple[Term, ...]], ...] = (
             ("заезд", "на", "участок"), ("заезд", "через", "канаву"),
             ("труба", "в", "канаву"), ("трубу", "в", "канаву"),
             ("мостик", "через", "канаву"), ("плиту", "через", "канаву"),
+            ("обустройство", "въезда", "на", "участок"),
         ),
     ),
     (
@@ -148,7 +199,7 @@ _SERVICE_TERMS: tuple[tuple[str, tuple[Term, ...]], ...] = (
         (
             ("освещение", "участка"), ("ландшафтное", "освещение"),
             ("уличное", "освещение"), ("подсветка", "участка"),
-            ("подсветка", "дорожек"),
+            ("подсветка", "дорожек"), ("монтаж", "освещения", "участка"),
         ),
     ),
     (
@@ -162,6 +213,7 @@ _SERVICE_TERMS: tuple[tuple[str, tuple[Term, ...]], ...] = (
         (
             ("посадка", "деревьев"), ("посадка", "кустарников"),
             ("посадка", "хвойных"), ("посадка", "крупномеров"),
+            ("озеленение", "участка"),
             ("дендролог",),
         ),
     ),
@@ -172,8 +224,7 @@ _SERVICE_TERMS: tuple[tuple[str, tuple[Term, ...]], ...] = (
             ("садовник",), ("садовника",), ("садовником",),
             ("садовые", "работы"), ("работы", "садовых"), ("работ", "садовых"),
             ("обрезка", "деревьев"),
-            ("обрезка", "кустарников"), ("корчевание", "деревьев"),
-            ("корчевка", "пня"),
+            ("обрезка", "кустарников"),
         ),
     ),
     (
@@ -192,11 +243,11 @@ _SERVICE_TERMS: tuple[tuple[str, tuple[Term, ...]], ...] = (
             ("ландшафтному", "дизайну"), ("ландшафтного", "дизайна"),
             ("ландшафтная", "компания"), ("ландшафтный", "дизайнер"),
             ("дизайн", "проект", "участка"), ("проект", "благоустройства"),
-            ("озеленение", "участка"), ("благоустройство", "участка"),
+            ("благоустройство", "участка"),
             ("благоустройство", "территории"), ("ландшафтные", "работы"),
             ("благоустройство",), ("благоустройства",), ("благоустройству",),
             ("благоустройстве",), ("благоучтройство",),
-            ("проектные", "работы"), ("проекты", "придомовых", "территорий"),
+            ("проекты", "придомовых", "территорий"),
             ("обустройства", "частного", "участка"),
             ("эксперты", "рыбинск"),
         ),
@@ -212,7 +263,8 @@ def classify_query(query: str, service_hint: str, scope: ScopeConfig) -> QueryCl
 
     normalized = normalize_query(query)
     tokens = tuple(normalized.split())
-    service_id = service_hint or infer_service_id(query)
+    service_evidence_id = infer_service_id(query)
+    service_id = service_hint or service_evidence_id
     geo = _detect_geo(tokens, scope)
 
     for reason, terms in _EXCLUSION_TERMS:
@@ -227,8 +279,20 @@ def classify_query(query: str, service_hint: str, scope: ScopeConfig) -> QueryCl
                 entities=(reason,),
             )
 
+    out_of_scope_reason = _out_of_scope_reason(tokens)
+    if out_of_scope_reason:
+        return QueryClassification(
+            intent="irrelevant",
+            service_id=service_id,
+            relevance="excluded",
+            exclusion_reason=out_of_scope_reason,
+            frozen_collision=False,
+            geo=geo,
+            entities=(out_of_scope_reason,),
+        )
+
     frozen = _match_frozen(tokens, scope)
-    intent = _detect_intent(tokens, bool(service_id) or frozen is not None)
+    intent = _detect_intent(tokens, bool(service_evidence_id) or frozen is not None)
     entities = _entities(tokens, service_id, frozen[0] if frozen else "")
     if frozen:
         frozen_name, owner_url = frozen
@@ -252,10 +316,10 @@ def classify_query(query: str, service_hint: str, scope: ScopeConfig) -> QueryCl
             geo=geo,
             entities=("service:S1", "brand:exp76"),
         )
-    if not service_id:
+    if not service_evidence_id:
         return QueryClassification(
             intent="irrelevant",
-            service_id="",
+            service_id=service_id,
             relevance="excluded",
             exclusion_reason="out_of_scope",
             frozen_collision=False,
@@ -279,7 +343,30 @@ def infer_service_id(query: str) -> str:
     for service_id, terms in _SERVICE_TERMS:
         if _contains_any(tokens, terms):
             return service_id
-    return ""
+    return _infer_service_context(tokens)
+
+
+def load_seed_owners(path: Path) -> dict[str, str]:
+    """Load exact normalized seed-to-service ownership from the approved config."""
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"unable to read seed ownership {path}: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise ValueError("seed ownership must be an object")
+    owners: dict[str, str] = {}
+    for service_id, seeds in payload.items():
+        if not isinstance(service_id, str) or not isinstance(seeds, list):
+            raise ValueError("seed ownership entries must map a service ID to an array")
+        for seed in seeds:
+            if not isinstance(seed, str) or not seed.strip():
+                raise ValueError(f"seed ownership {service_id} contains an invalid seed")
+            normalized = normalize_query(seed)
+            previous = owners.get(normalized)
+            if previous and previous != service_id:
+                raise ValueError(f"seed {seed!r} has multiple owners: {previous}, {service_id}")
+            owners[normalized] = service_id
+    return owners
 
 
 def exclusion_evidence(query: str, reason: str) -> tuple[str, ...]:
@@ -287,9 +374,8 @@ def exclusion_evidence(query: str, reason: str) -> tuple[str, ...]:
     tokens = tuple(normalize_query(query).split())
     canonical_terms = {
         "jobs": (
-            ("вакансия", (("вакансия",), ("вакансии",))),
-            ("работа", (("работа",),)),
-            ("зарплата", (("зарплата",), ("зарплаты",))),
+            ("вакансия", (("вакансия",), ("вакансии",), ("вакансий",), ("вакансию",))),
+            ("зарплата", (("зарплата",), ("зарплаты",), ("зарплатой",))),
             ("резюме", (("резюме",),)),
         ),
         "training": (
@@ -303,6 +389,86 @@ def exclusion_evidence(query: str, reason: str) -> tuple[str, ...]:
         for word, terms in canonical_terms.get(reason, ())
         if _contains_any(tokens, terms)
     )
+
+
+def _out_of_scope_reason(tokens: tuple[str, ...]) -> str:
+    if _contains_any(tokens, _DISPUTED_LEGACY_TERMS + _NOISY_OUT_OF_SCOPE_TERMS):
+        return "out_of_scope"
+    planning = _contains_any(tokens, _PLANNING_TERMS)
+    municipal_project = _contains_any(tokens, _PROJECT_TERMS) and _contains_any(tokens, _TERRITORY_TERMS)
+    municipal_zoning = _contains_any(tokens, _ZONING_TERMS) and (
+        _contains_any(tokens, _TERRITORY_TERMS)
+        or _contains_any(tokens, _MUNICIPAL_CONTEXT_TERMS)
+    )
+    if planning and (
+        _contains_any(tokens, _LEGAL_MUNICIPAL_TERMS)
+        or municipal_project
+        or municipal_zoning
+    ):
+        return "legal_municipal_planning"
+    return ""
+
+
+def _infer_service_context(tokens: tuple[str, ...]) -> str:
+    entry = {"въезд", "въезда", "въезде", "въездом", "заезд", "заезда", "заезде", "заездом"}
+    site = {"участок", "участка", "участке", "участку", "участком", "участки", "участков"}
+    ditch = {"канава", "канавы", "канаве", "канаву", "канавой"}
+    if entry.intersection(tokens) and (site.intersection(tokens) or ditch.intersection(tokens)):
+        return "S8"
+
+    retaining = {"подпорная", "подпорной", "подпорную", "подпорные", "подпорных"}
+    wall = {"стена", "стены", "стену", "стеной", "стенка", "стенки", "стенку", "стенкой"}
+    if retaining.intersection(tokens) and wall.intersection(tokens):
+        return "S6"
+
+    lighting = {"освещение", "освещения", "освещению", "освещением"}
+    outdoor = site | {"уличное", "уличного", "ландшафтное", "ландшафтного"}
+    if lighting.intersection(tokens) and outdoor.intersection(tokens):
+        return "S7"
+
+    lawn = {"газон", "газона", "газону", "газоном", "газоны", "газонов", "газоне"}
+    if lawn.intersection(tokens):
+        return "S2"
+
+    planting = {"посадка", "посадки", "посадке", "посадку", "посадкой"}
+    plants = {
+        "дерево", "дерева", "дереву", "деревом", "деревья", "деревьев", "деревьями",
+        "кустарник", "кустарника", "кустарнику", "кустарником", "кустарники", "кустарников",
+        "хвойные", "хвойных", "крупномер", "крупномера", "крупномеры", "крупномеров",
+    }
+    greening = {"озеленение", "озеленения", "озеленению", "озеленением"}
+    if (planting.intersection(tokens) and plants.intersection(tokens)) or (
+        greening.intersection(tokens) and site.intersection(tokens)
+    ):
+        return "S3"
+
+    pruning = {"обрезка", "обрезки", "обрезке", "обрезку", "обрезкой"}
+    garden = {"сад", "сада", "саду", "садом", "садов"}
+    care = {"уход", "ухода", "уходу", "уходом", "обслуживание", "обслуживания"}
+    gardener = {"садовник", "садовника", "садовнику", "садовником", "садовники"}
+    if (pruning.intersection(tokens) and plants.intersection(tokens)) or (
+        care.intersection(tokens) and garden.intersection(tokens)
+    ) or gardener.intersection(tokens):
+        return "S4"
+
+    planning_forms = {term[0] for term in _PLANNING_TERMS}
+    ground = {"грунт", "грунта", "грунтом", "земля", "земли", "землей", "рельеф", "рельефа"}
+    leveling = {"выравнивание", "выравнивания", "выровнять", "поднять", "подсыпка", "подсыпки"}
+    if planning_forms.intersection(tokens) and (site.intersection(tokens) or ground.intersection(tokens)):
+        return "S5"
+    if leveling.intersection(tokens) and (site.intersection(tokens) or ground.intersection(tokens)):
+        return "S5"
+
+    landscape = {"ландшафтный", "ландшафтного", "ландшафтному", "ландшафтное", "ландшафтная"}
+    design = {"дизайн", "дизайна", "проектирование", "проектирования", "проект"}
+    beautification = {
+        "благоустройство", "благоустройства", "благоустройству", "благоустройстве",
+    }
+    if landscape.intersection(tokens) and design.intersection(tokens):
+        return "S1"
+    if beautification.intersection(tokens) and (site.intersection(tokens) or _contains_any(tokens, _TERRITORY_TERMS)):
+        return "S1"
+    return ""
 
 
 def _detect_intent(tokens: tuple[str, ...], has_service: bool) -> str:

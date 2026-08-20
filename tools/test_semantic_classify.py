@@ -1,15 +1,17 @@
 import csv
+import json
 import tempfile
 import unittest
 from pathlib import Path
 
-from tools.seo_semantics.classify import classify_query, infer_service_id
+from tools.seo_semantics.classify import classify_query, infer_service_id, load_seed_owners
 from tools.seo_semantics.cli import main
 from tools.seo_semantics.scope import load_scope
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SCOPE_PATH = ROOT / "seo-data/2026-08-exp76-services/scope.json"
+SEEDS_PATH = ROOT / "seo-data/2026-08-exp76-services/seeds.json"
 SCOPE = load_scope(SCOPE_PATH)
 
 
@@ -45,6 +47,19 @@ class SemanticClassifyTest(unittest.TestCase):
         self.assertEqual(result.intent, "irrelevant")
         self.assertEqual(result.exclusion_reason, "jobs")
 
+    def test_bare_work_token_is_not_employment_or_minus_evidence(self):
+        queries = (
+            ("благоустройство участка плиткой стоимость работа плюс материалы", "S1"),
+            ("планировка участки цена работа", "S5"),
+            ("рыбинск сколько стоит работа выложить тротуарную плитку", ""),
+            ("сколько стоит работа по монтажу дренажной и ливневой системы", ""),
+        )
+
+        for query, service_hint in queries:
+            with self.subTest(query=query):
+                result = classify_query(query, service_hint, SCOPE)
+                self.assertNotEqual(result.exclusion_reason, "jobs")
+
     def test_preserves_mixed_service_and_frozen_query_for_review(self):
         result = classify_query("планировка участка с уклоном и дренажом", "S5", SCOPE)
 
@@ -75,6 +90,32 @@ class SemanticClassifyTest(unittest.TestCase):
         self.assertTrue(result.frozen_collision)
         self.assertEqual(result.owner_url, "https://exp76.ru/category/drenazh-uchastka/")
 
+    def test_routes_observed_frozen_inflections_as_complete_tokens(self):
+        examples = (
+            ("организация занимается дренажными работами", "drenazh-uchastka"),
+            ("водоотводы ливневые вокруг дома", "livnevaya-kanalizatsiya"),
+            ("на новой отмостке появились трещины", "otmostka-vokrug-doma"),
+            ("организация занимается ливневкой", "livnevaya-kanalizatsiya"),
+            ("сделать ливневку вокруг дома", "livnevaya-kanalizatsiya"),
+            ("схема ливневых колодцев", "livnevaya-kanalizatsiya"),
+            ("осушение заболоченных территорий", "osushenie-uchastka"),
+        )
+
+        for query, owner_slug in examples:
+            with self.subTest(query=query):
+                result = classify_query(query, "", SCOPE)
+                self.assertTrue(result.frozen_collision)
+                self.assertIn(f"/category/{owner_slug}/", result.owner_url)
+
+    def test_routes_morphological_frozen_collision_with_seeded_service(self):
+        s8 = classify_query("заезд на участок где есть канава с ливневкой", "S8", SCOPE)
+        s3 = classify_query("посадка деревьев на заболоченных почвах", "S3", SCOPE)
+
+        self.assertEqual((s8.service_id, s8.relevance), ("S8", "manual_review"))
+        self.assertTrue(s8.owner_url.endswith("/category/livnevaya-kanalizatsiya/"))
+        self.assertEqual((s3.service_id, s3.relevance), ("S3", "manual_review"))
+        self.assertTrue(s3.owner_url.endswith("/category/osushenie-uchastka/"))
+
     def test_infers_reviewed_service_phrases(self):
         self.assertEqual(infer_service_id("благоустройство в рыбинске"), "S1")
         self.assertEqual(infer_service_id("найти садовника на участок"), "S4")
@@ -98,6 +139,62 @@ class SemanticClassifyTest(unittest.TestCase):
         self.assertEqual(brand.intent, "brand_navigation")
         self.assertEqual(infer_service_id("калькулятор работ садовых"), "S4")
 
+    def test_loads_every_approved_seed_owner_from_configuration(self):
+        payload = json.loads(SEEDS_PATH.read_text(encoding="utf-8"))
+        owners = load_seed_owners(SEEDS_PATH)
+
+        self.assertEqual(sum(len(seeds) for seeds in payload.values()), len(owners))
+        for service_id, seeds in payload.items():
+            for seed in seeds:
+                with self.subTest(seed=seed):
+                    self.assertEqual(owners[seed], service_id)
+                    result = classify_query(seed, owners[seed], SCOPE)
+                    self.assertEqual(result.service_id, service_id)
+                    self.assertEqual(result.relevance, "relevant")
+
+    def test_source_hint_requires_query_evidence_and_excludes_wrong_senses(self):
+        legal = classify_query("градостроительный кодекс планировка территории", "S5", SCOPE)
+        municipal = classify_query("1 проект планировки территории", "S5", SCOPE)
+        arbitrary = classify_query("купить трактор", "S5", SCOPE)
+        generic_project = classify_query("проектные работы арефино", "S1", SCOPE)
+        grading = classify_query("планировка участка с уклоном", "S5", SCOPE)
+        grading_inflected = classify_query("аренда трактора для планировки участка", "S5", SCOPE)
+        site_zoning = classify_query("планировка участка зонирование", "S5", SCOPE)
+        municipal_zoning = classify_query(
+            "территориальное планирование зонирование планировка территории", "S5", SCOPE
+        )
+        disputed = classify_query("корчевание деревьев ярославль", "S4", SCOPE)
+
+        self.assertEqual((legal.relevance, legal.exclusion_reason), ("excluded", "legal_municipal_planning"))
+        self.assertEqual((municipal.relevance, municipal.exclusion_reason), ("excluded", "legal_municipal_planning"))
+        self.assertEqual((arbitrary.relevance, arbitrary.exclusion_reason), ("excluded", "out_of_scope"))
+        self.assertEqual(
+            (generic_project.relevance, generic_project.exclusion_reason),
+            ("excluded", "out_of_scope"),
+        )
+        self.assertEqual(grading.relevance, "relevant")
+        self.assertEqual(grading_inflected.relevance, "relevant")
+        self.assertEqual(site_zoning.relevance, "relevant")
+        self.assertEqual(
+            (municipal_zoning.relevance, municipal_zoning.exclusion_reason),
+            ("excluded", "legal_municipal_planning"),
+        )
+        self.assertEqual((disputed.relevance, disputed.exclusion_reason), ("excluded", "out_of_scope"))
+
+    def test_excludes_reviewed_noisy_frozen_token_contexts(self):
+        queries = (
+            "грузоперевозки капельный полив углич",
+            "автополив он ярославль автосалон",
+            "отвод дренажной воды от действующих градирен в систему канализации ярославль",
+            "цены на заболоченный участок в ярославле",
+        )
+
+        for query in queries:
+            with self.subTest(query=query):
+                result = classify_query(query, "", SCOPE)
+                self.assertFalse(result.frozen_collision)
+                self.assertEqual((result.relevance, result.exclusion_reason), ("excluded", "out_of_scope"))
+
     def test_cli_partitions_every_row_once_and_requires_repeat_minus_evidence(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -117,6 +214,10 @@ class SemanticClassifyTest(unittest.TestCase):
                 self._raw_row("K000003", "вакансии садовника", "садовник на участок"),
                 self._raw_row("K000004", "планировка участка с дренажом", "планировка участка"),
                 self._raw_row("K000005", "курс по уходу за садом", "уход за садом"),
+                self._raw_row("K000006", "авито навес арочный", "", clicks="1"),
+                self._raw_row("K000007", "градостроительный кодекс планировка территории", "планировка территории"),
+                self._raw_row("K000008", "монтаж освещения участка рыбинск", "монтаж освещения участка"),
+                self._raw_row("K000009", "обустройство въезда на участок углич", "обустройство въезда на участок"),
             ]
             with raw_path.open("w", encoding="utf-8", newline="") as handle:
                 writer = csv.DictWriter(handle, fieldnames=fieldnames)
@@ -135,13 +236,27 @@ class SemanticClassifyTest(unittest.TestCase):
             clean = self._read_csv(clean_path)
             frozen = self._read_csv(frozen_path)
             all_ids = [row["keyword_id"] for row in clean + frozen]
-            self.assertEqual(sorted(all_ids), [f"K{index:06d}" for index in range(1, 6)])
+            self.assertEqual(sorted(all_ids), [f"K{index:06d}" for index in range(1, 10)])
             self.assertEqual(len(all_ids), len(set(all_ids)))
             self.assertEqual(next(row for row in clean if row["keyword_id"] == "K000001")["service_id"], "S8")
             self.assertEqual(next(row for row in clean if row["keyword_id"] == "K000002")["exclusion_reason"], "jobs")
             mixed = next(row for row in frozen if row["keyword_id"] == "K000004")
             self.assertEqual(mixed["relevance"], "manual_review")
             self.assertTrue(mixed["owner_url"].endswith("/category/drenazh-uchastka/"))
+            clicked_exclusion = next(row for row in clean if row["keyword_id"] == "K000006")
+            self.assertEqual(clicked_exclusion["service_id"], "")
+            self.assertEqual(clicked_exclusion["review_status"], "reviewed")
+            self.assertEqual(clicked_exclusion["final_decision"], "exclude")
+            self.assertEqual(clicked_exclusion["review_reason"], "clicked_out_of_scope")
+            legal = next(row for row in clean if row["keyword_id"] == "K000007")
+            self.assertEqual((legal["relevance"], legal["exclusion_reason"]), ("excluded", "legal_municipal_planning"))
+            self.assertEqual(next(row for row in clean if row["keyword_id"] == "K000008")["service_id"], "S7")
+            self.assertEqual(next(row for row in clean if row["keyword_id"] == "K000009")["service_id"], "S8")
+            self.assertEqual(next(row for row in clean if row["keyword_id"] == "K000008")["relevance"], "relevant")
+            self.assertEqual(next(row for row in clean if row["keyword_id"] == "K000009")["relevance"], "relevant")
+            self.assertEqual(clicked_exclusion["seed"], "")
+            self.assertEqual(clicked_exclusion["ctr"], "25.0")
+            self.assertEqual(clicked_exclusion["collected_at"], "2026-08-20T12:00:00+03:00")
             minus = self._read_csv(minus_path)
             self.assertEqual(
                 [(row["scope"], row["word"], row["reason"]) for row in minus],
@@ -165,7 +280,7 @@ class SemanticClassifyTest(unittest.TestCase):
             "exact_frequency": "",
             "impressions": clicks,
             "clicks": clicks,
-            "ctr": "",
+            "ctr": "25.0",
             "avg_position": "",
             "current_url": "",
             "collected_at": "2026-08-20T12:00:00+03:00",
