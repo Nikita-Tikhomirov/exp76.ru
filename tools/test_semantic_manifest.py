@@ -32,6 +32,19 @@ class SemanticManifestTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "secret-like filename"):
                 register_source(path, "wordstat", "2026-08-20T12:00:00+03:00", root / "manifest.json")
 
+    def test_register_source_rejects_a_manifest_alias_of_the_source_file(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source_file = root / "source-manifest.json"
+            original_contents = "query\nгазон\n"
+            source_file.write_text(original_contents, encoding="utf-8")
+            alias_path = root / "raw" / ".." / "source-manifest.json"
+
+            with self.assertRaisesRegex(ValueError, "source file and manifest path must differ"):
+                register_source(source_file, "wordstat", "2026-08-20T12:00:00+03:00", alias_path)
+
+            self.assertEqual(source_file.read_text(encoding="utf-8"), original_contents)
+
 
 if __name__ == "__main__":
     unittest.main()

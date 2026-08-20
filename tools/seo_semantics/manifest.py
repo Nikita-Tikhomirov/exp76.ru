@@ -66,6 +66,8 @@ def register_source(path: Path, source: str, collected_at: str, manifest_path: P
     """Hash and register a raw source file without modifying the source itself."""
     source_path = path.resolve()
     target_manifest = manifest_path.resolve()
+    if source_path == target_manifest:
+        raise ValueError("source file and manifest path must differ")
     if _contains_secret_like_name(source_path):
         raise ValueError("secret-like filename cannot be registered")
     if not source_path.is_file():
