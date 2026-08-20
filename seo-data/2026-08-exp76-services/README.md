@@ -37,3 +37,16 @@ Later tasks add these read-only CLI commands, which must preserve this boundary:
 - `cluster`
 - `export`
 - `qa`
+
+## Source registration
+
+`seeds.json` contains the initial search masks for every approved service. Keep its hypotheses, including seasonal garden care, large-tree planting, and retaining-wall materials, until Wordstat, SERP, and business evidence are evaluated.
+
+Register each raw source without changing the source file:
+
+```powershell
+python -m tools.seo_semantics.cli validate-scope --scope seo-data/2026-08-exp76-services/scope.json
+python -m tools.seo_semantics.cli register-source --file <path> --source webmaster --collected-at <ISO-8601> --manifest seo-data/2026-08-exp76-services/raw/source-manifest.json
+```
+
+The manifest records a relative POSIX path, SHA-256 digest, byte count, source, and collection timestamp. It rejects filenames that look like secrets.
