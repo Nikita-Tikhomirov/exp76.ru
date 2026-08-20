@@ -1,0 +1,1033 @@
+{
+  "files": [
+    {
+      "path": "webmaster/site-12mo-2026-08-20.csv",
+      "source": "webmaster",
+      "collected_at": "2026-08-20T18:17:52+03:00",
+      "sha256": "a1ed979ab69eb97f024443ab5c16283f188b29c471f4101fc754b872d7453fa3",
+      "byte_count": 341009
+    },
+    {
+      "path": "webmaster/site-30d-2026-08-20.csv",
+      "source": "webmaster",
+      "collected_at": "2026-08-20T18:18:33+03:00",
+      "sha256": "c425c3d95b6e1ebc133873f259b60243ccebb2d6cd17ff58059b2b70bb04a596",
+      "byte_count": 215764
+    },
+    {
+      "path": "webmaster/site-90d-2026-08-20.csv",
+      "source": "webmaster",
+      "collected_at": "2026-08-20T18:18:17+03:00",
+      "sha256": "4cb96ae90ead26d5b584cd0deb40671fed0603bcc67ad7a03d8b038c6afef2c8",
+      "byte_count": 341009
+    },
+    {
+      "path": "wordcraft/coverage.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "d1c0eea54e89f4bf7beb648f97500f291bd56da8415b6c1b33157c6c78d94918",
+      "byte_count": 9457
+    },
+    {
+      "path": "wordcraft/seed-s1-all-2026-08-20-dom.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "8e66c5c17abd7a63888ae6bf64cea7cb93689f2bf764af1c223faa690ad04e85",
+      "byte_count": 799
+    },
+    {
+      "path": "wordcraft/seed-s1-all-2026-08-20.xlsx",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:23:13+03:00",
+      "sha256": "8f2a1ec01e91c04c21741174867934704ca35e7bdc3d49f8d14c8eff96a40c20",
+      "byte_count": 3552
+    },
+    {
+      "path": "wordcraft/seed-s2-all-2026-08-20-dom.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "fce199bfc6d7bc91ff3773b77e046d5f33365bccd1cab1b7f7551a955a8edd42",
+      "byte_count": 10664
+    },
+    {
+      "path": "wordcraft/seed-s2-mobile-2026-08-20-dom.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "dc349d1762c29dbb67a450df60ced88681ee08a100a92aa803844cc4fc8e9d1c",
+      "byte_count": 8901
+    },
+    {
+      "path": "wordcraft/seed-s3-all-2026-08-20-dom.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "9c26455e284c82f0eb74f43a6994bcb16c67ea3600de7577310d6b76fa2dc99c",
+      "byte_count": 9159
+    },
+    {
+      "path": "wordcraft/seed-s4-all-2026-08-20-dom.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "6113f8baf13847017dc8a2ddabf1c2d0c8d681693d17427bee817791798a97ab",
+      "byte_count": 1198
+    },
+    {
+      "path": "wordcraft/seed-s5-all-2026-08-20-dom.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "249a9a7def7469370d119c009f8a2f0baa516b3218e4ec4e4fa2332ed913f782",
+      "byte_count": 32245
+    },
+    {
+      "path": "wordcraft/seed-s5-mobile-2026-08-20-dom.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "243da00da49747bc3a8f0c134b3399150cc4eb16dba2a1d78eba2e2b29f9e62a",
+      "byte_count": 29242
+    },
+    {
+      "path": "wordcraft/seed-s6-all-2026-08-20-dom.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "9d57cff193252435d1a7804f2c6347df817458b6d8562680adf8addf7d522246",
+      "byte_count": 670
+    },
+    {
+      "path": "wordcraft/seed-s7-all-2026-08-20-dom.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "0da343a5302558d50e3a86a6d639b2da5318faab6312c6c6f151891f366d46af",
+      "byte_count": 600
+    },
+    {
+      "path": "wordcraft/url-s8-all-2026-08-20-dom.csv",
+      "source": "wordcraft",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "f8ab06e1d07207626332034583850dea0ba9ceed9f3732faf30929d78afb3656",
+      "byte_count": 671
+    },
+    {
+      "path": "wordstat/coverage.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "85c89efdd38548f8eecbaa39fcaa1f859b31baf0f562bed4c72557be2b680904",
+      "byte_count": 136874
+    },
+    {
+      "path": "wordstat/dynamics-001-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:05+03:00",
+      "sha256": "e0095c7d7f6db3b0454736d856321ad4959dc8e3da9568bd9b35ab80385484c8",
+      "byte_count": 952
+    },
+    {
+      "path": "wordstat/dynamics-002-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:07+03:00",
+      "sha256": "15e8cc092bddc556117219f165f55f8df9fd3fcdeb9f4cd64f0c1d6c30515ba8",
+      "byte_count": 1060
+    },
+    {
+      "path": "wordstat/dynamics-003-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:09+03:00",
+      "sha256": "8b94d59d0547dcecb72881fd5943cb811116f7f203be3c89dbd1dc106fb67ca5",
+      "byte_count": 958
+    },
+    {
+      "path": "wordstat/dynamics-004-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:12+03:00",
+      "sha256": "dc1756ed9dc34308f7d5073d64d6df00c858a1988b69d5c03741186aefb7a9cc",
+      "byte_count": 1044
+    },
+    {
+      "path": "wordstat/dynamics-005-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:14+03:00",
+      "sha256": "0ac996aa2fe175f50d35be36561e0121f838f06667297fb1bde7a13cf3865790",
+      "byte_count": 1001
+    },
+    {
+      "path": "wordstat/dynamics-006-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:16+03:00",
+      "sha256": "fe330d4417f1e2bf488816cbe6b09c0a84e565f8eff7363cad7e34bb832452ef",
+      "byte_count": 1024
+    },
+    {
+      "path": "wordstat/dynamics-007-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:18+03:00",
+      "sha256": "cbd2f7ec2d94ae8022c436dce508b7172e8c35d011eeb00a221807b8f7ac5352",
+      "byte_count": 997
+    },
+    {
+      "path": "wordstat/dynamics-008-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:20+03:00",
+      "sha256": "78229588a975d5d6eae5c2429f6a553a7041dfe19558aa79b5815f8561d00f7b",
+      "byte_count": 1018
+    },
+    {
+      "path": "wordstat/dynamics-009-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:22+03:00",
+      "sha256": "6da0e69cc79784a54e27fee58ac39616e80f1fe99efe30a4b57f87db3cf35dfc",
+      "byte_count": 1006
+    },
+    {
+      "path": "wordstat/dynamics-010-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:24+03:00",
+      "sha256": "2cdaf82fae7240709b1b0cb7f516a56183cb4cc5dceaab08744746e64ed8d4ca",
+      "byte_count": 1028
+    },
+    {
+      "path": "wordstat/dynamics-011-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:27+03:00",
+      "sha256": "0132ba4e8113aedaa54c51a62a6a0c0ac507cf4069a34d1ef4117370c4a807be",
+      "byte_count": 1028
+    },
+    {
+      "path": "wordstat/dynamics-012-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:29+03:00",
+      "sha256": "3bbeffa994b984183481826c39b3197e7876ba7ee327d7b2cfe3f73e931b8673",
+      "byte_count": 1058
+    },
+    {
+      "path": "wordstat/dynamics-013-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:31+03:00",
+      "sha256": "bc635934a24a00fc3aa0a80dd84b9a6e05150aefb6a4f6503c372dccab480b1c",
+      "byte_count": 1028
+    },
+    {
+      "path": "wordstat/dynamics-014-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:33+03:00",
+      "sha256": "d9f203cbaa5e6b9fd692cccf2ade7412adb052f282fb41fcc8ea342047c2a26c",
+      "byte_count": 1027
+    },
+    {
+      "path": "wordstat/dynamics-015-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:35+03:00",
+      "sha256": "b7d710670a25805fc40953ed10f9f7691483ee257aa931235fcaed86fdec54cf",
+      "byte_count": 972
+    },
+    {
+      "path": "wordstat/dynamics-016-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:37:38+03:00",
+      "sha256": "8a975966a393fcde61cc09c34b4d49027d22d983bd9fec609ab494a278ec975d",
+      "byte_count": 1065
+    },
+    {
+      "path": "wordstat/dynamics-coverage.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:45:05+03:00",
+      "sha256": "1ea5c56437670ed948169859866cec6f1aed9627a96ac2b35a23596bd9782ca0",
+      "byte_count": 5537
+    },
+    {
+      "path": "wordstat/top-001-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:11+03:00",
+      "sha256": "dc85f42b0ad6f59fe714e3a2d4c21ad2714f5a43d1d5521f46b2dc7a6d56f50b",
+      "byte_count": 11128
+    },
+    {
+      "path": "wordstat/top-002-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:13+03:00",
+      "sha256": "f0387f77015908263bda288996e0372cc416f38bc535052bcee91952eda666b5",
+      "byte_count": 466
+    },
+    {
+      "path": "wordstat/top-003-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:15+03:00",
+      "sha256": "31569c0335f266d5fe23da07f4d4d82c923c9d7427eafd7ebfd7b12fe44d9243",
+      "byte_count": 1171
+    },
+    {
+      "path": "wordstat/top-004-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:17+03:00",
+      "sha256": "4b9398f965472d5478a764ad3681cb1348e4c7051552ebe57fc3695ace7d3f29",
+      "byte_count": 388
+    },
+    {
+      "path": "wordstat/top-005-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:19+03:00",
+      "sha256": "1d216c03d35cf697f5403006f37fec7bb582337c6a12a3094cdaf709d1377acf",
+      "byte_count": 2769
+    },
+    {
+      "path": "wordstat/top-006-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:22+03:00",
+      "sha256": "efcd41973a8e0900a89cab39c32d8193dd77d1312b57280fbcd320dc6f652e13",
+      "byte_count": 248
+    },
+    {
+      "path": "wordstat/top-007-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:24+03:00",
+      "sha256": "418732d6799a5089ac3825f693594a168facbf8a1ba3ba04309e3be16cce7b2d",
+      "byte_count": 555
+    },
+    {
+      "path": "wordstat/top-008-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:26+03:00",
+      "sha256": "7d9f40efc56f1590672a6ef5278c0afa2f1cdb8b78fb3abeeef766d5ff05518a",
+      "byte_count": 474
+    },
+    {
+      "path": "wordstat/top-009-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:28+03:00",
+      "sha256": "41cda55426240e62d17b766cef87e2c4a3115bb3fa59b09766d2620cbad7e3dd",
+      "byte_count": 6971
+    },
+    {
+      "path": "wordstat/top-010-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:30+03:00",
+      "sha256": "a5181d5ac27c9119fdd48c304a2e7e89856ef633444e29ea872b4d395a8b1786",
+      "byte_count": 4680
+    },
+    {
+      "path": "wordstat/top-011-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:32+03:00",
+      "sha256": "57653f236a0b2983544a25e0bee64e9113be9ec1d0b8d5a7fe507b775e27c932",
+      "byte_count": 595
+    },
+    {
+      "path": "wordstat/top-012-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:34+03:00",
+      "sha256": "96d1a1ea3283644aaf8f7e80318547813184c7e29b7aa9deaa72ba1e14cd7330",
+      "byte_count": 1027
+    },
+    {
+      "path": "wordstat/top-013-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:36+03:00",
+      "sha256": "fe026ed21236beeac3c064630084a8415e8a0ca123d862d06a126de33c75ee48",
+      "byte_count": 268
+    },
+    {
+      "path": "wordstat/top-014-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:38+03:00",
+      "sha256": "c6851d566524d898eff2b9617e8151474a9f459e6ef2f5711c54751154a3bc66",
+      "byte_count": 819
+    },
+    {
+      "path": "wordstat/top-015-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:41+03:00",
+      "sha256": "27792028eaaaba201b04ecbfd2ecb61168e143ec846f571a9d126771ed239a9c",
+      "byte_count": 831
+    },
+    {
+      "path": "wordstat/top-016-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:44+03:00",
+      "sha256": "66830330f7f7501d45131431d98e2cb7a4d191790d631c7044cefccd863e43d0",
+      "byte_count": 15468
+    },
+    {
+      "path": "wordstat/top-017-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:45+03:00",
+      "sha256": "b21a37982068f15c66a60a8d984e3e5dc8a7b2e1278e6d7f7bdd1bbeaa266148",
+      "byte_count": 2264
+    },
+    {
+      "path": "wordstat/top-018-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:48+03:00",
+      "sha256": "b2ab7e72a7871b2ea2287d48ce2fcc5b9340cf91dd08fefc2192f6b634e24b1b",
+      "byte_count": 14507
+    },
+    {
+      "path": "wordstat/top-019-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:50+03:00",
+      "sha256": "a040c30b7c1a8175051932443cb1a46f6c2da96d16bf973dd19225bf1c3556f1",
+      "byte_count": 21368
+    },
+    {
+      "path": "wordstat/top-020-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:52+03:00",
+      "sha256": "c101a1a5bfdc955fe979aa3ccf8df7d3a36b9597b268c117f2df74ae306a9828",
+      "byte_count": 3697
+    },
+    {
+      "path": "wordstat/top-021-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:54+03:00",
+      "sha256": "b47fd1dfce6244892a23b0f82f6bae46d11f7071c236daa00bedcb7887753240",
+      "byte_count": 399
+    },
+    {
+      "path": "wordstat/top-022-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:56+03:00",
+      "sha256": "fdc8e104fe9aa887188e746dd5be66104589ef03ba25f45820847486165429f1",
+      "byte_count": 376
+    },
+    {
+      "path": "wordstat/top-023-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:32:58+03:00",
+      "sha256": "1cfa60bf724949cc8a05f4eb41ab9e75fd9964d3d5d1fd022afb8b64bfa587d7",
+      "byte_count": 882
+    },
+    {
+      "path": "wordstat/top-024-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:00+03:00",
+      "sha256": "985aaddd454b51afa1d64c2d8de5c63d2e5f7698d8c487d494e99554b6fed9e9",
+      "byte_count": 527
+    },
+    {
+      "path": "wordstat/top-025-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:03+03:00",
+      "sha256": "be20c2ac9118a44e1386cedc7e6e42b92bf60127baacf66fdc7404a19cfb627e",
+      "byte_count": 667
+    },
+    {
+      "path": "wordstat/top-026-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:07+03:00",
+      "sha256": "acc6c08cb056108cd350eee7eae42fa32d740cfd4f55ff90b741a79cf4fbca0c",
+      "byte_count": 300
+    },
+    {
+      "path": "wordstat/top-027-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:10+03:00",
+      "sha256": "3219f4791c684c9fddcfb7ee5b82ffb3c55e34f65e604a6b5a5450550d39fa09",
+      "byte_count": 1770
+    },
+    {
+      "path": "wordstat/top-028-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:12+03:00",
+      "sha256": "4fe1945371c687e12be1d7255fa132f6ef4903eb6b1a4808c0af8a25f1e82919",
+      "byte_count": 614
+    },
+    {
+      "path": "wordstat/top-029-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:16+03:00",
+      "sha256": "99d72c2fccf7f4cd0aaadc81fa8ed79b44288db6c5ea2a1a8b2273255235c4a2",
+      "byte_count": 625
+    },
+    {
+      "path": "wordstat/top-030-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:18+03:00",
+      "sha256": "e64bdd1076fe7f16e3f6249c4ba24832d0a25b3c6bc156243db98a1b4e7bb3e1",
+      "byte_count": 517
+    },
+    {
+      "path": "wordstat/top-031-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:20+03:00",
+      "sha256": "806ef5a0c2ce57c0d702c5020ccf7a73e1bedee17f35c7e39712bd8dfb810d88",
+      "byte_count": 662
+    },
+    {
+      "path": "wordstat/top-032-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:22+03:00",
+      "sha256": "b6470082a2614a5ea9dbdde6ea5b6d951697d6741712af50e19f5ad29ad3ce20",
+      "byte_count": 1417
+    },
+    {
+      "path": "wordstat/top-033-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:24+03:00",
+      "sha256": "8841b519fd19a2aa68a961f2068ba9130591b567eaf647d85e0db370b363af35",
+      "byte_count": 3942
+    },
+    {
+      "path": "wordstat/top-034-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:26+03:00",
+      "sha256": "bab6c37391cfda8aa00ce9b20011b8469a66ccef5a0e42d4e0a8caac33d36ec7",
+      "byte_count": 2771
+    },
+    {
+      "path": "wordstat/top-035-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:28+03:00",
+      "sha256": "86d0ce846215f3f35f7a9968a1124072a0352a246423541f440f5bcdc371ee3a",
+      "byte_count": 494
+    },
+    {
+      "path": "wordstat/top-036-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:47+03:00",
+      "sha256": "f50ad4ef6818c5cc5451bf1653a085ce6f7842ca629de4e92aff76246a674ece",
+      "byte_count": 17676
+    },
+    {
+      "path": "wordstat/top-037-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:49+03:00",
+      "sha256": "3096ae15d49f72c57b0b37feab7deb25d25daaac7ed05635bd924ecfb789e7ce",
+      "byte_count": 485
+    },
+    {
+      "path": "wordstat/top-038-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:51+03:00",
+      "sha256": "4b6a454d7c393f9b528b9106ee493353560348eb44d61ff5304027cbae709f33",
+      "byte_count": 2271
+    },
+    {
+      "path": "wordstat/top-039-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:53+03:00",
+      "sha256": "383ecf1c496b9ecd597dc6e23e61738f89f522fba196f9f1c5cd99a990c3bdd5",
+      "byte_count": 901
+    },
+    {
+      "path": "wordstat/top-040-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:55+03:00",
+      "sha256": "1df65e07e6f057ba12a1502d8face3f60b89c6ec404710e7e7caa17e435d114f",
+      "byte_count": 6430
+    },
+    {
+      "path": "wordstat/top-041-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:57+03:00",
+      "sha256": "f40c66dbecf6bc3571cf7129440876d525dbe31f3548112a7bc24562e5d2be80",
+      "byte_count": 305
+    },
+    {
+      "path": "wordstat/top-042-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:33:59+03:00",
+      "sha256": "7a174a847b38dd077f524e56c5d5d878bd4582e6546eb98d78282a863cced7a3",
+      "byte_count": 517
+    },
+    {
+      "path": "wordstat/top-043-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:01+03:00",
+      "sha256": "8cd18035634f6d61f474962999b7a46e549ccd9ef33d2c25709bfa7e805f4ed5",
+      "byte_count": 967
+    },
+    {
+      "path": "wordstat/top-044-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:03+03:00",
+      "sha256": "13cd7f8e445b8d964f5afa73b31b0f147a7a9ed28008dc8c587bc317d30156d7",
+      "byte_count": 553
+    },
+    {
+      "path": "wordstat/top-045-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:05+03:00",
+      "sha256": "a02bc59d0977a6562d608237c9c54577d02358b1d6356cbc7bc201dea3735c82",
+      "byte_count": 13445
+    },
+    {
+      "path": "wordstat/top-046-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:07+03:00",
+      "sha256": "1c13159a31decbfbf9761a6a196bf185442ef85e19a34d441fb78e9705c3fd79",
+      "byte_count": 11533
+    },
+    {
+      "path": "wordstat/top-047-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:09+03:00",
+      "sha256": "1e98638bf199fabf14b636113442a9d71b42dc2558aef249538a0dca328b751c",
+      "byte_count": 1126
+    },
+    {
+      "path": "wordstat/top-048-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:11+03:00",
+      "sha256": "b9d837534298cac792488945b1c31a99b6a533cc5f7b525167c1b3ea9f661f1a",
+      "byte_count": 1884
+    },
+    {
+      "path": "wordstat/top-049-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:13+03:00",
+      "sha256": "a10ebe6ac957743cb902834dbec65468bc1d1f454dba3c6e189bf17fd4474cb2",
+      "byte_count": 345
+    },
+    {
+      "path": "wordstat/top-050-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:15+03:00",
+      "sha256": "e5ea99830dd3e9613523a845a4002aa2252448ff0e35cdbbeab3f4f41c5838a0",
+      "byte_count": 1467
+    },
+    {
+      "path": "wordstat/top-051-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:18+03:00",
+      "sha256": "c912cad29738ac4d19e1f001a149ccc16be9a3ce925e250377742e7fd38f12c7",
+      "byte_count": 850
+    },
+    {
+      "path": "wordstat/top-052-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:20+03:00",
+      "sha256": "1f3fa257db59df9fd1f3dece95f51181f39d77710953394a186d7c652658a2a0",
+      "byte_count": 30999
+    },
+    {
+      "path": "wordstat/top-053-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:22+03:00",
+      "sha256": "70c2dc001b54f2eb9a61c698a4640c1feaf925ca251db760cd05e51bb39aa51d",
+      "byte_count": 3184
+    },
+    {
+      "path": "wordstat/top-054-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:25+03:00",
+      "sha256": "f618f7884ac9d1bc7b971be8f3df270790464e7c7a5f127a329219115853309d",
+      "byte_count": 22419
+    },
+    {
+      "path": "wordstat/top-055-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:28+03:00",
+      "sha256": "b513b35c3d153ea0a94c59d3db6c4412db05c96c072fcc443d8467b7526f22eb",
+      "byte_count": 28495
+    },
+    {
+      "path": "wordstat/top-056-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:30+03:00",
+      "sha256": "4e4bb9c4c545baca8cf3654a3447cb5f90471fdc60b617b6998e909c8f9c4407",
+      "byte_count": 6879
+    },
+    {
+      "path": "wordstat/top-057-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:32+03:00",
+      "sha256": "c363072f5c7dd4662d07e4f3f2464cf6234ad4177d1d7948937787a843e45553",
+      "byte_count": 418
+    },
+    {
+      "path": "wordstat/top-058-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:34+03:00",
+      "sha256": "0a47854690a2bd771f20b2c0ed9cb19ac56e029409a79d17110d567846dda848",
+      "byte_count": 454
+    },
+    {
+      "path": "wordstat/top-059-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:36+03:00",
+      "sha256": "292f42bf5728412ff842166622cc56ad4ec03965fd2acb842fb52cff673c857e",
+      "byte_count": 1544
+    },
+    {
+      "path": "wordstat/top-060-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:38+03:00",
+      "sha256": "89120646e0bc13ed1b78fcba6581e97b69a4eb6fa0ec7927eb26f67ed514247f",
+      "byte_count": 834
+    },
+    {
+      "path": "wordstat/top-061-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:41+03:00",
+      "sha256": "e8f054301f3e9dbba772fb438f722e6d884aeb614982b0cc69ac387e5ce3fa16",
+      "byte_count": 686
+    },
+    {
+      "path": "wordstat/top-062-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:43+03:00",
+      "sha256": "dcdbff1b3de6d974afa28bf9a9996772157fc0e04f0404103837486e4e81cb6d",
+      "byte_count": 455
+    },
+    {
+      "path": "wordstat/top-063-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:45+03:00",
+      "sha256": "0587a43bf077c6985fc7663dbd8ac653682960feb90ef5274448b802efd203ee",
+      "byte_count": 382
+    },
+    {
+      "path": "wordstat/top-064-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:47+03:00",
+      "sha256": "6233d96422733b16e89db4cfd75e8b3b92173939a33e624b03b6ad344715414b",
+      "byte_count": 319
+    },
+    {
+      "path": "wordstat/top-065-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:49+03:00",
+      "sha256": "9e315f6b9fd2898609cdd340f67113487f82c7bffab3febd79babd03b9e9e342",
+      "byte_count": 2481
+    },
+    {
+      "path": "wordstat/top-066-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:52+03:00",
+      "sha256": "349cd139ecea7b3e439830d0919435b66e6f7c8b2f8607bbfdfbc1ec4ddabca9",
+      "byte_count": 949
+    },
+    {
+      "path": "wordstat/top-067-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:56+03:00",
+      "sha256": "6a51d5b928b257d327a7aa8493cffb2eeb67966bceb66ea826c7286504230c12",
+      "byte_count": 810
+    },
+    {
+      "path": "wordstat/top-068-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:34:58+03:00",
+      "sha256": "c8d180301040f1c041b3e7184a1bf587911de173060438597dec9d8217e2c2c7",
+      "byte_count": 649
+    },
+    {
+      "path": "wordstat/top-069-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:00+03:00",
+      "sha256": "3aefaff4b3407cb607aefd44274be9fe5494cb7dfc1bc393937de04401d6e3b4",
+      "byte_count": 1474
+    },
+    {
+      "path": "wordstat/top-070-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:02+03:00",
+      "sha256": "0867fc25391b71ce69f0d69e57cfd6cd0ffa523bd615bf02aeb5adc08038ea35",
+      "byte_count": 1976
+    },
+    {
+      "path": "wordstat/top-071-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:04+03:00",
+      "sha256": "90aaa38167dd3cff531545a1d4867c199f28accdcbeeb653ae62aa0252de1842",
+      "byte_count": 7241
+    },
+    {
+      "path": "wordstat/top-072-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:06+03:00",
+      "sha256": "5d263b98a530796bc6dcd3c0ea5a01db02773c5db9cb5369b18e5a709b2b4074",
+      "byte_count": 5718
+    },
+    {
+      "path": "wordstat/top-073-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:08+03:00",
+      "sha256": "7132485a8a31ba9fab9f70cfdd4e9ed6299aa7e5cc9aacceff7f9b4954d1aea0",
+      "byte_count": 661
+    },
+    {
+      "path": "wordstat/top-074-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:10+03:00",
+      "sha256": "e6be2a927a4d9cddab92caa0eda80538e609dac707c6e67a17428f629ab09356",
+      "byte_count": 412
+    },
+    {
+      "path": "wordstat/top-075-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:45+03:00",
+      "sha256": "a3292b0a963395c38358b1363693f3740af74bb6c1726ab95f73092351361896",
+      "byte_count": 266
+    },
+    {
+      "path": "wordstat/top-076-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:47+03:00",
+      "sha256": "fee4918c7b96aeddcbf1d878a29cccab0a6d1bf3e117558c6504f8ff82df43f9",
+      "byte_count": 269
+    },
+    {
+      "path": "wordstat/top-077-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:50+03:00",
+      "sha256": "67fbf7534250c8c73211914b7860ce4344bb46a849b258c3c83ad2f5a8eeabb4",
+      "byte_count": 286
+    },
+    {
+      "path": "wordstat/top-078-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:52+03:00",
+      "sha256": "add9298089d028abdfcb2ec76e2b3820dd4d185d50a17568ba4dc7138aab23fb",
+      "byte_count": 289
+    },
+    {
+      "path": "wordstat/top-079-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:54+03:00",
+      "sha256": "12e4e98c4ec0eb74d007cca43d6e266605c9d34f557aef39bcb277f6657f5d77",
+      "byte_count": 278
+    },
+    {
+      "path": "wordstat/top-080-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:56+03:00",
+      "sha256": "84b531d82f50a443ae058dc94f8d5e18e824e896e92d8852580bf8c9459f40a5",
+      "byte_count": 280
+    },
+    {
+      "path": "wordstat/top-081-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:35:58+03:00",
+      "sha256": "f18790d28f087bb46df55e86d6a1eb636073f9b8e79720d89ebc195de9f7cf52",
+      "byte_count": 297
+    },
+    {
+      "path": "wordstat/top-082-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:00+03:00",
+      "sha256": "2444fa6e7d3210beb45b9dce277fc1bda08072cd521f7516d9a432ae64da572d",
+      "byte_count": 299
+    },
+    {
+      "path": "wordstat/top-083-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:02+03:00",
+      "sha256": "a96811d07e0b2230f47656a401fcfeedc97576ff53dcbe16fce35275088b7cc8",
+      "byte_count": 263
+    },
+    {
+      "path": "wordstat/top-084-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:04+03:00",
+      "sha256": "fe019c63218843df8357d919293f724fec3fc4dcffc6e078507df7e070a77e5f",
+      "byte_count": 266
+    },
+    {
+      "path": "wordstat/top-085-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:06+03:00",
+      "sha256": "67c508932a05c6fda2ed57593391efdc75ef034dfee207ff0b2c47425309b8ea",
+      "byte_count": 282
+    },
+    {
+      "path": "wordstat/top-086-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:08+03:00",
+      "sha256": "14e91d63d8d2a882894f3a00e4f02a597a2907826a16cf5d25c3ba5b7ccbeb8a",
+      "byte_count": 285
+    },
+    {
+      "path": "wordstat/top-087-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:10+03:00",
+      "sha256": "bf7ba5bd566fc030b6cf0dd1ffed39dd0733d2cee6b929f460823c2fd573655c",
+      "byte_count": 286
+    },
+    {
+      "path": "wordstat/top-088-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:12+03:00",
+      "sha256": "79ee22aa1ba7c105b1532a1e42165f101abab4f1f16261465018a472d6f8ef91",
+      "byte_count": 288
+    },
+    {
+      "path": "wordstat/top-089-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:14+03:00",
+      "sha256": "5579c317955b01c0a8f00fa7d06f8dcfe6167bfca900dd385a27ddca3e38538a",
+      "byte_count": 305
+    },
+    {
+      "path": "wordstat/top-090-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:16+03:00",
+      "sha256": "08d3dab7ab014bf2739171021848fdc96eaf10c9a67749217ed8f0b0ef84df1a",
+      "byte_count": 307
+    },
+    {
+      "path": "wordstat/top-091-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:18+03:00",
+      "sha256": "3028f8d0a1ccc7bb862483c5c3ae56f4d7f6ce75b5eb9e045053d719a0f51860",
+      "byte_count": 316
+    },
+    {
+      "path": "wordstat/top-092-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:20+03:00",
+      "sha256": "00e4a8b4cc4cbc865f61c822cdb2603bd3527c80bfca2923c072f7984bb08b4c",
+      "byte_count": 320
+    },
+    {
+      "path": "wordstat/top-093-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:22+03:00",
+      "sha256": "a38ba09e7a9db008a71a1a081f9b2c0a63619ec8c64a861ce0d14e5e2207703b",
+      "byte_count": 336
+    },
+    {
+      "path": "wordstat/top-094-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:24+03:00",
+      "sha256": "bf721a155319c722b15d4579d689f2c70b85ee4dfd09287b2908c0370e849814",
+      "byte_count": 340
+    },
+    {
+      "path": "wordstat/top-095-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:26+03:00",
+      "sha256": "38f260b18d773a0d63fc59bd7411431034a720d8b7e71f786b3b96fa674ab140",
+      "byte_count": 281
+    },
+    {
+      "path": "wordstat/top-096-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:28+03:00",
+      "sha256": "12633b221cdb5731e1c1245e76b94669ddc590564558154f794754fada3d7c0f",
+      "byte_count": 283
+    },
+    {
+      "path": "wordstat/top-097-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:30+03:00",
+      "sha256": "82a2cf6f5c7329229fa809dd8982c30eefed071c025a7bb2853e0ab71e13ed15",
+      "byte_count": 300
+    },
+    {
+      "path": "wordstat/top-098-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:32+03:00",
+      "sha256": "d9c1f081e6aed0657cc537eef0e82ab0321fba2ab5541e29c0b167dfbd5dc494",
+      "byte_count": 302
+    },
+    {
+      "path": "wordstat/top-099-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:34+03:00",
+      "sha256": "c448478c1ad2bbabce191cc9026d75a30f9f2c6e1cbc42e2b8535526f3cad611",
+      "byte_count": 282
+    },
+    {
+      "path": "wordstat/top-100-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:37+03:00",
+      "sha256": "b95f60bf7cd50f0f8e6ec8a8a4c5cb67f9bce63fad83a8b0969d7f82e69b128c",
+      "byte_count": 285
+    },
+    {
+      "path": "wordstat/top-101-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:39+03:00",
+      "sha256": "d26d8001984f1953be3aabf9136f5881eb4dcbadde0f5ce7a0027ec1b50643d6",
+      "byte_count": 302
+    },
+    {
+      "path": "wordstat/top-102-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:36:41+03:00",
+      "sha256": "463fedd00d53cec81da5aabb03ac0b87da6324bcb69beea26a2c13e21e3bd26d",
+      "byte_count": 305
+    },
+    {
+      "path": "wordstat/top-103-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:38:45+03:00",
+      "sha256": "b5261cba730cc54e195e5f4f0c7416e04dd4a59b97865dbe37e0ea5efad67d2b",
+      "byte_count": 356
+    },
+    {
+      "path": "wordstat/top-104-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:40:30+03:00",
+      "sha256": "39da0832c09e33ff29a90f6d51aa3910bd97d92381901b5b4bd96bdacb6d2dfd",
+      "byte_count": 332
+    },
+    {
+      "path": "wordstat/top-105-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:42:12+03:00",
+      "sha256": "ecb185f3cad17c6223db416f3c214d370d443c29bad5e7168ad9cd593b4b0167",
+      "byte_count": 333
+    },
+    {
+      "path": "wordstat/top-106-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:42:19+03:00",
+      "sha256": "d89de708c422b94b827425ead72cd76f504c555392e0ef359622dadea8aeae66",
+      "byte_count": 329
+    },
+    {
+      "path": "wordstat/top-107-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:42:49+03:00",
+      "sha256": "5fe615735c453aba5882f41f1136cab798435965c3f8357b342799958eeaf7bb",
+      "byte_count": 849
+    },
+    {
+      "path": "wordstat/top-108-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:42:51+03:00",
+      "sha256": "30f1a6d47f995eb223e89d29ce5d25d1009896f5b5f3c04c5d867fd81c51275e",
+      "byte_count": 2900
+    },
+    {
+      "path": "wordstat/top-109-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:42:53+03:00",
+      "sha256": "392a7506e2f62dbead8d8c3a0756b0fc4d91252345492c5fca28939f07f9e5c7",
+      "byte_count": 59209
+    },
+    {
+      "path": "wordstat/top-110-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:42:55+03:00",
+      "sha256": "3eea2706291aa1eb3c9c91585f7a883c6e9de4036e5bead9de9b617c771262d5",
+      "byte_count": 8085
+    },
+    {
+      "path": "wordstat/top-111-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:42:58+03:00",
+      "sha256": "a956ae15e79dfc837d0323f0e7294b66cafe01eb16e694e739ded212d8079d33",
+      "byte_count": 71652
+    },
+    {
+      "path": "wordstat/top-112-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:42:59+03:00",
+      "sha256": "16bf1bfabc6394216784100e81befeeb80e54f7200686eaf0d34fc3b85317539",
+      "byte_count": 1913
+    },
+    {
+      "path": "wordstat/top-113-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:43:01+03:00",
+      "sha256": "93a2b29a593cdc616e222a9ec30cb3947f497d260d4a52e12a6b5f4cc5f62cd1",
+      "byte_count": 6898
+    },
+    {
+      "path": "wordstat/top-114-2026-08-20.csv",
+      "source": "wordstat",
+      "collected_at": "2026-08-20T18:43:04+03:00",
+      "sha256": "884c59b760d1f21371ca4bdf996afd0032fe9b3ca30a3b4f8f04a48288b3fda0",
+      "byte_count": 2092
+    }
+  ]
+}

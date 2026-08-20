@@ -1,0 +1,10 @@
+# Preserve collected source bytes even when core.autocrlf is enabled.
+seo-data/2026-08-exp76-services/raw/** -text
+seo-data/2026-08-exp76-services/raw/source-manifest.json text eol=lf
+
+# Native Yandex exports may use CR-only records and delimiter-terminated rows.
+# Treat them as opaque artifacts so whitespace checks do not rewrite or flag them.
+seo-data/2026-08-exp76-services/raw/webmaster/*.csv binary
+seo-data/2026-08-exp76-services/raw/wordstat/top-*.csv binary
+seo-data/2026-08-exp76-services/raw/wordstat/dynamics-[0-9]*.csv binary
+seo-data/2026-08-exp76-services/raw/wordcraft/*.xlsx binary

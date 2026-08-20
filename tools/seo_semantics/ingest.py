@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 from dataclasses import fields, replace
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Iterable
 
@@ -35,7 +36,10 @@ def load_source_csv(path: Path, source: str, column_map: dict[str, str]) -> list
 
     try:
         with path.open("r", encoding="utf-8-sig", newline="") as handle:
-            reader = csv.DictReader(handle)
+            sample = handle.read(8192)
+            handle.seek(0)
+            delimiter = _detect_delimiter(sample, query_column)
+            reader = csv.DictReader(handle, delimiter=delimiter)
             headers = reader.fieldnames or []
             if query_column not in headers:
                 raise ValueError(f"{path.name}: missing expected query column {query_column!r}")
@@ -50,31 +54,36 @@ def load_source_csv(path: Path, source: str, column_map: dict[str, str]) -> list
 
 def merge_records(records: Iterable[KeywordRecord]) -> list[KeywordRecord]:
     """Group exact normalized duplicates without combining incompatible metrics."""
-    grouped: dict[str, list[KeywordRecord]] = {}
+    grouped: dict[tuple[str, str, str, str], list[KeywordRecord]] = {}
     for record in records:
-        grouped.setdefault(record.query_normalized, []).append(record)
+        key = (
+            record.query_normalized,
+            record.region,
+            record.device,
+            record.current_url,
+        )
+        grouped.setdefault(key, []).append(record)
 
     merged: list[KeywordRecord] = []
-    for query_normalized in sorted(grouped):
-        group = grouped[query_normalized]
+    for key in sorted(grouped):
+        group = grouped[key]
         first = group[0]
         sources = tuple(sorted({source for record in group for source in _record_sources(record)}))
-        if len(sources) == 1:
-            merged.append(replace(first, sources=sources))
-        else:
-            merged.append(
-                replace(
-                    first,
-                    broad_frequency=None,
-                    phrase_frequency=None,
-                    exact_frequency=None,
-                    impressions=None,
-                    clicks=None,
-                    ctr=None,
-                    avg_position=None,
-                    sources=sources,
-                )
+        metrics = {
+            field_name: _merge_metric(group, field_name)
+            for field_name in sorted(_INTEGER_FIELDS | _FLOAT_FIELDS)
+        }
+        seed = next((record.seed for record in group if record.seed), "")
+        collected_at = next((record.collected_at for record in group if record.collected_at), "")
+        merged.append(
+            replace(
+                first,
+                **metrics,
+                seed=seed,
+                collected_at=collected_at,
+                sources=sources,
             )
+        )
     return merged
 
 
@@ -85,6 +94,18 @@ def _validate_column_map(path: Path, column_map: dict[str, str], headers: list[s
     missing = sorted(column for column in column_map.values() if column not in headers)
     if missing:
         raise ValueError(f"{path.name}: missing expected columns: {', '.join(missing)}")
+
+
+def _detect_delimiter(sample: str, query_column: str) -> str:
+    for delimiter in (",", ";", "\t"):
+        reader = csv.reader(sample.splitlines(), delimiter=delimiter)
+        headers = next(reader, [])
+        if query_column in headers:
+            return delimiter
+    try:
+        return csv.Sniffer().sniff(sample, delimiters=",;\t").delimiter
+    except csv.Error:
+        return ","
 
 
 def _record_from_row(
@@ -121,16 +142,20 @@ def _parse_value(
         return None if field_name in _INTEGER_FIELDS | _FLOAT_FIELDS else ""
     value = raw_value.strip()
     if field_name in _INTEGER_FIELDS:
+        normalized_number = value.replace(" ", "").replace("\u00a0", "")
         try:
-            number = int(value)
-        except ValueError as exc:
+            decimal_number = Decimal(normalized_number.replace(",", "."))
+        except InvalidOperation as exc:
             raise ValueError(f"{path.name}:{row_number}: {field_name} must be an integer") from exc
+        if decimal_number != decimal_number.to_integral_value():
+            raise ValueError(f"{path.name}:{row_number}: {field_name} must be an integer")
+        number = int(decimal_number)
         if number < 0:
             raise ValueError(f"{path.name}:{row_number}: {field_name} must not be negative")
         return number
     if field_name in _FLOAT_FIELDS:
         try:
-            return float(value.replace(",", "."))
+            return float(value.replace(" ", "").replace("\u00a0", "").replace(",", "."))
         except ValueError as exc:
             raise ValueError(f"{path.name}:{row_number}: {field_name} must be a number") from exc
     return value
@@ -138,3 +163,16 @@ def _parse_value(
 
 def _record_sources(record: KeywordRecord) -> tuple[str, ...]:
     return record.sources or (record.source,)
+
+
+def _merge_metric(group: list[KeywordRecord], field_name: str) -> int | float | None:
+    observations = [
+        (record.source, getattr(record, field_name))
+        for record in group
+        if getattr(record, field_name) is not None
+    ]
+    if not observations:
+        return None
+    if len({source for source, _ in observations}) > 1:
+        return None
+    return observations[0][1]
