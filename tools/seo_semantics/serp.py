@@ -602,12 +602,12 @@ def cluster_semantics(
         "serp_ambiguous_pairs.csv"
     )
     _write_rows(ambiguous_pairs_output_path, AMBIGUOUS_PAIR_COLUMNS, ambiguous_pair_rows)
-    ambiguous_query_ids = {
-        query_id
-        for row in ambiguous_pair_rows
-        if row["review_status"] == "pending"
-        for query_id in (row["left_query_id"], row["right_query_id"])
-    }
+    pending_pair_ids_by_query: dict[str, set[str]] = {}
+    for row in ambiguous_pair_rows:
+        if row["review_status"] != "pending":
+            continue
+        for query_id in (row["left_query_id"], row["right_query_id"]):
+            pending_pair_ids_by_query.setdefault(query_id, set()).add(row["pair_id"])
     # A shared aggregator can make two different services look identical after
     # query-string removal. Keep the SERP overlap as evidence, but never merge
     # two approved service owners automatically.
@@ -678,6 +678,7 @@ def cluster_semantics(
                 )
                 base_reviewed = False
         direct_query_id = representative_by_candidate.get(candidate_key)
+        unresolved_pair_ids = sorted(pending_pair_ids_by_query.get(direct_query_id, set()))
         manual_boundary = direct_query_id in cross_service_overlap_ids
         boundary_note = ""
         if manual_boundary:
@@ -730,20 +731,45 @@ def cluster_semantics(
                 "offer and is excluded from the service URL map"
             )
         else:
-            target_url = current_url
-            url_action = "keep_enhance"
             manually_reviewed = base_reviewed or candidate.clicked or manual_boundary
-            if manual_boundary and not base_reviewed:
+            if unresolved_pair_ids or not manually_reviewed:
+                target_url = ""
+                url_action = "unresolved"
+                validation_status = "serp_pair_pending_review" if unresolved_pair_ids else base_validation
+                review_status = "pending"
+                reviewer = ""
+                unresolved_note = ",".join(unresolved_pair_ids) or "no reviewed cluster page decision"
+                rationale = (
+                    f"{base_rationale}{boundary_note}; unresolved commercial architecture: "
+                    f"{unresolved_note}"
+                )
+            elif manual_boundary and not base_reviewed:
+                target_url = current_url
+                url_action = "keep_enhance"
                 validation_status = "cross_service_owner_boundary_reviewed"
+                review_status = "reviewed"
+                reviewer = "codex_task6"
+                rationale = (
+                    f"{base_rationale}{boundary_note}; existing URL retained and no new URL approved"
+                )
             elif candidate.clicked and not base_reviewed:
+                target_url = current_url
+                url_action = "keep_enhance"
                 validation_status = "clicked_current_owner_reviewed"
+                review_status = "reviewed"
+                reviewer = "codex_task6"
+                rationale = (
+                    f"{base_rationale}{boundary_note}; existing URL retained and no new URL approved"
+                )
             else:
+                target_url = current_url
+                url_action = "keep_enhance"
                 validation_status = base_validation
-            review_status = "reviewed" if manually_reviewed else "pending"
-            reviewer = "codex_task6" if manually_reviewed else ""
-            rationale = (
-                f"{base_rationale}{boundary_note}; existing URL retained and no new URL approved"
-            )
+                review_status = "reviewed"
+                reviewer = "codex_task6"
+                rationale = (
+                    f"{base_rationale}{boundary_note}; existing URL retained and no new URL approved"
+                )
         candidate_rows.append(
             {
                 "candidate_key": "|".join(candidate_key),
@@ -773,7 +799,7 @@ def cluster_semantics(
         primary_keys,
         component_id_by_query,
         overlaps,
-        ambiguous_query_ids,
+        pending_pair_ids_by_query,
     )
     cluster_rows.append(_brand_owner_cluster(queue_by_id, roles.brand_query_ids))
     frozen_start = len(cluster_rows)
@@ -965,7 +991,7 @@ def _cluster_rows_from_assignments(
     primary_keys: Mapping[str, tuple[str, str, str]],
     component_id_by_query: Mapping[str, str],
     overlaps: Mapping[tuple[str, str], int],
-    ambiguous_query_ids: set[str],
+    pending_pair_ids_by_query: Mapping[str, set[str]],
 ) -> list[dict[str, str]]:
     candidate_by_text_key = {"|".join(key): candidate for key, candidate in candidates.items()}
     grouped: dict[str, list[Mapping[str, str]]] = {}
@@ -1025,7 +1051,14 @@ def _cluster_rows_from_assignments(
                 f"representatives={','.join(representative_ids) or 'none'};"
                 f"assignment_methods={','.join(sorted({row['assignment_method'] for row in rows}))}"
             )
-        unresolved_serp_pair = bool(direct_query_ids & ambiguous_query_ids)
+        unresolved_pair_ids = sorted(
+            {
+                pair_id
+                for query_id in direct_query_ids
+                for pair_id in pending_pair_ids_by_query.get(query_id, set())
+            }
+        )
+        unresolved_serp_pair = bool(unresolved_pair_ids)
         review_status = (
             "reviewed"
             if not unresolved_serp_pair and all(row["review_status"] == "reviewed" for row in rows)
@@ -1036,6 +1069,13 @@ def _cluster_rows_from_assignments(
         if unresolved_serp_pair:
             validation_statuses.append("serp_pair_pending_review")
             reviewers = []
+        target_url = targets[0] if len(targets) == 1 else ""
+        url_action = actions[0] if len(actions) == 1 else "owner_conflict"
+        rationale = "; ".join(sorted({row["rationale"] for row in rows}))
+        if unresolved_serp_pair and intent in COMMERCIAL_INTENTS:
+            target_url = ""
+            url_action = "unresolved"
+            rationale = f"{rationale}; unresolved SERP pairs: {','.join(unresolved_pair_ids)}"
         result.append(
             {
                 "cluster_id": cluster_id,
@@ -1053,11 +1093,11 @@ def _cluster_rows_from_assignments(
                 "webmaster_impressions": _format_metric(sum(member.impressions for member in members)),
                 "webmaster_clicks": _format_metric(sum(member.clicks for member in members)),
                 "serp_cohesion": cohesion,
-                "target_url": targets[0] if len(targets) == 1 else "",
-                "url_action": actions[0] if len(actions) == 1 else "owner_conflict",
+                "target_url": target_url,
+                "url_action": url_action,
                 "priority": _priority(services[0]) if len(services) == 1 else "manual",
                 "confidence": "high" if review_status == "reviewed" else "medium",
-                "rationale": "; ".join(sorted({row["rationale"] for row in rows})),
+                "rationale": rationale,
                 "method": method,
                 "evidence": evidence,
                 "validation_status": "|".join(validation_statuses),

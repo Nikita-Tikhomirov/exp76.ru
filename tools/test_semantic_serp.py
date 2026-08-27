@@ -256,7 +256,8 @@ class SemanticSerpTest(unittest.TestCase):
             self.assertEqual(len(ambiguous_cluster_rows), 67)
             self.assertEqual({row["review_status"] for row in ambiguous_cluster_rows}, {"pending"})
             self.assertNotIn("high", {row["confidence"] for row in ambiguous_cluster_rows})
-            self.assertEqual({row["url_action"] for row in ambiguous_cluster_rows}, {"keep_enhance"})
+            self.assertEqual({row["url_action"] for row in ambiguous_cluster_rows}, {"unresolved"})
+            self.assertEqual({row["target_url"] for row in ambiguous_cluster_rows}, {""})
             self.assertTrue(
                 all("serp_pair_pending_review" in row["validation_status"] for row in ambiguous_cluster_rows)
             )
@@ -277,8 +278,8 @@ class SemanticSerpTest(unittest.TestCase):
             generic_mini = next(
                 row for row in assignments if row["query"] == "планировка участка мини погрузчиком"
             )
-            self.assertEqual(generic_mini["target_url"], "https://exp76.ru/services/planirovka-territorii/")
-            self.assertNotEqual(generic_mini["url_action"], "exclude")
+            self.assertEqual(generic_mini["target_url"], "")
+            self.assertEqual(generic_mini["url_action"], "unresolved")
             informational = [row for row in assignments if row["intent"] == "informational"]
             product_only = [row for row in assignments if row["intent"] == "product_only"]
             self.assertTrue(informational)
@@ -303,7 +304,14 @@ class SemanticSerpTest(unittest.TestCase):
             assignments_by_key = {row["candidate_key"]: row for row in assignments}
             self.assertTrue(clicked_keys)
             self.assertTrue(
-                all(assignments_by_key[key]["review_status"] == "reviewed" for key in clicked_keys)
+                all(
+                    assignments_by_key[key]["review_status"] == "reviewed"
+                    or (
+                        assignments_by_key[key]["url_action"] == "unresolved"
+                        and assignments_by_key[key]["target_url"] == ""
+                    )
+                    for key in clicked_keys
+                )
             )
             self.assertTrue(
                 all(row["review_status"] != "reviewed" for row in assignments if "pending" in row["validation_status"])

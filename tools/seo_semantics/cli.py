@@ -11,6 +11,18 @@ from dataclasses import replace
 from pathlib import Path
 from typing import Sequence
 
+from .architecture import (
+    CONTENT_BRIEF_COLUMNS,
+    PAGE_ARCHITECTURE_COLUMNS,
+    PAIR_REVIEW_COLUMNS,
+    URL_MAP_COLUMNS as ARCHITECTURE_URL_MAP_COLUMNS,
+    build_destination_briefs,
+    build_pair_review_queue,
+    load_cluster_page_decisions,
+    load_pair_reviews,
+    resolve_url_architecture,
+    validate_architecture,
+)
 from .classify import (
     QueryClassification,
     classify_query,
@@ -138,6 +150,21 @@ def _build_parser() -> argparse.ArgumentParser:
     cluster.add_argument("--candidate-map-output", type=Path)
     cluster.add_argument("--ambiguous-output", type=Path)
 
+    review_queue = commands.add_parser("review-queue")
+    review_queue.add_argument("--ambiguous", required=True, type=Path)
+    review_queue.add_argument("--output", required=True, type=Path)
+
+    resolve_architecture = commands.add_parser("resolve-architecture")
+    resolve_architecture.add_argument("--scope", required=True, type=Path)
+    resolve_architecture.add_argument("--clusters", required=True, type=Path)
+    resolve_architecture.add_argument("--candidate-map", required=True, type=Path)
+    resolve_architecture.add_argument("--ambiguous", required=True, type=Path)
+    resolve_architecture.add_argument("--pair-reviews", required=True, type=Path)
+    resolve_architecture.add_argument("--cluster-decisions", required=True, type=Path)
+    resolve_architecture.add_argument("--url-map-output", required=True, type=Path)
+    resolve_architecture.add_argument("--page-architecture-output", required=True, type=Path)
+    resolve_architecture.add_argument("--briefs-output", required=True, type=Path)
+
     export = commands.add_parser("export")
     export.add_argument("--processed-dir", required=True, type=Path)
     export.add_argument("--output", required=True, type=Path)
@@ -214,6 +241,33 @@ def main(argv: Sequence[str] | None = None) -> int:
                 f"serp_queries={result.serp_query_count}, serp_results={result.serp_result_count}, "
                 f"ambiguous_pairs={result.ambiguous_pair_count}"
             )
+        elif args.command == "review-queue":
+            queue = build_pair_review_queue(_load_required_csv_rows(args.ambiguous))
+            _write_dict_rows(args.output, PAIR_REVIEW_COLUMNS, queue)
+            print(f"pair review queue: {len(queue)} rows")
+        elif args.command == "resolve-architecture":
+            clusters = _load_required_csv_rows(args.clusters)
+            candidates = _load_required_csv_rows(args.candidate_map)
+            build = resolve_url_architecture(
+                load_scope(args.scope),
+                clusters,
+                candidates,
+                _load_required_csv_rows(args.ambiguous),
+                load_pair_reviews(args.pair_reviews),
+                load_cluster_page_decisions(args.cluster_decisions),
+            )
+            _write_architecture_outputs(
+                build,
+                clusters,
+                candidates,
+                args.url_map_output,
+                args.page_architecture_output,
+                args.briefs_output,
+            )
+            errors = validate_architecture(build, release=True)
+            if errors:
+                raise ValueError("; ".join(errors))
+            print(f"architecture resolved: destinations={len(build.destinations)}")
         elif args.command == "export":
             build_workbook(args.processed_dir, args.output)
             print(f"semantic workbook exported: {args.output}")
@@ -595,6 +649,63 @@ def _write_dict_rows(path: Path, columns: tuple[str, ...], rows: list[dict[str, 
         writer = csv.DictWriter(handle, fieldnames=columns)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def _load_required_csv_rows(path: Path) -> list[dict[str, str]]:
+    if not path.is_file():
+        raise ValueError(f"required CSV does not exist: {path}")
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
+def _write_architecture_outputs(
+    build,
+    clusters: list[dict[str, str]],
+    candidates: list[dict[str, str]],
+    url_map_path: Path,
+    page_architecture_path: Path,
+    briefs_path: Path,
+) -> None:
+    del clusters
+    page_rows = [
+        {
+            "destination_id": destination.destination_id,
+            "service_id": destination.service_id,
+            "page_role": destination.page_role,
+            "parent_destination_id": destination.parent_destination_id,
+            "canonical_url": destination.canonical_url,
+            "source_cluster_ids": "|".join(destination.source_cluster_ids),
+        }
+        for destination in build.destinations
+    ]
+    url_map_rows = [
+        {
+            "cluster_id": cluster_id,
+            "destination_id": destination.destination_id,
+            "service_id": destination.service_id,
+            "page_role": destination.page_role,
+            "parent_destination_id": destination.parent_destination_id,
+            "canonical_url": destination.canonical_url,
+            "url_action": _destination_action(destination.page_role),
+        }
+        for destination in build.destinations
+        for cluster_id in destination.source_cluster_ids
+    ]
+    _write_dict_rows(url_map_path, ARCHITECTURE_URL_MAP_COLUMNS, url_map_rows)
+    _write_dict_rows(page_architecture_path, PAGE_ARCHITECTURE_COLUMNS, page_rows)
+    _write_dict_rows(briefs_path, CONTENT_BRIEF_COLUMNS, build_destination_briefs(build, candidates))
+
+
+def _destination_action(page_role: str) -> str:
+    if page_role == "child_service":
+        return "child"
+    if page_role == "hub":
+        return "hub"
+    if page_role == "frozen":
+        return "frozen"
+    if page_role == "article":
+        return "article"
+    return page_role
 
 
 def _positive_integer(value: str) -> bool:
