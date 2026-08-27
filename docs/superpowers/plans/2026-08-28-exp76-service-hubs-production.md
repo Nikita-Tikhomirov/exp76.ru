@@ -72,6 +72,7 @@
 - `ftp_dump_minimal/wp-content/themes/land76wp/import/acf-service-hub-relations.json` — переносимая ACF-схема `selected_works_posts` и `selected_real_projects`, которых нет в текущем repo-export.
 - `ftp_dump_minimal/wp-content/themes/land76wp/import/cases-seo-import.json` — расширенная карта существующих кейсов и связей.
 - `ftp_dump_minimal/wp-content/themes/land76wp/inc/import-service-hubs.php` — безопасный preview/apply upsert без удаления.
+- `ftp_dump_minimal/wp-content/themes/land76wp/inc/service-hub-registry.php` — единый registry восьми topic slug, hub ID/canonical, managed roles and archive policy.
 - `ftp_dump_minimal/wp-content/themes/land76wp/inc/service-v2.php` — загрузка hub schema v2 и SEO metadata.
 - `ftp_dump_minimal/wp-content/themes/land76wp/inc/service-v2-template.php` — кликабельные подуслуги, статьи и кейсы.
 - `ftp_dump_minimal/wp-content/themes/land76wp/inc/newservicepost.php` — явный topic key и реальные изображения для новых подуслуг.
@@ -79,6 +80,7 @@
 - `seo-content/blog/acf-seo-blog-post-fields.json` — relationship статьи к коммерческому владельцу типа post или page.
 - `ftp_dump_minimal/wp-content/themes/land76wp/inc/import-drenazh-blog.php` — общий resolver связанных услуг для post и page.
 - `ftp_dump_minimal/wp-content/themes/land76wp/inc/seo-category-indexing.php` — точное правило для внутренних категорий новых хабов.
+- `ftp_dump_minimal/wp-content/themes/land76wp/page-service-hub-region.php` — единый registry-driven шаблон подтверждённых геостраниц.
 - `ftp_dump_minimal/wp-content/themes/land76wp/functions.php` — подключение импортёра и безопасный роутинг.
 - `ftp_dump_minimal/wp-content/themes/land76wp/css/service-v2.css` — стили карточек-ссылок, статей и доказательств.
 - `tools/test_service_hubs_php.py` — статические тесты импортёра, маршрутизации, canonical и отсутствия удаления.
@@ -350,6 +352,7 @@ git push origin codex/semantic-core
 - Produces: `load_content_page(path: Path) -> ContentPage`
 - Produces: `validate_content_page(page: ContentPage, architecture: Mapping[str, PageDestination], cases: Mapping[int, CaseEvidence]) -> list[str]`
 - Produces: hub schema version 2 with linked services, articles and cases
+- Produces: CLI `tools/service_v2.py sync <source_dir> <theme_content_dir>` that atomically writes the eight validated JSON payloads and rendered fragments to the theme
 
 - [ ] **Step 1: Write failing contract tests**
 
@@ -392,6 +395,8 @@ Reject duplicate canonical, title or H1; a cluster owned by two pages; an archit
 
 Keep the exact eight owner IDs and slugs. Require linked service/article items and verified cases, render semantic `<a>` cards, preserve the current canonical and hero metadata, and make generation atomic through a temporary output directory followed by file replacement only after all eight payloads pass.
 
+Treat `seo-content/service-hubs/hubs/*.json` as the canonical hub source. Add `sync` so the theme copies under `content/service-v2/*.json` and `content/service-v2/rendered/*.html` are generated together from that source; reject a source count other than eight and remove no unrelated theme file.
+
 - [ ] **Step 6: Run focused tests**
 
 ```powershell
@@ -413,6 +418,7 @@ git push origin codex/semantic-core
 
 **Files:**
 - Create: `ftp_dump_minimal/wp-content/themes/land76wp/inc/import-service-hubs.php`
+- Create: `ftp_dump_minimal/wp-content/themes/land76wp/inc/service-hub-registry.php`
 - Create: `tools/test_service_hubs_php.py`
 - Create: `ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json`
 - Create: `ftp_dump_minimal/wp-content/themes/land76wp/import/acf-service-hub-relations.json`
@@ -420,21 +426,22 @@ git push origin codex/semantic-core
 - Modify: `ftp_dump_minimal/wp-content/themes/land76wp/inc/newservicepost.php`
 - Modify: `ftp_dump_minimal/wp-content/themes/land76wp/inc/seoblogpost.php`
 - Modify: `ftp_dump_minimal/wp-content/themes/land76wp/inc/seo-category-indexing.php`
+- Create: `ftp_dump_minimal/wp-content/themes/land76wp/page-service-hub-region.php`
 - Modify: `seo-content/blog/acf-seo-blog-post-fields.json`
 - Modify: `ftp_dump_minimal/wp-content/themes/land76wp/inc/import-drenazh-blog.php`
 
 **Interfaces:**
 - Consumes: release manifest and validated content JSON
 - Produces: `land76wp_service_hubs_build_plan(array $payload) -> array`
-- Produces: `land76wp_run_service_hubs_import($json_path = '', $apply = false) -> array`
-- Produces: exact post meta `_land76_page_key`, `_land76_service_id`, `_land76_topic_key`, `_land76_canonical`
+- Produces: `land76wp_run_service_hubs_import($json_path = '', $mode = 'preview') -> array`, where mode is `preview|stage|publish`
+- Produces: exact post meta `_land76_page_key`, `_land76_service_id`, `_land76_topic_key`, `_land76_canonical`, `_land76_import_owner`, `_land76_import_checksum`
 
 - [ ] **Step 1: Write failing static safety tests**
 
 ```python
 def test_importer_defaults_to_preview_and_contains_no_delete_call():
     source = IMPORTER.read_text(encoding="utf-8")
-    self.assertIn("$apply = false", source)
+    self.assertIn("$mode = 'preview'", source)
     self.assertNotIn("wp_delete_post", source)
     self.assertNotIn("wp_delete_term", source)
     payload = IMPORT_PAYLOAD.read_text(encoding="utf-8")
@@ -457,18 +464,20 @@ Run: `python -m unittest tools.test_service_hubs_php -v`
 The importer must:
 
 - validate `schema_version=1` and an exact `release_id` before any write;
+- read hub IDs/canonicals, topic slugs, roles and archive policy exclusively from `service-hub-registry.php` instead of adding separate hard-coded arrays to templates;
 - reject payload keys `cleanup`, `delete_stale_posts` and `delete_stale_terms` at any nesting level;
 - ensure eight internal grouping categories by fixed ASCII slug, store the corresponding hub URL in term meta and never expose them as competing indexable hubs;
-- upsert commercial posts by exact slug and `_land76_page_key`, assign categories `[74, grouping_term_id]`, set ACF and SEO metadata;
-- upsert article posts by exact slug and `_land76_page_key`, assign categories `[72, grouping_term_id]`, set ACF and related commercial IDs;
+- upsert commercial posts by exact owner meta and post type, require an exact slug match, add managed categories `[74, grouping_term_id]` without erasing unrelated taxonomies, set ACF and SEO metadata;
+- upsert article posts by exact owner meta and post type, require an exact slug match, add managed categories `[72, grouping_term_id]` without erasing unrelated taxonomies, set ACF and related commercial IDs;
 - upsert only approved geo pages with explicit template, region, local evidence and canonical;
 - update selected real project ACF fields only with resolved existing case IDs;
 - return `planned`, `created`, `updated`, `unchanged`, `unresolved_cases`, `errors` and `rollback_snapshot`;
-- perform no mutation when `$apply=false` or when any validation error exists.
+- perform no mutation when `$mode='preview'` or when any validation error exists;
+- in `stage` mode create new child/article/geo entities as `draft` and update only owned managed fields; in `publish` mode change only the exact staged release entities to `publish` after checksum, ACF, media, category and permalink verification.
 
-Every created post/category receives exact `_land76_release_id` and `_land76_page_key` ownership metadata. Updates are allowed only when slug plus ownership metadata match, or when the release manifest explicitly names a pre-existing approved hub page ID. Never call any older category importer from the new runner.
+Every created post/category receives exact `_land76_release_id`, `_land76_page_key`, `_land76_import_owner` and `_land76_import_checksum` ownership metadata. Updates are allowed only when post type plus ownership metadata match and slug remains exact, or when the release manifest explicitly names a pre-existing approved hub page ID. A matching slug without the expected owner is a fatal conflict, never permission to overwrite. Category 72 and category 74 are mutually exclusive. Never call any older category importer from the new runner.
 
-At this task `service-hubs-import.json` may contain an empty `items` collection only with `release_status=draft`; preview must report it as non-applicable. The importer rejects draft payloads in apply mode, so incomplete content can never be published.
+At this task `service-hubs-import.json` may contain an empty `items` collection only with `release_status=draft`; preview must report it as non-applicable. The importer rejects draft payloads in `stage` or `publish` mode, so incomplete content can never be written.
 
 Before upsert, import or register the exact ACF relationship fields `selected_works_posts` for category context and `selected_real_projects` for category-74 posts. Both fields restrict selection to existing case/page objects and preserve current live values. Abort apply when ACF is unavailable or the field schema cannot be verified.
 
@@ -484,7 +493,9 @@ Register an admin-only Tools page. Preview requires `manage_options`; apply addi
 
 - [ ] **Step 6: Redirect only internal grouping archives**
 
-For the exact eight new grouping category slugs, redirect archive requests to the mapped existing `/services/.../` hub and filter canonical/sitemap ownership accordingly. Leave categories 87–92 unchanged. Unknown categories follow existing WordPress behavior.
+For the exact eight new grouping category slugs, redirect archive requests to the mapped existing `/services/.../` hub and filter canonical/sitemap ownership accordingly. Do not add these categories to the static category sitemap. Leave categories 87–92 unchanged. Unknown categories follow existing WordPress behavior. Make Service/Breadcrumb schema and topic resolution consume the central registry for both child posts and hub pages.
+
+Create one `page-service-hub-region.php` that loads its service from `_land76_service_id`, requires the city parent and local evidence meta, and renders the same approved hub/service components without copying a category template. Geo upsert resolves an existing page only by exact `post_parent + service_slug`; a global same-slug match or duplicate under the parent aborts the release.
 
 - [ ] **Step 7: Run PHP and static tests**
 
@@ -508,6 +519,7 @@ git push origin codex/semantic-core
 ### Task 6: Upgrade the Eight Existing Pages into Navigable Hubs
 
 **Files:**
+- Create/Modify: `seo-content/service-hubs/hubs/*.json`
 - Modify: `ftp_dump_minimal/wp-content/themes/land76wp/inc/service-v2.php`
 - Modify: `ftp_dump_minimal/wp-content/themes/land76wp/inc/service-v2-template.php`
 - Modify: `ftp_dump_minimal/wp-content/themes/land76wp/css/service-v2.css`
@@ -536,7 +548,7 @@ def test_every_hub_links_all_approved_children_articles_and_cases():
 
 Run: `python -m unittest tools.test_service_v2 -v`
 
-- [ ] **Step 3: Populate all eight schema-v2 hub payloads**
+- [ ] **Step 3: Populate all eight canonical schema-v2 hub payloads**
 
 Reuse and edit the existing final hub text instead of discarding it. Replace each inline service card with its accepted child URL, add all accepted article cards, attach the strongest verified cases/photos from Task 3, and ensure the hub retains the broad head cluster while child pages own narrower intents.
 
@@ -547,8 +559,8 @@ Use real `<a>` elements with visible focus, meaningful link text and responsive 
 - [ ] **Step 5: Regenerate and validate all eight hubs**
 
 ```powershell
-python tools/service_v2.py validate ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2
-python tools/service_v2.py build ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2 ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/rendered
+python tools/service_v2.py validate seo-content/service-hubs/hubs
+python tools/service_v2.py sync seo-content/service-hubs/hubs ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2
 python -m unittest tools.test_service_v2 -v
 ```
 
@@ -604,6 +616,7 @@ Separate construction/service intents proven by the architecture, such as pipe/c
 ```powershell
 python -m tools.site_content.release validate --services S5,S8 --root seo-content/service-hubs
 python -m tools.site_content.release build-import --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
+python tools/service_v2.py sync seo-content/service-hubs/hubs ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2
 ```
 
 Expected: all accepted page keys are present, no placeholders or unsupported facts, and every page has commercial/article/case links.
@@ -656,6 +669,7 @@ Separate trees, conifers, shrubs, large specimens, soil preparation and aftercar
 ```powershell
 python -m tools.site_content.release validate --services S2,S3 --root seo-content/service-hubs
 python -m tools.site_content.release build-import --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
+python tools/service_v2.py sync seo-content/service-hubs/hubs ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2
 ```
 
 - [ ] **Step 5: Commit and push**
@@ -706,6 +720,7 @@ Separate material/technology intents only when the company actually performs the
 ```powershell
 python -m tools.site_content.release validate --services S4,S6 --root seo-content/service-hubs
 python -m tools.site_content.release build-import --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
+python tools/service_v2.py sync seo-content/service-hubs/hubs ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2
 ```
 
 - [ ] **Step 5: Commit and push**
@@ -756,6 +771,7 @@ Separate pathway, façade, garden, functional or decorative lighting only where 
 ```powershell
 python -m tools.site_content.release validate --services S1,S7 --root seo-content/service-hubs
 python -m tools.site_content.release build-import --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
+python tools/service_v2.py sync seo-content/service-hubs/hubs ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2
 ```
 
 - [ ] **Step 5: Commit and push**
@@ -877,27 +893,31 @@ Read-only record status, canonical, title, H1, indexability and content hash for
 
 Download the remote versions of each theme file named in the release manifest into a timestamped local backup outside the deploy source directory. Verify the resolved remote paths belong to `/wp-content/themes/land76wp/`; do not recursively move or delete anything.
 
-- [ ] **Step 4: Upload additions before routing changes**
+- [ ] **Step 4: Upload inactive code and data before hub links**
 
-Upload content JSON, rendered HTML, CSS and new importer first; verify remote hashes. Upload modified templates and `functions.php` last. If any hash or PHP syntax check fails, stop before applying the database import and restore only the individual file whose previous version was backed up.
+Upload CSS, new registry/importer, child/article templates, ACF schemas and import payload first; verify remote hashes. Keep the current hub JSON/rendered HTML and hub-routing changes off the server at this point, so no public hub can link to an unpublished child. If any hash or PHP syntax check fails, stop before staging database content and restore only the individual file whose previous version was backed up.
 
-- [ ] **Step 5: Preview and apply the WordPress imports**
+- [ ] **Step 5: Preview, stage and publish the WordPress imports**
 
-Open the authenticated WordPress Tools page for `import-service-hubs.php`, run preview and require zero validation errors/unresolved cases. Apply the exact release ID once. Re-run preview and require `created=0`, `updated=0`, proving idempotence. Do not invoke any historical service/category importer. Then apply the case SEO importer with the generated release payload and confirm every referenced case resolves.
+Open the authenticated WordPress Tools page for `import-service-hubs.php`, run preview and require zero validation errors/unresolved cases. Stage the exact release ID as drafts, inspect the resolved IDs, categories, ACF, images and preview permalinks, then run publish for that release. Re-run preview and require `created=0`, `updated=0`, proving idempotence. Do not invoke any historical service/category importer. Then apply the case SEO importer with the generated release payload and confirm every referenced case resolves.
 
-- [ ] **Step 6: Perform live desktop and mobile QA**
+- [ ] **Step 6: Activate hub navigation after child URLs succeed**
+
+Verify every published child/article/geo URL first. Only then upload the eight validated hub JSON files, rendered HTML, `service-v2.php`, hub template and `functions.php` routing changes; verify hashes and PHP syntax. If any child is not 200/self-canonical, keep its hub card out of the activated manifest and record the withheld page.
+
+- [ ] **Step 7: Perform live desktop and mobile QA**
 
 Check every released URL for HTTP 200, self-canonical, unique title/H1/description, correct template, real image, working form, hub breadcrumb, service/article/case links and no PHP/console error. Check grouping category URLs redirect to their hub and categories 87–92 remain unchanged. Separately verify whether each prepared legacy article is actually live so prepared JSON cannot inflate the report. Record results in `release-url-status.csv`.
 
-- [ ] **Step 7: Submit only successful new URLs for indexing**
+- [ ] **Step 8: Submit only successful new URLs for indexing**
 
 Add successful 200/self-canonical URLs to the sitemap/indexing workflow. Do not submit failed, redirected, noindex or duplicate URLs. Record the submission date and baseline metrics in `launch_monitoring.csv`.
 
-- [ ] **Step 8: Write the release report**
+- [ ] **Step 9: Write the release report**
 
 `docs/seo/2026-08-28-service-hubs-release.md` must list: final counts by hub/service/article/geo/case; every created and updated URL; protected categories unchanged; tests; import preview/apply counts; live QA; rollback backup location; Webmaster baseline; and any page deliberately withheld with its evidence reason.
 
-- [ ] **Step 9: Commit and push the verified release state**
+- [ ] **Step 10: Commit and push the verified release state**
 
 ```powershell
 git add docs/seo/2026-08-28-service-hubs-release.md seo-data/2026-08-exp76-services/processed seo-data/2026-08-exp76-services/README.md
