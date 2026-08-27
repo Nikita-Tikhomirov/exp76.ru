@@ -23,6 +23,7 @@
 - Восемь хабов обязательно выводят кликабельные карточки подуслуг, статьи, релевантные работы, цены/факторы цены, FAQ и ссылки на защищённые смежные направления.
 - Подуслуги и статьи публикуются только с финальными текстами; пустые секции, шаблонные фразы и заглушки запрещены.
 - Импортёр по умолчанию работает в preview-режиме, не удаляет записи и не меняет сущности вне release manifest.
+- Старые `import-otmostka.php`, `import-plitka.php`, `import-osushenie.php`, `import-livnevka.php` и `import-autopoliv.php` повторно не запускать: их `delete_stale_posts=true` может без корзины удалить статьи общей категории. Production использует только новый fail-closed импортёр с owner-meta и полностью отключённым cleanup.
 - Секреты, API-ключи, cookies, FTP-пароли и WordPress-пароли не сохранять в проекте и не включать в команды, логи или commit.
 - Все текстовые файлы — UTF-8; имена файлов, модулей, функций, классов и JSON-ключей — ASCII.
 - Любое изменение кода или данных начинается с падающего теста; каждый логический task заканчивается проверками, отдельным commit и push.
@@ -434,6 +435,8 @@ def test_importer_defaults_to_preview_and_contains_no_delete_call():
     self.assertIn("$apply = false", source)
     self.assertNotIn("wp_delete_post", source)
     self.assertNotIn("wp_delete_term", source)
+    payload = IMPORT_PAYLOAD.read_text(encoding="utf-8")
+    self.assertNotIn("delete_stale_posts", payload)
 
 
 def test_new_topic_resolution_uses_explicit_post_meta():
@@ -452,6 +455,7 @@ Run: `python -m unittest tools.test_service_hubs_php -v`
 The importer must:
 
 - validate `schema_version=1` and an exact `release_id` before any write;
+- reject payload keys `cleanup`, `delete_stale_posts` and `delete_stale_terms` at any nesting level;
 - ensure eight internal grouping categories by fixed ASCII slug, store the corresponding hub URL in term meta and never expose them as competing indexable hubs;
 - upsert commercial posts by exact slug and `_land76_page_key`, assign categories `[74, grouping_term_id]`, set ACF and SEO metadata;
 - upsert article posts by exact slug and `_land76_page_key`, assign categories `[72, grouping_term_id]`, set ACF and related commercial IDs;
@@ -459,6 +463,8 @@ The importer must:
 - update selected real project ACF fields only with resolved existing case IDs;
 - return `planned`, `created`, `updated`, `unchanged`, `unresolved_cases`, `errors` and `rollback_snapshot`;
 - perform no mutation when `$apply=false` or when any validation error exists.
+
+Every created post/category receives exact `_land76_release_id` and `_land76_page_key` ownership metadata. Updates are allowed only when slug plus ownership metadata match, or when the release manifest explicitly names a pre-existing approved hub page ID. Never call any older category importer from the new runner.
 
 Before upsert, import or register the exact ACF relationship fields `selected_works_posts` for category context and `selected_real_projects` for category-74 posts. Both fields restrict selection to existing case/page objects and preserve current live values. Abort apply when ACF is unavailable or the field schema cannot be verified.
 
@@ -873,7 +879,7 @@ Upload content JSON, rendered HTML, CSS and new importer first; verify remote ha
 
 - [ ] **Step 5: Preview and apply the WordPress imports**
 
-Open the authenticated WordPress Tools page, run preview and require zero validation errors/unresolved cases. Apply the exact release ID once. Re-run preview and require `created=0`, `updated=0`, proving idempotence. Then apply the existing case SEO importer and confirm every referenced case resolves.
+Open the authenticated WordPress Tools page for `import-service-hubs.php`, run preview and require zero validation errors/unresolved cases. Apply the exact release ID once. Re-run preview and require `created=0`, `updated=0`, proving idempotence. Do not invoke any historical service/category importer. Then apply the case SEO importer with the generated release payload and confirm every referenced case resolves.
 
 - [ ] **Step 6: Perform live desktop and mobile QA**
 
