@@ -236,7 +236,7 @@ def resolve_url_architecture(
     )
 
     destinations: list[PageDestination] = []
-    merge_sources: list[tuple[str, str]] = []
+    merge_sources: list[tuple[str, str, str]] = []
     commercial_ids: set[str] = set()
     informational_ids: list[str] = []
     for cluster_id, row in sorted(cluster_by_id.items()):
@@ -254,7 +254,7 @@ def resolve_url_architecture(
         if decision.url_action in {"exclude", "unresolved"}:
             continue
         if decision.url_action == "merge":
-            merge_sources.append((cluster_id, decision.destination_id))
+            merge_sources.append((cluster_id, decision.destination_id, intent))
             if intent in {"transactional", "commercial_research"}:
                 commercial_ids.add(cluster_id)
             else:
@@ -274,7 +274,7 @@ def resolve_url_architecture(
         else:
             informational_ids.append(cluster_id)
 
-    for cluster_id, destination_id in merge_sources:
+    for cluster_id, destination_id, source_intent in merge_sources:
         matches = [
             index for index, destination in enumerate(destinations) if destination.destination_id == destination_id
         ]
@@ -283,6 +283,10 @@ def resolve_url_architecture(
             continue
         index = matches[0]
         destination = destinations[index]
+        destination_intent = cluster_by_id[destination.source_cluster_ids[0]].get("intent", "").strip()
+        if _intent_family(source_intent) != _intent_family(destination_intent):
+            errors.append(f"cluster {cluster_id} cannot merge into commercial destination {destination_id}")
+            continue
         expanded = replace(destination, source_cluster_ids=destination.source_cluster_ids + (cluster_id,))
         destinations[index] = expanded
     return ArchitectureBuild(
@@ -371,9 +375,19 @@ def _decision_errors(
     if decision.url_action == "unresolved":
         if _decision_url(decision) or decision.destination_id:
             errors.append(f"{prefix} unresolved action must have blank target and destination")
+        if intent in {"transactional", "commercial_research"}:
+            errors.append(f"{prefix} remains unresolved")
         return errors
     if decision.url_action in {"exclude"}:
         return errors
+    expected_role = {
+        "hub": "hub",
+        "child": "child_service",
+        "frozen": "frozen",
+        "article": "article",
+    }.get(decision.url_action)
+    if expected_role and decision.page_role != expected_role:
+        errors.append(f"{prefix} action {decision.url_action} requires page role {expected_role}")
     if not decision.destination_id:
         errors.append(f"{prefix} has no destination id")
     if decision.url_action == "merge":
@@ -392,6 +406,12 @@ def _decision_errors(
             errors.append(f"{prefix} child URL must be a unique internal HTTPS URL")
         if not decision.parent_destination_id:
             errors.append(f"{prefix} child destination has no parent")
+        if not decision.evidence_refs:
+            errors.append(f"{prefix} child destination has no evidence references")
+        if decision.publication_status.casefold() not in {"ready", "approved", "published"}:
+            errors.append(f"{prefix} child destination has no publication readiness")
+        if not decision.proposed_slug:
+            errors.append(f"{prefix} child destination has no proposed slug")
     elif decision.url_action == "frozen" and url not in frozen_urls:
         errors.append(f"{prefix} frozen URL is outside the protected categories")
     if decision.url_action in {"hub", "child"} and decision.business_offer_confirmed.casefold() not in {"true", "yes", "1"}:
@@ -406,6 +426,14 @@ def _decision_url(decision: ClusterPageDecision) -> str:
 def _is_https_url(value: str) -> bool:
     parsed = urlsplit(value)
     return parsed.scheme == "https" and bool(parsed.netloc) and value.endswith("/")
+
+
+def _intent_family(intent: str) -> str:
+    if intent in {"transactional", "commercial_research"}:
+        return "commercial"
+    if intent == "informational":
+        return "informational"
+    return "other"
 
 
 def _read_csv(path: Path, required: set[str]) -> list[dict[str, str]]:

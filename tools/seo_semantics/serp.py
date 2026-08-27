@@ -654,9 +654,9 @@ def cluster_semantics(
             query_id = representative_by_candidate[candidate_key]
             cluster_id = component_id_by_query[query_id]
             assignment_method = "direct_serp_representative"
-            base_validation = "serp_direct_reviewed"
-            base_rationale = "direct SERP representative retained within its approved service owner"
-            base_reviewed = True
+            base_validation = "serp_direct_pending_review"
+            base_rationale = "direct SERP representative is evidence only; no page owner is approved"
+            base_reviewed = False
         else:
             possible_components = stratum_components.get(candidate_strata[candidate_key], set())
             if len(possible_components) == 1:

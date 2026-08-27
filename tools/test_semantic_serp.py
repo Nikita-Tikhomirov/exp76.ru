@@ -280,6 +280,17 @@ class SemanticSerpTest(unittest.TestCase):
             )
             self.assertEqual(generic_mini["target_url"], "")
             self.assertEqual(generic_mini["url_action"], "unresolved")
+            direct_commercial = [
+                row
+                for row in assignments
+                if row["assignment_method"] == "direct_serp_representative"
+                and row["intent"] in {"transactional", "commercial_research"}
+                and row["validation_status"] != "cross_service_owner_boundary_reviewed"
+                and row["validation_status"] != "clicked_current_owner_reviewed"
+            ]
+            self.assertTrue(direct_commercial)
+            self.assertEqual({row["url_action"] for row in direct_commercial}, {"unresolved"})
+            self.assertEqual({row["target_url"] for row in direct_commercial}, {""})
             informational = [row for row in assignments if row["intent"] == "informational"]
             product_only = [row for row in assignments if row["intent"] == "product_only"]
             self.assertTrue(informational)
