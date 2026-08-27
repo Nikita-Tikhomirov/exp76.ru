@@ -97,6 +97,40 @@ Cluster actions:
 редакторской проверки до публикации или изменения структуры. Ещё 27
 внутрисервисных пар закрыты явными правилами калькулятора и исключений.
 
+## Готовый production-пакет восьми услуг
+
+Для S1–S8 подготовлен новый вариант страниц без смены URL, page ID, родителя
+или WordPress-шаблона. Исходный контент хранится в
+`ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/*.json`, а
+готовые проверенные фрагменты — в соседнем каталоге `rendered/`.
+
+Каждая страница содержит готовые hero, вводный блок, состав работ, этапы,
+факторы стоимости, географию, перелинковку, FAQ-разметку и форму заявки.
+Подтверждённые кейсы показаны только у S1–S3; для S4–S8 вымышленные объекты не
+добавлялись. Цены S1 и S2 подписаны как предварительные ориентиры действующего
+калькулятора, а не как окончательная смета.
+
+Подключение ограничено точным совпадением page ID, slug, parent ID и шаблона.
+Если JSON, HTML или CSS не загружены полностью, `servicepost.php` оставляет
+старую страницу — это защищает остальные услуги от частичного релиза. Вместе
+с пакетом добавлены отдельные `/privacy/` и `/consent/`, совместимые редиректы
+со старых относительных `.html`-ссылок и проверяемый обработчик заявок, который
+не показывает успех при ошибке `mail()`.
+
+Сборка и целевая проверка:
+
+```powershell
+python -m tools.service_v2 validate ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2
+python -m tools.service_v2 build ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2 ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/rendered
+python -m unittest tools.test_service_v2 -v
+```
+
+Публикация должна выполняться только после резервного копирования изменяемых
+файлов темы и корневого `server.php`. После загрузки проверяются все восемь
+канонических URL, две юридические страницы, метаданные, FAQ JSON-LD,
+изображения, мобильная вёрстка и отказ формы на заведомо некорректных данных.
+Отправлять тестовую успешную заявку без согласования с получателем не нужно.
+
 ## Воспроизведение без сети
 
 Команды запускаются из корня проекта. Рекомендуется bundled Python из Codex;
@@ -127,7 +161,7 @@ native hyperlink API отсутствует. Поэтому фильтры, ст
 ## Полные проверки
 
 ```powershell
-python -m unittest tools.test_semantic_scope tools.test_semantic_normalize tools.test_semantic_ingest tools.test_semantic_manifest tools.test_semantic_classify tools.test_semantic_serp tools.test_yandex_search_api tools.test_semantic_workbook -v
+python -m unittest discover -s tools -p "test_*.py" -v
 C:\Users\user\.codex\scripts\harness.cmd smoke
 git diff --check
 ```

@@ -2,6 +2,16 @@
 add_action( 'wp_enqueue_scripts', 'style_theme' );
 add_action( 'wp_footer', 'scripts_theme' );
 
+$land76_service_v2_file = __DIR__ . '/inc/service-v2.php';
+if (file_exists($land76_service_v2_file)) {
+  require_once $land76_service_v2_file;
+}
+
+$land76_legal_pages_file = __DIR__ . '/inc/legal-pages.php';
+if (file_exists($land76_legal_pages_file)) {
+  require_once $land76_legal_pages_file;
+}
+
 $land76_import_file = __DIR__ . '/inc/import-drenazh.php';
 if (file_exists($land76_import_file)) {
   require_once $land76_import_file;
@@ -239,9 +249,11 @@ function land76_get_card_image_alt($post_id = null, $fallback = '') {
 }
 
 function land76_render_header_popup() {
+  $request_path = (string) wp_parse_url(wp_unslash($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH);
+  $form_source = home_url($request_path ?: '/');
   ?>
   <div class="formWrapper" id="header-popup">
-    <form class="form">
+    <form class="form" method="post" action="/server.php">
       <p class="form__title">Оставить заявку</p>
       <label class="form__label">
         <p>Имя или название организации *</p>
@@ -251,16 +263,18 @@ function land76_render_header_popup() {
         <p>Контактный телефон *</p>
         <input class="form__input" type="text" name="phone" placeholder="" required="required" />
       </label>
+      <input type="hidden" name="form_version" value="site-popup-v2" />
+      <input type="hidden" name="source" value="<?php echo esc_url($form_source); ?>" />
       <div class="formConsent">
         <label class="formConsent__container">
-          <input class="formConsent__input" type="checkbox" required="required" />
+          <input class="formConsent__input" type="checkbox" name="consent" value="1" required="required" />
           <span class="formConsent__checkbox">
             <svg class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px">
               <path d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928C170.827,363.533,162.165,366.839,153.504,366.839z" fill="#B22917"></path>
             </svg>
           </span>
         </label>
-        <p class="formConsent__text">Я ознакомлен и согласен с <a href="<?php echo esc_url(home_url('/privacy/')); ?>">политикой конфиденциальности</a> оператора, подтверждаю свое согласие на обработку введенных мною персональных данных</p>
+        <p class="formConsent__text">Я ознакомлен и согласен с <a href="<?php echo esc_url(home_url('/privacy/')); ?>">политикой конфиденциальности</a> оператора, подтверждаю <a href="<?php echo esc_url(home_url('/consent/')); ?>">согласие на обработку персональных данных</a></p>
       </div>
       <button class="form__btn btn" type="submit">Отправить</button>
     </form>
@@ -385,6 +399,13 @@ function land76_schema_current_url() {
 }
 
 function land76_schema_description() {
+  if (function_exists('land76_service_v2_current')) {
+    $service_v2 = land76_service_v2_current();
+    if ($service_v2 && !empty($service_v2['seo']['description'])) {
+      return land76_schema_limit($service_v2['seo']['description']);
+    }
+  }
+
   if (is_front_page()) {
     return 'Ландшафтно-строительная компания «Эксперты» выполняет благоустройство участков под ключ в Рыбинске, Ярославле и Ярославской области: дренаж, ливневая канализация, отмостка, плитка, газон, автополив и озеленение.';
   }
@@ -722,8 +743,20 @@ function land76_schema_service_node($current_url) {
   $name = $service['name'];
   $description = $service['description'];
 
+  if (function_exists('land76_service_v2_current')) {
+    $service_v2 = land76_service_v2_current();
+    if ($service_v2) {
+      $name = $service_v2['hero']['title'];
+      $description = $service_v2['seo']['description'];
+      $service['name'] = $service_v2['hero']['title'];
+      $service['serviceType'] = $service_v2['hero']['title'];
+    }
+  }
+
   if (is_singular()) {
-    $name = get_the_title();
+    if (empty($service_v2)) {
+      $name = get_the_title();
+    }
     $description = land76_schema_description();
   } elseif (is_category()) {
     $term = get_queried_object();
@@ -968,7 +1001,7 @@ function land76_schema_page_node($current_url, $main_entity_id = '') {
 }
 
 function land76_output_structured_data() {
-  if (is_admin() || is_404()) {
+  if (is_admin() || is_404() || (function_exists('land76_legal_page_request_slug') && land76_legal_page_request_slug())) {
     return;
   }
 

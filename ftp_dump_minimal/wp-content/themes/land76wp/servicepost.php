@@ -4,6 +4,15 @@ Template Name: Услуга
 */
 ?>
 
+<?php if (function_exists('land76_service_v2_current') && land76_service_v2_current()): ?>
+  <?php get_header('seo'); ?>
+  <?php require get_template_directory() . '/inc/service-v2-template.php'; ?>
+    </main>
+  </div>
+  <?php get_footer(); ?>
+  <?php return; ?>
+<?php endif; ?>
+
 <?php get_header('service'); ?>
 
 

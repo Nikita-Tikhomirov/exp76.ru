@@ -10,3 +10,4 @@ __pycache__/
 *.inspect.ndjson
 seo-data/2026-08-exp76-services/raw/serp/yandex-api-*.xml
 harness/smoke_report.json
+ftp_dump_minimal/wp-config.php

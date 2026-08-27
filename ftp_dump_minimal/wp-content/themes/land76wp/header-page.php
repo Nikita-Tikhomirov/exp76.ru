@@ -40,7 +40,7 @@
 	<?php wp_head();?>
 
 <meta property = "og:type" content = "website" />
-<meta property = "og:url" content = "<?php echo get_permalink(); ?>" />
+<meta property="og:url" content="<?php echo esc_url(function_exists('land76_legal_page_current_url') ? land76_legal_page_current_url(get_permalink()) : get_permalink()); ?>" />
 <meta property = "og:image" content = "https://exp76.ru/wp-content/themes/land76wp/img/h11.jpg" />
 
 </head>

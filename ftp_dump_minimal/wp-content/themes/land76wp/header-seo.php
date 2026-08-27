@@ -39,7 +39,7 @@
 
 <meta property = "og:type" content = "website" />
 <meta property = "og:url" content = "<?php echo get_permalink(); ?>" />
-<meta property = "og:image" content = "https://exp76.ru/wp-content/themes/land76wp/img/h11.jpg" />
+<meta property="og:image" content="<?php echo esc_url(function_exists('land76_service_v2_hero_image_url') ? land76_service_v2_hero_image_url('https://exp76.ru/wp-content/themes/land76wp/img/h11.jpg') : 'https://exp76.ru/wp-content/themes/land76wp/img/h11.jpg'); ?>" />
 
 
 

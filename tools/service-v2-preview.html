@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Service v2 preview</title>
+  <link rel="stylesheet" href="/ftp_dump_minimal/wp-content/themes/land76wp/css/styles.css">
+  <link rel="stylesheet" href="/ftp_dump_minimal/wp-content/themes/land76wp/css/service-v2.css">
+  <style>
+    .preview-status { background: #102a16; color: #fff; font: 600 13px/1.4 sans-serif; padding: 8px 16px; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="preview-status" id="preview-status">Локальная проверка шаблона service v2</div>
+  <header class="header wrapper">
+    <a class="header__logo-wrap" href="#"><img class="header__logo" src="https://exp76.ru/wp-content/themes/land76wp/img/logo4.webp" alt="Компания Эксперты"></a>
+    <nav class="menu" aria-label="Главное меню">
+      <ul class="menu__list">
+        <li class="menu__item"><a class="menu__link" href="#">Услуги</a></li>
+        <li class="menu__item"><a class="menu__link" href="#">Работы</a></li>
+        <li class="menu__item"><a class="menu__link" href="#">О компании</a></li>
+        <li class="menu__item"><a class="menu__link" href="#">Контакты</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="page-content"><main class="main" id="preview"></main></div>
+  <footer class="footer wrapper"><span>© Компания «Эксперты»</span></footer>
+  <script>
+    const allowed = new Set([
+      'landshaftnoe-proektirovanie',
+      'gazon-posevnojj-i-gazon-rulonnyjj',
+      'posadka-derevev-i-kustarnikov',
+      'ukhod-za-sadom',
+      'planirovka-territorii',
+      'podpornye-stenki',
+      'ulichnoe-osveshhenie-uchastka',
+      'vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch'
+    ]);
+    const requested = new URLSearchParams(location.search).get('service');
+    const slug = allowed.has(requested) ? requested : 'landshaftnoe-proektirovanie';
+    const path = `/ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/rendered/${slug}.html`;
+    document.getElementById('preview-status').textContent = `Локальная проверка: ${slug}`;
+    fetch(path)
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.text();
+      })
+      .then((html) => { document.getElementById('preview').innerHTML = html; })
+      .catch((error) => { document.getElementById('preview').textContent = `Не удалось загрузить собранную страницу: ${error.message}`; });
+  </script>
+</body>
+</html>
