@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000041",
+  "query": "газон под ключ",
+  "service_id": "S2",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "mobile",
+  "operation_id": "spr7c7vo29bs5mail011",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

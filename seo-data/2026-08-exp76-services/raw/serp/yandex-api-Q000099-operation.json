@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000099",
+  "query": "рассчитать стоимость выравнивания участка 5 соток",
+  "service_id": "S5",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprbnbn2h50c5iek82fp",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

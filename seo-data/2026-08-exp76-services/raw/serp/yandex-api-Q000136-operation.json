@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000136",
+  "query": "купить обычный мостик через канаву в рыбинске",
+  "service_id": "S8",
+  "intent": "product_only",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprtb41cqitvn979su56",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

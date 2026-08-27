@@ -24,6 +24,20 @@ from .manifest import register_source
 from .models import KeywordRecord
 from .normalize import normalize_query
 from .scope import load_scope
+from .serp import cluster_semantics, write_representative_queue
+from .workbook import (
+    SHEET_NAMES,
+    build_workbook,
+    validate_processed_data,
+    validate_workbook,
+)
+from .yandex_search import (
+    assert_complete_coverage,
+    build_collection_plan,
+    load_api_credentials,
+    poll_submitted,
+    submit_pending,
+)
 
 
 _OUTPUT_COLUMNS = (
@@ -109,6 +123,44 @@ def _build_parser() -> argparse.ArgumentParser:
     classify.add_argument("--output", required=True, type=Path)
     classify.add_argument("--frozen-output", required=True, type=Path)
     classify.add_argument("--minus-output", required=True, type=Path)
+
+    serp_queue = commands.add_parser("serp-queue")
+    serp_queue.add_argument("--keywords", required=True, type=Path)
+    serp_queue.add_argument("--output", required=True, type=Path)
+
+    cluster = commands.add_parser("cluster")
+    cluster.add_argument("--scope", required=True, type=Path)
+    cluster.add_argument("--keywords", required=True, type=Path)
+    cluster.add_argument("--serp-dir", required=True, type=Path)
+    cluster.add_argument("--serp-output", required=True, type=Path)
+    cluster.add_argument("--clusters-output", required=True, type=Path)
+    cluster.add_argument("--url-map-output", required=True, type=Path)
+    cluster.add_argument("--candidate-map-output", type=Path)
+    cluster.add_argument("--ambiguous-output", type=Path)
+
+    export = commands.add_parser("export")
+    export.add_argument("--processed-dir", required=True, type=Path)
+    export.add_argument("--output", required=True, type=Path)
+
+    qa = commands.add_parser("qa")
+    qa.add_argument("--scope", required=True, type=Path)
+    qa.add_argument("--processed-dir", required=True, type=Path)
+    qa.add_argument("--workbook", required=True, type=Path)
+
+    serp_api_plan = commands.add_parser("serp-api-plan")
+    serp_api_plan.add_argument("--queue", required=True, type=Path)
+    serp_api_plan.add_argument("--serp-dir", required=True, type=Path)
+
+    serp_api_verify = commands.add_parser("serp-api-verify")
+    serp_api_verify.add_argument("--queue", required=True, type=Path)
+    serp_api_verify.add_argument("--serp-dir", required=True, type=Path)
+
+    for command_name in ("serp-api-submit", "serp-api-poll"):
+        serp_api = commands.add_parser(command_name)
+        serp_api.add_argument("--queue", required=True, type=Path)
+        serp_api.add_argument("--serp-dir", required=True, type=Path)
+        serp_api.add_argument("--manifest", required=True, type=Path)
+        serp_api.add_argument("--collected-at", required=True)
     return parser
 
 
@@ -137,8 +189,103 @@ def main(argv: Sequence[str] | None = None) -> int:
                 f"classified {clean_count + frozen_count} keyword rows: "
                 f"clean={clean_count}, frozen={frozen_count}, minus={minus_count}"
             )
+        elif args.command == "serp-queue":
+            result = write_representative_queue(args.keywords, args.output)
+            print(
+                f"SERP queue: eligible_rows={result.eligible_row_count}, "
+                f"candidates={result.distinct_candidate_count}, "
+                f"groups={result.tentative_group_count}, queue={len(result.rows)}"
+            )
+        elif args.command == "cluster":
+            result = cluster_semantics(
+                args.scope,
+                args.keywords,
+                args.serp_dir,
+                args.serp_output,
+                args.clusters_output,
+                args.url_map_output,
+                args.candidate_map_output,
+                args.ambiguous_output,
+            )
+            print(
+                f"clusters: eligible_rows={result.eligible_row_count}, "
+                f"candidates={result.distinct_candidate_count}, "
+                f"clusters={result.cluster_count}, frozen={result.frozen_cluster_count}, "
+                f"serp_queries={result.serp_query_count}, serp_results={result.serp_result_count}, "
+                f"ambiguous_pairs={result.ambiguous_pair_count}"
+            )
+        elif args.command == "export":
+            build_workbook(args.processed_dir, args.output)
+            print(f"semantic workbook exported: {args.output}")
+        elif args.command == "qa":
+            load_scope(args.scope)
+            required_processed_files = [
+                *(f"{name}.csv" for name in SHEET_NAMES),
+                "candidate_cluster_map.csv",
+                "serp_ambiguous_pairs.csv",
+            ]
+            missing = [
+                filename
+                for filename in required_processed_files
+                if not (args.processed_dir / filename).is_file()
+            ]
+            if missing:
+                raise ValueError(f"missing processed CSV files: {', '.join(missing)}")
+            errors = sorted(
+                set(
+                    validate_processed_data(args.processed_dir)
+                    + validate_workbook(args.workbook, args.processed_dir)
+                )
+            )
+            if errors:
+                for error in errors:
+                    print(f"QA error: {error}", file=sys.stderr)
+                return 4
+            print("semantic QA passed")
+        elif args.command == "serp-api-plan":
+            plan = build_collection_plan(args.queue, args.serp_dir)
+            print(
+                f"SERP API plan: completed={len(plan.completed_query_ids)}, "
+                f"submitted={len(plan.submitted_query_ids)}, pending={len(plan.pending_query_ids)}, "
+                f"estimated_cost_rub={plan.estimated_cost_rub}, "
+                f"guard={plan.max_requests} requests/{plan.max_cost_rub} RUB"
+            )
+        elif args.command == "serp-api-verify":
+            assert_complete_coverage(args.queue, args.serp_dir)
+            print("SERP API coverage complete")
+        elif args.command in {"serp-api-submit", "serp-api-poll"}:
+            credentials = load_api_credentials()
+            plan = build_collection_plan(args.queue, args.serp_dir)
+            if args.command == "serp-api-submit":
+                written = submit_pending(
+                    plan,
+                    credentials,
+                    args.serp_dir,
+                    args.manifest,
+                    args.collected_at,
+                )
+            else:
+                result = poll_submitted(
+                    plan,
+                    credentials,
+                    args.serp_dir,
+                    args.manifest,
+                    args.collected_at,
+                )
+                print(
+                    f"{args.command}: raw_files_written={len(result.written_paths)}, "
+                    f"completed={len(result.completed_query_ids)}, "
+                    f"remaining={len(result.remaining_query_ids)}, errors={len(result.errors)}"
+                )
+                for error in result.errors:
+                    print(f"error: {error}", file=sys.stderr)
+                if result.remaining_query_ids or result.errors:
+                    return 3
+                assert_complete_coverage(args.queue, args.serp_dir)
+                return 0
+            print(f"{args.command}: raw_files_written={len(written)}")
         return 0
-    except (OSError, ValueError) as exc:
+    except (OSError, RuntimeError, ValueError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
 

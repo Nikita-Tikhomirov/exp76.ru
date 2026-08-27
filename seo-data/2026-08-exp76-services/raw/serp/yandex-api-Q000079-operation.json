@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000079",
+  "query": "уход за садом цена",
+  "service_id": "S4",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprm9061lrahldd9g3qp",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

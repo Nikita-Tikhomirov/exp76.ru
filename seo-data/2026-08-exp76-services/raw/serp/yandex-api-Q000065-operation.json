@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000065",
+  "query": "посадка кустарников",
+  "service_id": "S3",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprvnbdi4m9qk7j1cuvp",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000027",
+  "query": "прейскурант цен на благоустройство придомовой территории в ярославской области",
+  "service_id": "S1",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr9g0ncion4ful9nq7h",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

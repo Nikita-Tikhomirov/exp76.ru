@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000036",
+  "query": "эксперты 76",
+  "service_id": "S1",
+  "intent": "brand_navigation",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprgtj1mkr8frg5g7f16",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

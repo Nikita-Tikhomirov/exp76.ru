@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000038",
+  "query": "эксперты рыбинск ландшафтный",
+  "service_id": "S1",
+  "intent": "brand_navigation",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr95vi5i4v98j3n13ko",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

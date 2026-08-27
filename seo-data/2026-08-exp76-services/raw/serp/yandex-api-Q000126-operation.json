@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000126",
+  "query": "заезд на участок через канаву под ключ",
+  "service_id": "S8",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr99qv9uuv6ja64tcnc",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

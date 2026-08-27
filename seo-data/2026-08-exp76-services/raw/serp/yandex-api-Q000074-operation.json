@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000074",
+  "query": "обрезка кустарников",
+  "service_id": "S4",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr7iom2qvha4f9v3mdc",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000114",
+  "query": "уличное освещение частного дома рыбинск",
+  "service_id": "S7",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprbrt5j82007ob8pppa",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

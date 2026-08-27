@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000095",
+  "query": "планировка участка",
+  "service_id": "S5",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "mobile",
+  "operation_id": "sprc641tdo9vovo5ho5b",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

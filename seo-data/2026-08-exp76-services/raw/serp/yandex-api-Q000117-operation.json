@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000117",
+  "query": "въезд через канаву",
+  "service_id": "S8",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprjkgtt5q94md4s508a",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

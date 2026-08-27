@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000082",
+  "query": "выравнивание участка цена",
+  "service_id": "S5",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr20oc03e0653hmqo49",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

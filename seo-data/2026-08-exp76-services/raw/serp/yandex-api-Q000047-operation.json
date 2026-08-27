@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000047",
+  "query": "посевной газон",
+  "service_id": "S2",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprr5b1nqs0q0l3lrqo7",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

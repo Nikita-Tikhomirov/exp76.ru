@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000115",
+  "query": "въезд на участок",
+  "service_id": "S8",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprgo89e2qp273ark1qk",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

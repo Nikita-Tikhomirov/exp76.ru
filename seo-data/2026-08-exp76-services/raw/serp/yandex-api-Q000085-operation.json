@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000085",
+  "query": "выровнять участок на даче ярославль за пределами города tehno ники",
+  "service_id": "S5",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprntu49kr0rmah5av67",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

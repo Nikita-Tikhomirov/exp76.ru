@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000084",
+  "query": "выравнивание участка ярославль купить tehno ники ру",
+  "service_id": "S5",
+  "intent": "product_only",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprc3ou37llp8cnuvnsq",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

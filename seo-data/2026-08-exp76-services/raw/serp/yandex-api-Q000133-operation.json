@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000133",
+  "query": "заезд через канаву на участок",
+  "service_id": "S8",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr2h0m6i4bhnvckfibi",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

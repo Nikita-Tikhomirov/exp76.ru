@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000110",
+  "query": "освещение участка",
+  "service_id": "S7",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr68fv84077kljkronj",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

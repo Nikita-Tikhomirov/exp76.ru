@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000060",
+  "query": "заказать посадку дерева",
+  "service_id": "S3",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprejd6a9gnskoskedd3",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

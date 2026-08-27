@@ -1,0 +1,142 @@
+query_id,query,service_id,intent,region,device,reason,status
+Q000001,www exp76,S1,brand_navigation,Yaroslavl,desktop,clicked,pending
+Q000002,www exp76 ru,S1,brand_navigation,Yaroslavl,desktop,clicked,pending
+Q000003,благоустройство в рыбинске,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000004,благоустройство дачного участка под ключ,S1,transactional,Yaroslavl,desktop,turnkey_order[S1-G01],pending
+Q000005,благоустройство участка,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000006,благоустройство участка участка ярославль,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000007,благоустройство участка ярославская область,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000008,благоустройство участков ярославль,S1,commercial_research,Yaroslavl,desktop,yaroslavl_geo[S1-G01],pending
+Q000009,благоучтройство дачного участка в ярославской области,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000010,дизайн проект участка,S1,commercial_research,Yaroslavl,desktop,commercial_head[S1-G02],pending
+Q000011,заказать дизайн проект участка,S1,transactional,Yaroslavl,desktop,turnkey_order[S1-G02],pending
+Q000012,калькулятор расценок на работы по благоустройству территории,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000013,компании по ландшафтному дизайну рыбинск под ключ,S1,transactional,Yaroslavl,desktop,clicked,pending
+Q000014,компания exp76 отзывы,S1,brand_navigation,Yaroslavl,desktop,clicked,pending
+Q000015,комплексное благоустройство частных территорий,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000016,ландшафтная компания эксперт,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000017,ландшафтная компания эксперты,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000018,ландшафтная компания эксперты рыбинск,S1,brand_navigation,Yaroslavl,desktop,clicked,pending
+Q000019,ландшафтное проектирование участка,S1,commercial_research,Yaroslavl,desktop,commercial_head[S1-G03],pending
+Q000020,ландшафтные работы рыбинск,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000021,ландшафтные работы это рыбинск,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000022,ландшафтный дизайн планировка участка,S1,commercial_research,Yaroslavl,desktop,commercial_head[S1-G05],pending
+Q000023,ландшафтный дизайн рыбинск,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000024,ландшафтный дизайн участка,S1,commercial_research,Yaroslavl,desktop,commercial_head[S1-G04],pending
+Q000025,ландшафтный дизайнер коприно,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000026,онлайн калькулятор для расчета стоимости работ по благоустройству,S1,transactional,Yaroslavl,desktop,clicked,pending
+Q000027,прейскурант цен на благоустройство придомовой территории в ярославской области,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000028,проект благоустройства участка,S1,commercial_research,Yaroslavl,desktop,commercial_head[S1-G01]|commercial_head[S1-G06],pending
+Q000029,проекты придомовых территорий рыбинск,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000030,сайты благоустройства участков,S1,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000031,стоимость благоустройства территории за м2 калькулятор,S1,transactional,Yaroslavl,desktop,price[S1-G01],pending
+Q000032,стоимость работ по благоустройству территории ярославль,S1,transactional,Yaroslavl,desktop,clicked,pending
+Q000033,стоимость реализации проекта обустройства частного участка в ярославской области компании,S1,transactional,Yaroslavl,desktop,clicked,pending
+Q000034,услуги по благоустройства участка брейтово,S1,transactional,Yaroslavl,desktop,clicked,pending
+Q000035,цены на работу по благоустройству,S1,transactional,Yaroslavl,desktop,clicked,pending
+Q000036,эксперты 76,S1,brand_navigation,Yaroslavl,desktop,clicked,pending
+Q000037,эксперты рыбинск,S1,brand_navigation,Yaroslavl,desktop,clicked,pending
+Q000038,эксперты рыбинск ландшафтный,S1,brand_navigation,Yaroslavl,desktop,clicked,pending
+Q000039,восстановление газона,S2,commercial_research,Yaroslavl,desktop,commercial_head[S2-G02],pending
+Q000040,газон под ключ,S2,transactional,Yaroslavl,desktop,commercial_head[S2-G03]|turnkey_order[S2-G03],pending
+Q000041,газон под ключ,S2,transactional,Yaroslavl,mobile,mobile_head_check,pending
+Q000042,газон под ключ полесье ярославль,S2,transactional,Yaroslavl,desktop,turnkey_order[S2-G01],pending
+Q000043,газон под ключ цена,S2,transactional,Yaroslavl,desktop,price[S2-G03],pending
+Q000044,газон рулонный в рыбинске,S2,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000045,заказать рулонные газоны,S2,transactional,Yaroslavl,desktop,turnkey_order[S2-G05],pending
+Q000046,полив газонов ярославль,S2,commercial_research,Yaroslavl,desktop,yaroslavl_geo[S2-G01],pending
+Q000047,посевной газон,S2,commercial_research,Yaroslavl,desktop,commercial_head[S2-G04],pending
+Q000048,посевной газон под ключ г ярославль ул магистральная 7 7,S2,transactional,Yaroslavl,desktop,yaroslavl_geo[S2-G03],pending
+Q000049,посевной газон цена,S2,transactional,Yaroslavl,desktop,price[S2-G04],pending
+Q000050,продам газон рулонный авито углич,S2,commercial_research,Yaroslavl,desktop,commercial_head[S2-G01],pending
+Q000051,производитель рулонного газона в ярославской области,S2,product_only,Yaroslavl,desktop,clicked,pending
+Q000052,рулонный газон,S2,commercial_research,Yaroslavl,desktop,commercial_head[S2-G05],pending
+Q000053,рулонный газон купить в угличе,S2,product_only,Yaroslavl,desktop,clicked,pending
+Q000054,рулонный газон цена,S2,transactional,Yaroslavl,desktop,price[S2-G05],pending
+Q000055,рулонный газон ярославль,S2,commercial_research,Yaroslavl,desktop,yaroslavl_geo[S2-G05],pending
+Q000056,укладка рулонного газона рыбинск,S2,commercial_research,Yaroslavl,desktop,commercial_head[S2-G06],pending
+Q000057,устройство газона,S2,transactional,Yaroslavl,desktop,commercial_head[S2-G07],pending
+Q000058,цена за метр раскатного газона,S2,transactional,Yaroslavl,desktop,price[S2-G01],pending
+Q000059,дендролог в рыбинске,S3,commercial_research,Yaroslavl,desktop,clicked|commercial_head[S3-G01],pending
+Q000060,заказать посадку дерева,S3,transactional,Yaroslavl,desktop,turnkey_order[S3-G03],pending
+Q000061,озеленение участка,S3,commercial_research,Yaroslavl,desktop,commercial_head[S3-G02],pending
+Q000062,озеленение участка под ключ и благоустройство ярославль,S3,transactional,Yaroslavl,desktop,turnkey_order[S3-G01]|yaroslavl_geo[S3-G01],pending
+Q000063,посадка деревьев,S3,commercial_research,Yaroslavl,desktop,commercial_head[S3-G03],pending
+Q000064,посадка крупномеров,S3,commercial_research,Yaroslavl,desktop,commercial_head[S3-G04],pending
+Q000065,посадка кустарников,S3,commercial_research,Yaroslavl,desktop,commercial_head[S3-G05],pending
+Q000066,посадка хвойных,S3,commercial_research,Yaroslavl,desktop,commercial_head[S3-G06],pending
+Q000067,стоимость посадки деревьев,S3,transactional,Yaroslavl,desktop,price[S3-G03],pending
+Q000068,услуги по выбору и посадке фруктовых деревьев в ярославле,S3,transactional,Yaroslavl,desktop,yaroslavl_geo[S3-G03],pending
+Q000069,заказать обрезку деревьев,S4,transactional,Yaroslavl,desktop,turnkey_order[S4-G02],pending
+Q000070,калькулятор работ садовых,S4,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000071,найти садовника на участок в рыбинске,S4,commercial_research,Yaroslavl,desktop,clicked|commercial_head[S4-G01],pending
+Q000072,обрезка деревьев,S4,commercial_research,Yaroslavl,desktop,commercial_head[S4-G02],pending
+Q000073,обрезка деревьев цена,S4,transactional,Yaroslavl,desktop,price[S4-G02],pending
+Q000074,обрезка кустарников,S4,commercial_research,Yaroslavl,desktop,commercial_head[S4-G03],pending
+Q000075,обслуживание садов,S4,commercial_research,Yaroslavl,desktop,commercial_head[S4-G04],pending
+Q000076,садовник на участок рыбинск,S4,commercial_research,Yaroslavl,desktop,commercial_head[S4-G05],pending
+Q000077,сезонный уход за садом рыбинск,S4,commercial_research,Yaroslavl,desktop,commercial_head[S4-G06],pending
+Q000078,уход за садом,S4,commercial_research,Yaroslavl,desktop,commercial_head[S4-G07],pending
+Q000079,уход за садом цена,S4,transactional,Yaroslavl,desktop,price[S4-G07],pending
+Q000080,вертикальная планировка участка рыбинск,S5,commercial_research,Yaroslavl,desktop,commercial_head[S5-G02],pending
+Q000081,выравнивание участка,S5,commercial_research,Yaroslavl,desktop,commercial_head[S5-G03],pending
+Q000082,выравнивание участка цена,S5,transactional,Yaroslavl,desktop,price[S5-G03],pending
+Q000083,выравнивание участка ярославль,S5,commercial_research,Yaroslavl,desktop,yaroslavl_geo[S5-G03],pending
+Q000084,выравнивание участка ярославль купить tehno ники ру,S5,product_only,Yaroslavl,desktop,clicked,pending
+Q000085,выровнять участок на даче ярославль за пределами города tehno ники,S5,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000086,выровнять участок на даче ярославль минимальная цена техно ники,S5,transactional,Yaroslavl,desktop,clicked,pending
+Q000087,выровнять участок на даче ярославль оформление заказа ник техно ооо,S5,commercial_research,Yaroslavl,desktop,turnkey_order[S5-G01],pending
+Q000088,заказать выравнивание участка,S5,transactional,Yaroslavl,desktop,turnkey_order[S5-G03],pending
+Q000089,заказать планировку участка,S5,transactional,Yaroslavl,desktop,turnkey_order[S5-G06],pending
+Q000090,каким грунтом поднять участок,S5,commercial_research,Yaroslavl,desktop,commercial_head[S5-G07],pending
+Q000091,планировка грунта,S5,commercial_research,Yaroslavl,desktop,commercial_head[S5-G04],pending
+Q000092,планировка территории,S5,commercial_research,Yaroslavl,desktop,commercial_head[S5-G05],pending
+Q000093,планировка территории цена,S5,transactional,Yaroslavl,desktop,price[S5-G05],pending
+Q000094,планировка участка,S5,commercial_research,Yaroslavl,desktop,commercial_head[S5-G06],pending
+Q000095,планировка участка,S5,commercial_research,Yaroslavl,mobile,mobile_head_check,pending
+Q000096,планировка участка рыбинск,S5,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000097,планировка участка цена,S5,transactional,Yaroslavl,desktop,price[S5-G06],pending
+Q000098,планировка участка ярославль,S5,commercial_research,Yaroslavl,desktop,clicked|commercial_head[S5-G01]|yaroslavl_geo[S5-G01]|yaroslavl_geo[S5-G06],pending
+Q000099,рассчитать стоимость выравнивания участка 5 соток,S5,transactional,Yaroslavl,desktop,price[S5-G01],pending
+Q000100,организация выполняющая установкой гравитационной подпорной стены ярославль,S6,commercial_research,Yaroslavl,desktop,clicked|commercial_head[S6-G01]|yaroslavl_geo[S6-G01],pending
+Q000101,подпорная стенка из бетона,S6,commercial_research,Yaroslavl,desktop,commercial_head[S6-G02],pending
+Q000102,подпорная стенка из блоков,S6,commercial_research,Yaroslavl,desktop,commercial_head[S6-G03],pending
+Q000103,подпорная стенка из габионов,S6,commercial_research,Yaroslavl,desktop,commercial_head[S6-G04],pending
+Q000104,подпорная стенка на участке,S6,commercial_research,Yaroslavl,desktop,commercial_head[S6-G05],pending
+Q000105,строительство подпорной стенки рыбинск,S6,transactional,Yaroslavl,desktop,commercial_head[S6-G06],pending
+Q000106,устройство подпорной стенки,S6,transactional,Yaroslavl,desktop,commercial_head[S6-G07],pending
+Q000107,ландшафтное освещение,S7,commercial_research,Yaroslavl,desktop,commercial_head[S7-G02],pending
+Q000108,ландшафтное освещение ярославль,S7,commercial_research,Yaroslavl,desktop,yaroslavl_geo[S7-G02],pending
+Q000109,монтаж освещения участка рыбинск,S7,transactional,Yaroslavl,desktop,commercial_head[S7-G03],pending
+Q000110,освещение участка,S7,commercial_research,Yaroslavl,desktop,commercial_head[S7-G04],pending
+Q000111,подсветка дорожек,S7,commercial_research,Yaroslavl,desktop,commercial_head[S7-G05],pending
+Q000112,подсветка участка,S7,commercial_research,Yaroslavl,desktop,commercial_head[S7-G06],pending
+Q000113,уличное освещение рыбинский район,S7,commercial_research,Yaroslavl,desktop,commercial_head[S7-G01],pending
+Q000114,уличное освещение частного дома рыбинск,S7,commercial_research,Yaroslavl,desktop,commercial_head[S7-G07],pending
+Q000115,въезд на участок,S8,commercial_research,Yaroslavl,desktop,commercial_head[S8-G02],pending
+Q000116,въезд на участок цена,S8,transactional,Yaroslavl,desktop,price[S8-G02],pending
+Q000117,въезд через канаву,S8,commercial_research,Yaroslavl,desktop,commercial_head[S8-G03],pending
+Q000118,въезд через канаву,S8,commercial_research,Yaroslavl,mobile,mobile_head_check,pending
+Q000119,въезд через канаву под ключ,S8,transactional,Yaroslavl,desktop,turnkey_order[S8-G03],pending
+Q000120,въезд через канаву цена,S8,transactional,Yaroslavl,desktop,price[S8-G03],pending
+Q000121,заезд на участок,S8,commercial_research,Yaroslavl,desktop,commercial_head[S8-G04],pending
+Q000122,заезд на участок под ключ,S8,transactional,Yaroslavl,desktop,turnkey_order[S8-G04],pending
+Q000123,заезд на участок рыбинск авито предложения,S8,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000124,заезд на участок цена,S8,transactional,Yaroslavl,desktop,price[S8-G04],pending
+Q000125,заезд на участок через канаву в тутаеве,S8,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000126,заезд на участок через канаву под ключ,S8,transactional,Yaroslavl,desktop,turnkey_order[S8-G01]|turnkey_order[S8-G05],pending
+Q000127,заезд на участок через канаву под ключ рыбинск,S8,transactional,Yaroslavl,desktop,clicked,pending
+Q000128,заезд на участок через канаву под ключ тутаев,S8,transactional,Yaroslavl,desktop,clicked,pending
+Q000129,заезд на участок через канаву под ключ ярославль,S8,transactional,Yaroslavl,desktop,clicked|yaroslavl_geo[S8-G01],pending
+Q000130,заезд на участок через канаву тутаев,S8,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000131,заезд на участок через канаву цена,S8,transactional,Yaroslavl,desktop,price[S8-G01]|price[S8-G05],pending
+Q000132,заезд через канаву,S8,commercial_research,Yaroslavl,desktop,commercial_head[S8-G05],pending
+Q000133,заезд через канаву на участок,S8,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000134,заезд через канаву тутаев,S8,commercial_research,Yaroslavl,desktop,commercial_head[S8-G01],pending
+Q000135,заказать въезд на участок,S8,transactional,Yaroslavl,desktop,turnkey_order[S8-G02],pending
+Q000136,купить обычный мостик через канаву в рыбинске,S8,product_only,Yaroslavl,desktop,clicked,pending
+Q000137,найти плиту через канаву установить для проезда телег и велосипедов в рыбинске,S8,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000138,обустройство въезда на участок рыбинск,S8,commercial_research,Yaroslavl,desktop,commercial_head[S8-G06],pending
+Q000139,труба в канаву для заезда,S8,commercial_research,Yaroslavl,desktop,commercial_head[S8-G07],pending
+Q000140,трубу в канаву уложить в рыбинске,S8,commercial_research,Yaroslavl,desktop,clicked,pending
+Q000141,ярославская область сделать въезд в канаву,S8,commercial_research,Yaroslavl,desktop,clicked,pending

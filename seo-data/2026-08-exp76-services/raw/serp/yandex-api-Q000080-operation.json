@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000080",
+  "query": "вертикальная планировка участка рыбинск",
+  "service_id": "S5",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr1h4isjinbu80k6va7",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

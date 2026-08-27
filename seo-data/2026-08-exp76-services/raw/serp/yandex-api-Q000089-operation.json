@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000089",
+  "query": "заказать планировку участка",
+  "service_id": "S5",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprhq5dh688knu3iptog",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000112",
+  "query": "подсветка участка",
+  "service_id": "S7",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprl7bprn6dh85nrtuo2",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

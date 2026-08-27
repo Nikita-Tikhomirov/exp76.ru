@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000069",
+  "query": "заказать обрезку деревьев",
+  "service_id": "S4",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprmfg4km21pksst4fbm",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

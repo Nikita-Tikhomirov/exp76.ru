@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000103",
+  "query": "подпорная стенка из габионов",
+  "service_id": "S6",
+  "intent": "commercial_research",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr8p8454cd6gvi8mcl8",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

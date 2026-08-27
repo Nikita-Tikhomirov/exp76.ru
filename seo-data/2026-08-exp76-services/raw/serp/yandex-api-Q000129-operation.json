@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000129",
+  "query": "заезд на участок через канаву под ключ ярославль",
+  "service_id": "S8",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprd7kiqf2vlojkusgms",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}

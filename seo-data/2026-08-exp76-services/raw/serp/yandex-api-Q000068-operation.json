@@ -1,0 +1,12 @@
+{
+  "query_id": "Q000068",
+  "query": "услуги по выбору и посадке фруктовых деревьев в ярославле",
+  "service_id": "S3",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr5n6ot9cuoqkc5kpa1",
+  "submitted_at": "2026-08-27T19:13:40+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML"
+}
