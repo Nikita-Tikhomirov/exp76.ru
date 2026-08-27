@@ -382,6 +382,8 @@ Every article requires: `page_type=article`, one informational primary query, at
 
 Every hub requires: all schema v1 fields plus `schema_version=2`, `services.items[].page_key/url`, `articles.items[].page_key/url/title/text/image`, and verified `proof.cases`. Hub service cards are rendered as anchors; empty article and case blocks are forbidden in a production manifest.
 
+Create `release-manifest.json` with `release_status=draft`, the eight hub entries and every accepted architecture destination marked `content_pending`. Draft entries never enter the WordPress import payload; `release_status=ready` is permitted only after Task 11 validates complete content and evidence for every included destination.
+
 - [ ] **Step 4: Add cross-page validation**
 
 Reject duplicate canonical, title or H1; a cluster owned by two pages; an architecture page absent from manifest; a manifest page absent from architecture; an internal link outside the manifest/frozen set; a case/photo not in catalog; blank text; repeated paragraph fingerprints; replacement-character corruption; and claims containing numeric price/term/guarantee values without a matching evidence field.
@@ -465,6 +467,8 @@ The importer must:
 - perform no mutation when `$apply=false` or when any validation error exists.
 
 Every created post/category receives exact `_land76_release_id` and `_land76_page_key` ownership metadata. Updates are allowed only when slug plus ownership metadata match, or when the release manifest explicitly names a pre-existing approved hub page ID. Never call any older category importer from the new runner.
+
+At this task `service-hubs-import.json` may contain an empty `items` collection only with `release_status=draft`; preview must report it as non-applicable. The importer rejects draft payloads in apply mode, so incomplete content can never be published.
 
 Before upsert, import or register the exact ACF relationship fields `selected_works_posts` for category context and `selected_real_projects` for category-74 posts. Both fields restrict selection to existing case/page objects and preserve current live values. Abort apply when ACF is unavailable or the field schema cannot be verified.
 
@@ -599,7 +603,7 @@ Separate construction/service intents proven by the architecture, such as pipe/c
 
 ```powershell
 python -m tools.site_content.release validate --services S5,S8 --root seo-content/service-hubs
-python -m tools.site_content.release build-import --services S5,S8 --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
+python -m tools.site_content.release build-import --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
 ```
 
 Expected: all accepted page keys are present, no placeholders or unsupported facts, and every page has commercial/article/case links.
@@ -651,7 +655,7 @@ Separate trees, conifers, shrubs, large specimens, soil preparation and aftercar
 
 ```powershell
 python -m tools.site_content.release validate --services S2,S3 --root seo-content/service-hubs
-python -m tools.site_content.release build-import --services S2,S3 --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
+python -m tools.site_content.release build-import --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
 ```
 
 - [ ] **Step 5: Commit and push**
@@ -701,7 +705,7 @@ Separate material/technology intents only when the company actually performs the
 
 ```powershell
 python -m tools.site_content.release validate --services S4,S6 --root seo-content/service-hubs
-python -m tools.site_content.release build-import --services S4,S6 --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
+python -m tools.site_content.release build-import --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
 ```
 
 - [ ] **Step 5: Commit and push**
@@ -751,7 +755,7 @@ Separate pathway, façade, garden, functional or decorative lighting only where 
 
 ```powershell
 python -m tools.site_content.release validate --services S1,S7 --root seo-content/service-hubs
-python -m tools.site_content.release build-import --services S1,S7 --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
+python -m tools.site_content.release build-import --root seo-content/service-hubs --output ftp_dump_minimal/wp-content/themes/land76wp/import/service-hubs-import.json
 ```
 
 - [ ] **Step 5: Commit and push**
