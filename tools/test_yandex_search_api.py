@@ -40,6 +40,18 @@ class YandexSearchApiTest(unittest.TestCase):
             self.assertEqual(result, 0)
             self.assertEqual(sorted(path.name for path in serp_dir.iterdir()), ["serp-queue.csv"])
 
+    def test_plan_accepts_a_globally_unique_consecutive_offset_range(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            serp_dir = Path(tmp) / "serp"
+            serp_dir.mkdir()
+            queue = self._write_queue(serp_dir, 13, start=142)
+
+            plan = build_collection_plan(queue, serp_dir)
+
+            self.assertEqual("Q000142", plan.pending_query_ids[0])
+            self.assertEqual("Q000154", plan.pending_query_ids[-1])
+            self.assertEqual(13, len(plan.pending_query_ids))
+
     def test_plan_resumes_after_26_captures_and_enforces_exact_budget(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -656,7 +668,7 @@ class YandexSearchApiTest(unittest.TestCase):
             self.assertEqual(record["results"][0]["url"], "https://result-1.example/page")
 
     @staticmethod
-    def _write_queue(serp_dir: Path, count: int) -> Path:
+    def _write_queue(serp_dir: Path, count: int, start: int = 1) -> Path:
         path = serp_dir / "serp-queue.csv"
         with path.open("w", encoding="utf-8", newline="") as handle:
             writer = csv.DictWriter(
@@ -667,7 +679,7 @@ class YandexSearchApiTest(unittest.TestCase):
                 ),
             )
             writer.writeheader()
-            for index in range(1, count + 1):
+            for index in range(start, start + count):
                 writer.writerow(
                     {
                         "query_id": f"Q{index:06d}",

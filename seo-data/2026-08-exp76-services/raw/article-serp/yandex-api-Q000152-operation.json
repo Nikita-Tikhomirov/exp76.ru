@@ -1,5 +1,5 @@
 {
-  "query_id": "Q000011",
+  "query_id": "Q000152",
   "query": "как сделать освещение на участке",
   "service_id": "S7",
   "intent": "informational",
@@ -9,7 +9,7 @@
   "submitted_at": "2026-08-28T06:14:37+03:00",
   "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
   "response_format": "FORMAT_XML",
-  "queue_sha256": "789f7c9c56d3fc041e5c38e584fa09de4d97ba6531fe34a170452f5d81e05115",
+  "queue_sha256": "32255d69937325110e1f839f27c55575f8fe5c7d9c8156dae27d6c521dd16047",
   "request_sha256": "86dfc892541c498ee3eead506f257f8b839698a479762d7b64277b49a5ce067c",
-  "batch_sha256": "e1051b6d8014d246fa05fb4b7811eee4a7a0b72719fb3921d0adbbde2dada28b"
+  "batch_sha256": "6f66e07299f9e540f5e8f4422a59e99b7057325ae5d97295abf81f5e70c4230b"
 }
