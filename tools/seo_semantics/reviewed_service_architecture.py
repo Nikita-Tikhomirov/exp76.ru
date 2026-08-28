@@ -648,6 +648,10 @@ def validate_reviewed_child_architecture(
             errors.append(f"confirmed reviewed child has no business source: {page.destination_id}")
         if "pending" in page.semantic_evidence.casefold():
             errors.append(f"production child has pending semantic evidence: {page.destination_id}")
+        if "seed_gap:" in page.semantic_evidence.casefold():
+            errors.append(
+                f"production child has unverified semantic evidence: {page.destination_id}"
+            )
         if not all((page.title, page.semantic_evidence, page.boundary)):
             errors.append(f"reviewed child is incomplete: {page.destination_id}")
 

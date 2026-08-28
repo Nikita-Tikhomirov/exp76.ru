@@ -139,6 +139,21 @@ class ReviewedServiceArchitectureTests(unittest.TestCase):
             <= set(BACKLOG_CHILDREN)
         )
 
+    def test_validator_rejects_unverified_seed_gap_evidence(self) -> None:
+        unverified = replace(
+            REVIEWED_CHILDREN["S1"][0],
+            semantic_evidence="seed_gap:эскизный проект участка",
+        )
+        children = {key: tuple(value) for key, value in REVIEWED_CHILDREN.items()}
+        children["S1"] = (unverified, *children["S1"][1:])
+
+        self.assertTrue(
+            any(
+                "unverified semantic evidence" in error
+                for error in validate_reviewed_child_architecture(children)
+            )
+        )
+
     def test_protected_owner_detection_rejects_compound_queries_and_slugs(self) -> None:
         base = REVIEWED_CHILDREN["S1"][0]
         bad_slug = replace(base, slug="remont-livnevaya-kanalizatsiya")
