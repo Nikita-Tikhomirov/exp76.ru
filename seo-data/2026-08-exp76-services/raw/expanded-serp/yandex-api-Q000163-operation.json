@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000163",
+  "query": "ландшафтный дизайн участка 10 соток",
+  "service_id": "S1",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spre2a252uetr16qtl2d",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "78438fd492374125345af7d49f219bf10bdd86cdba58d333b7bba5cb0c4b1e1c",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

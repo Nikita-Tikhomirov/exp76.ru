@@ -1,0 +1,53 @@
+{
+  "files": [
+    {
+      "path": "serp-queue.csv",
+      "source": "serp_api_queue",
+      "collected_at": "2026-08-28T23:36:21+03:00",
+      "sha256": "459093adad37487906a4b690b7ff3df9a8922a16767f9830bdfebeb6f62cb0c4",
+      "byte_count": 644
+    },
+    {
+      "path": "yandex-api-Q000270-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:36:21+03:00",
+      "sha256": "219ac5ac49bba61f7a06502c281a3de6811e6b86da91667a919ceb33efb5db8e",
+      "byte_count": 678
+    },
+    {
+      "path": "yandex-api-Q000270.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:36:51+03:00",
+      "sha256": "bf68cac24a97dd5be1af89f76efb6c9fe5076fb64990ffeaa5d82129e1cdeaa0",
+      "byte_count": 3048
+    },
+    {
+      "path": "yandex-api-Q000271-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:36:21+03:00",
+      "sha256": "68d9b05255825e1865c9ed97223ab185c1d676e6549adb3e26bd461f05169505",
+      "byte_count": 703
+    },
+    {
+      "path": "yandex-api-Q000271.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:36:51+03:00",
+      "sha256": "4aa30e817ba014483ea2065c08c726264f416ffb4d6467a8f28259305fc5a6ae",
+      "byte_count": 2447
+    },
+    {
+      "path": "yandex-api-Q000272-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:36:21+03:00",
+      "sha256": "4b1830a15ba73f617f8eaaed4a5e4fc3d3facb71152b7769c46b15607ef24594",
+      "byte_count": 683
+    },
+    {
+      "path": "yandex-api-Q000272.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:36:51+03:00",
+      "sha256": "7f1b8c0e7609070ef9fe05810ae0a9fa522c795318ad4ebf60a3ce91165b6c7b",
+      "byte_count": 2349
+    }
+  ]
+}

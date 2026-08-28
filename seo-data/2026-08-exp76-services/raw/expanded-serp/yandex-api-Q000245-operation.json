@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000245",
+  "query": "щебень бетон или плиты для въезда на участок",
+  "service_id": "S8",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprg3far57ttno37aggn",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "c34313e21b930f736e4557043a33f9281fabb29536478889dca0b83cbf734e9b",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

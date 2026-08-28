@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000270",
+  "query": "посадка живой изгороди под ключ ярославль",
+  "service_id": "S3",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprindjqrj07up7j3s46",
+  "submitted_at": "2026-08-28T23:36:21+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "de6091dd85d09f9c888052f831bc7ce2145ab46889950f354e829133d366d006",
+  "request_sha256": "6a59f38a0ed8147b8bf7548d9a9a6680e63d22706e5849eb3198cb42e5c7d71f",
+  "batch_sha256": "81f1df11f7bf868185355bc650010cc88092f35d9015e98f9636ca95a5de4935"
+}

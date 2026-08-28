@@ -1,0 +1,4 @@
+query_id,query,service_id,intent,region,device,destination_id,reason
+Q000270,посадка живой изгороди под ключ ярославль,S3,transactional,Yaroslavl,desktop,S3-CHILD-HEDGE,reviewed_replacement_probe[S3-CHILD-HEDGE]
+Q000271,устройство подпорной стенки из габионов цена ярославль,S6,transactional,Yaroslavl,desktop,S6-CHILD-GABIONS,reviewed_replacement_probe[S6-CHILD-GABIONS]
+Q000272,монтаж новогоднего освещения дома ярославль,S7,transactional,Yaroslavl,desktop,S7-CHILD-HOLIDAY,reviewed_replacement_probe[S7-CHILD-HOLIDAY]

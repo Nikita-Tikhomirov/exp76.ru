@@ -1,0 +1,123 @@
+{
+  "files": [
+    {
+      "path": "serp-queue.csv",
+      "source": "serp_api_queue",
+      "collected_at": "2026-08-28T23:51:38+03:00",
+      "sha256": "5ff322dd393f34786a06bd907f65ed79293aaf7d37e22a75e60ee86cc5673263",
+      "byte_count": 1660
+    },
+    {
+      "path": "yandex-api-Q000273-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:52:17+03:00",
+      "sha256": "af8e393a38b14d50198ae2477c7f6b165e272bff53bd26a7ca25ad3f610bc6f8",
+      "byte_count": 702
+    },
+    {
+      "path": "yandex-api-Q000273.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:52:56+03:00",
+      "sha256": "b1f000afeac6406657dfd5d4fdb651548b71f3a819782876e67fa1f45f83a80f",
+      "byte_count": 3271
+    },
+    {
+      "path": "yandex-api-Q000274-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:52:17+03:00",
+      "sha256": "0d1cb0fc12ee2beb1db08b4b01f5220fc41bd813e5fdeef59d8d8a749d7b6c01",
+      "byte_count": 682
+    },
+    {
+      "path": "yandex-api-Q000274.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:52:56+03:00",
+      "sha256": "a36b98e7760b9609acd2f2f18ca442470804e2db7216052df64289d5d7f8f742",
+      "byte_count": 3213
+    },
+    {
+      "path": "yandex-api-Q000275-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:52:17+03:00",
+      "sha256": "935d860bf9a79dc4af4b1d7a039d5ab1dc1ddf5e1e765ad12f7fa2a943e27179",
+      "byte_count": 692
+    },
+    {
+      "path": "yandex-api-Q000275.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:52:56+03:00",
+      "sha256": "83a0da87840ce1d7e42bfcb1d6163d8fe8b2db48bac1193c6b123fcdd3022fb2",
+      "byte_count": 3158
+    },
+    {
+      "path": "yandex-api-Q000276-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:52:17+03:00",
+      "sha256": "c5db10cd546dd58f1946dc6c92984943e0bd7d8b04d818cc0ba309500b484233",
+      "byte_count": 694
+    },
+    {
+      "path": "yandex-api-Q000276.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:52:56+03:00",
+      "sha256": "5ffabf769d78760652f2fcfd5322194f097eb869e0ae74f4ae8f43c6c0e3fd8f",
+      "byte_count": 2791
+    },
+    {
+      "path": "yandex-api-Q000277-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:52:17+03:00",
+      "sha256": "7d6f147af96b375d551271b790be569b7775b28997b885ba5ba83edf9f0f4b70",
+      "byte_count": 702
+    },
+    {
+      "path": "yandex-api-Q000277.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:52:56+03:00",
+      "sha256": "35697236e469fd7932fd331bf0c2aac61813948edd9646f051afd53835bfe770",
+      "byte_count": 3041
+    },
+    {
+      "path": "yandex-api-Q000278-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:52:17+03:00",
+      "sha256": "982389bc72be3f2ded59eeaf8bbf63e6940daf6101a1a8e4dd04f45b9c3383fc",
+      "byte_count": 702
+    },
+    {
+      "path": "yandex-api-Q000278.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:52:56+03:00",
+      "sha256": "e189a399656a9a996bd119d3964311fc4cabc0f842a3b2aaa421f359568730b0",
+      "byte_count": 3204
+    },
+    {
+      "path": "yandex-api-Q000279-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:52:17+03:00",
+      "sha256": "68e34007cb84907c8a31fed2043d4ac3012d9e74b238b1724ea6f528992feec8",
+      "byte_count": 708
+    },
+    {
+      "path": "yandex-api-Q000279.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:52:56+03:00",
+      "sha256": "894f973db5f4ef8d143cae1b23572663683bcfce5a79d33dfa1f9e5092ee40b1",
+      "byte_count": 2790
+    },
+    {
+      "path": "yandex-api-Q000280-operation.json",
+      "source": "serp_api_operation",
+      "collected_at": "2026-08-28T23:52:17+03:00",
+      "sha256": "f5dc8b8d24958469c667a9d5d192edfcc1872780d73b8f3ef23bc7ee84d19dbe",
+      "byte_count": 711
+    },
+    {
+      "path": "yandex-api-Q000280.jsonl",
+      "source": "serp",
+      "collected_at": "2026-08-28T23:52:56+03:00",
+      "sha256": "06c50721c4a6d7e02b85294201ff34efa4d201d6561b90d884543454488af5ea",
+      "byte_count": 3200
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000276",
+  "query": "деревянная подпорная стенка цена работы ярославль",
+  "service_id": "S6",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr2kgg9jtuota02gp09",
+  "submitted_at": "2026-08-28T23:52:17+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "801bd4ca0520948b2fe966acb0d46da608c16d7aa277fa8cdf9d5cbee88f82c4",
+  "request_sha256": "6b891c5fc3b9bcb098fa88e591e579544b09dfe9dc75c0f90b6d91dff9401800",
+  "batch_sha256": "bd2a5db4a4c22e73e87a93108b67ffcd53c3465a8548e30c567dc3f06a0fa441"
+}

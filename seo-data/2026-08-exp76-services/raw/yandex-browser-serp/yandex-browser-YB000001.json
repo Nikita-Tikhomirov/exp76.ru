@@ -1,0 +1,73 @@
+{
+  "query_id": "YB000001",
+  "query": "расчистка участка от деревьев и кустарников цена ярославль",
+  "service_id": "S5",
+  "destination_id": "S5-CHILD-CLEARING",
+  "region_id": 16,
+  "device": "desktop",
+  "source": "yandex_search_browser",
+  "checked_at": "2026-08-29T00:27:19+03:00",
+  "request_url": "https://yandex.ru/search/?text=расчистка+участка+от+деревьев+и+кустарников+цена+ярославль&lr=16",
+  "organic_results": [
+    {
+      "rank": 1,
+      "title": "расчистка участка в Ярославле - цены и отзывы",
+      "url": "https://www.avito.ru/yaroslavl/predlozheniya_uslug?q=расчистка+участка",
+      "snippet": "Расчистка участка от деревьев и кустарников, Ярославль. Спил деревьев, кустарника, демонтаж старых построек."
+    },
+    {
+      "rank": 2,
+      "title": "расчистка участка в Ярославской области - цены и отзывы",
+      "url": "https://www.avito.ru/yaroslavskaya_oblast/predlozheniya_uslug?q=расчистка+участка",
+      "snippet": "Расчистка участка от деревьев и кустарников. Демонтаж и расчистка участков под ключ в Ярославле и области."
+    },
+    {
+      "rank": 3,
+      "title": "Расчистка участка Ярославль, цена от 5240 руб.",
+      "url": "https://yaroslavl.mzog.ru/raschistka-uchastka",
+      "snippet": "Профессионально расчистим дачный участок, уберем мусор, вырубим деревья и кустарник."
+    },
+    {
+      "rank": 4,
+      "title": "Расчистка участка от деревьев и растительности...",
+      "url": "https://uslugi.yandex.ru/16-yaroslavl/category/hozyajstvo-i-uborka/spil-i-obrezka-derevev-i-kustarnikov/raschistka-uchastka-ot-derevev-i-rastitelnosti--4441",
+      "snippet": "Удаляем и фрезеруем пни; расчистка участка от деревьев и растительности в Ярославле."
+    },
+    {
+      "rank": 5,
+      "title": "Расчистка участка Ярославль цена от 5240 руб.",
+      "url": "https://yaroslavl.topsadovnik.ru/raschistka-uchastka",
+      "snippet": "Расчистка участка под строительство от деревьев, поросли и корней в Ярославской области."
+    },
+    {
+      "rank": 6,
+      "title": "Расчистка участка от деревьев и кустарников...",
+      "url": "https://ekskavatory-arenda.ru/uslugi/raschistka-uchastka/",
+      "snippet": "Стоимость расчистки участка техникой; в стоимость включены оператор, техника и ГСМ."
+    },
+    {
+      "rank": 7,
+      "title": "Расчистка участков в Ярославле — ТехноНик",
+      "url": "https://tehno-niki.ru/raschistka-uchastkov.html",
+      "snippet": "Спиливаем деревья, выкорчёвываем пни, убираем кустарник мини-экскаватором с мульчером."
+    },
+    {
+      "rank": 8,
+      "title": "Расчистка участка от деревьев, кустарников и поросли...",
+      "url": "https://www.tehnoniki.ru/articles/raschistka-uchastka-pod-stroitelstvo.html",
+      "snippet": "Уборка деревьев, травы и мусора на участке перед строительством."
+    },
+    {
+      "rank": 9,
+      "title": "Вырубка кустарников в Ярославле — расчистка",
+      "url": "https://landshaftniy-dizayn.ru/region/yaroslavl/raschistka-uchastka/vyrubka-kustarnikov/",
+      "snippet": "Полная расчистка территории от деревьев и кустарников."
+    },
+    {
+      "rank": 10,
+      "title": "Покос травы, расчистка участка от растений.",
+      "url": "https://uchastok76.ru/",
+      "snippet": "Расчистка участка от травы, кустарников и деревьев; работы любой сложности."
+    }
+  ]
+}

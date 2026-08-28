@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000193",
+  "query": "комплексное обслуживание сада услуги",
+  "service_id": "S4",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprg00pp6lhldljq2qep",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "8d836ccbfa192ae87422fe92bb180637aa6d2c9e940141d983e7ab5b0096d605",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

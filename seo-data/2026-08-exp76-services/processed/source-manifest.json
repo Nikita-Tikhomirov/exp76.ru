@@ -1,0 +1,46 @@
+{
+  "files": [
+    {
+      "path": "../raw/reviewed-suggest-v5/source-manifest.json",
+      "source": "input_suggest_manifest",
+      "collected_at": "2026-08-29T00:38:46+03:00",
+      "sha256": "2e3ada0e3fb8611c11e0cc196f4e59208876977d317ed14346351a1bf4425857",
+      "byte_count": 19001
+    },
+    {
+      "path": "../raw/reviewed-suggest-v5/suggest-queue.csv",
+      "source": "input_suggest_queue",
+      "collected_at": "2026-08-29T00:38:46+03:00",
+      "sha256": "aadce666a7eb7270be266e1dc93f2e3ba6b9bd94d06cd7a103b1d7397ef3417a",
+      "byte_count": 11770
+    },
+    {
+      "path": "../raw/reviewed-suggest-v6/source-manifest.json",
+      "source": "input_suggest_manifest",
+      "collected_at": "2026-08-29T00:58:16+03:00",
+      "sha256": "611340cd0dc4dbda2311566e9d387c901392e89c543b9a11182b848f3613aed6",
+      "byte_count": 19000
+    },
+    {
+      "path": "../raw/reviewed-suggest-v6/suggest-queue.csv",
+      "source": "input_suggest_queue",
+      "collected_at": "2026-08-29T00:58:16+03:00",
+      "sha256": "6b6f5e41f848947ad94886b8aa61a5fed01dc01c463b862a2ed8725164db9ef3",
+      "byte_count": 11798
+    },
+    {
+      "path": "reviewed_suggestion_candidates_v5.csv",
+      "source": "derived_yandex_suggest_assignments",
+      "collected_at": "2026-08-29T00:38:46+03:00",
+      "sha256": "44b634c14c121d2818db6748dd6098f1123500c0ec2a816ee4591203e3df54e5",
+      "byte_count": 41070
+    },
+    {
+      "path": "reviewed_suggestion_candidates_v6.csv",
+      "source": "derived_yandex_suggest_assignments",
+      "collected_at": "2026-08-29T00:58:16+03:00",
+      "sha256": "0ae8e67793f7b43097ce659f68f22b9ee0729d6cb6ccca7f95b7e718bb4a7f2f",
+      "byte_count": 37628
+    }
+  ]
+}

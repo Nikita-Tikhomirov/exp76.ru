@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000246",
+  "query": "как укрепить края канавы у въезда",
+  "service_id": "S8",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr1b2ie6dvnac2kqh1s",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "a13438bb249f4b98e90c71553bf7ad7262b1ed238a90c39eee981b4ec363a0a2",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

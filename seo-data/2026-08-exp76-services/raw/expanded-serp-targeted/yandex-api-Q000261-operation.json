@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000261",
+  "query": "монтаж ландшафтного освещения цена ярославль",
+  "service_id": "S7",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spra7r94cbtchocaitfq",
+  "submitted_at": "2026-08-28T23:11:22+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "e3b70e0e67ffb60b6be984e2ec99d282beab781144963975ca1e16e1db9198fd",
+  "request_sha256": "84aee529c923f0dc327427d4ceaeb5a6a70781fa1e2a6007dc405cfdfca10a44",
+  "batch_sha256": "758e20d0d18bc181471a8a1f3a27bdbdd7acd84354b8f9cf06cbb12bfcfd5b64"
+}

@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000164",
+  "query": "ландшафтный дизайн участка с домом и баней",
+  "service_id": "S1",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprcrhenl7vjqi44t0f1",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "f83bedf53dbf362e793a4cca39f7176f129e59110c1a83dd9211b7235327c1d6",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

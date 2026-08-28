@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000228",
+  "query": "монтаж охранного освещения участка",
+  "service_id": "S7",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr8i1ca3fbqvd2vb9lj",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "53fc4a09eb7b73ce38004eb3980c92deb20a77b9698d5e5e4142ee2e7895031f",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

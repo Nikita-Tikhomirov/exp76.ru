@@ -1,0 +1,9 @@
+query_id,query,service_id,intent,region,device,destination_id,reason
+Q000273,обработка сада от болезней и вредителей цена ярославль,S4,transactional,Yaroslavl,desktop,S4-CHILD-PEST,final_review_probe[S4-CHILD-PEST]
+Q000274,культивация участка цена за сотку ярославль,S5,transactional,Yaroslavl,desktop,S5-CHILD-CULTIVATION,final_review_probe[S5-CHILD-CULTIVATION]
+Q000275,вывоз грунта с участка с погрузкой цена ярославль,S5,transactional,Yaroslavl,desktop,S5-CHILD-SOIL-REMOVAL,final_review_probe[S5-CHILD-SOIL-REMOVAL]
+Q000276,деревянная подпорная стенка цена работы ярославль,S6,transactional,Yaroslavl,desktop,S6-CHILD-WOOD,final_review_probe[S6-CHILD-WOOD]
+Q000277,пластиковая труба в канаву для заезда монтаж ярославль,S8,transactional,Yaroslavl,desktop,S8-CHILD-PIPE-PLASTIC,final_review_probe[S8-CHILD-PIPE-PLASTIC]
+Q000278,стальная труба в канаву для заезда установка ярославль,S8,transactional,Yaroslavl,desktop,S8-CHILD-PIPE-STEEL,final_review_probe[S8-CHILD-PIPE-STEEL]
+Q000279,железобетонная труба в канаву для заезда монтаж ярославль,S8,transactional,Yaroslavl,desktop,S8-CHILD-PIPE-RC,final_review_probe[S8-CHILD-PIPE-RC]
+Q000280,въезд на участок с парковочной площадкой под ключ ярославль,S8,transactional,Yaroslavl,desktop,S8-CHILD-PARKING,final_review_probe[S8-CHILD-PARKING]

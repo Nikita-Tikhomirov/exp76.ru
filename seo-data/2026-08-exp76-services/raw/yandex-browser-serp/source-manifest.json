@@ -1,0 +1,18 @@
+{
+  "files": [
+    {
+      "path": "serp-queue.csv",
+      "source": "yandex_browser_serp_queue",
+      "collected_at": "2026-08-29T00:27:19+03:00",
+      "sha256": "8a2be94ff49391c5da160494853eb30db146f7b6f68410e218fab8c4e0913cac",
+      "byte_count": 238
+    },
+    {
+      "path": "yandex-browser-YB000001.json",
+      "source": "yandex_browser_serp",
+      "collected_at": "2026-08-29T00:27:19+03:00",
+      "sha256": "5e4a801e30784fc8e980d281e090eb63e781679820c84d58615415580737f2cc",
+      "byte_count": 4513
+    }
+  ]
+}

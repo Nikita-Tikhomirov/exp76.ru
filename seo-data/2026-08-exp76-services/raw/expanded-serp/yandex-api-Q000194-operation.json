@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000194",
+  "query": "услуги по уходу за газоном цена",
+  "service_id": "S4",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprgj2hl4ga41a8au5db",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "a5cfb52c09c617c1f54f0814eec3af6f5ccd9356b750368d1ce7b578e6f0c703",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

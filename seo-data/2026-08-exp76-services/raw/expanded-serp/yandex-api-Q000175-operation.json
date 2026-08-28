@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000175",
+  "query": "рулонный или посевной газон что лучше",
+  "service_id": "S2",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprta7q0mgbefd7juqmg",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "bc4957eb8b2caeb107022f5f8cc48c749c71fa16befcb7e700685a3bcd2cd131",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

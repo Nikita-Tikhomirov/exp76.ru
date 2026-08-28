@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000177",
+  "query": "уход за газоном после укладки и посева",
+  "service_id": "S2",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprg1mt36f0c2jno81fm",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "2cbe0c2eb1ce206bebc41d8bce42e48ce35285feb6176a6bcdc3b38cf84a16a0",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

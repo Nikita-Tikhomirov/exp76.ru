@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000212",
+  "query": "как выровнять участок под газон",
+  "service_id": "S5",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr6m8jq8v5g4jdvvvma",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "4c0afcff5835c51e364e7a71f0e1302de1843e089fded4fe53910cab157f1300",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

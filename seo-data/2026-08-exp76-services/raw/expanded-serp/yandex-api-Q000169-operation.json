@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000169",
+  "query": "подготовка грунта под газон цена",
+  "service_id": "S2",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spruomsvdi9qodkc0pda",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "43e40d0eabcefd5e3cef834789fe8c88f8ae7ca0de293da38500984676ab7fb8",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

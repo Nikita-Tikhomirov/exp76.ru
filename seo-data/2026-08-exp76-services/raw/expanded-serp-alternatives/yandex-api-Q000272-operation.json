@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000272",
+  "query": "монтаж новогоднего освещения дома ярославль",
+  "service_id": "S7",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprsrd7h4hve1iqlrua0",
+  "submitted_at": "2026-08-28T23:36:21+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "de6091dd85d09f9c888052f831bc7ce2145ab46889950f354e829133d366d006",
+  "request_sha256": "a3f5ddb5b75edc1b4bb57b6c0198282fe7fdd2d0e13d39df6ed7be86901cd96e",
+  "batch_sha256": "81f1df11f7bf868185355bc650010cc88092f35d9015e98f9636ca95a5de4935"
+}

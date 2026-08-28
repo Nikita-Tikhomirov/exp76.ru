@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000271",
+  "query": "устройство подпорной стенки из габионов цена ярославль",
+  "service_id": "S6",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprgst6uebm3i45i87b6",
+  "submitted_at": "2026-08-28T23:36:21+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "de6091dd85d09f9c888052f831bc7ce2145ab46889950f354e829133d366d006",
+  "request_sha256": "0e3415d3d1c5ffd16895207e5993c1166392b78baa13a789cc0b91e30eba2329",
+  "batch_sha256": "81f1df11f7bf868185355bc650010cc88092f35d9015e98f9636ca95a5de4935"
+}

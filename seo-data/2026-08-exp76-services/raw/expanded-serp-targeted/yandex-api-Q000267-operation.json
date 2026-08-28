@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000267",
+  "query": "бетонный въезд через канаву цена ярославль",
+  "service_id": "S8",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprbjjgohqvd5ismg6q0",
+  "submitted_at": "2026-08-28T23:11:22+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "e3b70e0e67ffb60b6be984e2ec99d282beab781144963975ca1e16e1db9198fd",
+  "request_sha256": "40b47c46d73ce68328d4ba0656db610a9d62a85c1735a3e73963a48f7f5c8b40",
+  "batch_sha256": "758e20d0d18bc181471a8a1f3a27bdbdd7acd84354b8f9cf06cbb12bfcfd5b64"
+}

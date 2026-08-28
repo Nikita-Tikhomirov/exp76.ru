@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000279",
+  "query": "железобетонная труба в канаву для заезда монтаж ярославль",
+  "service_id": "S8",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprik5397v6m6tu4h016",
+  "submitted_at": "2026-08-28T23:52:17+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "801bd4ca0520948b2fe966acb0d46da608c16d7aa277fa8cdf9d5cbee88f82c4",
+  "request_sha256": "81e2a40bb9ac86d97235165d0b06a9a1188fbabdda92fe782dbddf1cd7362c80",
+  "batch_sha256": "bd2a5db4a4c22e73e87a93108b67ffcd53c3465a8548e30c567dc3f06a0fa441"
+}

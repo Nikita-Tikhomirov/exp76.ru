@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000260",
+  "query": "монтаж подсветки садовых дорожек цена ярославль",
+  "service_id": "S7",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprkm6vpg2vsnif8bvd0",
+  "submitted_at": "2026-08-28T23:11:22+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "e3b70e0e67ffb60b6be984e2ec99d282beab781144963975ca1e16e1db9198fd",
+  "request_sha256": "b7915ed85bd5e408c645b4cb78d1ca3d6aad49a24512c6ec57726473e6be84be",
+  "batch_sha256": "758e20d0d18bc181471a8a1f3a27bdbdd7acd84354b8f9cf06cbb12bfcfd5b64"
+}

@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000156",
+  "query": "заказать генеральный план участка",
+  "service_id": "S1",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprths86hk8ui3snvi6r",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "038c9d97c6e9340fefdebfe61ee12a55fe6ac01fa2f57e4eda93b1f0d8b246dd",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

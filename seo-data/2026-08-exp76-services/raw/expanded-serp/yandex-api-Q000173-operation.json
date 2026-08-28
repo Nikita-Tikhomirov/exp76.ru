@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000173",
+  "query": "устройство газона схема",
+  "service_id": "S2",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr676c96l7j32bgbpn8",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "6921ed0b2391f38746dd48f0231049d328bd5c5a2cf2d2114aa3487faebe192e",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

@@ -9,6 +9,10 @@ seo-data/2026-08-exp76-services/raw/wordstat/top-*.csv binary
 seo-data/2026-08-exp76-services/raw/wordstat/dynamics-[0-9]*.csv binary
 seo-data/2026-08-exp76-services/raw/wordcraft/*.xlsx binary
 
+# Deterministic generated SEO exports are hashed and compared byte-for-byte.
+seo-data/2026-08-exp76-services/processed/** text eol=lf
+seo-data/2026-08-exp76-services/reviews/** text eol=lf
+
 # Generated service hubs bind JSON metadata to exact rendered HTML bytes.
 seo-content/service-hubs/hubs/*.json text eol=lf
 ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/*.json text eol=lf

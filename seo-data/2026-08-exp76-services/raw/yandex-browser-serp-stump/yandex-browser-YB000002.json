@@ -1,0 +1,73 @@
+{
+  "query_id": "YB000002",
+  "query": "корчевание пней цена ярославль",
+  "service_id": "S5",
+  "destination_id": "S5-CHILD-STUMPS",
+  "region_id": 16,
+  "device": "desktop",
+  "source": "yandex_search_browser",
+  "checked_at": "2026-08-29T00:32:37+03:00",
+  "request_url": "https://yandex.ru/search/?text=корчевание+пней+цена+ярославль&lr=16",
+  "organic_results": [
+    {
+      "rank": 1,
+      "title": "корчевание пней в Ярославле - цены и отзывы | Услуги...",
+      "url": "https://www.avito.ru/yaroslavl/predlozheniya_uslug?q=корчевание+пней",
+      "snippet": "212 объявлений об услугах по корчеванию пней в Ярославле."
+    },
+    {
+      "rank": 2,
+      "title": "корчевание пней в Ярославской области - цены и отзывы",
+      "url": "https://www.avito.ru/yaroslavskaya_oblast/predlozheniya_uslug?q=корчевание+пней",
+      "snippet": "543 объявления об услугах по корчеванию пней в Ярославской области."
+    },
+    {
+      "rank": 3,
+      "title": "Удаление пней в Ярославле: 144 арбориста со средним...",
+      "url": "https://uslugi.yandex.ru/16-yaroslavl/category?text=удаление+пней",
+      "snippet": "Удаление пней в Ярославле: специалисты и организации по ценам, рейтингам и отзывам."
+    },
+    {
+      "rank": 4,
+      "title": "Корчевание пней на участке в Ярославле – цена от 734...",
+      "url": "https://yaroslavl.topsadovnik.ru/korchevanie-pnej-na-uchastke",
+      "snippet": "Услуги по корчеванию пней и выкорчевыванию деревьев в Ярославле."
+    },
+    {
+      "rank": 5,
+      "title": "Выкорчевка пней и деревьев на участке в Ярославле по...",
+      "url": "https://www.tehnoniki.ru/arenda_ekskavatora/vykorchevyvanie_pnej.html",
+      "snippet": "Компания-собственник техники предлагает услуги по корчеванию пней и деревьев в Ярославле."
+    },
+    {
+      "rank": 6,
+      "title": "Выкорчевка пней и деревьев в Ярославле по доступным...",
+      "url": "https://ekskavatory-arenda.ru/uslugi/vykorchevka-pnej/",
+      "snippet": "Услуги корчевания пней экскаватором в Ярославле."
+    },
+    {
+      "rank": 7,
+      "title": "Корчевание пней на участке в Ярославле — цена от 786...",
+      "url": "https://yaroslavl.mzog.ru/korchevanie-pnej",
+      "snippet": "Стоимость зависит от диаметра, глубины корней, способа удаления и объёма работ."
+    },
+    {
+      "rank": 8,
+      "title": "Расчистка от корней, обработка грунта, корчевка...",
+      "url": "https://yaroslavl.wetzavet.ru/raschistka-uchastka/raschistka-ot-korney/",
+      "snippet": "Удаление пней деревьев и корчевание трактором."
+    },
+    {
+      "rank": 9,
+      "title": "Выкорчёвывание пней в Москве. Мастера по...",
+      "url": "https://profi.ru/geo-yar/remont/blagoustroistvo-territorii/landshaftnye-raboty/vykorchevyvanie-pnei/",
+      "snippet": "Цены на выкорчёвывание пней в Ярославле начинаются от 370 рублей."
+    },
+    {
+      "rank": 10,
+      "title": "Корчевка пней в Ярославле: 159 корчевщиков пней...",
+      "url": "https://poisk-pro.ru/masters/yaroslavl/korchevka-pnej",
+      "snippet": "Специалисты по корчеванию пней в Ярославле, цены, фото и отзывы."
+    }
+  ]
+}

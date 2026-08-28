@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000165",
+  "query": "программа для ландшафтного дизайна участка",
+  "service_id": "S1",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spru7rb0hos1tpo3iab9",
+  "submitted_at": "2026-08-28T23:03:07+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "cf0f4b29a02a50decd84acd83598d9afba48d0fce9523ce011aac6f7c32e2b6e",
+  "request_sha256": "ec0591fd3e82bb54b1447b41b1e98ff878d572c67088813d0be10a2a42d4d7cb",
+  "batch_sha256": "e9cfbe831ca8e783f4b2859648b1ebf7fbb0cc366a3be8ffd4516b54815766f6"
+}

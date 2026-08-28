@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000247",
+  "query": "генеральный план участка ландшафтный дизайн цена",
+  "service_id": "S1",
+  "intent": "transactional",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "spr15ebporuiug8kpfvf",
+  "submitted_at": "2026-08-28T23:11:22+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "e3b70e0e67ffb60b6be984e2ec99d282beab781144963975ca1e16e1db9198fd",
+  "request_sha256": "29a7b1596ba086def0b8ed118bd4b89c316620e1ac7f5a8ec66a3b28dedb9a44",
+  "batch_sha256": "758e20d0d18bc181471a8a1f3a27bdbdd7acd84354b8f9cf06cbb12bfcfd5b64"
+}
