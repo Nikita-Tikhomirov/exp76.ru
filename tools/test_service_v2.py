@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import json
 import os
 import re
@@ -16,9 +17,9 @@ from tools.service_v2 import (
     ContractError,
     count_words,
     load_hub_services,
+    load_services_auto,
     render_service,
     sync_services,
-    validate_service,
     validate_service_v2,
 )
 from tools.site_content.contracts import (
@@ -31,6 +32,7 @@ from tools.site_content.contracts import (
 ROOT = Path(__file__).resolve().parents[1]
 THEME = ROOT / "ftp_dump_minimal" / "wp-content" / "themes" / "land76wp"
 DATA_DIR = THEME / "content" / "service-v2"
+HUB_SOURCE_DIR = ROOT / "seo-content" / "service-hubs" / "hubs"
 ARCHITECTURE_PATH = (
     ROOT / "seo-data" / "2026-08-exp76-services" / "processed" / "page_architecture.csv"
 )
@@ -60,6 +62,197 @@ EXPECTED_CASES = {
     "S8": [],
 }
 
+EXPECTED_SCOPE_COUNTS = {
+    "S1": 5,
+    "S2": 4,
+    "S3": 5,
+    "S4": 5,
+    "S5": 5,
+    "S6": 5,
+    "S7": 5,
+    "S8": 5,
+}
+
+EXPECTED_LEGACY_WORDS = {
+    "S1": 1259,
+    "S2": 1086,
+    "S3": 1093,
+    "S4": 1339,
+    "S5": 1317,
+    "S6": 1296,
+    "S7": 1254,
+    "S8": 1306,
+}
+
+EXPECTED_LEGACY_FINGERPRINTS = {
+    "S1": "87e7b122301f1971d9b72ba1dd47f66c7bbe84b7154f57857fa16f7acb0b7a0f",
+    "S2": "59fbf87336edc788beb0a3b2cb61134a63f840a05e78b71ceb60708bf4f53f4e",
+    "S3": "4fddc3df0abd9469ab6d7e1ecbaf7234459b62cc0ac39194275641f53fb6ff3f",
+    "S4": "3f78e81ede630e0fe24e4b0b19d268812a8bef1e8e021f6eb5548dbc55ddffcf",
+    "S5": "53478d3a3492f2d86b21bb076bb07e3364978e833c0169a719f0db1edc19ae4c",
+    "S6": "85126de28e06c94bfb2083d56fb3d9f5d857f62c99673faf708ef1f86db95df9",
+    "S7": "5f75cbcfbcb89981934bedc0fc0459c36a47167106533cd41faae4da37b8b6d2",
+    "S8": "f998456dd56c25e636d3160a772c4754073209e73d3c27ebf12c642015e2cad7",
+}
+
+EXPECTED_NAVIGATION = {
+    "S1": {
+        "services": {},
+        "articles": {
+            "S1-ARTICLE-505521C7EF8C": "https://exp76.ru/kak-rasschitat-stoimost-blagoustrojstva-sa-sotku/",
+            "S1-ARTICLE-72FBB49E67C8": "https://exp76.ru/kak-rasschitat-inzhenernoe-blagoustrojstvo-uchastka/",
+            "S1-ARTICLE-DIY-DESIGN": "https://exp76.ru/dizajn-proekt-uchastka-svoimi-rukami/",
+        },
+    },
+    "S2": {
+        "services": {
+            "S2-CHILD-POSEVNOY-GAZON": "https://exp76.ru/posevnoj-gazon-pod-kljuch/",
+            "S2-CHILD-RULONNY-GAZON": "https://exp76.ru/rulonnyj-gazon-pod-kljuch/",
+        },
+        "articles": {
+            "S2-ARTICLE-15A8258BC551": "https://exp76.ru/ustrojstvo-gazona-shema/",
+            "S2-ARTICLE-182825428CBD": "https://exp76.ru/kak-ukladyvat-rulonnyj-gazon/",
+        },
+    },
+    "S3": {
+        "services": {
+            "S3-CHILD-KRUPNOMERY": "https://exp76.ru/posadka-krupnomerov/",
+        },
+        "articles": {
+            "S3-ARTICLE-PLANTING-SCHEMES": "https://exp76.ru/normy-posadki-derevev/",
+        },
+    },
+    "S4": {
+        "services": {
+            "S4-CHILD-OBREZKA": "https://exp76.ru/obrezka-derevev-i-kustarnikov/",
+        },
+        "articles": {
+            "S4-ARTICLE-F668FF6F6190": "https://exp76.ru/shema-uhoda-za-sadom/",
+            "S4-ARTICLE-PRUNING-GUIDE": "https://exp76.ru/obrezka-derevev-shema/",
+        },
+    },
+    "S5": {
+        "services": {
+            "S5-CHILD-VYRAVNIVANIE": "https://exp76.ru/vyravnivanie-uchastka/",
+        },
+        "articles": {
+            "S5-ARTICLE-74B3B2B18DA4": "https://exp76.ru/vyravnivanie-uchastka-svoimi-rukami/",
+            "S5-ARTICLE-FF3B04A53D72": "https://exp76.ru/shema-planirovki-uchastka/",
+        },
+    },
+    "S6": {
+        "services": {},
+        "articles": {
+            "S6-ARTICLE-DIY-RETAINING-WALL": "https://exp76.ru/podpornaya-stenka-na-uchastke-svoimi-rukami/",
+        },
+    },
+    "S7": {
+        "services": {},
+        "articles": {
+            "S7-ARTICLE-DIY-LIGHTING": "https://exp76.ru/kak-sdelat-osveschenie-na-uchastke/",
+        },
+    },
+    "S8": {
+        "services": {},
+        "articles": {
+            "S8-ARTICLE-DIY-ENTRANCE": "https://exp76.ru/kak-sdelat-vezd-na-uchastok-cherez-kanavu/",
+        },
+    },
+}
+
+EXPECTED_FROZEN_LINKS = {
+    "S1": {
+        "https://exp76.ru/category/drenazh-uchastka/",
+        "https://exp76.ru/category/livnevaya-kanalizatsiya/",
+        "https://exp76.ru/category/avtopoliv-na-uchastke/",
+        "https://exp76.ru/category/ukladka-trotuarnoy-plitki/",
+    },
+    "S2": {"https://exp76.ru/category/avtopoliv-na-uchastke/"},
+    "S3": {"https://exp76.ru/category/avtopoliv-na-uchastke/"},
+    "S4": set(),
+    "S5": {
+        "https://exp76.ru/category/drenazh-uchastka/",
+        "https://exp76.ru/category/osushenie-uchastka/",
+        "https://exp76.ru/category/livnevaya-kanalizatsiya/",
+    },
+    "S6": {"https://exp76.ru/category/drenazh-uchastka/"},
+    "S7": set(),
+    "S8": {
+        "https://exp76.ru/category/drenazh-uchastka/",
+        "https://exp76.ru/category/livnevaya-kanalizatsiya/",
+    },
+}
+
+UPLOADS = "https://exp76.ru/wp-content/uploads/"
+EXPECTED_IMAGE_POOLS = {
+    "S1": {
+        UPLOADS + "2015/07/lanshaftnoe-proektirovanie.webp",
+        UPLOADS + "2019/02/IMG_20181015_110705_HDR.webp",
+        UPLOADS + "2020/10/Ila-CrwKkL4.webp",
+        UPLOADS + "2023/12/20230817_084022-1-scaled.webp",
+    },
+    "S2": {
+        UPLOADS + "2017/01/gazoni-rulonniy-posevnoy.webp",
+        UPLOADS + "2019/02/NEwk9KFYTXY.webp",
+        UPLOADS + "2020/10/20200514_085626.webp",
+    },
+    "S3": {
+        UPLOADS + "2017/01/ozelenenie.webp",
+        UPLOADS + "2020/10/20200514_085626.webp",
+    },
+    "S4": {
+        UPLOADS + "2015/07/lanshaftnoe-proektirovanie.webp",
+        UPLOADS + "2017/01/gazoni-rulonniy-posevnoy.webp",
+        UPLOADS + "2017/01/landshaftnoe-osveshenie.webp",
+        UPLOADS + "2017/01/ozelenenie.webp",
+        UPLOADS + "2018/12/uhod1.webp",
+        UPLOADS + "2018/12/uhod2.webp",
+    },
+    "S5": {
+        UPLOADS + "2015/07/lanshaftnoe-proektirovanie.webp",
+        UPLOADS + "2015/07/planirovka-territorii.webp",
+        UPLOADS + "2017/01/ozelenenie.webp",
+        UPLOADS + "2017/01/planirovka_territorii10.webp",
+        UPLOADS + "2017/01/planirovka_territorii2.webp",
+        UPLOADS + "2017/01/planirovka_territorii6.webp",
+    },
+    "S6": {
+        UPLOADS + "2015/07/Подпорные-стенки.webp",
+        *(UPLOADS + f"2015/07/podporki{index}.webp" for index in range(1, 6)),
+    },
+    "S7": {
+        UPLOADS + "2017/01/landshaftnoe-osveshenie.webp",
+        UPLOADS + "2017/01/naruzhnoe-osveshhenie_752.webp",
+        UPLOADS + "2017/01/osvescheniezdaniya.webp",
+    },
+    "S8": {
+        UPLOADS + "2018/12/vjezd.webp",
+        UPLOADS + "2018/12/vjezd2.webp",
+    },
+}
+
+EXPECTED_FACT_PATHS = {
+    "S1": {"pricing.body[0]", "pricing.calculator.note", "faq.items[4].question"},
+    "S2": {"pricing.body[0]", "pricing.factors[2].text", "faq.items[2].answer"},
+    "S3": set(),
+    "S4": set(),
+    "S5": set(),
+    "S6": set(),
+    "S7": set(),
+    "S8": set(),
+}
+
+LEGACY_RELATED_COUNTS = {
+    "S1": 4,
+    "S2": 3,
+    "S3": 3,
+    "S4": 3,
+    "S5": 3,
+    "S6": 3,
+    "S7": 3,
+    "S8": 4,
+}
+
 
 def _text_paths(value: object, path: str = "") -> list[tuple[str, str]]:
     result: list[tuple[str, str]] = []
@@ -75,9 +268,63 @@ def _text_paths(value: object, path: str = "") -> list[tuple[str, str]]:
     return result
 
 
-def schema_two_fixture(service: dict[str, object]) -> dict[str, object]:
-    """Promote a v1 payload in memory without changing committed theme content."""
+def _legacy_projection(service: dict[str, object]) -> dict[str, object]:
+    """Reconstruct the exact pre-hub payload while ignoring Task 6 additions."""
     payload = copy.deepcopy(service)
+    service_id = str(payload["service_id"])
+    payload["schema_version"] = 1
+    payload["services"] = payload.pop("scope")
+    payload["related_links"]["items"] = payload["related_links"]["items"][
+        : LEGACY_RELATED_COUNTS[service_id]
+    ]
+    for field in (
+        "page_key",
+        "page_type",
+        "articles",
+        "fact_evidence",
+        "evidence_gaps",
+        "release_id",
+        "release_status",
+        "rendered_sha256",
+    ):
+        payload.pop(field, None)
+    return payload
+
+
+def _payload_fingerprint(payload: dict[str, object]) -> str:
+    serialized = json.dumps(
+        payload,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(serialized).hexdigest()
+
+
+def _embedded_image_urls(value: object) -> set[str]:
+    urls: set[str] = set()
+    if isinstance(value, dict):
+        url = value.get("url")
+        alt = value.get("alt")
+        if isinstance(url, str) and url.startswith(UPLOADS) and isinstance(alt, str):
+            urls.add(url)
+        for item in value.values():
+            urls.update(_embedded_image_urls(item))
+    elif isinstance(value, list):
+        for item in value:
+            urls.update(_embedded_image_urls(item))
+    return urls
+
+
+def schema_two_fixture(service: dict[str, object]) -> dict[str, object]:
+    """Return a valid v2 fixture, promoting preserved v1 input when necessary."""
+    payload = copy.deepcopy(service)
+    if payload.get("schema_version") == 2:
+        payload["rendered_sha256"] = hashlib.sha256(
+            render_service(payload).encode("utf-8")
+        ).hexdigest()
+        return payload
+
     service_id = str(payload["service_id"])
     architecture = load_page_architecture(ARCHITECTURE_PATH)
     payload["schema_version"] = 2
@@ -165,6 +412,9 @@ def schema_two_fixture(service: dict[str, object]) -> dict[str, object]:
         for path, text in _text_paths(payload)
         for claim_type, claim in numeric_fact_claims(text)
     ]
+    payload["rendered_sha256"] = hashlib.sha256(
+        render_service(payload).encode("utf-8")
+    ).hexdigest()
     return payload
 
 
@@ -268,8 +518,12 @@ class ServiceV2Test(unittest.TestCase):
         service = copy.deepcopy(self.load_services()[0])
         service["hero"]["image"]["url"] = "https://example.com/unverified-image.webp"
 
-        with self.assertRaises(ContractError):
-            validate_service(service)
+        with self.assertRaisesRegex(ContractError, "must stay on exp76.ru"):
+            validate_service_v2(
+                service,
+                load_page_architecture(ARCHITECTURE_PATH),
+                load_case_catalog(CASE_CATALOG_PATH),
+            )
 
     def test_build_outputs_complete_accessible_html_for_every_service(self) -> None:
         """Catches empty production sections, broken form fallback and image accessibility regressions."""
@@ -305,9 +559,9 @@ class ServiceV2Test(unittest.TestCase):
         rendered_dir = DATA_DIR / "rendered"
         self.assertEqual(len(list(rendered_dir.glob("*.html"))), 8)
 
+        services = {str(item["slug"]): item for item in load_services_auto(DATA_DIR)}
         for json_path in sorted(DATA_DIR.glob("*.json")):
-            service = json.loads(json_path.read_text(encoding="utf-8"))
-            validate_service(service)
+            service = services[json_path.stem]
             actual = (rendered_dir / f"{service['slug']}.html").read_text(encoding="utf-8")
             self.assertEqual(actual, render_service(service), json_path.name)
 
@@ -368,6 +622,294 @@ class ServiceV2Test(unittest.TestCase):
         self.assertIn("land76_clean_post_value('source'", handler_source)
         self.assertIn("$mail_sent = @mail(", handler_source)
         self.assertIn("if (!$mail_sent)", handler_source)
+
+
+class SchemaTwoProductionDataTest(unittest.TestCase):
+    def load_sources(self) -> list[dict[str, object]]:
+        files = sorted(HUB_SOURCE_DIR.glob("*.json"))
+        self.assertEqual(8, len(files), "canonical hub source must contain S1-S8")
+        return [json.loads(path.read_text(encoding="utf-8")) for path in files]
+
+    def test_canonical_hubs_bind_exact_legacy_owners_and_content(self) -> None:
+        services = self.load_sources()
+        actual_owners = {
+            str(service["service_id"]): (
+                int(service["page_id"]),
+                int(service["parent_id"]),
+                str(service["wp_template"]),
+                str(service["slug"]),
+                str(service["canonical"]),
+            )
+            for service in services
+        }
+        expected_owners = {
+            service_id: (
+                page_id,
+                921,
+                "servicepost.php",
+                slug,
+                f"https://exp76.ru/services/{slug}/",
+            )
+            for service_id, (page_id, slug) in EXPECTED_SERVICES.items()
+        }
+        self.assertEqual(expected_owners, actual_owners)
+
+        total_words = 0
+        total_scope_cards = 0
+        for service in services:
+            service_id = str(service["service_id"])
+            self.assertEqual(2, service["schema_version"])
+            self.assertEqual(f"{service_id}-HUB", service["page_key"])
+            self.assertEqual("hub", service["page_type"])
+            self.assertEqual(RELEASE_ID, service["release_id"])
+            self.assertEqual("draft", service["release_status"])
+            scope_items = service["scope"]["items"]
+            self.assertEqual(EXPECTED_SCOPE_COUNTS[service_id], len(scope_items))
+            self.assertTrue(
+                all("url" not in item and "page_key" not in item for item in scope_items)
+            )
+            legacy = _legacy_projection(service)
+            words = count_words(legacy)
+            self.assertEqual(EXPECTED_LEGACY_WORDS[service_id], words)
+            self.assertEqual(
+                EXPECTED_LEGACY_FINGERPRINTS[service_id],
+                _payload_fingerprint(legacy),
+            )
+            total_words += words
+            total_scope_cards += len(scope_items)
+        self.assertEqual(9950, total_words)
+        self.assertEqual(39, total_scope_cards)
+
+    def test_every_hub_has_the_exact_child_and_article_destinations_once(self) -> None:
+        services = self.load_sources()
+        navigation_count = 0
+        for service in services:
+            service_id = str(service["service_id"])
+            rendered = render_service(service)
+            for field in ("services", "articles"):
+                expected = EXPECTED_NAVIGATION[service_id][field]
+                items = service[field]["items"]
+                actual = {str(item["page_key"]): str(item["url"]) for item in items}
+                self.assertEqual(expected, actual)
+                self.assertEqual(len(actual), len(items), f"duplicate {field} in {service_id}")
+                for item in items:
+                    self.assertNotEqual(item["page_key"], item["title"])
+                    self.assertGreaterEqual(len(str(item["text"]).strip()), 45)
+                    self.assertEqual(1, rendered.count(f'href="{item["url"]}"'))
+                navigation_count += len(items)
+        self.assertEqual(5, sum(len(item["services"]) for item in EXPECTED_NAVIGATION.values()))
+        self.assertEqual(13, sum(len(item["articles"]) for item in EXPECTED_NAVIGATION.values()))
+        self.assertEqual(18, navigation_count)
+
+    def test_cases_images_frozen_links_and_draft_gaps_are_exact(self) -> None:
+        services = self.load_sources()
+        frozen_universe = set().union(*EXPECTED_FROZEN_LINKS.values())
+        architecture = load_page_architecture(ARCHITECTURE_PATH)
+        for service in services:
+            service_id = str(service["service_id"])
+            self.assertEqual(
+                EXPECTED_CASES[service_id],
+                [int(case["page_id"]) for case in service["proof"]["cases"]],
+            )
+            self.assertEqual(EXPECTED_IMAGE_POOLS[service_id], _embedded_image_urls(service))
+            related_urls = {
+                str(item["url"]) for item in service["related_links"]["items"]
+            }
+            self.assertEqual(
+                EXPECTED_FROZEN_LINKS[service_id],
+                related_urls & frozen_universe,
+            )
+
+            expected_gaps = {
+                (
+                    "nonready_destination",
+                    destination_id,
+                    architecture[destination_id].publication_status,
+                )
+                for field in ("services", "articles")
+                for destination_id in EXPECTED_NAVIGATION[service_id][field]
+            }
+            if not EXPECTED_CASES[service_id]:
+                expected_gaps.add(("missing_verified_case", f"{service_id}-HUB", "missing"))
+            actual_gaps = {
+                (str(gap["kind"]), str(gap["page_key"]), str(gap["status"]))
+                for gap in service["evidence_gaps"]
+            }
+            self.assertEqual(expected_gaps, actual_gaps)
+
+    def test_numeric_claims_have_exact_main_js_evidence(self) -> None:
+        source_refs = {
+            "S1": "ftp_dump_minimal/wp-content/themes/land76wp/js/main.js#tab-project-total",
+            "S2": "ftp_dump_minimal/wp-content/themes/land76wp/js/main.js#tab-grass-total",
+        }
+        for service in self.load_sources():
+            service_id = str(service["service_id"])
+            evidence = service["fact_evidence"]
+            self.assertEqual(EXPECTED_FACT_PATHS[service_id], {item["path"] for item in evidence})
+            if service_id in source_refs:
+                self.assertEqual({source_refs[service_id]}, {item["source_ref"] for item in evidence})
+            else:
+                self.assertEqual([], evidence)
+
+            expected_claims = {
+                (path, claim_type, claim)
+                for path, text in _text_paths(service)
+                if not path.startswith("fact_evidence[")
+                for claim_type, claim in numeric_fact_claims(text)
+            }
+            actual_claims = {
+                (str(item["path"]), str(item["claim_type"]), str(item["claim"]))
+                for item in evidence
+            }
+            self.assertEqual(expected_claims, actual_claims)
+
+    def test_synced_json_html_and_bound_sha256_are_identical(self) -> None:
+        source_services = {
+            str(service["service_id"]): service for service in self.load_sources()
+        }
+        installed_files = sorted(DATA_DIR.glob("*.json"))
+        self.assertEqual(8, len(installed_files))
+        for installed_path in installed_files:
+            installed = json.loads(installed_path.read_text(encoding="utf-8"))
+            service_id = str(installed["service_id"])
+            self.assertEqual(source_services[service_id], installed)
+            rendered_bytes = (DATA_DIR / "rendered" / f'{installed["slug"]}.html').read_bytes()
+            self.assertEqual(render_service(installed).encode("utf-8"), rendered_bytes)
+            self.assertRegex(str(installed["rendered_sha256"]), r"^[0-9a-f]{64}$")
+            self.assertEqual(
+                installed["rendered_sha256"], hashlib.sha256(rendered_bytes).hexdigest()
+            )
+
+    def test_generated_hub_sources_and_fragments_are_checkout_stable_lf(self) -> None:
+        generated_paths = [
+            *sorted(HUB_SOURCE_DIR.glob("*.json")),
+            *sorted(DATA_DIR.glob("*.json")),
+            *sorted((DATA_DIR / "rendered").glob("*.html")),
+        ]
+        relative_paths = [path.relative_to(ROOT).as_posix() for path in generated_paths]
+        result = subprocess.run(
+            ["git", "check-attr", "eol", "--", *relative_paths],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        attributes = {
+            line.rsplit(": eol: ", 1)[0]: line.rsplit(": eol: ", 1)[1]
+            for line in result.stdout.splitlines()
+            if ": eol: " in line
+        }
+        self.assertEqual(set(relative_paths), set(attributes))
+        self.assertEqual({"lf"}, set(attributes.values()))
+        for path in generated_paths:
+            self.assertNotIn(b"\r\n", path.read_bytes(), str(path))
+
+    def test_renderer_uses_semantic_accessible_links_and_omits_empty_proof(self) -> None:
+        linked_cards = 0
+        scope_cards = 0
+        for service in self.load_sources():
+            service_id = str(service["service_id"])
+            rendered = render_service(service)
+            self.assertIn('data-schema-version="2"', rendered)
+            self.assertNotIn("onclick=", rendered.casefold())
+            scope_cards += rendered.count('<article class="service-v2__card">')
+            linked_cards += rendered.count(
+                '<a class="service-v2__card service-v2__card--linked"'
+            )
+            if EXPECTED_CASES[service_id]:
+                self.assertIn('id="service-v2-cases"', rendered)
+                self.assertIn('href="#service-v2-cases"', rendered)
+            else:
+                self.assertNotIn('id="service-v2-cases"', rendered)
+                self.assertNotIn('href="#service-v2-cases"', rendered)
+        self.assertEqual(39, scope_cards)
+        self.assertEqual(18, linked_cards)
+
+        css = (THEME / "css" / "service-v2.css").read_text(encoding="utf-8")
+        self.assertIn(".service-v2__card--linked:focus-visible", css)
+        self.assertIn("@media (prefers-reduced-motion: reduce)", css)
+        self.assertRegex(css, r"@media\s*\(max-width:")
+
+    def test_php_loader_fails_closed_and_templates_cached_verified_bytes(self) -> None:
+        helper = (THEME / "inc" / "service-v2.php").read_text(encoding="utf-8")
+        template = (THEME / "inc" / "service-v2-template.php").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("is_readable($css_path)", helper)
+        self.assertIn("file_get_contents($rendered_path)", helper)
+        self.assertIn("hash('sha256', $rendered_html)", helper)
+        self.assertIn("hash_equals(", helper)
+        self.assertIn("data-schema-version=\"2\"", helper)
+        self.assertIn("$schema_version === 1", helper)
+        self.assertIn("strpos($rendered_html, 'data-schema-version=\"2\"')", helper)
+        self.assertIn("$payload['release_status'] === 'ready'", helper)
+        self.assertIn("$payload['_rendered_html']", helper)
+        self.assertNotIn("readfile", template)
+        self.assertIn("$service_v2['_rendered_html']", template)
+
+    def test_php_loader_binds_v2_payload_and_root_to_the_exact_page_owner(self) -> None:
+        attacker = copy.deepcopy(
+            next(
+                service
+                for service in self.load_sources()
+                if service["service_id"] == "S2"
+            )
+        )
+        s1_page_id, s1_slug = EXPECTED_SERVICES["S1"]
+        attacker.update(
+            page_id=s1_page_id,
+            slug=s1_slug,
+            canonical=f"https://exp76.ru/services/{s1_slug}/",
+            release_status="ready",
+        )
+        attacker_html = render_service(attacker)
+        attacker["rendered_sha256"] = hashlib.sha256(
+            attacker_html.encode("utf-8")
+        ).hexdigest()
+
+        self.assertEqual("S2-HUB", attacker["page_key"])
+        self.assertIn('data-service-id="S2" data-schema-version="2"', attacker_html)
+        self.assertEqual(
+            attacker["rendered_sha256"],
+            hashlib.sha256(attacker_html.encode("utf-8")).hexdigest(),
+        )
+
+        helper = (THEME / "inc" / "service-v2.php").read_text(encoding="utf-8")
+        self.assertIn(
+            "673 => array('slug' => 'landshaftnoe-proektirovanie', 'service_id' => 'S1')",
+            helper,
+        )
+        self.assertIn("$payload['service_id'] === $expected_service_id", helper)
+        self.assertIn("$payload['page_key'] === $expected_service_id . '-HUB'", helper)
+        self.assertIn("strpos($rendered_html, $expected_root_marker) !== 0", helper)
+
+    def test_php_loader_binds_legacy_service_id_in_the_common_owner_gate(self) -> None:
+        s2 = next(
+            service for service in self.load_sources() if service["service_id"] == "S2"
+        )
+        attacker = _legacy_projection(s2)
+        s1_page_id, s1_slug = EXPECTED_SERVICES["S1"]
+        attacker.update(
+            page_id=s1_page_id,
+            slug=s1_slug,
+            canonical=f"https://exp76.ru/services/{s1_slug}/",
+        )
+        attacker_html = render_service(attacker).replace(
+            'data-service-id="S2"', 'data-service-id="S1"', 1
+        )
+
+        self.assertEqual("S2", attacker["service_id"])
+        self.assertTrue(attacker_html.startswith('<div class="service-v2" data-service-id="S1"'))
+        helper = (THEME / "inc" / "service-v2.php").read_text(encoding="utf-8")
+        common_owner_gate = helper.split("$schema_version =", 1)[0]
+        self.assertIn("$payload['service_id']", common_owner_gate)
+        self.assertIn(
+            "$payload['service_id'] === $expected_service_id", common_owner_gate
+        )
 
 
 class SchemaTwoSyncTest(unittest.TestCase):
@@ -474,6 +1016,13 @@ class SchemaTwoSyncTest(unittest.TestCase):
         service["hero"]["image"] = copy.deepcopy(s1["hero"]["image"])
 
         with self.assertRaisesRegex(ContractError, "verified catalog images for S8"):
+            validate_service_v2(service, self.architecture, self.cases)
+
+    def test_schema_two_rejects_stale_rendered_fragment_hash(self) -> None:
+        service = schema_two_fixture(self.v1_services[0])
+        service["hero"]["lead"] += " Изменение после генерации фрагмента."
+
+        with self.assertRaisesRegex(ContractError, "rendered_sha256 does not match"):
             validate_service_v2(service, self.architecture, self.cases)
 
     def test_sync_writes_only_eight_slug_json_and_html_outputs(self) -> None:

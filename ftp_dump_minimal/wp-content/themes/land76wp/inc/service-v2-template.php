@@ -4,7 +4,8 @@
 if (!defined('ABSPATH')) {
   exit;
 }
-$land76_service_v2_path = land76_service_v2_rendered_path();
-if ($land76_service_v2_path && is_readable($land76_service_v2_path)) {
-  readfile($land76_service_v2_path);
+$service_v2 = land76_service_v2_current();
+if ($service_v2 && isset($service_v2['_rendered_html'])) {
+  // Generated HTML bytes were read and verified once by the fail-closed loader.
+  echo $service_v2['_rendered_html'];
 }

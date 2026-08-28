@@ -31,6 +31,19 @@ PLACEHOLDER_PATTERNS = (
     "по запросу",
 )
 
+LEGACY_SHARED_RELATED_TEXT = (
+    "Форма для предварительного обращения по работам на вашем участке."
+)
+LEGACY_SHARED_RELATED_FINGERPRINT = (
+    "форма для предварительного обращения по работам на вашем участке"
+)
+LEGACY_SHARED_RELATED_LOCATIONS = frozenset(
+    {
+        ("S4-HUB", "related_links.items[2].text"),
+        ("S5-HUB", "related_links.items[2].text"),
+    }
+)
+
 SERVICE_SOURCE_SLUGS = {
     "S1": "landshaftnoe-proektirovanie",
     "S2": "gazon-posevnojj-i-gazon-rulonnyjj",
@@ -741,7 +754,7 @@ def _normalized_fingerprint(value: str) -> str:
     return " ".join(re.findall(r"[0-9a-zа-я]+", folded))
 
 
-def _paragraph_candidates(data: Mapping[str, Any]) -> Iterable[str]:
+def _paragraph_candidates(data: Mapping[str, Any]) -> Iterable[tuple[str, str]]:
     for path, text in _text_leaves(data):
         if len(_normalized_fingerprint(text)) < 45:
             continue
@@ -753,7 +766,23 @@ def _paragraph_candidates(data: Mapping[str, Any]) -> Iterable[str]:
             (".title", ".heading", ".label", ".question", ".button_label")
         ):
             continue
-        yield text
+        yield path, text
+
+
+def _is_allowed_legacy_paragraph_duplicate(
+    fingerprint: str,
+    occurrences: list[tuple[str, str, str]],
+) -> bool:
+    """Allow only the exact S4/S5 copy already shared before schema v2."""
+    return (
+        len(occurrences) == 2
+        and fingerprint == LEGACY_SHARED_RELATED_FINGERPRINT
+        and all(text == LEGACY_SHARED_RELATED_TEXT for _, _, text in occurrences)
+        and frozenset(
+            (page_key, path) for page_key, path, _ in occurrences
+        )
+        == LEGACY_SHARED_RELATED_LOCATIONS
+    )
 
 
 def validate_content_collection(
@@ -773,7 +802,7 @@ def validate_content_collection(
         "seo.description": [],
         "hero.title": [],
     }
-    paragraphs: list[str] = []
+    paragraphs: dict[str, list[tuple[str, str, str]]] = {}
     for page in page_list:
         fields["canonical"].append(str(page.data.get("canonical", "")))
         seo = page.data.get("seo")
@@ -785,14 +814,20 @@ def validate_content_collection(
         fields["hero.title"].append(
             str(hero.get("title", "")) if isinstance(hero, Mapping) else ""
         )
-        paragraphs.extend(_paragraph_candidates(page.data))
+        page_key = str(page.data.get("page_key", ""))
+        for path, text in _paragraph_candidates(page.data):
+            fingerprint = _normalized_fingerprint(text)
+            paragraphs.setdefault(fingerprint, []).append((page_key, path, text))
     for field, values in fields.items():
         fingerprints = [_normalized_fingerprint(value) for value in values if value]
         if len(fingerprints) != len(set(fingerprints)):
             label = "H1" if field == "hero.title" else field
             errors.append(f"duplicate normalized {label} across content pages")
-    paragraph_fingerprints = [_normalized_fingerprint(value) for value in paragraphs]
-    if len(paragraph_fingerprints) != len(set(paragraph_fingerprints)):
+    if any(
+        len(occurrences) > 1
+        and not _is_allowed_legacy_paragraph_duplicate(fingerprint, occurrences)
+        for fingerprint, occurrences in paragraphs.items()
+    ):
         errors.append("repeated paragraph fingerprint across content pages")
 
     cluster_counts: dict[str, int] = {}

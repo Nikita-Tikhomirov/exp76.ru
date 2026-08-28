@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import html
 import json
 import os
@@ -312,6 +313,7 @@ def validate_service_v2(
         "evidence_gaps",
         "release_id",
         "release_status",
+        "rendered_sha256",
     ):
         legacy.pop(field, None)
     validate_service(legacy)
@@ -324,6 +326,15 @@ def validate_service_v2(
     )
     if errors:
         raise ContractError(f"{service_id} schema-v2 contract: {'; '.join(errors)}")
+
+    rendered_sha256 = service.get("rendered_sha256")
+    if not isinstance(rendered_sha256, str) or re.fullmatch(
+        r"[0-9a-f]{64}", rendered_sha256
+    ) is None:
+        raise ContractError(f"{service_id}.rendered_sha256 must be a lowercase SHA-256")
+    expected_sha256 = hashlib.sha256(render_service(service).encode("utf-8")).hexdigest()
+    if rendered_sha256 != expected_sha256:
+        raise ContractError(f"{service_id}.rendered_sha256 does not match rendered HTML")
 
 
 def _is_link_or_reparse_point(path: Path) -> bool:
@@ -504,7 +515,11 @@ def render_service(service: dict[str, Any]) -> str:
     related = service["related_links"]
     cta = service["cta"]
 
-    output: list[str] = [f'<div class="service-v2" data-service-id="{service_id}">']
+    schema_version = 2 if schema_two else 1
+    output: list[str] = [
+        f'<div class="service-v2" data-service-id="{service_id}" '
+        f'data-schema-version="{schema_version}">'
+    ]
     output.extend(
         [
             '<section class="service-v2__hero">',
@@ -721,7 +736,7 @@ def render_service(service: dict[str, Any]) -> str:
 
 
 def build_services(data_dir: Path, output_dir: Path) -> dict[str, int]:
-    services = load_services(data_dir)
+    services = load_services_auto(data_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     for stale in output_dir.glob("*.html"):
         stale.unlink()

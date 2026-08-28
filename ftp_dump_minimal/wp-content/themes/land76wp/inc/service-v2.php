@@ -12,14 +12,14 @@ if (!defined('ABSPATH')) {
 }
 function land76_service_v2_owners() {
   return array(
-    673 => 'landshaftnoe-proektirovanie',
-    6868 => 'gazon-posevnojj-i-gazon-rulonnyjj',
-    6871 => 'posadka-derevev-i-kustarnikov',
-    9357 => 'ukhod-za-sadom',
-    667 => 'planirovka-territorii',
-    676 => 'podpornye-stenki',
-    6918 => 'ulichnoe-osveshhenie-uchastka',
-    9282 => 'vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch',
+    673 => array('slug' => 'landshaftnoe-proektirovanie', 'service_id' => 'S1'),
+    6868 => array('slug' => 'gazon-posevnojj-i-gazon-rulonnyjj', 'service_id' => 'S2'),
+    6871 => array('slug' => 'posadka-derevev-i-kustarnikov', 'service_id' => 'S3'),
+    9357 => array('slug' => 'ukhod-za-sadom', 'service_id' => 'S4'),
+    667 => array('slug' => 'planirovka-territorii', 'service_id' => 'S5'),
+    676 => array('slug' => 'podpornye-stenki', 'service_id' => 'S6'),
+    6918 => array('slug' => 'ulichnoe-osveshhenie-uchastka', 'service_id' => 'S7'),
+    9282 => array('slug' => 'vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch', 'service_id' => 'S8'),
   );
 }
 
@@ -41,7 +41,8 @@ function land76_service_v2_load($page_id) {
     return null;
   }
 
-  $expected_slug = $owners[$page_id];
+  $expected_slug = $owners[$page_id]['slug'];
+  $expected_service_id = $owners[$page_id]['service_id'];
   $actual_slug = (string) get_post_field('post_name', $page_id);
   $actual_template = (string) get_page_template_slug($page_id);
   $actual_parent = (int) wp_get_post_parent_id($page_id);
@@ -52,18 +53,26 @@ function land76_service_v2_load($page_id) {
   $content_directory = land76_service_v2_content_directory();
   $json_path = $content_directory . '/' . $expected_slug . '.json';
   $rendered_path = $content_directory . '/rendered/' . $expected_slug . '.html';
-  if (!is_readable($json_path) || !is_readable($rendered_path)) {
+  $css_path = get_template_directory() . '/css/service-v2.css';
+  if (!is_readable($json_path) || !is_readable($rendered_path) || !is_readable($css_path)) {
     return null;
   }
 
-  $payload = json_decode(file_get_contents($json_path), true);
-  if (!is_array($payload)) {
+  $json_bytes = file_get_contents($json_path);
+  $rendered_html = file_get_contents($rendered_path);
+  if ($json_bytes === false || $rendered_html === false || $rendered_html === '') {
+    return null;
+  }
+
+  $payload = json_decode($json_bytes, true);
+  if (!is_array($payload) || json_last_error() !== JSON_ERROR_NONE) {
     return null;
   }
 
   $expected_canonical = 'https://exp76.ru/services/' . $expected_slug . '/';
-  $is_valid = isset(
+  $is_valid_owner = isset(
     $payload['schema_version'],
+    $payload['service_id'],
     $payload['page_id'],
     $payload['parent_id'],
     $payload['wp_template'],
@@ -73,18 +82,59 @@ function land76_service_v2_load($page_id) {
     $payload['seo']['description'],
     $payload['hero']['image']['url']
   )
-    && (int) $payload['schema_version'] === 1
+    && $payload['service_id'] === $expected_service_id
     && (int) $payload['page_id'] === $page_id
     && (int) $payload['parent_id'] === 921
     && $payload['wp_template'] === 'servicepost.php'
     && $payload['slug'] === $expected_slug
     && $payload['canonical'] === $expected_canonical;
 
-  if (!$is_valid) {
+  if (!$is_valid_owner) {
+    return null;
+  }
+
+  $schema_version = (int) $payload['schema_version'];
+  if ($schema_version === 1) {
+    // A schema-v1 JSON file must never activate a partially deployed v2 fragment.
+    $expected_root_prefix = '<div class="service-v2" data-service-id="' . $expected_service_id . '"';
+    if (
+      strpos($rendered_html, $expected_root_prefix) !== 0
+      || strpos($rendered_html, 'data-schema-version="2"') !== false
+    ) {
+      return null;
+    }
+  } elseif ($schema_version === 2) {
+    $is_valid_hub = isset(
+      $payload['service_id'],
+      $payload['page_key'],
+      $payload['page_type'],
+      $payload['release_status'],
+      $payload['rendered_sha256']
+    )
+      && $payload['page_key'] === $expected_service_id . '-HUB'
+      && $payload['page_type'] === 'hub'
+      && $payload['release_status'] === 'ready'
+      && is_string($payload['rendered_sha256'])
+      && preg_match('/\A[0-9a-f]{64}\z/D', $payload['rendered_sha256']) === 1;
+    if (!$is_valid_hub) {
+      return null;
+    }
+
+    $expected_root_marker = '<div class="service-v2" data-service-id="' . $expected_service_id . '" data-schema-version="2">';
+    if (strpos($rendered_html, $expected_root_marker) !== 0) {
+      return null;
+    }
+
+    $actual_rendered_sha256 = hash('sha256', $rendered_html);
+    if (!hash_equals($payload['rendered_sha256'], $actual_rendered_sha256)) {
+      return null;
+    }
+  } else {
     return null;
   }
 
   $payload['_rendered_path'] = $rendered_path;
+  $payload['_rendered_html'] = $rendered_html;
   $cache[$page_id] = $payload;
   return $payload;
 }
@@ -126,12 +176,13 @@ function land76_service_v2_hero_image_url($fallback = '') {
 }
 
 function land76_service_v2_enqueue_assets() {
-  if (!land76_service_v2_current()) {
+  $service = land76_service_v2_current();
+  if (!$service) {
     return;
   }
 
-  $path = get_template_directory() . '/css/service-v2.css';
-  if (!is_readable($path)) {
+  $css_path = get_template_directory() . '/css/service-v2.css';
+  if (!is_readable($css_path)) {
     return;
   }
 
@@ -139,7 +190,7 @@ function land76_service_v2_enqueue_assets() {
     'land76-service-v2',
     get_template_directory_uri() . '/css/service-v2.css',
     array('style2'),
-    filemtime($path)
+    filemtime($css_path)
   );
 }
 

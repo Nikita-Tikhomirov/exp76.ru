@@ -281,6 +281,23 @@
   min-width: 0;
 }
 
+.service-v2__card--linked {
+  color: inherit;
+  text-decoration: none;
+  transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.service-v2__card--linked:hover {
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+  color: inherit;
+  transform: translateY(-2px);
+}
+
+.service-v2__card--linked:focus-visible {
+  outline: 3px solid var(--service-v2-orange);
+  outline-offset: 4px;
+}
+
 .service-v2__card-image,
 .service-v2__case-image {
   aspect-ratio: 16 / 10;
@@ -299,6 +316,20 @@
 
 .service-v2__card-body p,
 .service-v2__case-body p {
+  color: var(--service-v2-muted);
+  line-height: 1.6;
+}
+
+.service-v2__card-title {
+  color: var(--service-v2-green);
+  font-family: "Poiret One", "Trebuchet MS", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.service-v2__card--linked .service-v2__card-body > span:last-child {
   color: var(--service-v2-muted);
   line-height: 1.6;
 }

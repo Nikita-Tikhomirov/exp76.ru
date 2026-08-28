@@ -29,6 +29,10 @@ PAGE_ARCHITECTURE_PATH = (
 )
 CASE_CATALOG_PATH = ROOT / "seo-content" / "service-hubs" / "case-catalog.json"
 RELEASE_MANIFEST_PATH = ROOT / "seo-content" / "service-hubs" / "release-manifest.json"
+HUB_SOURCE_DIR = ROOT / "seo-content" / "service-hubs" / "hubs"
+LEGACY_SHARED_RELATED_TEXT = (
+    "Форма для предварительного обращения по работам на вашем участке."
+)
 
 ARCHITECTURE = {
     "S1-HUB": PageDestination(
@@ -968,6 +972,68 @@ class ContentContractTest(unittest.TestCase):
         )
 
         self.assertIn("duplicate normalized seo.description across content pages", errors)
+
+    def test_collection_accepts_only_the_exact_preserved_s4_s5_legacy_duplicate(self) -> None:
+        architecture = load_page_architecture(PAGE_ARCHITECTURE_PATH)
+        cases = load_case_catalog(CASE_CATALOG_PATH)
+        pages = [
+            load_content_page(path) for path in sorted(HUB_SOURCE_DIR.glob("*.json"))
+        ]
+
+        self.assertEqual([], validate_content_collection(pages, architecture, cases))
+
+    def test_legacy_duplicate_policy_rejects_another_owner_or_path(self) -> None:
+        architecture = load_page_architecture(PAGE_ARCHITECTURE_PATH)
+        cases = load_case_catalog(CASE_CATALOG_PATH)
+        by_key = {
+            str(page.data["page_key"]): page
+            for page in (
+                load_content_page(path)
+                for path in sorted(HUB_SOURCE_DIR.glob("*.json"))
+            )
+        }
+
+        s1 = copy.deepcopy(by_key["S1-HUB"].data)
+        s4 = copy.deepcopy(by_key["S4-HUB"].data)
+        s1["related_links"]["items"][2]["text"] = LEGACY_SHARED_RELATED_TEXT
+        owner_errors = validate_content_collection(
+            [load_memory_page("S1.json", s1), load_memory_page("S4.json", s4)],
+            architecture,
+            cases,
+        )
+        self.assertIn("repeated paragraph fingerprint across content pages", owner_errors)
+
+        s4 = copy.deepcopy(by_key["S4-HUB"].data)
+        s5 = copy.deepcopy(by_key["S5-HUB"].data)
+        s4["intro"]["body"][0] = LEGACY_SHARED_RELATED_TEXT
+        s5["intro"]["body"][0] = LEGACY_SHARED_RELATED_TEXT
+        path_errors = validate_content_collection(
+            [load_memory_page("S4.json", s4), load_memory_page("S5.json", s5)],
+            architecture,
+            cases,
+        )
+        self.assertIn("repeated paragraph fingerprint across content pages", path_errors)
+
+    def test_legacy_duplicate_policy_rejects_changed_copy(self) -> None:
+        architecture = load_page_architecture(PAGE_ARCHITECTURE_PATH)
+        cases = load_case_catalog(CASE_CATALOG_PATH)
+        by_key = {
+            str(page.data["page_key"]): page
+            for page in (
+                load_content_page(path)
+                for path in sorted(HUB_SOURCE_DIR.glob("*.json"))
+            )
+        }
+        changed = LEGACY_SHARED_RELATED_TEXT + " Изменённая версия."
+        pages = []
+        for page_key in ("S4-HUB", "S5-HUB"):
+            data = copy.deepcopy(by_key[page_key].data)
+            data["related_links"]["items"][2]["text"] = changed
+            pages.append(load_memory_page(f"{page_key}.json", data))
+
+        errors = validate_content_collection(pages, architecture, cases)
+
+        self.assertIn("repeated paragraph fingerprint across content pages", errors)
 
     def test_collection_rejects_cluster_owned_by_two_destinations(self) -> None:
         architecture = dict(ARCHITECTURE)
