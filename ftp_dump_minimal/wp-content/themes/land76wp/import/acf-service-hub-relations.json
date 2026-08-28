@@ -1,0 +1,66 @@
+[
+  {
+    "key": "group_land76_service_hub_category_relations",
+    "title": "Service hub grouping relations",
+    "fields": [
+      {
+        "key": "field_land76_selected_works_posts",
+        "label": "Selected verified works",
+        "name": "selected_works_posts",
+        "type": "relationship",
+        "instructions": "Select existing published case pages only.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {"width": "", "class": "", "id": ""},
+        "post_type": ["page"],
+        "post_status": ["publish"],
+        "taxonomy": [],
+        "filters": ["search"],
+        "return_format": "id",
+        "min": 0,
+        "max": 0,
+        "elements": ["featured_image"]
+      }
+    ],
+    "location": [[{"param": "taxonomy", "operator": "==", "value": "category"}]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": ""
+  },
+  {
+    "key": "group_land76_service_hub_post_relations",
+    "title": "Service hub verified projects",
+    "fields": [
+      {
+        "key": "field_land76_selected_real_projects",
+        "label": "Selected verified projects",
+        "name": "selected_real_projects",
+        "type": "relationship",
+        "instructions": "Select existing published case pages only.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {"width": "", "class": "", "id": ""},
+        "post_type": ["page"],
+        "post_status": ["publish"],
+        "taxonomy": [],
+        "filters": ["search"],
+        "return_format": "id",
+        "min": 0,
+        "max": 0,
+        "elements": ["featured_image"]
+      }
+    ],
+    "location": [[{"param": "post_taxonomy", "operator": "==", "value": "category:74"}]],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": ""
+  }
+]

@@ -8,6 +8,133 @@ function land76_is_indexable_service_category() {
     return is_category(land76_indexable_service_category_ids());
 }
 
+function land76_is_owned_service_hub_grouping_term($term, array $hub) {
+    if (!$term instanceof WP_Term
+        || $term->taxonomy !== 'category'
+        || !isset($hub['service_id'], $hub['grouping_slug'], $hub['canonical'], $hub['archive_policy'])
+        || !hash_equals((string) $hub['grouping_slug'], (string) $term->slug)
+        || !function_exists('land76wp_service_hubs_expected_release_id')
+        || !function_exists('land76wp_service_hubs_import_owner')
+        || !function_exists('land76wp_service_hubs_term_checksum')) {
+        return false;
+    }
+
+    $release_id = (string) get_term_meta($term->term_id, '_land76_release_id', true);
+    $manifest_sha256 = (string) get_term_meta($term->term_id, '_land76_manifest_sha256', true);
+    if (!hash_equals(land76wp_service_hubs_expected_release_id(), $release_id)
+        || !preg_match('/^[a-f0-9]{64}$/', $manifest_sha256)
+        || hash_equals(str_repeat('0', 64), $manifest_sha256)) {
+        return false;
+    }
+
+    $service_id = (string) $hub['service_id'];
+    $expected = array(
+        '_land76_release_id' => $release_id,
+        '_land76_manifest_sha256' => $manifest_sha256,
+        '_land76_page_key' => $service_id . '-GROUPING',
+        '_land76_service_id' => $service_id,
+        '_land76_topic_key' => $service_id,
+        '_land76_canonical' => (string) $hub['canonical'],
+        '_land76_hub_url' => (string) $hub['canonical'],
+        '_land76_archive_policy' => (string) $hub['archive_policy'],
+        '_land76_import_owner' => land76wp_service_hubs_import_owner(),
+        '_land76_import_checksum' => land76wp_service_hubs_term_checksum($hub, $release_id, $manifest_sha256),
+    );
+    foreach ($expected as $meta_key => $expected_value) {
+        if (!hash_equals((string) $expected_value, (string) get_term_meta($term->term_id, $meta_key, true))) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function land76_service_hub_grouping_for_current_archive() {
+    if (!is_category() || !function_exists('land76wp_service_hub_by_grouping_slug')) {
+        return null;
+    }
+
+    $term = get_queried_object();
+    if (!$term instanceof WP_Term || $term->taxonomy !== 'category') {
+        return null;
+    }
+
+    $hub = land76wp_service_hub_by_grouping_slug($term->slug);
+    return $hub !== null && land76_is_owned_service_hub_grouping_term($term, $hub) ? $hub : null;
+}
+
+function land76_redirect_service_hub_grouping_archive() {
+    $hub = land76_service_hub_grouping_for_current_archive();
+    if ($hub === null || $hub['archive_policy'] !== 'redirect_to_hub') {
+        return;
+    }
+
+    wp_safe_redirect($hub['canonical'], 301, 'land76-service-hubs');
+    exit;
+}
+add_action('template_redirect', 'land76_redirect_service_hub_grouping_archive', 1);
+
+function land76_filter_service_hub_grouping_canonical($canonical) {
+    $hub = land76_service_hub_grouping_for_current_archive();
+    return $hub === null ? $canonical : $hub['canonical'];
+}
+add_filter('redirect_canonical', 'land76_filter_service_hub_grouping_canonical', 20);
+add_filter('aioseo_canonical_url', 'land76_filter_service_hub_grouping_canonical', 20);
+
+function land76_service_hub_grouping_term_ids() {
+    $term_ids = array();
+    if (!function_exists('land76wp_service_hub_registry')) {
+        return $term_ids;
+    }
+    foreach (land76wp_service_hub_registry() as $hub) {
+        $term = get_term_by('slug', $hub['grouping_slug'], 'category');
+        if ($term instanceof WP_Term && land76_is_owned_service_hub_grouping_term($term, $hub)) {
+            $term_ids[] = (int) $term->term_id;
+        }
+    }
+
+    return array_values(array_unique($term_ids));
+}
+
+function land76_exclude_service_hub_groupings_from_core_sitemap($args, $taxonomy) {
+    if ($taxonomy !== 'category') {
+        return $args;
+    }
+
+    $excluded = isset($args['exclude']) && is_array($args['exclude']) ? array_map('intval', $args['exclude']) : array();
+    $excluded = array_merge($excluded, land76_service_hub_grouping_term_ids());
+    $args['exclude'] = array_values(array_unique($excluded));
+
+    return $args;
+}
+add_filter('wp_sitemaps_taxonomies_query_args', 'land76_exclude_service_hub_groupings_from_core_sitemap', 20, 2);
+
+function land76_exclude_service_hub_grouping_entries_from_aioseo_sitemap($entries) {
+    if (!is_array($entries)) {
+        return $entries;
+    }
+
+    $blocked_urls = array();
+    foreach (land76_service_hub_grouping_term_ids() as $term_id) {
+        $term_url = get_term_link($term_id, 'category');
+        if (!is_wp_error($term_url)) {
+            $blocked_urls[] = trailingslashit($term_url);
+        }
+    }
+
+    $filtered = array();
+    foreach ($entries as $entry) {
+        $entry_url = is_array($entry) && !empty($entry['loc']) ? trailingslashit($entry['loc']) : '';
+        if ($entry_url !== '' && in_array($entry_url, $blocked_urls, true)) {
+            continue;
+        }
+        $filtered[] = $entry;
+    }
+
+    return $filtered;
+}
+add_filter('aioseo_sitemap_terms', 'land76_exclude_service_hub_grouping_entries_from_aioseo_sitemap', 20);
+
 function land76_service_category_descriptions() {
     return array(
         87 => 'Дренаж участка под ключ в Рыбинске, Ярославле и области: проектирование, монтаж глубинных и поверхностных систем, защита дома от воды.',
