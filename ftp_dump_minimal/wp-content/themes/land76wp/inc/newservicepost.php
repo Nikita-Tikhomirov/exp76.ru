@@ -628,6 +628,22 @@ $ns87_estimate_items = function_exists('get_field') ? get_field('ns87_estimate_i
 $ns87_estimate_total = function_exists('get_field') ? get_field('ns87_estimate_total', $ns87_post_context) : '';
 $ns87_faq_title = function_exists('get_field') ? get_field('ns87_faq_title', $ns87_post_context) : '';
 $ns87_faq_items = function_exists('get_field') ? get_field('ns87_faq_items', $ns87_post_context) : array();
+$ns87_parent_hub = $land76_managed_service_hub_post && function_exists('land76wp_service_hub_for_post')
+    ? land76wp_service_hub_for_post($ns87_post_context)
+    : null;
+$ns87_parent_hub_id = is_array($ns87_parent_hub) && isset($ns87_parent_hub['hub_post_id'])
+    ? (int) $ns87_parent_hub['hub_post_id']
+    : 0;
+$ns87_parent_hub_url = is_array($ns87_parent_hub) && isset($ns87_parent_hub['canonical'])
+    ? (string) $ns87_parent_hub['canonical']
+    : '';
+$ns87_parent_hub_title = $ns87_parent_hub_id ? get_the_title($ns87_parent_hub_id) : '';
+$ns87_related_services = $land76_managed_service_hub_post && function_exists('get_field')
+    ? get_field('blogseo_related_services', $ns87_post_context)
+    : array();
+if (!is_array($ns87_related_services)) {
+    $ns87_related_services = array();
+}
 
 if (!function_exists('land76_newservice_selected_real_projects')) {
     function land76_newservice_selected_real_projects($post_id)
@@ -866,7 +882,7 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
 <!-- 1. Hero блок -->
 <section class="hero">
   <div class="hero__scene" id="scene">
-    <div class="hero__bg" data-depth="0.4"></div>
+    <div class="hero__bg" data-depth="0.4"<?php if ($ns87_main_image_url !== '') : ?> style="background-image: url('<?php echo esc_url($ns87_main_image_url); ?>');"<?php endif; ?>></div>
   </div>
   <div class="hero__content wrapper">
     <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800"><?php echo esc_html($ns87_hero_title ? $ns87_hero_title : get_the_title()); ?>
@@ -876,8 +892,11 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
       <a href="<?php echo esc_url($ns87_hero_btn_primary_url ? $ns87_hero_btn_primary_url : '#calc'); ?>" class="hero__btn"><?php echo esc_html($ns87_hero_btn_primary_text ? $ns87_hero_btn_primary_text : 'Рассчитать стоимость'); ?></a>
       <a href="<?php echo esc_url($ns87_hero_btn_secondary_url ? $ns87_hero_btn_secondary_url : '#consultation'); ?>" class="hero__btn openPopup" data-modal="#popup" style="margin-left: 15px;"><?php echo esc_html($ns87_hero_btn_secondary_text ? $ns87_hero_btn_secondary_text : 'Получить консультацию'); ?></a>
     </div>
-    <div class="hero__breadcramps"><a class="hero__home" href="<?php echo get_home_url(); ?>">Компания "Эксперты"
-        | </a><span class="hero__active-page"><?php echo esc_html($ns87_breadcrumb_title); ?></span></div>
+    <div class="hero__breadcramps"><a class="hero__home" href="<?php echo esc_url(get_home_url('/')); ?>">Компания «Эксперты»</a>
+      <?php if ($ns87_parent_hub_url !== '' && $ns87_parent_hub_title !== '') : ?>
+        <span aria-hidden="true"> | </span><a href="<?php echo esc_url($ns87_parent_hub_url); ?>"><?php echo esc_html($ns87_parent_hub_title); ?></a>
+      <?php endif; ?>
+      <span aria-hidden="true"> | </span><span class="hero__active-page"><?php echo esc_html($ns87_breadcrumb_title); ?></span></div>
   </div>
 
   <div class="animation-wrap"><img style="margin-left:100px" class="animation-wrap__img"
@@ -950,7 +969,9 @@ Poiret One
     <?php the_content(); ?>
   </div>
 </section>
-<!-- 5. Кейсы -->
+<?php $ns87_selected_projects = land76_newservice_selected_real_projects(get_the_ID()); ?>
+<?php if (!empty($ns87_selected_projects)) : ?>
+<!-- 5. Подтверждённые кейсы -->
 <section class="services wrapper casesCustom">
   <h2 style="text-align: center; color: #0a9215; font-family: 
 '
@@ -959,10 +980,7 @@ Poiret One
 , cursive; font-size: 35px; margin-bottom: 40px;">Примеры наших работ</h2>
   <div class="services__cards columns3">
     <?php
-    $selected_projects = land76_newservice_selected_real_projects(get_the_ID());
-
-    if ($selected_projects && !empty($selected_projects)) {
-      foreach ($selected_projects as $post_id) {
+      foreach ($ns87_selected_projects as $post_id) {
         $post_id = is_object($post_id) && !empty($post_id->ID) ? (int) $post_id->ID : (int) $post_id;
         $post = get_post($post_id);
         if (!$post) {
@@ -973,7 +991,7 @@ Poiret One
           ? land76_get_card_image_url($post_id, 'medium')
           : get_the_post_thumbnail_url($post_id, 'medium');
         if (!$project_image) {
-          $project_image = land76_newservice_context_image(get_the_ID(), 'пример работ');
+          $project_image = land76_newservice_context_image($ns87_post_context, 'пример работ');
         }
         $project_title = function_exists('get_field') ? get_field('cs87_hero_title', $post_id) : '';
         if (!$project_title) {
@@ -1006,10 +1024,48 @@ Poiret One
       <?php
       }
       wp_reset_postdata();
-    }
     ?>
   </div>
 </section>
+<?php endif; ?>
+
+<?php if ($land76_managed_service_hub_post && !empty($ns87_related_services)) : ?>
+<section class="services wrapper service-related-services">
+  <h2>Другие услуги направления</h2>
+  <div class="services__cards columns3">
+    <?php foreach ($ns87_related_services as $ns87_related_service) : ?>
+      <?php
+      $ns87_related_service_id = is_object($ns87_related_service) && !empty($ns87_related_service->ID)
+          ? (int) $ns87_related_service->ID
+          : (int) $ns87_related_service;
+      if (!$ns87_related_service_id || $ns87_related_service_id === (int) get_the_ID()) {
+          continue;
+      }
+      $ns87_related_service_post = get_post($ns87_related_service_id);
+      $ns87_related_service_hub = $ns87_related_service_post instanceof WP_Post
+          && function_exists('land76wp_service_hub_for_post')
+          ? land76wp_service_hub_for_post($ns87_related_service_id)
+          : null;
+      if (!$ns87_related_service_post instanceof WP_Post
+          || $ns87_related_service_post->post_status !== 'publish'
+          || !is_array($ns87_related_service_hub)
+          || !is_array($ns87_parent_hub)
+          || !hash_equals((string) $ns87_parent_hub['service_id'], (string) $ns87_related_service_hub['service_id'])) {
+          continue;
+      }
+      ?>
+      <article class="service">
+        <div class="service__text-wrap">
+          <h3 class="service__title"><?php echo esc_html(get_the_title($ns87_related_service_id)); ?></h3>
+          <div class="service__link-wrap">
+            <a class="service__link" href="<?php echo esc_url(get_permalink($ns87_related_service_id)); ?>">Подробнее</a>
+          </div>
+        </div>
+      </article>
+    <?php endforeach; ?>
+  </div>
+</section>
+<?php endif; ?>
 
 <?php
 $ns87_related_article_ids = get_post_meta(get_the_ID(), '_land76_related_article_ids', true);
@@ -1062,12 +1118,9 @@ Poiret One
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #fff;">
       <thead>
         <tr style="background: #f5f5f5;">
-          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Услуга
-          </th>
-          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Цена
-            за метр</th>
-          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Сроки
-          </th>
+          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Работа</th>
+          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Стоимость</th>
+          <th style="padding: 15px; text-align: left; border: 1px solid #ddd; font-weight: 600; font-size: 16px;">Примечание</th>
         </tr>
       </thead>
       <tbody>
@@ -1120,9 +1173,8 @@ Poiret One
 <!-- 10. CTA -->
 <section class="advantages wrapper">
   <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
-    <h2 style="font-weight: 600; margin-bottom: 35px;">Получите расчет по услуге за 1 день</h2>
-    <p style="margin-bottom: 30px;">Оставьте заявку и наш специалист свяжется с вами для бесплатной консультации и
-      точного расчета стоимости</p>
+    <h2 style="font-weight: 600; margin-bottom: 35px;">Получите расчёт по вашему участку</h2>
+    <p style="margin-bottom: 30px;">Пришлите фото, план или краткое описание задачи. Предварительно оценим состав работ, а точную смету подготовим после уточнения условий объекта.</p>
     <form class="cta-form form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
       <input type="text" name="name" placeholder="Ваше имя" required
         style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
