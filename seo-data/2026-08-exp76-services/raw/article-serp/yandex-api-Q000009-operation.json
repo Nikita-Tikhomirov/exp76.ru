@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000009",
+  "query": "нормы посадки деревьев",
+  "service_id": "S3",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprp17cgknmuc6fk1lqh",
+  "submitted_at": "2026-08-28T06:14:37+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "789f7c9c56d3fc041e5c38e584fa09de4d97ba6531fe34a170452f5d81e05115",
+  "request_sha256": "f9154d7629d6640f9324485094d4be3dfcd05a85453d527ba34949b899f59545",
+  "batch_sha256": "e1051b6d8014d246fa05fb4b7811eee4a7a0b72719fb3921d0adbbde2dada28b"
+}

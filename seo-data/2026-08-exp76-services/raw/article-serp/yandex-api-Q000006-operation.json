@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000006",
+  "query": "как рассчитать инженерное благоустройство участка",
+  "service_id": "S1",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprm179nb2ui2knit0d3",
+  "submitted_at": "2026-08-28T06:14:37+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "789f7c9c56d3fc041e5c38e584fa09de4d97ba6531fe34a170452f5d81e05115",
+  "request_sha256": "3781639c67739074c992c6853ace19ecc0405cdc3627034f047482722c18fd41",
+  "batch_sha256": "e1051b6d8014d246fa05fb4b7811eee4a7a0b72719fb3921d0adbbde2dada28b"
+}
