@@ -11,29 +11,30 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_ROOT = ROOT / "seo-data" / "2026-08-exp76-services"
 RAW_ROOT = DATA_ROOT / "raw" / "article-serp"
 QUEUE_PATH = RAW_ROOT / "serp-queue.csv"
+MAIN_QUEUE_PATH = DATA_ROOT / "raw" / "serp" / "serp-queue.csv"
 MANIFEST_PATH = RAW_ROOT / "source-manifest.json"
 REVIEW_PATH = DATA_ROOT / "reviews" / "article_destination_serp_reviews.csv"
 
 EXPECTED_DESTINATIONS = {
-    "Q000001": "S4-ARTICLE-PRUNING-GUIDE",
-    "Q000002": "S2-ARTICLE-15A8258BC551",
-    "Q000003": "S2-ARTICLE-182825428CBD",
-    "Q000004": "S1-ARTICLE-505521C7EF8C",
-    "Q000005": "S6-ARTICLE-DIY-RETAINING-WALL",
-    "Q000006": "S1-ARTICLE-72FBB49E67C8",
-    "Q000007": "S5-ARTICLE-74B3B2B18DA4",
-    "Q000008": "S1-ARTICLE-DIY-DESIGN",
-    "Q000009": "S3-ARTICLE-PLANTING-SCHEMES",
-    "Q000010": "S8-ARTICLE-DIY-ENTRANCE",
-    "Q000011": "S7-ARTICLE-DIY-LIGHTING",
-    "Q000012": "S4-ARTICLE-F668FF6F6190",
-    "Q000013": "S5-ARTICLE-FF3B04A53D72",
+    "Q000142": "S4-ARTICLE-PRUNING-GUIDE",
+    "Q000143": "S2-ARTICLE-15A8258BC551",
+    "Q000144": "S2-ARTICLE-182825428CBD",
+    "Q000145": "S1-ARTICLE-505521C7EF8C",
+    "Q000146": "S6-ARTICLE-DIY-RETAINING-WALL",
+    "Q000147": "S1-ARTICLE-72FBB49E67C8",
+    "Q000148": "S5-ARTICLE-74B3B2B18DA4",
+    "Q000149": "S1-ARTICLE-DIY-DESIGN",
+    "Q000150": "S3-ARTICLE-PLANTING-SCHEMES",
+    "Q000151": "S8-ARTICLE-DIY-ENTRANCE",
+    "Q000152": "S7-ARTICLE-DIY-LIGHTING",
+    "Q000153": "S4-ARTICLE-F668FF6F6190",
+    "Q000154": "S5-ARTICLE-FF3B04A53D72",
 }
 
 EXPECTED_OVERLAPS = {
-    ("Q000002", "Q000003"): 1,
-    ("Q000004", "Q000006"): 3,
-    ("Q000008", "Q000013"): 1,
+    ("Q000143", "Q000144"): 1,
+    ("Q000145", "Q000147"): 3,
+    ("Q000149", "Q000154"): 1,
 }
 
 
@@ -64,6 +65,13 @@ class ArticleSerpEvidenceTest(unittest.TestCase):
                 f"article_representative[{EXPECTED_DESTINATIONS[row['query_id']]}]",
                 row["reason"],
             )
+
+    def test_article_query_ids_do_not_collide_with_the_main_serp_corpus(self) -> None:
+        article_ids = {row["query_id"] for row in read_csv(QUEUE_PATH)}
+        main_ids = {row["query_id"] for row in read_csv(MAIN_QUEUE_PATH)}
+        self.assertEqual(set(), article_ids & main_ids)
+        self.assertEqual("Q000142", min(article_ids))
+        self.assertEqual("Q000154", max(article_ids))
 
     def test_every_result_is_sanitized_exact_top_ten(self) -> None:
         queue = {row["query_id"]: row for row in read_csv(QUEUE_PATH)}
@@ -119,7 +127,7 @@ class ArticleSerpEvidenceTest(unittest.TestCase):
         kept = [row for row in rows if row["decision"] == "keep_article"]
         self.assertEqual(12, len(kept))
         self.assertEqual(1, len(merged))
-        self.assertEqual("Q000006", merged[0]["query_id"])
+        self.assertEqual("Q000147", merged[0]["query_id"])
         self.assertEqual("S1-ARTICLE-505521C7EF8C", merged[0]["merge_target"])
 
     def test_exact_url_overlap_oracle_is_stable(self) -> None:

@@ -7,6 +7,7 @@ import csv
 import hashlib
 import json
 import os
+import re
 import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
@@ -337,8 +338,12 @@ def _read_queue(path: Path) -> list[dict[str, str]]:
     query_ids = [row["query_id"] for row in rows]
     if len(query_ids) != len(set(query_ids)) or any(not value for value in query_ids):
         raise ValueError("SERP queue requires unique non-empty query_id values")
-    expected = [f"Q{index:06d}" for index in range(1, len(rows) + 1)]
-    if query_ids != expected:
+    matches = [re.fullmatch(r"Q([0-9]{6})", query_id) for query_id in query_ids]
+    if any(match is None for match in matches):
+        raise ValueError("SERP queue query_ids must be the exact consecutive ordered range")
+    indexes = [int(match.group(1)) for match in matches if match is not None]
+    expected = list(range(indexes[0], indexes[0] + len(indexes))) if indexes else []
+    if not indexes or indexes[0] < 1 or indexes != expected:
         raise ValueError("SERP queue query_ids must be the exact consecutive ordered range")
     return rows
 
