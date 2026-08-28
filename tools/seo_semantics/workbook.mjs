@@ -416,7 +416,15 @@ function workbookErrors(workbook) {
     }
     const intent = String(cluster.intent ?? "").trim();
     const action = String(cluster.url_action ?? "").trim();
-    const accepted = ["keep_enhance", "new_child_candidate", "new_url", "create"].includes(action);
+    const accepted = [
+      "keep_enhance",
+      "new_child_candidate",
+      "new_url",
+      "create",
+      "hub",
+      "child",
+      "merge",
+    ].includes(action);
     if (
       ["commercial_research", "transactional"].includes(intent)
       && accepted
@@ -464,7 +472,11 @@ function workbookErrors(workbook) {
     const ownerUrl = String(row.owner_url ?? "").trim();
     const targetUrl = String(mapped.target_url ?? clusterById.get(clusterId)?.target_url ?? "").trim();
     const action = String(mapped.url_action ?? clusterById.get(clusterId)?.url_action ?? "").trim();
-    if (targetUrl && targetUrl !== ownerUrl && ["new_child_candidate", "new_url", "create"].includes(action)) {
+    if (
+      targetUrl
+      && targetUrl !== ownerUrl
+      && ["new_child_candidate", "new_url", "create", "child"].includes(action)
+    ) {
       errors.push(`frozen_collision_assigned_new_url:${keywordId}`);
     }
   }

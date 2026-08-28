@@ -103,8 +103,6 @@ _PROCESSED_QA_FILES = {
         "source_cluster_ids",
         "primary_query",
         "secondary_queries",
-        "title_intent",
-        "h1_intent",
         "required_sections",
         "price_factors",
         "case_ids",
@@ -136,10 +134,17 @@ _PROCESSED_QA_FILES = {
 }
 _ALLOWED_URL_ACTIONS = {
     "article_candidate",
+    "article",
+    "child",
     "exclude",
+    "frozen",
     "frozen_owner",
+    "hub",
     "keep_enhance",
     "keep_special_owner",
+    "merge",
+    "special",
+    "unresolved",
 }
 _SERP_GRAPH_INTENTS = {
     "commercial_research",
@@ -429,7 +434,7 @@ def _candidate_map_errors(
     actual_counts = Counter(_text(row.get("cluster_id")) for row in rows)
     for row_number, cluster in enumerate(cluster_rows, start=2):
         cluster_id = _text(cluster.get("cluster_id"))
-        if not cluster_id or _text(cluster.get("url_action")) == "frozen_owner":
+        if not cluster_id or _text(cluster.get("url_action")) in {"frozen", "frozen_owner"}:
             continue
         try:
             expected = int(_text(cluster.get("candidate_count")))
@@ -454,6 +459,8 @@ def _content_brief_errors(
     candidate_rows: list[dict[str, str]],
 ) -> list[str]:
     """Keep editorial briefs traceable to accepted service-query assignments."""
+    if rows and all("destination_id" in row for row in rows):
+        return _destination_content_brief_errors(rows, cluster_rows, candidate_rows)
     errors: list[str] = []
     clusters = {
         _text(row.get("cluster_id")): row
@@ -537,6 +544,95 @@ def _content_brief_errors(
                     errors.append(
                         f"content_brief_query_outside_sources:{brief_id}:{field}:{query}"
                     )
+    return errors
+
+
+def _destination_content_brief_errors(
+    rows: list[dict[str, str]],
+    cluster_rows: list[dict[str, str]],
+    candidate_rows: list[dict[str, str]],
+) -> list[str]:
+    """Validate the Task 2 destination-level brief contract."""
+    errors: list[str] = []
+    clusters = {
+        _text(row.get("cluster_id")): row
+        for row in cluster_rows
+        if _text(row.get("cluster_id"))
+    }
+    candidate_queries: dict[str, set[str]] = defaultdict(set)
+    for candidate in candidate_rows:
+        candidate_queries[_text(candidate.get("cluster_id"))].add(
+            _text(candidate.get("query"))
+        )
+    destination_ids = [_text(row.get("destination_id")) for row in rows]
+    for destination_id, count in Counter(item for item in destination_ids if item).items():
+        if count > 1:
+            errors.append(f"duplicate_content_brief_destination:{destination_id}")
+
+    required_fields = (
+        "destination_id",
+        "target_url",
+        "page_type",
+        "source_cluster_ids",
+        "primary_query",
+        "secondary_queries",
+        "intent",
+        "required_sections",
+        "price_factors",
+        "internal_links",
+        "evidence_refs",
+        "evidence_state",
+        "missing_facts",
+        "status",
+    )
+    for row_number, row in enumerate(rows, start=2):
+        destination_id = _text(row.get("destination_id")) or f"row-{row_number}"
+        for field in required_fields:
+            if not _text(row.get(field)):
+                errors.append(f"blank_content_brief_field:{destination_id}:{field}")
+        source_ids = _pipe_values(row.get("source_cluster_ids"))
+        for source_id, count in Counter(source_ids).items():
+            if count > 1:
+                errors.append(f"duplicate_content_brief_source:{destination_id}:{source_id}")
+        target_url = _text(row.get("target_url"))
+        service_id = _text(row.get("service_id"))
+        for source_id in source_ids:
+            cluster = clusters.get(source_id)
+            if cluster is None:
+                errors.append(f"content_brief_source_missing:{destination_id}:{source_id}")
+                continue
+            source_target = _text(cluster.get("target_url"))
+            if source_target != target_url:
+                errors.append(
+                    f"content_brief_source_target_mismatch:{destination_id}:{source_id}"
+                )
+            source_service = _text(cluster.get("service_id"))
+            if service_id and source_service != service_id:
+                errors.append(
+                    f"content_brief_source_service_mismatch:"
+                    f"{destination_id}:{source_id}:{source_service or '<blank>'}"
+                )
+        page_type = _text(row.get("page_type"))
+        if page_type not in {"frozen", "special"}:
+            traceable_queries = set().union(
+                *(candidate_queries.get(source_id, set()) for source_id in source_ids)
+            )
+            for field in ("primary_query", "secondary_queries"):
+                queries = (
+                    [_text(row.get(field))]
+                    if field == "primary_query"
+                    else _pipe_values(row.get(field))
+                )
+                for query in queries:
+                    if query not in traceable_queries:
+                        errors.append(
+                            f"content_brief_query_outside_sources:"
+                            f"{destination_id}:{field}:{query}"
+                        )
+        if (not _text(row.get("case_ids")) or not _text(row.get("photo_ids"))) and _text(
+            row.get("status")
+        ) != "needs_case_mapping":
+            errors.append(f"content_brief_missing_case_mapping_status:{destination_id}")
     return errors
 
 

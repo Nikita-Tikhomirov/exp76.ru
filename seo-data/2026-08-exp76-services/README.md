@@ -68,34 +68,46 @@ manifest входят только санитизированные top-10 JSONL
 - `serp_results.csv`: 141 QID и 1 410 строк;
 - `clusters.csv`: 164 кластера;
 - `url_map.csv`: 164 URL-решения;
-- `serp_ambiguous_pairs.csv`: 1 044 пограничные пары, из них 263 manual
-  pending и 781 policy-reviewed;
-- `content_briefs.csv`: 8 агрегированных брифов, по одному на S1–S8;
+- `serp_ambiguous_pairs.csv`: 1 044 неизменяемые пограничные пары, из них
+  263 требуют отдельного review-overlay и 781 закрыты policy-правилами;
+- `reviews/serp_pair_reviews.csv`: ровно 263 reviewed-решения — 186
+  `same_destination` и 77 `separate_destinations`. Это статический ручной
+  input: каждое rationale называет обе query-потребности, exact overlap и
+  фактический формат двух сохранённых top-10; генератор его проверяет, но не
+  переписывает из page owners;
+- `reviews/cluster_page_decisions.csv`: 164 окончательных назначения без
+  пропусков и дублей;
+- `page_architecture.csv`: 35 destinations — 8 хабов, 5 заблокированных
+  кандидатов подуслуг, 13 backlog-статей, 6 защищённых owners и 3 special
+  owners;
+- `content_briefs.csv`: 35 destination-driven брифов;
 - frozen: 560 observations, 558 distinct queries и 6 owners.
 
 В `content_briefs.csv` поля `title_intent` и `h1_intent` являются
-редакторскими формулировками. `source_cluster_ids` содержит фактические
-`keep_enhance`-кластеры того же service/URL, а `primary_query` и каждый
-элемент `secondary_queries` дословно взяты из `candidate_cluster_map.csv` и
-принадлежат одному из этих кластеров; это соответствие проверяет команда
-`qa`.
+редакторскими формулировками. Каждый бриф содержит собственные primary и
+secondary queries, intent, обязательные секции, факторы цены, внутренние
+ссылки и evidence state. До Task 3 `case_ids` и `photo_ids` пусты только при
+`status=needs_case_mapping`; это не считается готовностью production-контента.
 
-Cluster actions:
+Cluster actions после ручного approval:
 
-- 115 `keep_enhance` — коммерческие запросы на существующих S1-S8 URL;
-- 23 `article_candidate` — информационный backlog без публикации;
-- 18 `exclude` — товарный и внешний шум;
-- 6 `frozen_owner`;
-- 2 `keep_special_owner` — главная и существующий калькулятор.
+- 106 `merge` — подтверждённое объединение с одним владельцем;
+- 13 `article` — информационные backlog destinations без публикации;
+- 23 `exclude` — товарный, guide- и внешний шум;
+- 8 `hub` — неизменяемые S1–S8 URL;
+- 6 `frozen` — защищённые категории 87–92;
+- 5 `child` — evidence-backed candidates со статусом `blocked_facts`;
+- 3 `special` — главная, `/services/` и существующий калькулятор.
 
-Новых URL, city pages, redirects и index actions нет. Ложный cross-owner
-компонент S1/S5 и остальные пограничные межсервисные пары разделены по
-утверждённой карте владельцев S1–S8. 23 чистых calculator candidates
-закреплены за `/kalkuljator-uslug/`; семь clicked brand QID — за главной.
-Варианты Techno Niki, маркетплейсы и внешние contaminant-формулировки
-исключены. Внутрисервисные пограничные пары не скрыты: 263 решения требуют
-редакторской проверки до публикации или изменения структуры. Ещё 27
-внутрисервисных пар закрыты явными правилами калькулятора и исключений.
+Готовы без изменения URL только 8 существующих хабов, 6 frozen owners и 3
+существующих special owners. Ни одна новая подуслуга, статья или geo-страница
+не имеет `publication_status=ready`: пять child candidates заблокированы до
+привязки реальных кейсов/фото. У S2 (рулонный и посевной газон), S4 (обрезка)
+и S5 (выравнивание) exact business offer подтверждён ссылкой на секцию
+текущего service-v2 payload; S3 (крупномеры) остаётся без такого
+подтверждения. Все 13 статей остаются в backlog из-за отсутствия successful
+representative-query SERP. Geo-страницы не создавались. Варианты Techno Niki, товарные и внешние
+contaminant-формулировки исключены.
 
 ## Готовый production-пакет восьми услуг
 
@@ -147,10 +159,20 @@ python -m tools.seo_semantics.cli serp-api-verify --queue seo-data/2026-08-exp76
 
 python -m tools.seo_semantics.cli cluster --scope seo-data/2026-08-exp76-services/scope.json --keywords seo-data/2026-08-exp76-services/processed/keywords_clean.csv --serp-dir seo-data/2026-08-exp76-services/raw/serp --serp-output seo-data/2026-08-exp76-services/processed/serp_results.csv --clusters-output seo-data/2026-08-exp76-services/processed/clusters.csv --url-map-output seo-data/2026-08-exp76-services/processed/url_map.csv --candidate-map-output seo-data/2026-08-exp76-services/processed/candidate_cluster_map.csv --ambiguous-output seo-data/2026-08-exp76-services/processed/serp_ambiguous_pairs.csv
 
+python -m tools.seo_semantics.production_architecture --data-root seo-data/2026-08-exp76-services
+
+python -m tools.seo_semantics.cli resolve-architecture --scope seo-data/2026-08-exp76-services/scope.json --clusters seo-data/2026-08-exp76-services/processed/clusters.csv --candidate-map seo-data/2026-08-exp76-services/processed/candidate_cluster_map.csv --ambiguous seo-data/2026-08-exp76-services/processed/serp_ambiguous_pairs.csv --pair-reviews seo-data/2026-08-exp76-services/reviews/serp_pair_reviews.csv --cluster-decisions seo-data/2026-08-exp76-services/reviews/cluster_page_decisions.csv --clusters-output seo-data/2026-08-exp76-services/processed/clusters.csv --url-map-output seo-data/2026-08-exp76-services/processed/url_map.csv --page-architecture-output seo-data/2026-08-exp76-services/processed/page_architecture.csv --briefs-output seo-data/2026-08-exp76-services/processed/content_briefs.csv
+
 python -m tools.seo_semantics.cli export --processed-dir seo-data/2026-08-exp76-services/processed --output seo-data/2026-08-exp76-services/exp76-semantic-core.xlsx
 
 python -m tools.seo_semantics.cli qa --scope seo-data/2026-08-exp76-services/scope.json --processed-dir seo-data/2026-08-exp76-services/processed --workbook seo-data/2026-08-exp76-services/exp76-semantic-core.xlsx
 ```
+
+Перед `production_architecture` файл `reviews/serp_pair_reviews.csv` уже
+должен содержать независимые ручные решения. Команда сначала сверяет их с
+двумя сохранёнными top-10, проверяет transitive contradictions и только затем
+строит/проверяет cluster-page assignments. Изменение destination ID при
+неизменном pair evidence завершает команду ошибкой.
 
 `export` использует только bundled `@oai/artifact-tool`. В версии 2.8.6
 документированный `freezeRows(1)` не попадает в экспортированный XLSX, а

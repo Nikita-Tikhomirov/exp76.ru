@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from unittest.mock import patch
 
+from tools.seo_semantics.architecture import CONTENT_BRIEF_COLUMNS
 from tools.seo_semantics.cli import main
 from tools.seo_semantics.workbook import (
     build_workbook,
@@ -1212,47 +1213,30 @@ class SemanticWorkbookTest(unittest.TestCase):
         self.assertEqual(len(url_rows), 164)
         self.assertEqual(len(candidate_rows), 4236)
         self.assertEqual(len({row["candidate_key"] for row in candidate_rows}), 4236)
-        self.assertEqual(len(brief_rows), 8)
-        self.assertEqual({row["service_id"] for row in brief_rows}, {f"S{i}" for i in range(1, 9)})
-        self.assertEqual(
-            brief_fields,
-            [
-                "service_id",
-                "target_url",
-                "page_type",
-                "source_cluster_ids",
-                "primary_query",
-                "secondary_queries",
-                "title_intent",
-                "h1_intent",
-                "required_sections",
-                "price_factors",
-                "case_ids",
-                "photo_ids",
-                "internal_links",
-                "frozen_links",
-                "missing_facts",
-                "status",
-            ],
-        )
+        self.assertEqual(len(brief_rows), 35)
+        self.assertEqual(len({row["destination_id"] for row in brief_rows}), 35)
+        self.assertEqual(brief_fields, list(CONTENT_BRIEF_COLUMNS))
         self.assertEqual(
             Counter(row["url_action"] for row in candidate_rows),
             Counter(
                 {
                     "article_candidate": 225,
                     "exclude": 202,
-                    "keep_enhance": 3786,
+                    "unresolved": 3781,
+                    "keep_enhance": 5,
                     "keep_special_owner": 23,
                 }
             ),
         )
         expected_cluster_actions = Counter(
             {
-                "article_candidate": 23,
-                "exclude": 18,
-                "frozen_owner": 6,
-                "keep_enhance": 115,
-                "keep_special_owner": 2,
+                "merge": 106,
+                "article": 13,
+                "exclude": 23,
+                "hub": 8,
+                "frozen": 6,
+                "child": 5,
+                "special": 3,
             }
         )
         self.assertEqual(
@@ -1278,20 +1262,14 @@ class SemanticWorkbookTest(unittest.TestCase):
         )
         self.assertEqual(
             Counter(row["review_status"] for row in cluster_rows),
-            Counter({"reviewed": 37, "pending": 127}),
+            Counter({"reviewed": 164}),
         )
         pending_serp_clusters = [
             row
             for row in cluster_rows
             if "serp_pair_pending_review" in row["validation_status"].split("|")
         ]
-        self.assertEqual(len(pending_serp_clusters), 67)
-        self.assertTrue(
-            all(
-                row["url_action"] == "keep_enhance" and row["review_status"] == "pending"
-                for row in pending_serp_clusters
-            )
-        )
+        self.assertEqual(len(pending_serp_clusters), 0)
         self.assertEqual(validate_processed_data(REAL_PROCESSED), [])
 
     def test_validation_reports_missing_sheet_even_with_source_comparison(self):

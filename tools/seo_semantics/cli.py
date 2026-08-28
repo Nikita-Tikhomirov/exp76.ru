@@ -161,6 +161,7 @@ def _build_parser() -> argparse.ArgumentParser:
     resolve_architecture.add_argument("--ambiguous", required=True, type=Path)
     resolve_architecture.add_argument("--pair-reviews", required=True, type=Path)
     resolve_architecture.add_argument("--cluster-decisions", required=True, type=Path)
+    resolve_architecture.add_argument("--clusters-output", type=Path)
     resolve_architecture.add_argument("--url-map-output", required=True, type=Path)
     resolve_architecture.add_argument("--page-architecture-output", required=True, type=Path)
     resolve_architecture.add_argument("--briefs-output", required=True, type=Path)
@@ -248,25 +249,27 @@ def main(argv: Sequence[str] | None = None) -> int:
         elif args.command == "resolve-architecture":
             clusters = _load_required_csv_rows(args.clusters)
             candidates = _load_required_csv_rows(args.candidate_map)
+            cluster_decisions = load_cluster_page_decisions(args.cluster_decisions)
             build = resolve_url_architecture(
                 load_scope(args.scope),
                 clusters,
                 candidates,
                 _load_required_csv_rows(args.ambiguous),
                 load_pair_reviews(args.pair_reviews),
-                load_cluster_page_decisions(args.cluster_decisions),
-            )
-            _write_architecture_outputs(
-                build,
-                clusters,
-                candidates,
-                args.url_map_output,
-                args.page_architecture_output,
-                args.briefs_output,
+                cluster_decisions,
             )
             errors = validate_architecture(build, release=True)
             if errors:
                 raise ValueError("; ".join(errors))
+            _write_architecture_outputs(
+                build,
+                clusters,
+                candidates,
+                args.clusters_output or args.clusters,
+                args.url_map_output,
+                args.page_architecture_output,
+                args.briefs_output,
+            )
             print(f"architecture resolved: destinations={len(build.destinations)}")
         elif args.command == "export":
             build_workbook(args.processed_dir, args.output)
@@ -662,38 +665,87 @@ def _write_architecture_outputs(
     build,
     clusters: list[dict[str, str]],
     candidates: list[dict[str, str]],
+    clusters_path: Path,
     url_map_path: Path,
     page_architecture_path: Path,
     briefs_path: Path,
 ) -> None:
-    del clusters
+    decisions = {decision.cluster_id: decision for decision in build.cluster_decisions}
+    destinations = {destination.destination_id: destination for destination in build.destinations}
+    updated_clusters: list[dict[str, str]] = []
+    url_map_rows: list[dict[str, str]] = []
+    for index, source in enumerate(clusters, start=1):
+        row = dict(source)
+        cluster_id = row["cluster_id"]
+        decision = decisions[cluster_id]
+        destination = destinations.get(decision.destination_id)
+        target_url = destination.canonical_url if destination is not None else ""
+        row.update(
+            {
+                "target_url": target_url,
+                "url_action": decision.url_action,
+                "priority": decision.publication_status,
+                "rationale": decision.rationale,
+                "method": "manual_architecture_review",
+                "evidence": decision.evidence_refs,
+                "validation_status": "architecture_reviewed",
+                "review_status": decision.review_status,
+                "reviewer": decision.reviewer,
+                "review_rationale": decision.rationale,
+            }
+        )
+        updated_clusters.append(row)
+        url_map_rows.append(
+            {
+                "map_id": f"M{index:04d}",
+                "cluster_id": cluster_id,
+                "service_id": decision.service_id,
+                "cluster_name": row.get("cluster_name", ""),
+                "intent": row.get("intent", ""),
+                "current_url": decision.current_url,
+                "target_url": target_url,
+                "url_action": decision.url_action,
+                "method": "manual_architecture_review",
+                "evidence": decision.evidence_refs,
+                "validation_status": "architecture_reviewed",
+                "confidence": row.get("confidence", ""),
+                "review_status": decision.review_status,
+                "reviewer": decision.reviewer,
+                "rationale": decision.rationale,
+                "destination_id": decision.destination_id,
+                "page_role": decision.page_role,
+                "parent_destination_id": decision.parent_destination_id,
+                "publication_status": decision.publication_status,
+            }
+        )
     page_rows = [
         {
             "destination_id": destination.destination_id,
             "service_id": destination.service_id,
             "page_role": destination.page_role,
             "parent_destination_id": destination.parent_destination_id,
+            "current_url": destination.current_url,
+            "proposed_url": destination.proposed_url,
             "canonical_url": destination.canonical_url,
+            "primary_cluster_id": destination.primary_cluster_id,
             "source_cluster_ids": "|".join(destination.source_cluster_ids),
+            "url_action": destination.url_action,
+            "publication_status": destination.publication_status,
+            "evidence_refs": destination.evidence_refs,
+            "review_status": destination.review_status,
+            "reviewer": destination.reviewer,
+            "rationale": destination.rationale,
         }
         for destination in build.destinations
     ]
-    url_map_rows = [
-        {
-            "cluster_id": cluster_id,
-            "destination_id": destination.destination_id,
-            "service_id": destination.service_id,
-            "page_role": destination.page_role,
-            "parent_destination_id": destination.parent_destination_id,
-            "canonical_url": destination.canonical_url,
-            "url_action": _destination_action(destination.page_role),
-        }
-        for destination in build.destinations
-        for cluster_id in destination.source_cluster_ids
-    ]
+    _write_dict_rows(clusters_path, tuple(clusters[0]), updated_clusters)
     _write_dict_rows(url_map_path, ARCHITECTURE_URL_MAP_COLUMNS, url_map_rows)
     _write_dict_rows(page_architecture_path, PAGE_ARCHITECTURE_COLUMNS, page_rows)
-    _write_dict_rows(briefs_path, CONTENT_BRIEF_COLUMNS, build_destination_briefs(build, candidates))
+    _write_dict_rows(
+        briefs_path,
+        CONTENT_BRIEF_COLUMNS,
+        build_destination_briefs(build, candidates, updated_clusters),
+    )
 
 
 def _destination_action(page_role: str) -> str:
