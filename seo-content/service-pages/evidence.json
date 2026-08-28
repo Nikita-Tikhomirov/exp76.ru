@@ -1,0 +1,963 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-08-29",
+  "sources": [
+    "seo-data/2026-08-exp76-services/processed/final_service_children.csv",
+    "seo-content/service-hubs/case-catalog.json",
+    "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/*.json",
+    "https://exp76.ru/wp-json/wp/v2/pages",
+    "https://exp76.ru/wp-json/wp/v2/media"
+  ],
+  "caption_policy": {
+    "illustration_caption_prefix": "Иллюстрация:",
+    "never_completed_object_pools": [
+      "M1",
+      "M7",
+      "M9",
+      "M10"
+    ],
+    "illustration_forbidden_claims": [
+      "наш объект",
+      "выполненные работы",
+      "реализованный объект",
+      "до и после",
+      "адрес объекта"
+    ]
+  },
+  "services": [
+    {
+      "destination_id": "S1-CHILD-SKETCH",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [673, 10345, 8604, 8620],
+      "media_pool": "M1",
+      "media": [
+        {
+          "attachment_id": 7330,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe_proektirovanie2.webp",
+          "pool": "M1",
+          "asset_kind": "illustration",
+          "source_page_id": 673
+        },
+        {
+          "attachment_id": 7332,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe_proektirovanie4.webp",
+          "pool": "M1",
+          "asset_kind": "illustration",
+          "source_page_id": 673
+        }
+      ],
+      "asset_kind": "illustration",
+      "safe_caption_rule": "Начинать подпись с «Иллюстрация:»; не указывать объект, адрес, срок, заказчика или факт выполнения компанией.",
+      "caveat": "Концептуальные планы со старой страницы услуги не привязаны к подтверждённому кейсу и не являются доказательством переданного эскиза.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S1-CHILD-MASTERPLAN",
+      "evidence_class": "A",
+      "exact_case_ids": [10345],
+      "exact_case_urls": ["https://exp76.ru/slip-ul-bugorok/"],
+      "contextual_page_ids": [673, 8604, 8620],
+      "media_pool": "CASE-10345",
+      "media": [
+        {
+          "attachment_id": 10354,
+          "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+          "pool": "CASE-10345",
+          "asset_kind": "case_photo",
+          "source_page_id": 10345
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Страница кейса сообщает о топосъёмке и составлении генплана, но сам файл генплана в открытых активах не найден.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S1-CHILD-DENDROPLAN",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [673, 8604, 8620],
+      "media_pool": "M1",
+      "media": [
+        {
+          "attachment_id": 7330,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe_proektirovanie2.webp",
+          "pool": "M1",
+          "asset_kind": "illustration",
+          "source_page_id": 673
+        },
+        {
+          "attachment_id": 7332,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe_proektirovanie4.webp",
+          "pool": "M1",
+          "asset_kind": "illustration",
+          "source_page_id": 673
+        }
+      ],
+      "asset_kind": "illustration",
+      "safe_caption_rule": "Начинать подпись с «Иллюстрация:»; не указывать объект, адрес, срок, заказчика или факт выполнения компанией.",
+      "caveat": "На планах видны посадочные обозначения, но формального дендроплана с ведомостью растений и подтверждённым кейсом нет.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S1-CHILD-3D",
+      "evidence_class": "A",
+      "exact_case_ids": [8620],
+      "exact_case_urls": ["https://exp76.ru/fotogalereja/rybinsk-shankhajj/"],
+      "contextual_page_ids": [673],
+      "media_pool": "CASE-8620",
+      "media": [
+        {
+          "attachment_id": 8685,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1814.webp",
+          "pool": "CASE-8620",
+          "asset_kind": "case_photo",
+          "source_page_id": 8620
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Текст кейса подтверждает 3D-визуализацию, но отдельные кадры галереи не размечены как исходный рендер или результат.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S1-CHILD-RELIEF",
+      "evidence_class": "C",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [673, 667, 10345, 9415, 9567],
+      "media_pool": "M5",
+      "media": [
+        {
+          "attachment_id": 7346,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+          "pool": "M5",
+          "asset_kind": "context_photo",
+          "source_page_id": 667
+        }
+      ],
+      "asset_kind": "context_photo",
+      "safe_caption_rule": "Описывать только видимый контекст; не называть изображение кейсом или выполненным объектом этой услуги и не указывать адрес.",
+      "caveat": "Фото показывает подготовленную поверхность после земляных работ, но не подтверждает проект отметок и уклонов.",
+      "needs_client_asset_or_generated_illustration": true
+    },
+    {
+      "destination_id": "S2-CHILD-ROLL",
+      "evidence_class": "A",
+      "exact_case_ids": [9554],
+      "exact_case_urls": ["https://exp76.ru/fotogalereja/d-nesterovo-uglichskijj-r-on/"],
+      "contextual_page_ids": [6868],
+      "media_pool": "CASE-9554",
+      "media": [
+        {
+          "attachment_id": 9559,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+          "pool": "CASE-9554",
+          "asset_kind": "case_photo",
+          "source_page_id": 9554
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Кейс подтверждает подготовку почвы и укладку рулонного газона; точная стадия отдельного кадра не размечена.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S2-CHILD-SEED",
+      "evidence_class": "A",
+      "exact_case_ids": [10096, 8613, 8636],
+      "exact_case_urls": [
+        "https://exp76.ru/pos-slip/",
+        "https://exp76.ru/fotogalereja/poselok-koprino/",
+        "https://exp76.ru/fotogalereja/sudoverf/"
+      ],
+      "contextual_page_ids": [6868],
+      "media_pool": "CASE-10096+CASE-8613+CASE-8636",
+      "media": [
+        {
+          "attachment_id": 10101,
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+          "pool": "CASE-10096",
+          "asset_kind": "case_photo",
+          "source_page_id": 10096
+        },
+        {
+          "attachment_id": 8523,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
+          "pool": "CASE-8613",
+          "asset_kind": "case_photo",
+          "source_page_id": 8613
+        },
+        {
+          "attachment_id": 8973,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0843.webp",
+          "pool": "CASE-8636",
+          "asset_kind": "case_photo",
+          "source_page_id": 8636
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Все три страницы подтверждают посев газона, но отдельные фотографии не размечены по этапам подготовки и посева.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S2-CHILD-SOIL",
+      "evidence_class": "A",
+      "exact_case_ids": [9554, 8613],
+      "exact_case_urls": [
+        "https://exp76.ru/fotogalereja/d-nesterovo-uglichskijj-r-on/",
+        "https://exp76.ru/fotogalereja/poselok-koprino/"
+      ],
+      "contextual_page_ids": [6868, 8636],
+      "media_pool": "CASE-9554+CASE-8613",
+      "media": [
+        {
+          "attachment_id": 9559,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+          "pool": "CASE-9554",
+          "asset_kind": "case_photo",
+          "source_page_id": 9554
+        },
+        {
+          "attachment_id": 8523,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
+          "pool": "CASE-8613",
+          "asset_kind": "case_photo",
+          "source_page_id": 8613
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Кейсы подтверждают подготовку почвы и завоз плодородного грунта, но выбранные кадры могут показывать уже готовое покрытие.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S2-CHILD-RESTORE",
+      "evidence_class": "C",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6868, 9357],
+      "media_pool": "M4",
+      "media": [
+        {
+          "attachment_id": 7619,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+          "pool": "M4",
+          "asset_kind": "context_photo",
+          "source_page_id": 9357
+        }
+      ],
+      "asset_kind": "context_photo",
+      "safe_caption_rule": "Описывать только видимый контекст; не называть изображение кейсом или выполненным объектом этой услуги и не указывать адрес.",
+      "caveat": "Фото показывает работу на газоне, но не подтверждает капитальное восстановление и не является серией до и после.",
+      "needs_client_asset_or_generated_illustration": true
+    },
+    {
+      "destination_id": "S3-CHILD-FRUIT",
+      "evidence_class": "C",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6871],
+      "media_pool": "M3",
+      "media": [
+        {
+          "attachment_id": 9194,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+          "pool": "M3",
+          "asset_kind": "context_photo",
+          "source_page_id": 6871
+        }
+      ],
+      "asset_kind": "context_photo",
+      "safe_caption_rule": "Описывать только видимый контекст; не называть изображение кейсом или выполненным объектом этой услуги и не указывать адрес.",
+      "caveat": "Общее фото озеленения релевантно направлению посадок, но не подтверждает посадку плодовых деревьев.",
+      "needs_client_asset_or_generated_illustration": true
+    },
+    {
+      "destination_id": "S3-CHILD-CONIFERS",
+      "evidence_class": "A",
+      "exact_case_ids": [10096],
+      "exact_case_urls": ["https://exp76.ru/pos-slip/"],
+      "contextual_page_ids": [6871],
+      "media_pool": "CASE-10096",
+      "media": [
+        {
+          "attachment_id": 10101,
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+          "pool": "CASE-10096",
+          "asset_kind": "case_photo",
+          "source_page_id": 10096
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Кейс подтверждает посадку хвойных деревьев и кустарников вместе с устройством посевного газона.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S3-CHILD-SHRUBS",
+      "evidence_class": "A",
+      "exact_case_ids": [10096],
+      "exact_case_urls": ["https://exp76.ru/pos-slip/"],
+      "contextual_page_ids": [6871],
+      "media_pool": "CASE-10096",
+      "media": [
+        {
+          "attachment_id": 10101,
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+          "pool": "CASE-10096",
+          "asset_kind": "case_photo",
+          "source_page_id": 10096
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Кейс подтверждает посадку кустарников в составе объекта, но отдельные виды растений в галерее не подписаны.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S3-CHILD-LARGE",
+      "evidence_class": "C",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6871],
+      "media_pool": "M3",
+      "media": [
+        {
+          "attachment_id": 9194,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+          "pool": "M3",
+          "asset_kind": "context_photo",
+          "source_page_id": 6871
+        }
+      ],
+      "asset_kind": "context_photo",
+      "safe_caption_rule": "Описывать только видимый контекст; не называть изображение кейсом или выполненным объектом этой услуги и не указывать адрес.",
+      "caveat": "Общее фото озеленения не подтверждает размер растений, доставку или механизированную посадку крупномеров.",
+      "needs_client_asset_or_generated_illustration": true
+    },
+    {
+      "destination_id": "S3-CHILD-HEDGE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6871],
+      "media_pool": "M3",
+      "media": [
+        {
+          "attachment_id": 9194,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+          "pool": "M3",
+          "asset_kind": "service_photo",
+          "source_page_id": 6871
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Описывать только видимый сюжет; не называть изображение кейсом или выполненным объектом компании и не указывать адрес.",
+      "caveat": "Старая страница услуги упоминает живую изгородь, но точного кейса и отдельной размеченной фотографии изгороди нет.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S4-CHILD-TREE-PRUNING",
+      "evidence_class": "C",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9357, 6870],
+      "media_pool": "M6",
+      "media": [
+        {
+          "attachment_id": 7501,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
+          "pool": "M6",
+          "asset_kind": "context_photo",
+          "source_page_id": 6870
+        }
+      ],
+      "asset_kind": "context_photo",
+      "safe_caption_rule": "Описывать только видимый контекст; не называть изображение кейсом или выполненным объектом этой услуги и не указывать адрес.",
+      "caveat": "Фото со страницы спила и корчевания связано с работами по деревьям, но не доказывает формирующую или санитарную обрезку.",
+      "needs_client_asset_or_generated_illustration": true
+    },
+    {
+      "destination_id": "S4-CHILD-SHRUB-PRUNING",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9357],
+      "media_pool": "M4",
+      "media": [
+        {
+          "attachment_id": 7620,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona1.webp",
+          "pool": "M4",
+          "asset_kind": "service_photo",
+          "source_page_id": 9357
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Описывать только видимый сюжет; не называть изображение кейсом или выполненным объектом компании и не указывать адрес.",
+      "caveat": "На старом фото видна стрижка кустарника, но изображение не связано с отдельной страницей выполненного объекта.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S4-CHILD-LAWN-CARE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9357],
+      "media_pool": "M4",
+      "media": [
+        {
+          "attachment_id": 7619,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+          "pool": "M4",
+          "asset_kind": "service_photo",
+          "source_page_id": 9357
+        },
+        {
+          "attachment_id": 9358,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/uhod.webp",
+          "pool": "M4",
+          "asset_kind": "service_photo",
+          "source_page_id": 9357
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Описывать только видимый сюжет; не называть изображение кейсом или выполненным объектом компании и не указывать адрес.",
+      "caveat": "Фотографии показывают уход за территорией, но не имеют отдельного кейса обслуживания газона.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S4-CHILD-FLOWERBEDS",
+      "evidence_class": "C",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9357, 6871],
+      "media_pool": "M3",
+      "media": [
+        {
+          "attachment_id": 9194,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+          "pool": "M3",
+          "asset_kind": "context_photo",
+          "source_page_id": 6871
+        }
+      ],
+      "asset_kind": "context_photo",
+      "safe_caption_rule": "Описывать только видимый контекст; не называть изображение кейсом или выполненным объектом этой услуги и не указывать адрес.",
+      "caveat": "Фото показывает озеленённую территорию, но не подтверждает обслуживание существующего цветника или клумбы.",
+      "needs_client_asset_or_generated_illustration": true
+    },
+    {
+      "destination_id": "S4-CHILD-PEST",
+      "evidence_class": "C",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9357],
+      "media_pool": "M4",
+      "media": [
+        {
+          "attachment_id": 7619,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+          "pool": "M4",
+          "asset_kind": "context_photo",
+          "source_page_id": 9357
+        }
+      ],
+      "asset_kind": "context_photo",
+      "safe_caption_rule": "Описывать только видимый контекст; не называть изображение кейсом или выполненным объектом этой услуги и не указывать адрес.",
+      "caveat": "На фото видна обработка территории распылителем, но назначение состава и борьба именно с болезнями или вредителями не подтверждены.",
+      "needs_client_asset_or_generated_illustration": true
+    },
+    {
+      "destination_id": "S5-CHILD-LEVEL",
+      "evidence_class": "A",
+      "exact_case_ids": [9415, 9567],
+      "exact_case_urls": [
+        "https://exp76.ru/fotogalereja/c-glebovo-rybinskijj-r-on/",
+        "https://exp76.ru/fotogalereja/d-timoshkino/"
+      ],
+      "contextual_page_ids": [667, 10345, 9533, 8640, 8613, 8636, 8630],
+      "media_pool": "CASE-9415+CASE-9567",
+      "media": [
+        {
+          "attachment_id": 9421,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20180919_165532_HDR.webp",
+          "pool": "CASE-9415",
+          "asset_kind": "case_photo",
+          "source_page_id": 9415
+        },
+        {
+          "attachment_id": 9579,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181103_121527_HDR.webp",
+          "pool": "CASE-9567",
+          "asset_kind": "case_photo",
+          "source_page_id": 9567
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Два кейса прямо сообщают о выравнивании, остальные страницы подтверждают более общий состав планировочных работ.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S5-CHILD-VERTICAL",
+      "evidence_class": "C",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [667, 10345, 8630, 9415, 9567],
+      "media_pool": "M5",
+      "media": [
+        {
+          "attachment_id": 7346,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+          "pool": "M5",
+          "asset_kind": "context_photo",
+          "source_page_id": 667
+        }
+      ],
+      "asset_kind": "context_photo",
+      "safe_caption_rule": "Описывать только видимый контекст; не называть изображение кейсом или выполненным объектом этой услуги и не указывать адрес.",
+      "caveat": "Фото показывает подготовленную поверхность, но не подтверждает расчёт или физическое формирование заданных уклонов.",
+      "needs_client_asset_or_generated_illustration": true
+    },
+    {
+      "destination_id": "S5-CHILD-MACHINERY",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [667, 10345, 9533, 9415, 8640, 8613, 8636, 8630],
+      "media_pool": "M5",
+      "media": [
+        {
+          "attachment_id": 7338,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
+          "pool": "M5",
+          "asset_kind": "service_photo",
+          "source_page_id": 667
+        },
+        {
+          "attachment_id": 7342,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
+          "pool": "M5",
+          "asset_kind": "service_photo",
+          "source_page_id": 667
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Описывать только видимый сюжет; не называть изображение кейсом или выполненным объектом компании и не указывать адрес.",
+      "caveat": "Водяные знаки и техника подтверждают старый сервисный фотопул, но изображения не привязаны к конкретной странице кейса.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S5-CHILD-FILL",
+      "evidence_class": "A",
+      "exact_case_ids": [8613],
+      "exact_case_urls": ["https://exp76.ru/fotogalereja/poselok-koprino/"],
+      "contextual_page_ids": [667, 8630],
+      "media_pool": "CASE-8613",
+      "media": [
+        {
+          "attachment_id": 8523,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
+          "pool": "CASE-8613",
+          "asset_kind": "case_photo",
+          "source_page_id": 8613
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Кейс подтверждает завоз плодородного грунта, но не содержит отдельной разметки объёма или кадра процесса отсыпки.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S5-CHILD-CULTIVATION",
+      "evidence_class": "A",
+      "exact_case_ids": [8636],
+      "exact_case_urls": ["https://exp76.ru/fotogalereja/sudoverf/"],
+      "contextual_page_ids": [667],
+      "media_pool": "CASE-8636",
+      "media": [
+        {
+          "attachment_id": 8973,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0843.webp",
+          "pool": "CASE-8636",
+          "asset_kind": "case_photo",
+          "source_page_id": 8636
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Страница подтверждает культивирование земли, планировку и посев; отдельные стадии фотографий не подписаны.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S5-CHILD-STUMPS",
+      "evidence_class": "A",
+      "exact_case_ids": [8613],
+      "exact_case_urls": ["https://exp76.ru/fotogalereja/poselok-koprino/"],
+      "contextual_page_ids": [667, 6870],
+      "media_pool": "CASE-8613+M6",
+      "media": [
+        {
+          "attachment_id": 8523,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
+          "pool": "CASE-8613",
+          "asset_kind": "case_photo",
+          "source_page_id": 8613
+        },
+        {
+          "attachment_id": 7501,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
+          "pool": "M6",
+          "asset_kind": "service_photo",
+          "source_page_id": 6870
+        },
+        {
+          "attachment_id": 7502,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil2.webp",
+          "pool": "M6",
+          "asset_kind": "service_photo",
+          "source_page_id": 6870
+        },
+        {
+          "attachment_id": 7503,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil3.webp",
+          "pool": "M6",
+          "asset_kind": "service_photo",
+          "source_page_id": 6870
+        },
+        {
+          "attachment_id": 7499,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil6.webp",
+          "pool": "M6",
+          "asset_kind": "service_photo",
+          "source_page_id": 6870
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Кадр CASE-8613 связывать только с подтверждённым кейсом; фото M6 описывать по видимому сюжету и не называть отдельным выполненным объектом.",
+      "caveat": "Кейс подтверждает корчевание пней; M6 — старые фотографии страницы услуги без отдельного адресного кейса.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S6-CHILD-CONCRETE",
+      "evidence_class": "A",
+      "exact_case_ids": [10107],
+      "exact_case_urls": ["https://exp76.ru/poshekhone/"],
+      "contextual_page_ids": [676],
+      "media_pool": "CASE-10107",
+      "media": [
+        {
+          "attachment_id": 10115,
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/DSC01487.webp",
+          "pool": "CASE-10107",
+          "asset_kind": "case_photo",
+          "source_page_id": 10107
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Текст кейса подтверждает подпорную стенку, а attachment 10115 визуально показывает монолитный бетон; материал не назван в самом тексте.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S6-CHILD-STONE",
+      "evidence_class": "A",
+      "exact_case_ids": [8638],
+      "exact_case_urls": ["https://exp76.ru/fotogalereja/timoshkino/"],
+      "contextual_page_ids": [676],
+      "media_pool": "CASE-8638",
+      "media": [
+        {
+          "attachment_id": 9017,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1983.webp",
+          "pool": "CASE-8638",
+          "asset_kind": "case_photo",
+          "source_page_id": 8638
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Кейс прямо подтверждает подпорную стенку из плитняка методом сухой кладки.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S6-CHILD-WOOD",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [676],
+      "media_pool": "M7",
+      "media": [
+        {
+          "attachment_id": 9292,
+          "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
+          "pool": "M7",
+          "asset_kind": "illustration",
+          "source_page_id": 676
+        },
+        {
+          "attachment_id": 9302,
+          "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki5.webp",
+          "pool": "M7",
+          "asset_kind": "illustration",
+          "source_page_id": 676
+        }
+      ],
+      "asset_kind": "illustration",
+      "safe_caption_rule": "Начинать подпись с «Иллюстрация:»; не указывать объект, адрес, срок, заказчика или факт выполнения компанией.",
+      "caveat": "M7 визуально показывает деревянные решения, но не связан с выполненным компанией объектом.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S7-CHILD-DESIGN",
+      "evidence_class": "C",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6918],
+      "media_pool": "M8",
+      "media": [
+        {
+          "attachment_id": 9270,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/osvescheniezdaniya.webp",
+          "pool": "M8",
+          "asset_kind": "context_photo",
+          "source_page_id": 6918
+        }
+      ],
+      "asset_kind": "context_photo",
+      "safe_caption_rule": "Описывать только видимый контекст; не называть изображение кейсом или выполненным объектом этой услуги и не указывать адрес.",
+      "caveat": "Фото показывает результат освещения здания, но не является техническим планом и не подтверждает отдельный проектный кейс.",
+      "needs_client_asset_or_generated_illustration": true
+    },
+    {
+      "destination_id": "S7-CHILD-INSTALL",
+      "evidence_class": "A",
+      "exact_case_ids": [9684, 8604, 8620],
+      "exact_case_urls": [
+        "https://exp76.ru/fotogalereja/rybinsk-marievka/",
+        "https://exp76.ru/fotogalereja/kamenniki/",
+        "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+      ],
+      "contextual_page_ids": [6918],
+      "media_pool": "CASE-9684+CASE-8604+CASE-8620",
+      "media": [
+        {
+          "attachment_id": 9689,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/EvxPksHMjgc.webp",
+          "pool": "CASE-9684",
+          "asset_kind": "case_photo",
+          "source_page_id": 9684
+        },
+        {
+          "attachment_id": 8431,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/DbDKG2WLtEk.webp",
+          "pool": "CASE-8604",
+          "asset_kind": "case_photo",
+          "source_page_id": 8604
+        },
+        {
+          "attachment_id": 8685,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1814.webp",
+          "pool": "CASE-8620",
+          "asset_kind": "case_photo",
+          "source_page_id": 8620
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "9684 подтверждает монтаж уличного освещения; 8604 и 8620 подтверждают архитектурное освещение в составе комплексных объектов.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S7-CHILD-LANDSCAPE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6918, 8604, 8620],
+      "media_pool": "M8",
+      "media": [
+        {
+          "attachment_id": 9195,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+          "pool": "M8",
+          "asset_kind": "service_photo",
+          "source_page_id": 6918
+        },
+        {
+          "attachment_id": 7954,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
+          "pool": "M8",
+          "asset_kind": "service_photo",
+          "source_page_id": 6918
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Описывать только видимый сюжет; не называть изображение кейсом или выполненным объектом компании и не указывать адрес.",
+      "caveat": "Существующие кейсы называют архитектурное, а не отдельное ландшафтное освещение; M8 остаётся сервисным фотопулом.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S7-CHILD-ARCHITECTURAL",
+      "evidence_class": "A",
+      "exact_case_ids": [8604, 8620],
+      "exact_case_urls": [
+        "https://exp76.ru/fotogalereja/kamenniki/",
+        "https://exp76.ru/fotogalereja/rybinsk-shankhajj/"
+      ],
+      "contextual_page_ids": [6918],
+      "media_pool": "CASE-8604+CASE-8620",
+      "media": [
+        {
+          "attachment_id": 8431,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/DbDKG2WLtEk.webp",
+          "pool": "CASE-8604",
+          "asset_kind": "case_photo",
+          "source_page_id": 8604
+        },
+        {
+          "attachment_id": 8685,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1814.webp",
+          "pool": "CASE-8620",
+          "asset_kind": "case_photo",
+          "source_page_id": 8620
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Называть только подтверждённый кейс и перечисленные для него работы; отдельный кадр не приписывать конкретному этапу без дополнительной разметки.",
+      "caveat": "Оба кейса подтверждают архитектурное освещение, однако кадры галерей не размечены как дневные или ночные этапы подсветки.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S7-CHILD-HOLIDAY",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [10381, 6918],
+      "media_pool": "M9",
+      "media": [
+        {
+          "attachment_id": 10384,
+          "url": "https://exp76.ru/wp-content/uploads/2024/02/image1.webp",
+          "pool": "M9",
+          "asset_kind": "illustration",
+          "source_page_id": 10381
+        },
+        {
+          "attachment_id": 10385,
+          "url": "https://exp76.ru/wp-content/uploads/2024/02/image2.webp",
+          "pool": "M9",
+          "asset_kind": "illustration",
+          "source_page_id": 10381
+        }
+      ],
+      "asset_kind": "illustration",
+      "safe_caption_rule": "Начинать подпись с «Иллюстрация:»; не указывать объект, адрес, срок, заказчика или факт выполнения компанией.",
+      "caveat": "M9 опубликован на странице услуги, но нет доказательства, что изображённые дома являются выполненными объектами компании.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S8-CHILD-PIPE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9282],
+      "media_pool": "M10",
+      "media": [
+        {
+          "attachment_id": 9286,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+          "pool": "M10",
+          "asset_kind": "illustration",
+          "source_page_id": 9282
+        },
+        {
+          "attachment_id": 9288,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
+          "pool": "M10",
+          "asset_kind": "illustration",
+          "source_page_id": 9282
+        }
+      ],
+      "asset_kind": "illustration",
+      "safe_caption_rule": "Начинать подпись с «Иллюстрация:»; не указывать объект, адрес, срок, заказчика или факт выполнения компанией.",
+      "caveat": "M10 — визуализации конструкции въезда и трубы, а не фотографии выполненного объекта.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S8-CHILD-GRAVEL",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9282],
+      "media_pool": "M10",
+      "media": [
+        {
+          "attachment_id": 9288,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
+          "pool": "M10",
+          "asset_kind": "illustration",
+          "source_page_id": 9282
+        }
+      ],
+      "asset_kind": "illustration",
+      "safe_caption_rule": "Начинать подпись с «Иллюстрация:»; не указывать объект, адрес, срок, заказчика или факт выполнения компанией.",
+      "caveat": "Страница услуги подтверждает щебёночный вариант, но M10 остаётся визуализацией без кейса и точной спецификации слоя.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S8-CHILD-CONCRETE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9282],
+      "media_pool": "M10",
+      "media": [
+        {
+          "attachment_id": 9286,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+          "pool": "M10",
+          "asset_kind": "illustration",
+          "source_page_id": 9282
+        }
+      ],
+      "asset_kind": "illustration",
+      "safe_caption_rule": "Начинать подпись с «Иллюстрация:»; не указывать объект, адрес, срок, заказчика или факт выполнения компанией.",
+      "caveat": "Страница услуги подтверждает бетонный вариант, но M10 не является фотографией готового бетонного въезда.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S8-CHILD-PARKING",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9282, 9699],
+      "media_pool": "M10",
+      "media": [
+        {
+          "attachment_id": 9286,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+          "pool": "M10",
+          "asset_kind": "illustration",
+          "source_page_id": 9282
+        },
+        {
+          "attachment_id": 9288,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
+          "pool": "M10",
+          "asset_kind": "illustration",
+          "source_page_id": 9282
+        }
+      ],
+      "asset_kind": "illustration",
+      "safe_caption_rule": "Начинать подпись с «Иллюстрация:»; не указывать объект, адрес, срок, заказчика или факт выполнения компанией.",
+      "caveat": "9699 подтверждает только въезд с плиткой; точного кейса перехода через канаву с парковочной площадкой нет, M10 — визуализация.",
+      "needs_client_asset_or_generated_illustration": false
+    }
+  ]
+}
