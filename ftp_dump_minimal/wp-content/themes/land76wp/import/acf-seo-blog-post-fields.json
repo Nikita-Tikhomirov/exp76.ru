@@ -346,17 +346,15 @@
           "id": ""
         },
         "post_type": [
-          "post"
+          "post",
+          "page"
         ],
         "post_status": [
           "publish"
         ],
-        "taxonomy": [
-          "category:74"
-        ],
+        "taxonomy": [],
         "filters": [
-          "search",
-          "taxonomy"
+          "search"
         ],
         "return_format": "id",
         "min": 0,

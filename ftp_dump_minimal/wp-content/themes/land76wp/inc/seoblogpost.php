@@ -45,6 +45,15 @@ if (!function_exists('land76_blogseo_asset_url')) {
 if (!function_exists('land76_blogseo_post_topics')) {
     function land76_blogseo_post_topics($post_id)
     {
+        $explicit_topic_key = (string) get_post_meta($post_id, '_land76_topic_key', true);
+        if ($explicit_topic_key !== '') {
+            $registry = function_exists('land76wp_service_hub_registry') ? land76wp_service_hub_registry() : array();
+            if (isset($registry[$explicit_topic_key]) && hash_equals($registry[$explicit_topic_key]['topic_key'], $explicit_topic_key)) {
+                return array($explicit_topic_key);
+            }
+            return array();
+        }
+
         $post_categories = wp_get_post_categories($post_id);
         $topics = array(
             'drenazh' => 87,
@@ -198,12 +207,21 @@ $blogseo_main_image = land76_blogseo_field('blogseo_main_image', '');
 $blogseo_main_image_url = land76_blogseo_image_url($blogseo_main_image, land76_blogseo_field('blogseo_main_image_url', ''));
 $blogseo_main_image_alt = land76_blogseo_field('blogseo_main_image_alt', $blogseo_title);
 $blogseo_topics = land76_blogseo_post_topics(get_the_ID());
+$land76_managed_service_hub_post = hash_equals(
+    'land76-service-hubs',
+    (string) get_post_meta(get_the_ID(), '_land76_import_owner', true)
+);
 
-if (!$blogseo_main_image_url || strpos($blogseo_main_image_url, '001-02-1') !== false) {
+if ($land76_managed_service_hub_post) {
+    $blogseo_main_image_url = (string) get_post_meta(get_the_ID(), '_land76_main_image_url', true);
+    $blogseo_main_image_alt = (string) get_post_meta(get_the_ID(), '_land76_main_image_alt', true);
+}
+
+if (!$land76_managed_service_hub_post && (!$blogseo_main_image_url || strpos($blogseo_main_image_url, '001-02-1') !== false)) { /* legacy drenazh fallback */
     $blogseo_main_image_url = land76_blogseo_asset_url(land76_blogseo_topic_image_by_text(get_the_ID(), $blogseo_topics));
 }
 
-if (!$blogseo_main_image_alt || $blogseo_main_image_alt === $blogseo_title) {
+if (!$land76_managed_service_hub_post && (!$blogseo_main_image_alt || $blogseo_main_image_alt === $blogseo_title)) {
     $blogseo_main_image_alt = land76_blogseo_default_image_alt(get_the_ID(), $blogseo_topics);
 }
 
@@ -317,7 +335,29 @@ if (!is_array($blogseo_faq_items)) {
           <?php foreach ($blogseo_related_services as $related_post_id) : ?>
             <?php
             $related_post = get_post($related_post_id);
-            if (!$related_post instanceof WP_Post) {
+            $related_page_key = $related_post instanceof WP_Post
+                ? (string) get_post_meta($related_post->ID, '_land76_page_key', true)
+                : '';
+            $is_registered_hub = false;
+            $service_hub_registry = function_exists('land76wp_service_hub_registry')
+                ? land76wp_service_hub_registry()
+                : array();
+            foreach ($service_hub_registry as $service_hub) {
+                if ($related_post instanceof WP_Post && (int) $service_hub['hub_post_id'] === (int) $related_post->ID) {
+                    $is_registered_hub = true;
+                    break;
+                }
+            }
+            $is_managed_child = $related_post instanceof WP_Post
+                && function_exists('land76wp_is_managed_service_hub_post')
+                && land76wp_is_managed_service_hub_post($related_post->ID)
+                && strpos($related_page_key, '-CHILD-') !== false;
+            $is_legacy_commercial = $related_post instanceof WP_Post
+                && $related_post->post_type === 'post'
+                && has_category(74, $related_post->ID);
+            if (!$related_post instanceof WP_Post
+                || $related_post->post_status !== 'publish'
+                || (!$is_registered_hub && !$is_managed_child && !$is_legacy_commercial)) {
                 continue;
             }
             ?>

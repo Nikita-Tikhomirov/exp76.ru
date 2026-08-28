@@ -7,6 +7,16 @@ if (file_exists($land76_service_v2_file)) {
   require_once $land76_service_v2_file;
 }
 
+$land76_service_hub_registry_file = __DIR__ . '/inc/service-hub-registry.php';
+if (file_exists($land76_service_hub_registry_file)) {
+  require_once $land76_service_hub_registry_file;
+}
+
+$land76_service_hub_import_file = __DIR__ . '/inc/import-service-hubs.php';
+if (file_exists($land76_service_hub_import_file)) {
+  require_once $land76_service_hub_import_file;
+}
+
 $land76_legal_pages_file = __DIR__ . '/inc/legal-pages.php';
 if (file_exists($land76_legal_pages_file)) {
   require_once $land76_legal_pages_file;
