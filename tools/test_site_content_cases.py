@@ -7,8 +7,10 @@ import hashlib
 import io
 import json
 import os
+import shutil
 import tempfile
 import unittest
+from collections.abc import Callable
 from contextlib import redirect_stderr
 from dataclasses import asdict
 from pathlib import Path
@@ -403,6 +405,56 @@ def _fake_image_auditor(url: str, checked_date: str) -> ImageAudit:
     )
 
 
+def _copy_local_case_evidence(destination: Path) -> None:
+    """Copy only the offline evidence files consumed by the case builder."""
+    relative_files = (
+        Path("cases_by_category.json"),
+        Path("acf_selected_works_map.json"),
+        Path("seo-content/cases/import/cases-seo-import.json"),
+    )
+    for relative_path in relative_files:
+        target = destination / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(ROOT / relative_path, target)
+
+    source_dir = (
+        ROOT
+        / "ftp_dump_minimal"
+        / "wp-content"
+        / "themes"
+        / "land76wp"
+        / "content"
+        / "service-v2"
+    )
+    target_dir = destination / source_dir.relative_to(ROOT)
+    target_dir.mkdir(parents=True, exist_ok=True)
+    for source_path in source_dir.glob("*.json"):
+        shutil.copy2(source_path, target_dir / source_path.name)
+
+
+def _build_catalog_with_copied_hubs(mutator: Callable[[Path], None]) -> dict[str, object]:
+    """Build from isolated local inputs after mutating copied hub fixtures."""
+    with tempfile.TemporaryDirectory() as temp_dir:
+        root = Path(temp_dir)
+        _copy_local_case_evidence(root)
+        hub_dir = (
+            root
+            / "ftp_dump_minimal"
+            / "wp-content"
+            / "themes"
+            / "land76wp"
+            / "content"
+            / "service-v2"
+        )
+        mutator(hub_dir)
+        return build_catalog_document(
+            root,
+            page_resolver=_fake_page_resolver,
+            image_auditor=_fake_image_auditor,
+            checked_date="2026-08-28",
+        )
+
+
 class CaseCatalogTest(unittest.TestCase):
     """Catch invented mappings, lost provenance and unsafe case references."""
 
@@ -551,6 +603,106 @@ class CaseCatalogTest(unittest.TestCase):
             [],
             validate_case_reference(verified.page_id, verified.image_urls[0], self.catalog),
         )
+
+    def test_schema_two_uses_scope_but_never_linked_navigation_as_image_evidence(self) -> None:
+        """Navigation images cannot gain evidence provenance, even when case-owned."""
+        navigation_only = "https://exp76.ru/wp-content/uploads/navigation-only.webp"
+
+        def add_navigation_only_image(hub_dir: Path) -> None:
+            hub_path = hub_dir / "gazon-posevnojj-i-gazon-rulonnyjj.json"
+            hub = json.loads(hub_path.read_text(encoding="utf-8"))
+            hub["services"]["items"][0]["image"]["url"] = navigation_only
+            hub_path.write_text(
+                json.dumps(hub, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+        document = _build_catalog_with_copied_hubs(add_navigation_only_image)
+
+        audits = document["selected_image_audits"]
+        self.assertEqual(EXPECTED_SELECTED_IMAGES, {row["url"] for row in audits})
+        self.assertNotIn(navigation_only, {row["url"] for row in audits})
+        source_refs = {
+            source_ref
+            for row in audits
+            for source_ref in row["source_refs"]
+        }
+        self.assertEqual(39, sum("#scope.items[" in source_ref for source_ref in source_refs))
+        self.assertFalse(any("#services.items[" in source_ref for source_ref in source_refs))
+        self.assertFalse(any("#articles.items[" in source_ref for source_ref in source_refs))
+
+    def test_schema_one_keeps_legacy_services_item_image_provenance(self) -> None:
+        """Legacy descriptive service cards remain selected-image evidence."""
+        def convert_hubs_to_schema_one(hub_dir: Path) -> None:
+            for hub_path in hub_dir.glob("*.json"):
+                hub = json.loads(hub_path.read_text(encoding="utf-8"))
+                hub["schema_version"] = 1
+                hub["services"] = hub.pop("scope")
+                hub.pop("articles", None)
+                hub_path.write_text(
+                    json.dumps(hub, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8",
+                )
+
+        document = _build_catalog_with_copied_hubs(convert_hubs_to_schema_one)
+
+        audits = document["selected_image_audits"]
+        self.assertEqual(EXPECTED_SELECTED_IMAGES, {row["url"] for row in audits})
+        source_refs = {
+            source_ref
+            for row in audits
+            for source_ref in row["source_refs"]
+        }
+        self.assertEqual(39, sum("#services.items[" in source_ref for source_ref in source_refs))
+        self.assertFalse(any("#scope.items[" in source_ref for source_ref in source_refs))
+
+    def test_service_evidence_schema_and_shapes_fail_closed(self) -> None:
+        """Ambiguous schema scalars and malformed evidence containers must be rejected."""
+        def set_nested(hub: dict[str, object], *path_and_value: object) -> None:
+            *path, value = path_and_value
+            target = hub
+            for key in path[:-1]:
+                target = target[key]  # type: ignore[assignment,index]
+            target[path[-1]] = value  # type: ignore[index]
+
+        mutations: tuple[tuple[str, Callable[[dict[str, object]], None]], ...] = (
+            ("boolean schema", lambda hub: hub.__setitem__("schema_version", True)),
+            ("float schema", lambda hub: hub.__setitem__("schema_version", 2.0)),
+            ("unknown schema", lambda hub: hub.__setitem__("schema_version", 3)),
+            ("hero is not object", lambda hub: hub.__setitem__("hero", [])),
+            ("scope is not object", lambda hub: hub.__setitem__("scope", [])),
+            (
+                "scope.items is not list",
+                lambda hub: set_nested(hub, "scope", "items", {"0": {}}),
+            ),
+            (
+                "scope item is not object",
+                lambda hub: set_nested(hub, "scope", "items", ["not-an-object"]),
+            ),
+            ("proof is not object", lambda hub: hub.__setitem__("proof", [])),
+            (
+                "proof.cases is not list",
+                lambda hub: set_nested(hub, "proof", "cases", {"0": {}}),
+            ),
+            (
+                "proof case is not object",
+                lambda hub: set_nested(hub, "proof", "cases", ["not-an-object"]),
+            ),
+        )
+
+        for label, mutation in mutations:
+            with self.subTest(label=label):
+                def corrupt_one_hub(hub_dir: Path, mutation: Callable[[dict[str, object]], None] = mutation) -> None:
+                    hub_path = hub_dir / "gazon-posevnojj-i-gazon-rulonnyjj.json"
+                    hub = json.loads(hub_path.read_text(encoding="utf-8"))
+                    mutation(hub)
+                    hub_path.write_text(
+                        json.dumps(hub, ensure_ascii=False, indent=2) + "\n",
+                        encoding="utf-8",
+                    )
+
+                with self.assertRaises(CatalogError):
+                    _build_catalog_with_copied_hubs(corrupt_one_hub)
 
     def test_catalog_rejects_unknown_case_and_unowned_photo(self) -> None:
         """A wrong ID or a photo borrowed from another case must fail validation."""
@@ -748,6 +900,57 @@ class CaseCatalogTest(unittest.TestCase):
         owner = next(row for row in mutated["cases"] if row["image_urls"])
         owner["image_urls"] = [next(iter(EXPECTED_SELECTED_IMAGES - set(owner["image_urls"])))]
         self.assertTrue(any("exact case-owned images" in error for error in validate_catalog_document(mutated)))
+
+    def test_checked_validator_pins_exact_selected_image_provenance(self) -> None:
+        """Navigation, impossible pointers and ref-to-image swaps must fail validation."""
+        checked = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+        mutations: list[tuple[str, dict[str, object]]] = []
+
+        navigation = copy.deepcopy(checked)
+        navigation["selected_image_audits"][0]["source_refs"].append(
+            "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/"
+            "gazon-posevnojj-i-gazon-rulonnyjj.json#services.items[0].image.url"
+        )
+        mutations.append(("linked navigation", navigation))
+
+        impossible = copy.deepcopy(checked)
+        scope_owner = next(
+            row
+            for row in impossible["selected_image_audits"]
+            if any("#scope.items[" in ref for ref in row["source_refs"])
+        )
+        scope_index = next(
+            index
+            for index, ref in enumerate(scope_owner["source_refs"])
+            if "#scope.items[" in ref
+        )
+        scope_ref = scope_owner["source_refs"][scope_index]
+        scope_prefix, scope_tail = scope_ref.split("#scope.items[", 1)
+        scope_owner["source_refs"][scope_index] = (
+            f"{scope_prefix}#scope.items[99]" + scope_tail.split("]", 1)[1]
+        )
+        mutations.append(("impossible scope pointer", impossible))
+
+        swapped = copy.deepcopy(checked)
+        source = next(
+            row
+            for row in swapped["selected_image_audits"]
+            if any("#scope.items[" in ref for ref in row["source_refs"])
+        )
+        source_ref = next(ref for ref in source["source_refs"] if "#scope.items[" in ref)
+        target = next(row for row in swapped["selected_image_audits"] if row is not source)
+        source["source_refs"].remove(source_ref)
+        target["source_refs"].append(source_ref)
+        mutations.append(("source assigned to wrong image", swapped))
+
+        for label, document in mutations:
+            with self.subTest(label=label):
+                self.assertTrue(
+                    any(
+                        "exact selected image provenance" in error
+                        for error in validate_catalog_document(document)
+                    )
+                )
 
     def test_checked_validator_accepts_a_valid_ranged_get_audit(self) -> None:
         """A HEAD 405 followed by 206 image headers remains valid replay evidence."""

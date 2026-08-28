@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 import os
 import re
@@ -51,6 +52,32 @@ EXPECTED_SOURCE_COUNTS = {
         "unique_cases": 5,
     },
 }
+SERVICE_V2_SOURCE_PREFIX = (
+    "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2"
+)
+EXPECTED_HUB_IMAGE_SOURCE_COUNTS = {
+    "gazon-posevnojj-i-gazon-rulonnyjj.json": (4, 2),
+    "landshaftnoe-proektirovanie.json": (5, 3),
+    "planirovka-territorii.json": (5, 0),
+    "podpornye-stenki.json": (5, 0),
+    "posadka-derevev-i-kustarnikov.json": (5, 1),
+    "ukhod-za-sadom.json": (5, 0),
+    "ulichnoe-osveshhenie-uchastka.json": (5, 0),
+    "vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json": (5, 0),
+}
+EXPECTED_SELECTED_IMAGE_SOURCE_REFS = frozenset(
+    f"{SERVICE_V2_SOURCE_PREFIX}/{filename}#{pointer}"
+    for filename, (scope_items, proof_cases) in EXPECTED_HUB_IMAGE_SOURCE_COUNTS.items()
+    for pointer in (
+        ["hero.image.url"]
+        + [f"scope.items[{index}].image.url" for index in range(scope_items)]
+        + [f"proof.cases[{index}].image.url" for index in range(proof_cases)]
+    )
+)
+# Pins every audited URL to its exact local source refs, not only aggregate counts.
+EXPECTED_SELECTED_IMAGE_PROVENANCE_SHA256 = (
+    "cb577118b2e382ec4c1952c17f89b3e26b51d377559d7a12168961975ec45413"
+)
 EXPECTED_PAGE_IDS = {
     "https://exp76.ru/d-rjabukhino/": 10079,
     "https://exp76.ru/d-volkovo/": 10066,
@@ -584,6 +611,51 @@ def _iter_upload_urls(value: Any, pointer: str = "") -> Sequence[tuple[str, str]
     return rows
 
 
+def _iter_service_evidence_upload_urls(
+    payload: Mapping[str, Any],
+    source_file: str,
+) -> Sequence[tuple[str, str]]:
+    """Yield only image sources that carry evidence in the hub schema."""
+    schema_version = payload.get("schema_version", 1)
+    if type(schema_version) is not int or schema_version not in {1, 2}:
+        raise CatalogError(
+            f"{source_file}#schema_version must be the exact integer 1 or 2"
+        )
+    if schema_version == 1:
+        card_section = "services"
+    else:
+        card_section = "scope"
+
+    hero = payload.get("hero")
+    cards = payload.get(card_section)
+    proof = payload.get("proof")
+    for pointer, value in (("hero", hero), (card_section, cards), ("proof", proof)):
+        if not isinstance(value, Mapping):
+            raise CatalogError(f"{source_file}#{pointer} must be an object")
+
+    card_items = cards.get("items")
+    proof_cases = proof.get("cases")
+    for pointer, values in (
+        (f"{card_section}.items", card_items),
+        ("proof.cases", proof_cases),
+    ):
+        if not isinstance(values, list):
+            raise CatalogError(f"{source_file}#{pointer} must be a list")
+        for index, item in enumerate(values):
+            if not isinstance(item, Mapping):
+                raise CatalogError(f"{source_file}#{pointer}[{index}] must be an object")
+
+    evidence_roots = (
+        (hero, "hero"),
+        (card_items, f"{card_section}.items"),
+        (proof_cases, "proof.cases"),
+    )
+    rows: list[tuple[str, str]] = []
+    for value, pointer in evidence_roots:
+        rows.extend(_iter_upload_urls(value, pointer))
+    return rows
+
+
 def _get_accumulator(cases: dict[str, _CaseAccumulator], url: str) -> _CaseAccumulator:
     canonical = canonicalize_case_url(url)
     if canonical not in cases:
@@ -679,7 +751,7 @@ def _load_local_evidence(root: Path) -> tuple[
             raise CatalogError(f"{path} must contain an object")
         source_file = _relative_path(root, path)
         service_id = str(payload.get("service_id", ""))
-        for image_url, pointer in _iter_upload_urls(payload):
+        for image_url, pointer in _iter_service_evidence_upload_urls(payload, source_file):
             selected_image_sources.setdefault(image_url, set()).add(f"{source_file}#{pointer}")
 
         proof = payload.get("proof", {})
@@ -1069,9 +1141,13 @@ def validate_catalog_document(document: Mapping[str, Any]) -> list[str]:
         errors.append(f"selected_image_audits must contain 25 URLs, found {len(selected)}")
     selected_urls: set[str] = set()
     selected_by_url: dict[str, Mapping[str, Any]] = {}
+    selected_source_refs: list[str] = []
+    selected_provenance: dict[str, tuple[str, ...]] = {}
+    provenance_shape_valid = True
     for row in selected:
         if not isinstance(row, Mapping):
             errors.append("selected image audit must be an object")
+            provenance_shape_valid = False
             continue
         raw_url = str(row.get("url", ""))
         try:
@@ -1087,10 +1163,33 @@ def validate_catalog_document(document: Mapping[str, Any]) -> list[str]:
         selected_by_url[canonical] = row
         if not _is_valid_image_audit(row):
             errors.append(f"selected image failed HTTP/content validation: {canonical}")
-        if not row.get("source_refs"):
+        source_refs = row.get("source_refs")
+        if (
+            not isinstance(source_refs, list)
+            or not source_refs
+            or any(not isinstance(source_ref, str) or not source_ref for source_ref in source_refs)
+        ):
             errors.append(f"selected image lacks source provenance: {canonical}")
+            provenance_shape_valid = False
+        else:
+            selected_source_refs.extend(source_refs)
+            selected_provenance[canonical] = tuple(sorted(source_refs))
     if selected_urls != EXPECTED_SELECTED_IMAGE_URLS:
         errors.append("selected image audits do not match the exact service-v2 URL set")
+    serialized_provenance = json.dumps(
+        selected_provenance,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    provenance_hash = hashlib.sha256(serialized_provenance).hexdigest()
+    if (
+        not provenance_shape_valid
+        or len(selected_source_refs) != len(EXPECTED_SELECTED_IMAGE_SOURCE_REFS)
+        or frozenset(selected_source_refs) != EXPECTED_SELECTED_IMAGE_SOURCE_REFS
+        or provenance_hash != EXPECTED_SELECTED_IMAGE_PROVENANCE_SHA256
+    ):
+        errors.append("catalog does not match exact selected image provenance")
     for image_url in owned_image_urls:
         if image_url not in selected_urls:
             errors.append(f"case-owned image is absent from selected audit: {image_url}")
