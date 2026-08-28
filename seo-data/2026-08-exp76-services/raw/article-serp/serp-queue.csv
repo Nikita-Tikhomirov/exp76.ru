@@ -1,0 +1,14 @@
+query_id,query,service_id,intent,region,device,reason,status
+Q000001,обрезка деревьев схема,S4,informational,Yaroslavl,desktop,article_representative[S4-ARTICLE-PRUNING-GUIDE],pending
+Q000002,устройство газона схема,S2,informational,Yaroslavl,desktop,article_representative[S2-ARTICLE-15A8258BC551],pending
+Q000003,как укладывать рулонный газон,S2,informational,Yaroslavl,desktop,article_representative[S2-ARTICLE-182825428CBD],pending
+Q000004,как рассчитать стоимость благоустройства са сотку,S1,informational,Yaroslavl,desktop,article_representative[S1-ARTICLE-505521C7EF8C],pending
+Q000005,подпорная стенка на участке своими руками,S6,informational,Yaroslavl,desktop,article_representative[S6-ARTICLE-DIY-RETAINING-WALL],pending
+Q000006,как рассчитать инженерное благоустройство участка,S1,informational,Yaroslavl,desktop,article_representative[S1-ARTICLE-72FBB49E67C8],pending
+Q000007,выравнивание участка своими руками,S5,informational,Yaroslavl,desktop,article_representative[S5-ARTICLE-74B3B2B18DA4],pending
+Q000008,дизайн проект участка своими руками,S1,informational,Yaroslavl,desktop,article_representative[S1-ARTICLE-DIY-DESIGN],pending
+Q000009,нормы посадки деревьев,S3,informational,Yaroslavl,desktop,article_representative[S3-ARTICLE-PLANTING-SCHEMES],pending
+Q000010,как сделать въезд на участок через канаву,S8,informational,Yaroslavl,desktop,article_representative[S8-ARTICLE-DIY-ENTRANCE],pending
+Q000011,как сделать освещение на участке,S7,informational,Yaroslavl,desktop,article_representative[S7-ARTICLE-DIY-LIGHTING],pending
+Q000012,схема ухода за садом,S4,informational,Yaroslavl,desktop,article_representative[S4-ARTICLE-F668FF6F6190],pending
+Q000013,схема планировки участка,S5,informational,Yaroslavl,desktop,article_representative[S5-ARTICLE-FF3B04A53D72],pending

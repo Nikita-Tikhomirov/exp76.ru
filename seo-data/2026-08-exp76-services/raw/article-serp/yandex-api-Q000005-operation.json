@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000005",
+  "query": "подпорная стенка на участке своими руками",
+  "service_id": "S6",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprse6rqsjgb0h3sc99o",
+  "submitted_at": "2026-08-28T06:14:37+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "789f7c9c56d3fc041e5c38e584fa09de4d97ba6531fe34a170452f5d81e05115",
+  "request_sha256": "0382c5b97fb962336d4db25d38cebdc2988482da0a679b3e3ed8bb2dbdf3081a",
+  "batch_sha256": "e1051b6d8014d246fa05fb4b7811eee4a7a0b72719fb3921d0adbbde2dada28b"
+}

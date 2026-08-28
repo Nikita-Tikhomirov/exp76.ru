@@ -1,0 +1,15 @@
+{
+  "query_id": "Q000004",
+  "query": "как рассчитать стоимость благоустройства са сотку",
+  "service_id": "S1",
+  "intent": "informational",
+  "region": "Yaroslavl",
+  "device": "desktop",
+  "operation_id": "sprjgbotir2opssli3kc",
+  "submitted_at": "2026-08-28T06:14:37+03:00",
+  "endpoint": "https://searchapi.api.cloud.yandex.net/v2/web/searchAsync",
+  "response_format": "FORMAT_XML",
+  "queue_sha256": "789f7c9c56d3fc041e5c38e584fa09de4d97ba6531fe34a170452f5d81e05115",
+  "request_sha256": "82e01d3e9288bee68100eebee0c692df3b733dbd19da9612078b2043131b2df8",
+  "batch_sha256": "e1051b6d8014d246fa05fb4b7811eee4a7a0b72719fb3921d0adbbde2dada28b"
+}
