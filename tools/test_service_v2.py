@@ -1,18 +1,42 @@
 import copy
 import json
+import os
 import re
+import stat
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
-from tools.service_v2 import ContractError, count_words, render_service, validate_service
+from tools import service_v2 as service_v2_module
+from tools.service_v2 import (
+    ContractError,
+    count_words,
+    load_hub_services,
+    render_service,
+    sync_services,
+    validate_service,
+    validate_service_v2,
+)
+from tools.site_content.contracts import (
+    load_case_catalog,
+    load_page_architecture,
+    numeric_fact_claims,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME = ROOT / "ftp_dump_minimal" / "wp-content" / "themes" / "land76wp"
 DATA_DIR = THEME / "content" / "service-v2"
+ARCHITECTURE_PATH = (
+    ROOT / "seo-data" / "2026-08-exp76-services" / "processed" / "page_architecture.csv"
+)
+CASE_CATALOG_PATH = ROOT / "seo-content" / "service-hubs" / "case-catalog.json"
+RELEASE_MANIFEST_PATH = ROOT / "seo-content" / "service-hubs" / "release-manifest.json"
+RELEASE_ID = "service-hubs-2026-08-28"
 
 EXPECTED_SERVICES = {
     "S1": (673, "landshaftnoe-proektirovanie"),
@@ -35,6 +59,136 @@ EXPECTED_CASES = {
     "S7": [],
     "S8": [],
 }
+
+
+def _text_paths(value: object, path: str = "") -> list[tuple[str, str]]:
+    result: list[tuple[str, str]] = []
+    if isinstance(value, dict):
+        for key, item in value.items():
+            child = f"{path}.{key}" if path else str(key)
+            result.extend(_text_paths(item, child))
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            result.extend(_text_paths(item, f"{path}[{index}]"))
+    elif isinstance(value, str):
+        result.append((path, value))
+    return result
+
+
+def schema_two_fixture(service: dict[str, object]) -> dict[str, object]:
+    """Promote a v1 payload in memory without changing committed theme content."""
+    payload = copy.deepcopy(service)
+    service_id = str(payload["service_id"])
+    architecture = load_page_architecture(ARCHITECTURE_PATH)
+    payload["schema_version"] = 2
+    payload["release_id"] = RELEASE_ID
+    payload["release_status"] = "draft"
+    payload["page_key"] = f"{service_id}-HUB"
+    payload["page_type"] = "hub"
+    payload["scope"] = payload.pop("services")
+    image = copy.deepcopy(payload["hero"]["image"])
+
+    children = sorted(
+        (
+            destination
+            for destination in architecture.values()
+            if destination.service_id == service_id
+            and destination.parent_destination_id == payload["page_key"]
+            and destination.page_role == "child_service"
+        ),
+        key=lambda destination: destination.destination_id,
+    )
+    articles = sorted(
+        (
+            destination
+            for destination in architecture.values()
+            if destination.service_id == service_id
+            and destination.parent_destination_id == payload["page_key"]
+            and destination.page_role == "article"
+        ),
+        key=lambda destination: destination.destination_id,
+    )
+    payload["services"] = {
+        "heading": f"Коммерческие направления {service_id}",
+        "lead": f"Коммерческие страницы владельца {service_id} создаются только для направлений, закреплённых в архитектуре релиза.",
+        "items": [
+            {
+                "page_key": destination.destination_id,
+                "url": destination.canonical_url,
+                "title": f"Направление {destination.destination_id}",
+                "text": f"Карточка {destination.destination_id} ведёт на единственную коммерческую страницу, которой назначен этот поисковый кластер.",
+                "image": copy.deepcopy(image),
+            }
+            for destination in children
+        ],
+    }
+    payload["articles"] = {
+        "heading": f"Материалы по теме {service_id}",
+        "lead": f"Информационные материалы владельца {service_id} отделены от коммерческой страницы и следуют утверждённой архитектуре.",
+        "items": [
+            {
+                "page_key": destination.destination_id,
+                "url": destination.canonical_url,
+                "title": f"Материал {destination.destination_id}",
+                "text": f"Статья {destination.destination_id} отвечает на самостоятельный информационный запрос и возвращает читателя к основной услуге.",
+                "image": copy.deepcopy(image),
+            }
+            for destination in articles
+        ],
+    }
+    if service_id == "S5":
+        payload["related_links"]["items"][2]["text"] += " Раздел относится к планировке территории."
+    payload["evidence_gaps"] = [
+        {
+            "kind": "nonready_destination",
+            "page_key": destination.destination_id,
+            "status": destination.publication_status,
+        }
+        for destination in children + articles
+        if destination.publication_status != "ready"
+    ]
+    if not payload["proof"]["cases"]:
+        payload["evidence_gaps"].append(
+            {
+                "kind": "missing_verified_case",
+                "page_key": payload["page_key"],
+                "status": "missing",
+            }
+        )
+    payload["fact_evidence"] = [
+        {
+            "path": path,
+            "claim_type": claim_type,
+            "claim": claim,
+            "source_ref": "fixture:preserved-v1-evidence",
+        }
+        for path, text in _text_paths(payload)
+        for claim_type, claim in numeric_fact_claims(text)
+    ]
+    return payload
+
+
+def write_schema_two_sources(source_dir: Path) -> list[dict[str, object]]:
+    source_dir.mkdir(parents=True, exist_ok=True)
+    services = [
+        schema_two_fixture(json.loads(path.read_text(encoding="utf-8")))
+        for path in sorted(DATA_DIR.glob("*.json"))
+    ]
+    for service in services:
+        path = source_dir / f'{service["service_id"]}.json'
+        path.write_text(
+            json.dumps(service, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+    return services
+
+
+def directory_snapshot(path: Path) -> dict[str, bytes]:
+    return {
+        file.relative_to(path).as_posix(): file.read_bytes()
+        for file in path.rglob("*")
+        if file.is_file()
+    }
 
 
 class ServiceV2Test(unittest.TestCase):
@@ -214,6 +368,455 @@ class ServiceV2Test(unittest.TestCase):
         self.assertIn("land76_clean_post_value('source'", handler_source)
         self.assertIn("$mail_sent = @mail(", handler_source)
         self.assertIn("if (!$mail_sent)", handler_source)
+
+
+class SchemaTwoSyncTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.architecture = load_page_architecture(ARCHITECTURE_PATH)
+        cls.cases = load_case_catalog(CASE_CATALOG_PATH)
+        cls.v1_services = [
+            json.loads(path.read_text(encoding="utf-8"))
+            for path in sorted(DATA_DIR.glob("*.json"))
+        ]
+
+    def test_schema_two_preserves_descriptive_scope_and_renders_linked_cards(self) -> None:
+        service = schema_two_fixture(self.v1_services[0])
+
+        validate_service_v2(service, self.architecture, self.cases)
+        rendered = render_service(service)
+
+        scope_title = service["scope"]["items"][0]["title"]
+        child = service["services"]["items"][0]
+        article = service["articles"]["items"][0]
+        self.assertIn(f'<article class="service-v2__card">', rendered)
+        self.assertIn(f"<h3>{scope_title}</h3>", rendered)
+        self.assertIn(
+            f'<a class="service-v2__card service-v2__card--linked" href="{child["url"]}">',
+            rendered,
+        )
+        self.assertIn(
+            f'<a class="service-v2__card service-v2__card--linked" href="{article["url"]}">',
+            rendered,
+        )
+
+    def test_direct_cli_auto_validates_schema_two_sources(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            source = Path(temp_dir) / "sources"
+            write_schema_two_sources(source)
+
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "tools" / "service_v2.py"), "validate", str(source)],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+            )
+
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertEqual(8, json.loads(result.stdout)["services"])
+
+    def test_schema_two_rejects_owner_and_architecture_drift(self) -> None:
+        service = schema_two_fixture(self.v1_services[0])
+        service["canonical"] = "https://exp76.ru/services/not-the-owner/"
+
+        with self.assertRaisesRegex(ContractError, "canonical"):
+            validate_service_v2(service, self.architecture, self.cases)
+
+        service = schema_two_fixture(self.v1_services[0])
+        service["services"]["items"][0]["url"] = "https://exp76.ru/not-approved/"
+        with self.assertRaisesRegex(ContractError, "architecture"):
+            validate_service_v2(service, self.architecture, self.cases)
+
+    def test_schema_two_requires_renderable_navigation_sections_even_when_empty(self) -> None:
+        s6 = next(payload for payload in self.v1_services if payload["service_id"] == "S6")
+        service = schema_two_fixture(s6)
+        service["services"] = {}
+
+        with self.assertRaisesRegex(ContractError, "services must contain heading, lead and items"):
+            validate_service_v2(service, self.architecture, self.cases)
+
+    def test_draft_gaps_are_explicit_and_production_ready_validation_fails_closed(self) -> None:
+        service = next(
+            schema_two_fixture(payload)
+            for payload in self.v1_services
+            if payload["service_id"] == "S4"
+        )
+
+        validate_service_v2(service, self.architecture, self.cases)
+        kinds = {gap["kind"] for gap in service["evidence_gaps"]}
+        self.assertIn("missing_verified_case", kinds)
+        self.assertIn("nonready_destination", kinds)
+
+        with self.assertRaisesRegex(ContractError, "production-ready"):
+            validate_service_v2(
+                service,
+                self.architecture,
+                self.cases,
+                production_ready=True,
+            )
+
+        service["release_status"] = "ready"
+        with self.assertRaisesRegex(ContractError, "production-ready"):
+            validate_service_v2(service, self.architecture, self.cases)
+        service["release_status"] = "draft"
+
+        service["evidence_gaps"] = []
+        with self.assertRaisesRegex(ContractError, "evidence_gaps"):
+            validate_service_v2(service, self.architecture, self.cases)
+
+    def test_schema_two_rejects_another_services_audited_illustration(self) -> None:
+        s1 = next(payload for payload in self.v1_services if payload["service_id"] == "S1")
+        s8 = next(payload for payload in self.v1_services if payload["service_id"] == "S8")
+        service = schema_two_fixture(s8)
+        service["hero"]["image"] = copy.deepcopy(s1["hero"]["image"])
+
+        with self.assertRaisesRegex(ContractError, "verified catalog images for S8"):
+            validate_service_v2(service, self.architecture, self.cases)
+
+    def test_sync_writes_only_eight_slug_json_and_html_outputs(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "sources"
+            target = root / "theme" / "service-v2"
+            target.mkdir(parents=True)
+            (target / "unrelated.txt").write_text("preserve me", encoding="utf-8")
+            (target / "rendered").mkdir()
+            (target / "rendered" / "unrelated.html").write_text(
+                "preserve rendered", encoding="utf-8"
+            )
+            fixtures = write_schema_two_sources(source)
+
+            summary = sync_services(source, target, allow_draft=True)
+
+            self.assertEqual(8, summary["services"])
+            self.assertEqual(16, summary["outputs"])
+            self.assertEqual("preserve me", (target / "unrelated.txt").read_text())
+            self.assertEqual(
+                "preserve rendered",
+                (target / "rendered" / "unrelated.html").read_text(),
+            )
+            self.assertEqual(
+                sorted(f'{service["slug"]}.json' for service in fixtures),
+                sorted(path.name for path in target.glob("*.json")),
+            )
+            self.assertEqual(
+                sorted(f'{service["slug"]}.html' for service in fixtures),
+                sorted(path.name for path in (target / "rendered").glob("*.html") if path.name != "unrelated.html"),
+            )
+            for service in fixtures:
+                installed = json.loads(
+                    (target / f'{service["slug"]}.json').read_text(encoding="utf-8")
+                )
+                self.assertEqual(service, installed)
+
+    def test_sync_rejects_draft_by_default_and_release_metadata_drift(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "sources"
+            target = root / "theme" / "service-v2"
+            target.mkdir(parents=True)
+            (target / "unrelated.txt").write_bytes(b"untouched")
+            services = write_schema_two_sources(source)
+            before = directory_snapshot(target)
+
+            with self.assertRaisesRegex(ContractError, "allow_draft"):
+                sync_services(source, target)
+            self.assertEqual(before, directory_snapshot(target))
+
+            services[0]["release_id"] = "different-release"
+            (source / f'{services[0]["service_id"]}.json').write_text(
+                json.dumps(services[0], ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ContractError, "release manifest"):
+                sync_services(source, target, allow_draft=True)
+            self.assertEqual(before, directory_snapshot(target))
+
+    def test_sync_rejects_incomplete_or_invalid_set_before_target_write(self) -> None:
+        for mutation in ("missing", "invalid"):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as temp_dir:
+                root = Path(temp_dir)
+                source = root / "sources"
+                target = root / "theme" / "service-v2"
+                target.mkdir(parents=True)
+                (target / "owner.json").write_bytes(b"existing-json")
+                (target / "rendered").mkdir()
+                (target / "rendered" / "owner.html").write_bytes(b"existing-html")
+                services = write_schema_two_sources(source)
+                if mutation == "missing":
+                    (source / "S8.json").unlink()
+                else:
+                    services[0]["services"]["items"][0]["url"] = (
+                        "https://exp76.ru/not-approved/"
+                    )
+                    (source / "S1.json").write_text(
+                        json.dumps(services[0], ensure_ascii=False, indent=2) + "\n",
+                        encoding="utf-8",
+                    )
+                before = directory_snapshot(target)
+
+                with self.assertRaises(ContractError):
+                    sync_services(source, target, allow_draft=True)
+
+                self.assertEqual(before, directory_snapshot(target))
+
+    def test_sync_rolls_back_every_managed_output_after_replace_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "sources"
+            target = root / "theme" / "service-v2"
+            target.mkdir(parents=True)
+            fixtures = write_schema_two_sources(source)
+            (target / "rendered").mkdir()
+            for service in fixtures:
+                (target / f'{service["slug"]}.json').write_bytes(
+                    f'old-json-{service["service_id"]}'.encode()
+                )
+                (target / "rendered" / f'{service["slug"]}.html').write_bytes(
+                    f'old-html-{service["service_id"]}'.encode()
+                )
+            (target / "unrelated.txt").write_bytes(b"untouched")
+            before = directory_snapshot(target)
+            replacements = 0
+
+            def fail_fifth_replace(source_path: os.PathLike[str], target_path: os.PathLike[str]) -> None:
+                nonlocal replacements
+                replacements += 1
+                if replacements == 5:
+                    os.replace(source_path, target_path)
+                    raise OSError("injected replacement failure")
+                os.replace(source_path, target_path)
+
+            with self.assertRaisesRegex(ContractError, "injected replacement failure"):
+                sync_services(
+                    source,
+                    target,
+                    allow_draft=True,
+                    _replace=fail_fifth_replace,
+                )
+
+            self.assertEqual(before, directory_snapshot(target))
+
+    def test_sync_rolls_back_and_reraises_keyboard_interrupt(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "sources"
+            target = root / "theme" / "service-v2"
+            target.mkdir(parents=True)
+            fixtures = write_schema_two_sources(source)
+            (target / "rendered").mkdir()
+            for service in fixtures:
+                (target / f'{service["slug"]}.json').write_bytes(
+                    f'old-json-{service["service_id"]}'.encode()
+                )
+                (target / "rendered" / f'{service["slug"]}.html').write_bytes(
+                    f'old-html-{service["service_id"]}'.encode()
+                )
+            before = directory_snapshot(target)
+            replacements = 0
+
+            def interrupt_fifth_replace(
+                source_path: os.PathLike[str], target_path: os.PathLike[str]
+            ) -> None:
+                nonlocal replacements
+                replacements += 1
+                if replacements == 5:
+                    os.replace(source_path, target_path)
+                    raise KeyboardInterrupt
+                os.replace(source_path, target_path)
+
+            with self.assertRaises(KeyboardInterrupt):
+                sync_services(
+                    source,
+                    target,
+                    allow_draft=True,
+                    _replace=interrupt_fifth_replace,
+                )
+
+            self.assertEqual(before, directory_snapshot(target))
+
+    def test_sync_preserves_recovery_bytes_when_rollback_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "sources"
+            target = root / "theme" / "service-v2"
+            target.mkdir(parents=True)
+            fixtures = write_schema_two_sources(source)
+            (target / "rendered").mkdir()
+            prior_bytes: set[bytes] = set()
+            for service in fixtures:
+                json_before = f'old-json-{service["service_id"]}'.encode()
+                html_before = f'old-html-{service["service_id"]}'.encode()
+                prior_bytes.update((json_before, html_before))
+                (target / f'{service["slug"]}.json').write_bytes(json_before)
+                (target / "rendered" / f'{service["slug"]}.html').write_bytes(html_before)
+            replacements = 0
+
+            def fail_commit_and_rollback(
+                source_path: os.PathLike[str], target_path: os.PathLike[str]
+            ) -> None:
+                nonlocal replacements
+                replacements += 1
+                if replacements == 2:
+                    os.replace(source_path, target_path)
+                    raise OSError("injected commit failure")
+                if replacements == 3:
+                    raise OSError("injected rollback failure")
+                os.replace(source_path, target_path)
+
+            with self.assertRaisesRegex(ContractError, "preserved backup") as raised:
+                sync_services(
+                    source,
+                    target,
+                    allow_draft=True,
+                    _replace=fail_commit_and_rollback,
+                )
+
+            backups = list(target.rglob("*.service-v2-recovery"))
+            self.assertEqual(1, len(backups), str(raised.exception))
+            self.assertIn(backups[0].read_bytes(), prior_bytes)
+            self.assertIn(str(backups[0]), str(raised.exception))
+
+    def test_sync_rejects_managed_output_symlink_before_any_write(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "sources"
+            target = root / "theme" / "service-v2"
+            target.mkdir(parents=True)
+            fixtures = write_schema_two_sources(source)
+            (target / "rendered").mkdir()
+            outside = root / "outside.json"
+            outside.write_bytes(b"outside-owner")
+            managed = target / f'{fixtures[0]["slug"]}.json'
+            try:
+                managed.symlink_to(outside)
+            except OSError as exc:
+                self.skipTest(f"symbolic links are unavailable: {exc}")
+            before = directory_snapshot(target)
+
+            with self.assertRaisesRegex(ContractError, "symbolic link"):
+                sync_services(source, target, allow_draft=True)
+
+            self.assertTrue(managed.is_symlink())
+            self.assertEqual(b"outside-owner", outside.read_bytes())
+            self.assertEqual(before, directory_snapshot(target))
+
+    def test_sync_rejects_schema_source_symlink_before_target_write(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "sources"
+            target = root / "theme" / "service-v2"
+            target.mkdir(parents=True)
+            write_schema_two_sources(source)
+            outside = root / "outside-source.json"
+            source_path = source / "S1.json"
+            source_path.replace(outside)
+            try:
+                source_path.symlink_to(outside)
+            except OSError as exc:
+                self.skipTest(f"symbolic links are unavailable: {exc}")
+            before = directory_snapshot(target)
+
+            with self.assertRaisesRegex(ContractError, "source is a symbolic link"):
+                sync_services(source, target, allow_draft=True)
+
+            self.assertEqual(before, directory_snapshot(target))
+
+    def test_loader_rejects_symlinked_source_directory_or_parent(self) -> None:
+        for mode in ("directory", "parent"):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as temp_dir:
+                root = Path(temp_dir)
+                real_parent = root / "real-parent"
+                real_source = real_parent / "sources"
+                write_schema_two_sources(real_source)
+                try:
+                    if mode == "directory":
+                        source = root / "linked-sources"
+                        source.symlink_to(real_source, target_is_directory=True)
+                    else:
+                        linked_parent = root / "linked-parent"
+                        linked_parent.symlink_to(real_parent, target_is_directory=True)
+                        source = linked_parent / "sources"
+                except OSError as exc:
+                    self.skipTest(f"symbolic links are unavailable: {exc}")
+
+                with self.assertRaisesRegex(ContractError, "source directory.*symbolic link"):
+                    load_hub_services(source)
+
+    def test_windows_reparse_fallback_rejects_source_and_target_trees(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            source = root / "sources"
+            target = root / "theme" / "service-v2"
+            write_schema_two_sources(source)
+            target.mkdir(parents=True)
+            original_lstat = Path.lstat
+
+            def reparse_lstat(protected: Path):
+                def fake_lstat(path: Path) -> object:
+                    result = original_lstat(path)
+                    if path == protected:
+                        return SimpleNamespace(
+                            st_file_attributes=(
+                                getattr(result, "st_file_attributes", 0)
+                                | stat.FILE_ATTRIBUTE_REPARSE_POINT
+                            )
+                        )
+                    return result
+
+                return fake_lstat
+
+            with patch.object(Path, "is_symlink", return_value=False), patch.object(
+                Path,
+                "lstat",
+                reparse_lstat(Path(os.path.abspath(source))),
+            ):
+                with self.assertRaisesRegex(ContractError, "source directory.*symbolic link"):
+                    load_hub_services(source)
+
+            protected_parent = target.parent
+            with patch.object(Path, "is_symlink", return_value=False), patch.object(
+                Path,
+                "lstat",
+                reparse_lstat(protected_parent),
+            ):
+                with self.assertRaisesRegex(ContractError, "managed target parent.*symbolic link"):
+                    service_v2_module._reject_managed_symlinks(target, ["managed"])
+
+    def test_sync_rejects_symlinked_target_directories(self) -> None:
+        for mode in ("theme", "rendered", "parent"):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as temp_dir:
+                root = Path(temp_dir)
+                source = root / "sources"
+                write_schema_two_sources(source)
+                outside = root / "outside-target"
+                outside.mkdir()
+                theme_parent = root / "theme"
+                theme_parent.mkdir()
+                target = theme_parent / "service-v2"
+                try:
+                    if mode == "theme":
+                        target.symlink_to(outside, target_is_directory=True)
+                    elif mode == "rendered":
+                        target.mkdir()
+                        (target / "rendered").symlink_to(
+                            outside,
+                            target_is_directory=True,
+                        )
+                    else:
+                        linked_parent = root / "linked-parent"
+                        linked_parent.symlink_to(outside, target_is_directory=True)
+                        target = linked_parent / "service-v2"
+                except OSError as exc:
+                    self.skipTest(f"symbolic links are unavailable: {exc}")
+
+                with self.assertRaisesRegex(ContractError, "symbolic link"):
+                    sync_services(source, target, allow_draft=True)
+
+                self.assertEqual({}, directory_snapshot(outside))
 
 
 if __name__ == "__main__":

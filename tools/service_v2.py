@@ -1,13 +1,34 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import html
 import json
+import os
 import re
+import stat
 import sys
+import tempfile
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable, Mapping
 from urllib.parse import urlparse
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from tools.seo_semantics.architecture import PageDestination
+from tools.site_content.cases import CaseEvidence
+from tools.site_content.contracts import (
+    ContractError as ContentContractError,
+    ContentPage,
+    load_case_catalog,
+    load_content_page,
+    load_page_architecture,
+    load_release_manifest,
+    validate_content_collection,
+    validate_content_page_dict,
+    validate_release_manifest,
+)
 
 
 PLACEHOLDER_PATTERNS = (
@@ -32,6 +53,12 @@ EXACT_SERVICE_OWNERS = {
     "S7": (6918, "ulichnoe-osveshhenie-uchastka"),
     "S8": (9282, "vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch"),
 }
+
+ROOT = Path(__file__).resolve().parents[1]
+PAGE_ARCHITECTURE_PATH = (
+    ROOT / "seo-data" / "2026-08-exp76-services" / "processed" / "page_architecture.csv"
+)
+CASE_CATALOG_PATH = ROOT / "seo-content" / "service-hubs" / "case-catalog.json"
 
 
 class ContractError(ValueError):
@@ -252,6 +279,191 @@ def load_services(data_dir: Path) -> list[dict[str, Any]]:
     return services
 
 
+def validate_service_v2(
+    service: dict[str, Any],
+    architecture: Mapping[str, PageDestination],
+    cases: Mapping[int, CaseEvidence],
+    *,
+    production_ready: bool = False,
+) -> None:
+    """Validate a schema-v2 hub while retaining every schema-v1 owner rule."""
+    service_id = _require_text(service.get("service_id"), "service_id")
+    if service.get("schema_version") != 2:
+        raise ContractError(f"{service_id}.schema_version must be 2")
+    if service.get("page_key") != f"{service_id}-HUB":
+        raise ContractError(f"{service_id}.page_key must remain {service_id}-HUB")
+    if service.get("page_type") != "hub":
+        raise ContractError(f"{service_id}.page_type must be hub")
+    if not isinstance(service.get("release_id"), str) or not service["release_id"].strip():
+        raise ContractError(f"{service_id}.release_id must be non-blank")
+    if service.get("release_status") not in {"draft", "ready"}:
+        raise ContractError(f"{service_id}.release_status must be draft or ready")
+
+    scope = _require_dict(service.get("scope"), f"{service_id}.scope")
+    legacy = copy.deepcopy(service)
+    legacy["schema_version"] = 1
+    legacy["services"] = copy.deepcopy(scope)
+    for field in (
+        "page_key",
+        "page_type",
+        "scope",
+        "articles",
+        "fact_evidence",
+        "evidence_gaps",
+        "release_id",
+        "release_status",
+    ):
+        legacy.pop(field, None)
+    validate_service(legacy)
+
+    errors = validate_content_page_dict(
+        service,
+        architecture,
+        cases,
+        production_ready=production_ready or service.get("release_status") == "ready",
+    )
+    if errors:
+        raise ContractError(f"{service_id} schema-v2 contract: {'; '.join(errors)}")
+
+
+def _is_link_or_reparse_point(path: Path) -> bool:
+    """Detect Windows junctions on Python 3.10 as well as ordinary symlinks."""
+    if path.is_symlink():
+        return True
+    try:
+        attributes = getattr(path.lstat(), "st_file_attributes", 0)
+    except FileNotFoundError:
+        return False
+    except OSError as exc:
+        raise ContractError(f"cannot inspect managed path {path}: {exc}") from exc
+    return bool(attributes & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0))
+
+
+def _reject_source_directory_symlinks(source_dir: Path) -> None:
+    """Keep schema sources inside the caller's lexical directory tree."""
+    absolute_source = Path(os.path.abspath(source_dir))
+    for component in (absolute_source, *absolute_source.parents):
+        if _is_link_or_reparse_point(component):
+            raise ContractError(
+                f"source directory path contains a symbolic link: {component}"
+            )
+
+
+def load_hub_services(
+    source_dir: Path,
+    architecture: Mapping[str, PageDestination] | None = None,
+    cases: Mapping[int, CaseEvidence] | None = None,
+) -> list[dict[str, Any]]:
+    """Load exactly one strict schema-v2 source for every preserved hub owner."""
+    _reject_source_directory_symlinks(source_dir)
+    if not source_dir.is_dir():
+        raise ContractError(f"source directory does not exist: {source_dir}")
+    files = sorted(source_dir.glob("*.json"))
+    if len(files) != len(EXACT_SERVICE_OWNERS):
+        raise ContractError(f"expected 8 schema-v2 JSON payloads, found {len(files)}")
+    try:
+        resolved_architecture = (
+            load_page_architecture(PAGE_ARCHITECTURE_PATH)
+            if architecture is None
+            else architecture
+        )
+        resolved_cases = load_case_catalog(CASE_CATALOG_PATH) if cases is None else cases
+    except ContentContractError as exc:
+        raise ContractError(str(exc)) from exc
+
+    services: list[dict[str, Any]] = []
+    pages: list[ContentPage] = []
+    for path in files:
+        if _is_link_or_reparse_point(path):
+            raise ContractError(f"schema-v2 source is a symbolic link: {path}")
+        try:
+            page = load_content_page(path)
+        except ContentContractError as exc:
+            raise ContractError(str(exc)) from exc
+        service = dict(page.data)
+        validate_service_v2(service, resolved_architecture, resolved_cases)
+        service_id = str(service["service_id"])
+        expected_slug = EXACT_SERVICE_OWNERS[service_id][1]
+        if path.stem not in {service_id, expected_slug}:
+            raise ContractError(
+                f"{path.name} must be named {service_id}.json or {expected_slug}.json"
+            )
+        services.append(service)
+        pages.append(ContentPage(path=path, data=service))
+
+    service_ids = [str(service["service_id"]) for service in services]
+    if set(service_ids) != set(EXACT_SERVICE_OWNERS):
+        raise ContractError("schema-v2 payloads must contain every S1-S8 owner exactly once")
+    if len(service_ids) != len(set(service_ids)):
+        raise ContractError("duplicate service_id in schema-v2 payloads")
+    collection_errors = validate_content_collection(
+        pages,
+        resolved_architecture,
+        resolved_cases,
+    )
+    if collection_errors:
+        raise ContractError("schema-v2 collection: " + "; ".join(collection_errors))
+    return sorted(services, key=lambda service: str(service["service_id"]))
+
+
+def load_services_auto(data_dir: Path) -> list[dict[str, Any]]:
+    """Validate either the preserved v1 set or one complete schema-v2 source set."""
+    if not data_dir.is_dir():
+        raise ContractError(f"data directory does not exist: {data_dir}")
+    files = sorted(data_dir.glob("*.json"))
+    if len(files) != len(EXACT_SERVICE_OWNERS):
+        raise ContractError(f"expected 8 JSON payloads, found {len(files)}")
+    versions: set[Any] = set()
+    for path in files:
+        try:
+            versions.add(load_content_page(path).data.get("schema_version"))
+        except ContentContractError as exc:
+            raise ContractError(str(exc)) from exc
+    if versions == {1}:
+        return load_services(data_dir)
+    if versions == {2}:
+        return load_hub_services(data_dir)
+    raise ContractError("payloads must use one supported schema version: 1 or 2")
+
+
+def _validate_sync_release(
+    services: list[dict[str, Any]],
+    architecture: Mapping[str, PageDestination],
+    cases: Mapping[int, CaseEvidence],
+    manifest_path: Path,
+    *,
+    allow_draft: bool,
+) -> None:
+    try:
+        manifest = load_release_manifest(manifest_path)
+    except ContentContractError as exc:
+        raise ContractError(str(exc)) from exc
+    manifest_errors = validate_release_manifest(manifest, architecture)
+    if manifest_errors:
+        raise ContractError("release manifest: " + "; ".join(manifest_errors))
+    release_id = manifest.get("release_id")
+    release_status = manifest.get("release_status")
+    for service in services:
+        if (
+            service.get("release_id") != release_id
+            or service.get("release_status") != release_status
+        ):
+            raise ContractError(
+                f"{service.get('service_id', 'unknown')} metadata does not match release manifest"
+            )
+    if release_status == "draft":
+        if not allow_draft:
+            raise ContractError("draft release sync requires explicit allow_draft=True")
+        return
+    for service in services:
+        validate_service_v2(
+            service,
+            architecture,
+            cases,
+            production_ready=True,
+        )
+
+
 def count_words(value: Any) -> int:
     if isinstance(value, dict):
         return sum(count_words(item) for item in value.values())
@@ -279,10 +491,11 @@ def _image(image: dict[str, str], css_class: str, *, eager: bool = False) -> str
 
 
 def render_service(service: dict[str, Any]) -> str:
+    schema_two = service.get("schema_version") == 2
     service_id = _e(service["service_id"])
     hero = service["hero"]
     intro = service["intro"]
-    services = service["services"]
+    services = service["scope"] if schema_two else service["services"]
     process = service["process"]
     pricing = service["pricing"]
     proof = service["proof"]
@@ -344,6 +557,30 @@ def render_service(service: dict[str, Any]) -> str:
             ]
         )
     output.append('</div></div></section>')
+
+    if schema_two:
+        for section_name in ("services", "articles"):
+            section = service[section_name]
+            if not section["items"]:
+                continue
+            output.extend(
+                [
+                    '<section class="service-v2__section wrapper">',
+                    f'<div class="service-v2__section-heading"><h2>{_e(section["heading"])}</h2><p>{_e(section["lead"])}</p></div>',
+                    '<div class="service-v2__cards">',
+                ]
+            )
+            for item in section["items"]:
+                output.extend(
+                    [
+                        f'<a class="service-v2__card service-v2__card--linked" href="{_e(item["url"])}">',
+                        _image(item["image"], "service-v2__card-image"),
+                        '<span class="service-v2__card-body">',
+                        f'<span class="service-v2__card-title">{_e(item["title"])}</span><span>{_e(item["text"])}</span>',
+                        '</span></a>',
+                    ]
+                )
+            output.append('</div></section>')
 
     output.extend(
         [
@@ -494,16 +731,189 @@ def build_services(data_dir: Path, output_dir: Path) -> dict[str, int]:
     return {"services": len(services), "errors": 0, "words": sum(count_words(service) for service in services)}
 
 
+ReplaceFunction = Callable[[os.PathLike[str], os.PathLike[str]], None]
+
+
+def _stage_recovery_bytes(target: Path) -> Path:
+    """Write an fsynced recovery copy beside its target on the same filesystem."""
+    with tempfile.NamedTemporaryFile(
+        mode="wb",
+        dir=target.parent,
+        prefix=f".{target.name}.",
+        suffix=".service-v2-recovery",
+        delete=False,
+    ) as handle:
+        handle.write(target.read_bytes())
+        handle.flush()
+        os.fsync(handle.fileno())
+        return Path(handle.name)
+
+
+def _reject_managed_symlinks(theme_content_dir: Path, slugs: list[str]) -> None:
+    """Reject links and non-regular managed targets before installation staging."""
+    rendered_dir = theme_content_dir / "rendered"
+    for parent in (theme_content_dir, *theme_content_dir.parents):
+        if _is_link_or_reparse_point(parent):
+            raise ContractError(f"managed target parent is a symbolic link: {parent}")
+    for directory in (theme_content_dir, rendered_dir):
+        if _is_link_or_reparse_point(directory):
+            raise ContractError(f"managed directory is a symbolic link: {directory}")
+        if directory.exists() and not directory.is_dir():
+            raise ContractError(f"managed directory path is not a directory: {directory}")
+    targets = [theme_content_dir / f"{slug}.json" for slug in slugs]
+    targets.extend(rendered_dir / f"{slug}.html" for slug in slugs)
+    for target in targets:
+        if _is_link_or_reparse_point(target):
+            raise ContractError(f"managed output is a symbolic link: {target}")
+        if target.exists() and not target.is_file():
+            raise ContractError(f"managed output is not a regular file: {target}")
+
+
+def _atomic_replace_outputs(
+    staged: list[tuple[Path, Path]],
+    replace: ReplaceFunction,
+) -> None:
+    """Replace only the enumerated outputs and restore all prior bytes on failure."""
+    backups: dict[Path, Path | None] = {}
+    replaced: list[Path] = []
+    preserved_backups: set[Path] = set()
+    try:
+        for _, target in staged:
+            backups[target] = _stage_recovery_bytes(target) if target.is_file() else None
+        for source, target in staged:
+            replaced.append(target)
+            replace(source, target)
+    except BaseException as exc:
+        rollback_errors: list[str] = []
+        for target in reversed(replaced):
+            backup = backups[target]
+            try:
+                if backup is None:
+                    target.unlink(missing_ok=True)
+                else:
+                    replace(backup, target)
+            except BaseException as rollback_exc:
+                if backup is not None:
+                    preserved_backups.add(backup)
+                    recovery = f"; preserved backup {backup}"
+                else:
+                    recovery = "; no prior file existed to preserve"
+                rollback_errors.append(f"{target}: {rollback_exc}{recovery}")
+        message = f"sync replacement failed: {exc}"
+        if rollback_errors:
+            message += "; rollback failed: " + "; ".join(rollback_errors)
+            raise ContractError(message) from exc
+        if isinstance(exc, Exception):
+            raise ContractError(message) from exc
+        raise
+    finally:
+        for backup in backups.values():
+            if backup is None or backup in preserved_backups:
+                continue
+            try:
+                backup.unlink(missing_ok=True)
+            except OSError:
+                pass
+
+
+def sync_services(
+    source_dir: Path,
+    theme_content_dir: Path,
+    *,
+    allow_draft: bool = False,
+    release_manifest_path: Path = ROOT / "seo-content" / "service-hubs" / "release-manifest.json",
+    _replace: ReplaceFunction = os.replace,
+) -> dict[str, int]:
+    """Validate all eight sources, then transactionally install exactly 16 outputs."""
+    try:
+        architecture = load_page_architecture(PAGE_ARCHITECTURE_PATH)
+        cases = load_case_catalog(CASE_CATALOG_PATH)
+    except ContentContractError as exc:
+        raise ContractError(str(exc)) from exc
+    services = load_hub_services(source_dir, architecture, cases)
+    _validate_sync_release(
+        services,
+        architecture,
+        cases,
+        release_manifest_path,
+        allow_draft=allow_draft,
+    )
+    rendered = {str(service["slug"]): render_service(service) for service in services}
+    serialized = {
+        str(service["slug"]): json.dumps(service, ensure_ascii=False, indent=2) + "\n"
+        for service in services
+    }
+    slugs = sorted(serialized)
+    _reject_managed_symlinks(theme_content_dir, slugs)
+
+    target_parent = theme_content_dir.parent
+    target_parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix=".service-v2-sync-", dir=target_parent) as temp:
+        staging_root = Path(temp)
+        output_root = staging_root / "outputs"
+        rendered_root = output_root / "rendered"
+        rendered_root.mkdir(parents=True)
+        for slug, payload in serialized.items():
+            (output_root / f"{slug}.json").write_text(
+                payload,
+                encoding="utf-8",
+                newline="\n",
+            )
+            (rendered_root / f"{slug}.html").write_text(
+                rendered[slug],
+                encoding="utf-8",
+                newline="\n",
+            )
+
+        theme_content_dir.mkdir(parents=True, exist_ok=True)
+        theme_rendered_dir = theme_content_dir / "rendered"
+        theme_rendered_dir.mkdir(parents=True, exist_ok=True)
+        staged: list[tuple[Path, Path]] = []
+        for slug in slugs:
+            staged.append(
+                (rendered_root / f"{slug}.html", theme_rendered_dir / f"{slug}.html")
+            )
+        for slug in slugs:
+            staged.append((output_root / f"{slug}.json", theme_content_dir / f"{slug}.json"))
+        _atomic_replace_outputs(staged, _replace)
+
+    return {
+        "services": len(services),
+        "errors": 0,
+        "outputs": len(services) * 2,
+        "words": sum(count_words(service) for service in services),
+    }
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Validate and render exp76 service-v2 content")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    validate = subparsers.add_parser("validate", help="validate all service JSON payloads")
+    validate = subparsers.add_parser(
+        "validate", help="auto-validate a complete schema-v1 or schema-v2 set"
+    )
     validate.add_argument("data_dir", type=Path)
+
+    validate_v1 = subparsers.add_parser(
+        "validate-v1", help="validate only the preserved schema-v1 theme payloads"
+    )
+    validate_v1.add_argument("data_dir", type=Path)
 
     build = subparsers.add_parser("build", help="validate and build static WordPress fragments")
     build.add_argument("data_dir", type=Path)
     build.add_argument("output_dir", type=Path)
+
+    sync = subparsers.add_parser(
+        "sync",
+        help="validate schema-v2 hub sources and atomically sync theme copies",
+    )
+    sync.add_argument("source_dir", type=Path)
+    sync.add_argument("theme_content_dir", type=Path)
+    sync.add_argument(
+        "--allow-draft",
+        action="store_true",
+        help="explicitly allow local generation from a reconciled draft manifest",
+    )
     return parser
 
 
@@ -511,14 +921,27 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
         if args.command == "validate":
+            services = load_services_auto(args.data_dir)
+            summary = {
+                "services": len(services),
+                "errors": 0,
+                "words": sum(count_words(service) for service in services),
+            }
+        elif args.command == "validate-v1":
             services = load_services(args.data_dir)
             summary = {
                 "services": len(services),
                 "errors": 0,
                 "words": sum(count_words(service) for service in services),
             }
-        else:
+        elif args.command == "build":
             summary = build_services(args.data_dir, args.output_dir)
+        else:
+            summary = sync_services(
+                args.source_dir,
+                args.theme_content_dir,
+                allow_draft=args.allow_draft,
+            )
     except ContractError as exc:
         print(json.dumps({"services": 0, "errors": 1, "message": str(exc)}, ensure_ascii=False), file=sys.stderr)
         return 1

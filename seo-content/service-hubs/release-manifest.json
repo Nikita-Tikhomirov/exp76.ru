@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "release_id": "service-hubs-2026-08-28",
+  "release_status": "draft",
+  "managed_pages": [
+    {
+      "page_key": "S1-ARTICLE-505521C7EF8C",
+      "service_id": "S1",
+      "page_role": "article",
+      "parent_page_key": "S1-HUB",
+      "canonical": "https://exp76.ru/kak-rasschitat-stoimost-blagoustrojstva-sa-sotku/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S1-ARTICLE-72FBB49E67C8",
+      "service_id": "S1",
+      "page_role": "article",
+      "parent_page_key": "S1-HUB",
+      "canonical": "https://exp76.ru/kak-rasschitat-inzhenernoe-blagoustrojstvo-uchastka/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S1-ARTICLE-DIY-DESIGN",
+      "service_id": "S1",
+      "page_role": "article",
+      "parent_page_key": "S1-HUB",
+      "canonical": "https://exp76.ru/dizajn-proekt-uchastka-svoimi-rukami/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S1-HUB",
+      "service_id": "S1",
+      "page_role": "hub",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/services/landshaftnoe-proektirovanie/",
+      "architecture_status": "ready",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S2-ARTICLE-15A8258BC551",
+      "service_id": "S2",
+      "page_role": "article",
+      "parent_page_key": "S2-HUB",
+      "canonical": "https://exp76.ru/ustrojstvo-gazona-shema/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S2-ARTICLE-182825428CBD",
+      "service_id": "S2",
+      "page_role": "article",
+      "parent_page_key": "S2-HUB",
+      "canonical": "https://exp76.ru/kak-ukladyvat-rulonnyj-gazon/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S2-CHILD-POSEVNOY-GAZON",
+      "service_id": "S2",
+      "page_role": "child_service",
+      "parent_page_key": "S2-HUB",
+      "canonical": "https://exp76.ru/posevnoj-gazon-pod-kljuch/",
+      "architecture_status": "blocked_facts",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S2-CHILD-RULONNY-GAZON",
+      "service_id": "S2",
+      "page_role": "child_service",
+      "parent_page_key": "S2-HUB",
+      "canonical": "https://exp76.ru/rulonnyj-gazon-pod-kljuch/",
+      "architecture_status": "blocked_facts",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S2-HUB",
+      "service_id": "S2",
+      "page_role": "hub",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/services/gazon-posevnojj-i-gazon-rulonnyjj/",
+      "architecture_status": "ready",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S3-ARTICLE-PLANTING-SCHEMES",
+      "service_id": "S3",
+      "page_role": "article",
+      "parent_page_key": "S3-HUB",
+      "canonical": "https://exp76.ru/normy-posadki-derevev/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S3-CHILD-KRUPNOMERY",
+      "service_id": "S3",
+      "page_role": "child_service",
+      "parent_page_key": "S3-HUB",
+      "canonical": "https://exp76.ru/posadka-krupnomerov/",
+      "architecture_status": "blocked_facts",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S3-HUB",
+      "service_id": "S3",
+      "page_role": "hub",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/services/posadka-derevev-i-kustarnikov/",
+      "architecture_status": "ready",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S4-ARTICLE-F668FF6F6190",
+      "service_id": "S4",
+      "page_role": "article",
+      "parent_page_key": "S4-HUB",
+      "canonical": "https://exp76.ru/shema-uhoda-za-sadom/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S4-ARTICLE-PRUNING-GUIDE",
+      "service_id": "S4",
+      "page_role": "article",
+      "parent_page_key": "S4-HUB",
+      "canonical": "https://exp76.ru/obrezka-derevev-shema/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S4-CHILD-OBREZKA",
+      "service_id": "S4",
+      "page_role": "child_service",
+      "parent_page_key": "S4-HUB",
+      "canonical": "https://exp76.ru/obrezka-derevev-i-kustarnikov/",
+      "architecture_status": "blocked_facts",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S4-HUB",
+      "service_id": "S4",
+      "page_role": "hub",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/services/ukhod-za-sadom/",
+      "architecture_status": "ready",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S5-ARTICLE-74B3B2B18DA4",
+      "service_id": "S5",
+      "page_role": "article",
+      "parent_page_key": "S5-HUB",
+      "canonical": "https://exp76.ru/vyravnivanie-uchastka-svoimi-rukami/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S5-ARTICLE-FF3B04A53D72",
+      "service_id": "S5",
+      "page_role": "article",
+      "parent_page_key": "S5-HUB",
+      "canonical": "https://exp76.ru/shema-planirovki-uchastka/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S5-CHILD-VYRAVNIVANIE",
+      "service_id": "S5",
+      "page_role": "child_service",
+      "parent_page_key": "S5-HUB",
+      "canonical": "https://exp76.ru/vyravnivanie-uchastka/",
+      "architecture_status": "blocked_facts",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S5-HUB",
+      "service_id": "S5",
+      "page_role": "hub",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/services/planirovka-territorii/",
+      "architecture_status": "ready",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S6-ARTICLE-DIY-RETAINING-WALL",
+      "service_id": "S6",
+      "page_role": "article",
+      "parent_page_key": "S6-HUB",
+      "canonical": "https://exp76.ru/podpornaya-stenka-na-uchastke-svoimi-rukami/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S6-HUB",
+      "service_id": "S6",
+      "page_role": "hub",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/services/podpornye-stenki/",
+      "architecture_status": "ready",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S7-ARTICLE-DIY-LIGHTING",
+      "service_id": "S7",
+      "page_role": "article",
+      "parent_page_key": "S7-HUB",
+      "canonical": "https://exp76.ru/kak-sdelat-osveschenie-na-uchastke/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S7-HUB",
+      "service_id": "S7",
+      "page_role": "hub",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/services/ulichnoe-osveshhenie-uchastka/",
+      "architecture_status": "ready",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S8-ARTICLE-DIY-ENTRANCE",
+      "service_id": "S8",
+      "page_role": "article",
+      "parent_page_key": "S8-HUB",
+      "canonical": "https://exp76.ru/kak-sdelat-vezd-na-uchastok-cherez-kanavu/",
+      "architecture_status": "backlog",
+      "content_status": "content_pending"
+    },
+    {
+      "page_key": "S8-HUB",
+      "service_id": "S8",
+      "page_role": "hub",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/services/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch/",
+      "architecture_status": "ready",
+      "content_status": "content_pending"
+    }
+  ],
+  "preserved_pages": [
+    {
+      "page_key": "FROZEN-268E90FAC815",
+      "service_id": "",
+      "page_role": "frozen",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/category/drenazh-uchastka/",
+      "architecture_status": "ready"
+    },
+    {
+      "page_key": "FROZEN-5398736839B9",
+      "service_id": "",
+      "page_role": "frozen",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/category/livnevaya-kanalizatsiya/",
+      "architecture_status": "ready"
+    },
+    {
+      "page_key": "FROZEN-6714C54192CE",
+      "service_id": "",
+      "page_role": "frozen",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/category/ukladka-trotuarnoy-plitki/",
+      "architecture_status": "ready"
+    },
+    {
+      "page_key": "FROZEN-7D3282BAA29C",
+      "service_id": "",
+      "page_role": "frozen",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/category/otmostka-vokrug-doma/",
+      "architecture_status": "ready"
+    },
+    {
+      "page_key": "FROZEN-DED8C0F5020F",
+      "service_id": "",
+      "page_role": "frozen",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/category/osushenie-uchastka/",
+      "architecture_status": "ready"
+    },
+    {
+      "page_key": "FROZEN-F839FE6BFD56",
+      "service_id": "",
+      "page_role": "frozen",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/category/avtopoliv-na-uchastke/",
+      "architecture_status": "ready"
+    },
+    {
+      "page_key": "SPECIAL-BRAND-HOMEPAGE",
+      "service_id": "",
+      "page_role": "special",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/",
+      "architecture_status": "ready"
+    },
+    {
+      "page_key": "SPECIAL-CALCULATOR",
+      "service_id": "S1|S3|S4",
+      "page_role": "special",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/kalkuljator-uslug/",
+      "architecture_status": "ready"
+    },
+    {
+      "page_key": "SPECIAL-SERVICES-CATALOG",
+      "service_id": "S1",
+      "page_role": "special",
+      "parent_page_key": "",
+      "canonical": "https://exp76.ru/services/",
+      "architecture_status": "ready"
+    }
+  ]
+}
