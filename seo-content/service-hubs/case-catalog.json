@@ -1,0 +1,2444 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-08-28",
+  "sources": [
+    {
+      "path": "cases_by_category.json",
+      "role": "primary_location_and_work_facts"
+    },
+    {
+      "path": "acf_selected_works_map.json",
+      "role": "relationship_corroboration_only"
+    },
+    {
+      "path": "seo-content/cases/import/cases-seo-import.json",
+      "role": "existing_import_state_not_fact_authority"
+    },
+    {
+      "path": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/*.json",
+      "role": "S1-S3_case_mapping_and_selected_image_authority"
+    },
+    {
+      "url": "https://exp76.ru/wp-json/wp/v2/pages",
+      "role": "public_page_id_and_publish_status"
+    }
+  ],
+  "summary": {
+    "source_occurrences": 142,
+    "source_counts": {
+      "cases_by_category.json": {
+        "occurrences": 51,
+        "unique_cases": 35
+      },
+      "acf_selected_works_map.json": {
+        "occurrences": 50,
+        "unique_cases": 29
+      },
+      "seo-content/cases/import/cases-seo-import.json": {
+        "occurrences": 35,
+        "unique_cases": 35
+      },
+      "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/*.json": {
+        "occurrences": 6,
+        "unique_cases": 5
+      }
+    },
+    "canonical_merges": 107,
+    "catalog_cases": 35,
+    "resolved_page_ids": 35,
+    "service_support_mappings": 6,
+    "support_by_service": {
+      "S1": 3,
+      "S2": 2,
+      "S3": 1,
+      "S4": 0,
+      "S5": 0,
+      "S6": 0,
+      "S7": 0,
+      "S8": 0
+    },
+    "services_without_supported_cases": [
+      "S4",
+      "S5",
+      "S6",
+      "S7",
+      "S8"
+    ],
+    "unmapped_cases": 30,
+    "selected_image_urls": 25,
+    "selected_image_statuses": {
+      "200": 25
+    },
+    "selected_image_content_types": {
+      "image/webp": 25
+    },
+    "case_owned_image_urls": 5,
+    "seo_ready_cases": 5,
+    "blocked_cases": 30
+  },
+  "selected_image_audits": [
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#services.items[3].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#services.items[4].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#services.items[4].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#services.items[4].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#services.items[3].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/podpornye-stenki.json#services.items[0].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki2.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki2.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/podpornye-stenki.json#services.items[1].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki3.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki3.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/podpornye-stenki.json#services.items[2].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki4.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki4.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/podpornye-stenki.json#services.items[3].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki5.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki5.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/podpornye-stenki.json#services.items[4].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/podpornye-stenki.json#hero.image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#services.items[2].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#services.items[1].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#services.items[3].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#services.items[0].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#services.items[2].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#services.items[3].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#services.items[4].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#hero.image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/osvescheniezdaniya.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2017/01/osvescheniezdaniya.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#services.items[1].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#services.items[2].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#services.items[0].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#services.items[2].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#services.items[4].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#services.items[2].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#hero.image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#services.items[0].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#services.items[1].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2018/12/uhod1.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2018/12/uhod1.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#hero.image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#services.items[0].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#services.items[0].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#services.items[2].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#services.items[4].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#hero.image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#services.items[1].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#services.items[3].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[2].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#services.items[2].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#proof.cases[1].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#services.items[1].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#hero.image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#proof.cases[0].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#services.items[0].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#services.items[3].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#hero.image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#proof.cases[0].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#services.items[1].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#services.items[3].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[1].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#services.items[1].image.url"
+      ]
+    },
+    {
+      "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+      "http_status": 200,
+      "content_type": "image/webp",
+      "checked_date": "2026-08-28",
+      "method": "HEAD",
+      "final_url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+      "error": "",
+      "source_refs": [
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#hero.image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[0].image.url",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#services.items[0].image.url"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "page_id": 10079,
+      "url": "https://exp76.ru/d-rjabukhino/",
+      "title": "д. Рябухино",
+      "location": "д. Рябухино",
+      "work_types": [
+        "пристенный дренаж фундамента",
+        "ливневая канализация"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#drenazh.cases[0]",
+        "acf_selected_works_map.json#livnevka.cases[2]",
+        "cases_by_category.json#drenazh[0]",
+        "cases_by_category.json#livnevka[2]",
+        "seo-content/cases/import/cases-seo-import.json#cases[8]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#drenazh[0].title",
+        "cases_by_category.json#livnevka[2].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "пристенный дренаж фундамента",
+          "source_ref": "cases_by_category.json#drenazh[0].description"
+        },
+        {
+          "value": "ливневая канализация",
+          "source_ref": "cases_by_category.json#livnevka[2].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 10079,
+        "canonical_url": "https://exp76.ru/d-rjabukhino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=d-rjabukhino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/d-rjabukhino/",
+        "post_type": "page",
+        "featured_media_id": 10080
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 10066,
+      "url": "https://exp76.ru/d-volkovo/",
+      "title": "д. Волково",
+      "location": "д. Волково",
+      "work_types": [
+        "кольцевой дренаж фундамента",
+        "ливневая канализация"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#drenazh.cases[1]",
+        "acf_selected_works_map.json#livnevka.cases[3]",
+        "cases_by_category.json#drenazh[1]",
+        "cases_by_category.json#livnevka[3]",
+        "seo-content/cases/import/cases-seo-import.json#cases[9]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#drenazh[1].title",
+        "cases_by_category.json#livnevka[3].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "кольцевой дренаж фундамента",
+          "source_ref": "cases_by_category.json#drenazh[1].description"
+        },
+        {
+          "value": "ливневая канализация",
+          "source_ref": "cases_by_category.json#livnevka[3].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 10066,
+        "canonical_url": "https://exp76.ru/d-volkovo/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=d-volkovo&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/d-volkovo/",
+        "post_type": "page",
+        "featured_media_id": 10067
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 10303,
+      "url": "https://exp76.ru/derevnja-selekhovo/",
+      "title": "Деревня Селехово",
+      "location": "Деревня Селехово",
+      "work_types": [
+        "пруд (водоём)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "cases_by_category.json#blagoustroystvo[1]",
+        "seo-content/cases/import/cases-seo-import.json#cases[2]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#blagoustroystvo[1].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "пруд (водоём)",
+          "source_ref": "cases_by_category.json#blagoustroystvo[1].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 10303,
+        "canonical_url": "https://exp76.ru/derevnja-selekhovo/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=derevnja-selekhovo&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/derevnja-selekhovo/",
+        "post_type": "page",
+        "featured_media_id": 10305
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 8512,
+      "url": "https://exp76.ru/fotogalereja/aksenovo/",
+      "title": "Аксеново",
+      "location": "Аксеново",
+      "work_types": [
+        "ливневые лотки + отвод воды"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#drenazh.cases[9]",
+        "acf_selected_works_map.json#livnevka.cases[14]",
+        "acf_selected_works_map.json#osushenie.cases[4]",
+        "cases_by_category.json#drenazh[9]",
+        "cases_by_category.json#livnevka[14]",
+        "seo-content/cases/import/cases-seo-import.json#cases[10]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#drenazh[9].title",
+        "cases_by_category.json#livnevka[14].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "ливневые лотки + отвод воды",
+          "source_ref": "cases_by_category.json#drenazh[9].description"
+        },
+        {
+          "value": "ливневые лотки + отвод воды",
+          "source_ref": "cases_by_category.json#livnevka[14].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 8512,
+        "canonical_url": "https://exp76.ru/fotogalereja/aksenovo/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=aksenovo&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/aksenovo/",
+        "post_type": "page",
+        "featured_media_id": 8408
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9415,
+      "url": "https://exp76.ru/fotogalereja/c-glebovo-rybinskijj-r-on/",
+      "title": "c. Глебово, Рыбинский р-он",
+      "location": "c. Глебово, Рыбинский р-он",
+      "work_types": [
+        "ливневая канализация"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#livnevka.cases[10]",
+        "cases_by_category.json#livnevka[10]",
+        "seo-content/cases/import/cases-seo-import.json#cases[18]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#livnevka[10].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "ливневая канализация",
+          "source_ref": "cases_by_category.json#livnevka[10].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9415,
+        "canonical_url": "https://exp76.ru/fotogalereja/c-glebovo-rybinskijj-r-on/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=c-glebovo-rybinskijj-r-on&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/c-glebovo-rybinskijj-r-on/",
+        "post_type": "page",
+        "featured_media_id": 9421
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9494,
+      "url": "https://exp76.ru/fotogalereja/d-gorokhovo/",
+      "title": "д. Горохово",
+      "location": "д. Горохово",
+      "work_types": [
+        "кольцевой дренаж фундамента",
+        "ливневая канализация"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#drenazh.cases[5]",
+        "acf_selected_works_map.json#livnevka.cases[9]",
+        "cases_by_category.json#drenazh[5]",
+        "cases_by_category.json#livnevka[9]",
+        "seo-content/cases/import/cases-seo-import.json#cases[11]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#drenazh[5].title",
+        "cases_by_category.json#livnevka[9].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "кольцевой дренаж фундамента",
+          "source_ref": "cases_by_category.json#drenazh[5].description"
+        },
+        {
+          "value": "ливневая канализация",
+          "source_ref": "cases_by_category.json#livnevka[9].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9494,
+        "canonical_url": "https://exp76.ru/fotogalereja/d-gorokhovo/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=d-gorokhovo&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/d-gorokhovo/",
+        "post_type": "page",
+        "featured_media_id": 9504
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9520,
+      "url": "https://exp76.ru/fotogalereja/d-kuzino/",
+      "title": "д. Кузино",
+      "location": "д. Кузино",
+      "work_types": [
+        "кольцевой дренаж фундамента",
+        "ливневая канализация"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#drenazh.cases[4]",
+        "acf_selected_works_map.json#livnevka.cases[8]",
+        "cases_by_category.json#drenazh[4]",
+        "cases_by_category.json#livnevka[8]",
+        "seo-content/cases/import/cases-seo-import.json#cases[12]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#drenazh[4].title",
+        "cases_by_category.json#livnevka[8].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "кольцевой дренаж фундамента",
+          "source_ref": "cases_by_category.json#drenazh[4].description"
+        },
+        {
+          "value": "ливневая канализация",
+          "source_ref": "cases_by_category.json#livnevka[8].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9520,
+        "canonical_url": "https://exp76.ru/fotogalereja/d-kuzino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=d-kuzino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/d-kuzino/",
+        "post_type": "page",
+        "featured_media_id": 9524
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9533,
+      "url": "https://exp76.ru/fotogalereja/d-malye-vysoka/",
+      "title": "д. Малые Высока",
+      "location": "д. Малые Высока",
+      "work_types": [
+        "укладка тротуарной плитки (380 м²)",
+        "ливневая канализация"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#livnevka.cases[7]",
+        "acf_selected_works_map.json#plitka.cases[10]",
+        "cases_by_category.json#livnevka[7]",
+        "cases_by_category.json#plitka[10]",
+        "seo-content/cases/import/cases-seo-import.json#cases[21]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#livnevka[7].title",
+        "cases_by_category.json#plitka[10].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "укладка тротуарной плитки (380 м²)",
+          "source_ref": "cases_by_category.json#plitka[10].description"
+        },
+        {
+          "value": "ливневая канализация",
+          "source_ref": "cases_by_category.json#livnevka[7].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9533,
+        "canonical_url": "https://exp76.ru/fotogalereja/d-malye-vysoka/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=d-malye-vysoka&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/d-malye-vysoka/",
+        "post_type": "page",
+        "featured_media_id": 9543
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9554,
+      "url": "https://exp76.ru/fotogalereja/d-nesterovo-uglichskijj-r-on/",
+      "title": "д. Нестерово, Угличский р-он",
+      "location": "д. Нестерово, Угличский р-он",
+      "work_types": [
+        "рулонный газон"
+      ],
+      "service_ids": [
+        "S2"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp"
+      ],
+      "source_files": [
+        "cases_by_category.json",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "cases_by_category.json#blagoustroystvo[4]",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#proof.cases[1]",
+        "seo-content/cases/import/cases-seo-import.json#cases[3]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#blagoustroystvo[4].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "рулонный газон",
+          "source_ref": "cases_by_category.json#blagoustroystvo[4].description"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S2",
+          "basis": "explicit_work",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#proof.cases[1]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#proof.cases[1].image.url"
+        }
+      ],
+      "page_audit": {
+        "page_id": 9554,
+        "canonical_url": "https://exp76.ru/fotogalereja/d-nesterovo-uglichskijj-r-on/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=d-nesterovo-uglichskijj-r-on&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/d-nesterovo-uglichskijj-r-on/",
+        "post_type": "page",
+        "featured_media_id": 9559
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-28",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 9567,
+      "url": "https://exp76.ru/fotogalereja/d-timoshkino/",
+      "title": "д. Тимошкино",
+      "location": "д. Тимошкино",
+      "work_types": [
+        "ливневая канализация + тротуарная плитка"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#livnevka.cases[6]",
+        "acf_selected_works_map.json#plitka.cases[1]",
+        "cases_by_category.json#livnevka[6]",
+        "cases_by_category.json#plitka[1]",
+        "seo-content/cases/import/cases-seo-import.json#cases[22]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#livnevka[6].title",
+        "cases_by_category.json#plitka[1].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "ливневая канализация + тротуарная плитка",
+          "source_ref": "cases_by_category.json#plitka[1].description"
+        },
+        {
+          "value": "ливневая канализация + тротуарная плитка",
+          "source_ref": "cases_by_category.json#livnevka[6].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9567,
+        "canonical_url": "https://exp76.ru/fotogalereja/d-timoshkino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=d-timoshkino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/d-timoshkino/",
+        "post_type": "page",
+        "featured_media_id": 9579
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9445,
+      "url": "https://exp76.ru/fotogalereja/g-rybinsk-r-on-verete/",
+      "title": "г. Рыбинск, р-он Веретье",
+      "location": "г. Рыбинск, р-он Веретье",
+      "work_types": [
+        "благоустройство участка"
+      ],
+      "service_ids": [
+        "S1"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp"
+      ],
+      "source_files": [
+        "cases_by_category.json",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "cases_by_category.json#blagoustroystvo[5]",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[2]",
+        "seo-content/cases/import/cases-seo-import.json#cases[4]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#blagoustroystvo[5].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "благоустройство участка",
+          "source_ref": "cases_by_category.json#blagoustroystvo[5].description"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S1",
+          "basis": "hub_proof_only",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[2]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[2].image.url"
+        }
+      ],
+      "page_audit": {
+        "page_id": 9445,
+        "canonical_url": "https://exp76.ru/fotogalereja/g-rybinsk-r-on-verete/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=g-rybinsk-r-on-verete&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/g-rybinsk-r-on-verete/",
+        "post_type": "page",
+        "featured_media_id": 9467
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-28",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 9431,
+      "url": "https://exp76.ru/fotogalereja/g-rybinsk/",
+      "title": "г. Рыбинск",
+      "location": "г. Рыбинск",
+      "work_types": [
+        "автополив (8 соток)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#autopoliv.cases[2]",
+        "cases_by_category.json#autopoliv[2]",
+        "seo-content/cases/import/cases-seo-import.json#cases[0]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#autopoliv[2].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "автополив (8 соток)",
+          "source_ref": "cases_by_category.json#autopoliv[2].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9431,
+        "canonical_url": "https://exp76.ru/fotogalereja/g-rybinsk/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=g-rybinsk&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/g-rybinsk/",
+        "post_type": "page",
+        "featured_media_id": 9436
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9716,
+      "url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/",
+      "title": "Ярославское взморье",
+      "location": "Ярославское взморье",
+      "work_types": [
+        "автополив (40 соток)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#autopoliv.cases[1]",
+        "cases_by_category.json#autopoliv[1]",
+        "seo-content/cases/import/cases-seo-import.json#cases[1]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#autopoliv[1].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "автополив (40 соток)",
+          "source_ref": "cases_by_category.json#autopoliv[1].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9716,
+        "canonical_url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=jaroslavskoe-vzmore&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/jaroslavskoe-vzmore/",
+        "post_type": "page",
+        "featured_media_id": 9732
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 8604,
+      "url": "https://exp76.ru/fotogalereja/kamenniki/",
+      "title": "Каменники",
+      "location": "Каменники",
+      "work_types": [
+        "дренаж фундамента + дренаж участка (комплекс)",
+        "мощение тротуарной плиткой (комплекс)",
+        "ливневая канализация (комплекс)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#drenazh.cases[8]",
+        "acf_selected_works_map.json#livnevka.cases[13]",
+        "acf_selected_works_map.json#osushenie.cases[3]",
+        "acf_selected_works_map.json#plitka.cases[15]",
+        "cases_by_category.json#drenazh[8]",
+        "cases_by_category.json#livnevka[13]",
+        "cases_by_category.json#plitka[15]",
+        "seo-content/cases/import/cases-seo-import.json#cases[13]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#drenazh[8].title",
+        "cases_by_category.json#livnevka[13].title",
+        "cases_by_category.json#plitka[15].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "дренаж фундамента + дренаж участка (комплекс)",
+          "source_ref": "cases_by_category.json#drenazh[8].description"
+        },
+        {
+          "value": "мощение тротуарной плиткой (комплекс)",
+          "source_ref": "cases_by_category.json#plitka[15].description"
+        },
+        {
+          "value": "ливневая канализация (комплекс)",
+          "source_ref": "cases_by_category.json#livnevka[13].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 8604,
+        "canonical_url": "https://exp76.ru/fotogalereja/kamenniki/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=kamenniki&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/kamenniki/",
+        "post_type": "page",
+        "featured_media_id": 8431
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9594,
+      "url": "https://exp76.ru/fotogalereja/miljushino/",
+      "title": "Милюшино",
+      "location": "Милюшино",
+      "work_types": [
+        "устройство отмостки по периметру дома",
+        "монтаж ливневой канализации"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#livnevka.cases[5]",
+        "acf_selected_works_map.json#otmostka.cases[0]",
+        "cases_by_category.json#livnevka[5]",
+        "cases_by_category.json#otmostka[0]",
+        "seo-content/cases/import/cases-seo-import.json#cases[20]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#livnevka[5].title",
+        "cases_by_category.json#otmostka[0].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "устройство отмостки по периметру дома",
+          "source_ref": "cases_by_category.json#otmostka[0].description"
+        },
+        {
+          "value": "монтаж ливневой канализации",
+          "source_ref": "cases_by_category.json#livnevka[5].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9594,
+        "canonical_url": "https://exp76.ru/fotogalereja/miljushino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=miljushino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/miljushino/",
+        "post_type": "page",
+        "featured_media_id": 9604
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9615,
+      "url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/",
+      "title": "поселок Дубрава, г. Ярославль",
+      "location": "поселок Дубрава, г. Ярославль",
+      "work_types": [
+        "кольцевой дренаж фундамента + дренаж участка",
+        "ливневая канализация"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#drenazh.cases[3]",
+        "acf_selected_works_map.json#livnevka.cases[4]",
+        "acf_selected_works_map.json#osushenie.cases[1]",
+        "cases_by_category.json#drenazh[3]",
+        "cases_by_category.json#livnevka[4]",
+        "seo-content/cases/import/cases-seo-import.json#cases[14]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#drenazh[3].title",
+        "cases_by_category.json#livnevka[4].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "кольцевой дренаж фундамента + дренаж участка",
+          "source_ref": "cases_by_category.json#drenazh[3].description"
+        },
+        {
+          "value": "ливневая канализация",
+          "source_ref": "cases_by_category.json#livnevka[4].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9615,
+        "canonical_url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=poselok-dubrava-g-jaroslavl&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/poselok-dubrava-g-jaroslavl/",
+        "post_type": "page",
+        "featured_media_id": 9619
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9630,
+      "url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/",
+      "title": "поселок Искра-Октября",
+      "location": "поселок Искра-Октября",
+      "work_types": [
+        "пристенный дренаж + дренаж участка"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#drenazh.cases[2]",
+        "acf_selected_works_map.json#osushenie.cases[0]",
+        "cases_by_category.json#drenazh[2]",
+        "seo-content/cases/import/cases-seo-import.json#cases[15]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#drenazh[2].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "пристенный дренаж + дренаж участка",
+          "source_ref": "cases_by_category.json#drenazh[2].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9630,
+        "canonical_url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=poselok-iskra-oktjabrja&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/poselok-iskra-oktjabrja/",
+        "post_type": "page",
+        "featured_media_id": 9634
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9650,
+      "url": "https://exp76.ru/fotogalereja/poselok-svingino/",
+      "title": "поселок Свингино",
+      "location": "поселок Свингино",
+      "work_types": [
+        "укладка тротуарной плитки (37 м²)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#plitka.cases[9]",
+        "cases_by_category.json#plitka[9]",
+        "seo-content/cases/import/cases-seo-import.json#cases[23]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#plitka[9].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "укладка тротуарной плитки (37 м²)",
+          "source_ref": "cases_by_category.json#plitka[9].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9650,
+        "canonical_url": "https://exp76.ru/fotogalereja/poselok-svingino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=poselok-svingino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/poselok-svingino/",
+        "post_type": "page",
+        "featured_media_id": 9660
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9673,
+      "url": "https://exp76.ru/fotogalereja/poshekhonskijj-rajjon/",
+      "title": "Пошехонский район",
+      "location": "Пошехонский район",
+      "work_types": [
+        "укладка тротуарной плитки (170 м²)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#plitka.cases[8]",
+        "cases_by_category.json#plitka[8]",
+        "seo-content/cases/import/cases-seo-import.json#cases[24]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#plitka[8].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "укладка тротуарной плитки (170 м²)",
+          "source_ref": "cases_by_category.json#plitka[8].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9673,
+        "canonical_url": "https://exp76.ru/fotogalereja/poshekhonskijj-rajjon/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=poshekhonskijj-rajjon&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/poshekhonskijj-rajjon/",
+        "post_type": "page",
+        "featured_media_id": 9677
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9684,
+      "url": "https://exp76.ru/fotogalereja/rybinsk-marievka/",
+      "title": "Рыбинск, Мариевка",
+      "location": "Рыбинск, Мариевка",
+      "work_types": [
+        "укладка тротуарной плитки (99 м²)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#plitka.cases[7]",
+        "cases_by_category.json#plitka[7]",
+        "seo-content/cases/import/cases-seo-import.json#cases[25]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#plitka[7].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "укладка тротуарной плитки (99 м²)",
+          "source_ref": "cases_by_category.json#plitka[7].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9684,
+        "canonical_url": "https://exp76.ru/fotogalereja/rybinsk-marievka/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinsk-marievka&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/rybinsk-marievka/",
+        "post_type": "page",
+        "featured_media_id": 9689
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 8620,
+      "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/",
+      "title": "Рыбинск, Шанхай",
+      "location": "Рыбинск, Шанхай",
+      "work_types": [
+        "дренаж участка + дренаж фундамента",
+        "ливневая канализация (комплекс)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#drenazh.cases[7]",
+        "acf_selected_works_map.json#livnevka.cases[12]",
+        "acf_selected_works_map.json#osushenie.cases[2]",
+        "cases_by_category.json#drenazh[7]",
+        "cases_by_category.json#livnevka[12]",
+        "seo-content/cases/import/cases-seo-import.json#cases[16]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#drenazh[7].title",
+        "cases_by_category.json#livnevka[12].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "дренаж участка + дренаж фундамента",
+          "source_ref": "cases_by_category.json#drenazh[7].description"
+        },
+        {
+          "value": "ливневая канализация (комплекс)",
+          "source_ref": "cases_by_category.json#livnevka[12].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 8620,
+        "canonical_url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinsk-shankhajj&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/",
+        "post_type": "page",
+        "featured_media_id": 8685
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 9699,
+      "url": "https://exp76.ru/fotogalereja/rybinsk-slip/",
+      "title": "Рыбинск, Слип",
+      "location": "Рыбинск, Слип",
+      "work_types": [
+        "укладка тротуарной плитки (20 м²)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#plitka.cases[6]",
+        "cases_by_category.json#plitka[6]",
+        "seo-content/cases/import/cases-seo-import.json#cases[26]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#plitka[6].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "укладка тротуарной плитки (20 м²)",
+          "source_ref": "cases_by_category.json#plitka[6].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 9699,
+        "canonical_url": "https://exp76.ru/fotogalereja/rybinsk-slip/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinsk-slip&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/rybinsk-slip/",
+        "post_type": "page",
+        "featured_media_id": 9703
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 8630,
+      "url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-d-djagtericy/",
+      "title": "Рыбинский р-он. д. Дягтерицы",
+      "location": "Рыбинский р-он. д. Дягтерицы",
+      "work_types": [
+        "ливневая канализация"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#livnevka.cases[11]",
+        "cases_by_category.json#livnevka[11]",
+        "seo-content/cases/import/cases-seo-import.json#cases[19]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#livnevka[11].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "ливневая канализация",
+          "source_ref": "cases_by_category.json#livnevka[11].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 8630,
+        "canonical_url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-d-djagtericy/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinskijj-r-on-d-djagtericy&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-d-djagtericy/",
+        "post_type": "page",
+        "featured_media_id": 8863
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 8628,
+      "url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-pos-svigino/",
+      "title": "Рыбинский р-он. пос. Свингино",
+      "location": "Рыбинский р-он. пос. Свингино",
+      "work_types": [
+        "укладка тротуарной плитки"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#plitka.cases[13]",
+        "cases_by_category.json#plitka[13]",
+        "seo-content/cases/import/cases-seo-import.json#cases[27]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#plitka[13].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "укладка тротуарной плитки",
+          "source_ref": "cases_by_category.json#plitka[13].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 8628,
+        "canonical_url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-pos-svigino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinskijj-r-on-pos-svigino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-pos-svigino/",
+        "post_type": "page",
+        "featured_media_id": 8832
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 8632,
+      "url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-pos-svingino/",
+      "title": "Рыбинский р-он. пос.Свингино",
+      "location": "Рыбинский р-он. пос.Свингино",
+      "work_types": [
+        "укладка тротуарной плитки"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#plitka.cases[12]",
+        "cases_by_category.json#plitka[12]",
+        "seo-content/cases/import/cases-seo-import.json#cases[28]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#plitka[12].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "укладка тротуарной плитки",
+          "source_ref": "cases_by_category.json#plitka[12].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 8632,
+        "canonical_url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-pos-svingino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinskijj-r-on-pos-svingino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/rybinskijj-r-on-pos-svingino/",
+        "post_type": "page",
+        "featured_media_id": 8888
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 8626,
+      "url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/",
+      "title": "Рыбинский район. Судоверфь",
+      "location": "Рыбинский район. Судоверфь",
+      "work_types": [
+        "тротуарная плитка + автополив"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#autopoliv.cases[0]",
+        "acf_selected_works_map.json#plitka.cases[14]",
+        "cases_by_category.json#autopoliv[0]",
+        "cases_by_category.json#plitka[14]",
+        "seo-content/cases/import/cases-seo-import.json#cases[29]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#autopoliv[0].title",
+        "cases_by_category.json#plitka[14].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "тротуарная плитка + автополив",
+          "source_ref": "cases_by_category.json#plitka[14].description"
+        },
+        {
+          "value": "тротуарная плитка + автополив",
+          "source_ref": "cases_by_category.json#autopoliv[0].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 8626,
+        "canonical_url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinskijj-rajjon-sudoverf&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/rybinskijj-rajjon-sudoverf/",
+        "post_type": "page",
+        "featured_media_id": 8779
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 8634,
+      "url": "https://exp76.ru/fotogalereja/s-spass/",
+      "title": "с.Спасс",
+      "location": "с.Спасс",
+      "work_types": [
+        "укладка тротуарной плитки"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#plitka.cases[11]",
+        "cases_by_category.json#plitka[11]",
+        "seo-content/cases/import/cases-seo-import.json#cases[30]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#plitka[11].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "укладка тротуарной плитки",
+          "source_ref": "cases_by_category.json#plitka[11].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 8634,
+        "canonical_url": "https://exp76.ru/fotogalereja/s-spass/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=s-spass&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/s-spass/",
+        "post_type": "page",
+        "featured_media_id": 8922
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 8638,
+      "url": "https://exp76.ru/fotogalereja/timoshkino/",
+      "title": "Тимошкино",
+      "location": "Тимошкино",
+      "work_types": [
+        "дренаж + ливневка + мощение"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#drenazh.cases[6]",
+        "acf_selected_works_map.json#livnevka.cases[0]",
+        "acf_selected_works_map.json#plitka.cases[0]",
+        "cases_by_category.json#drenazh[6]",
+        "cases_by_category.json#livnevka[0]",
+        "cases_by_category.json#plitka[0]",
+        "seo-content/cases/import/cases-seo-import.json#cases[17]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#drenazh[6].title",
+        "cases_by_category.json#livnevka[0].title",
+        "cases_by_category.json#plitka[0].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "дренаж + ливневка + мощение",
+          "source_ref": "cases_by_category.json#drenazh[6].description"
+        },
+        {
+          "value": "дренаж + ливневка + мощение",
+          "source_ref": "cases_by_category.json#plitka[0].description"
+        },
+        {
+          "value": "дренаж + ливневка + мощение",
+          "source_ref": "cases_by_category.json#livnevka[0].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 8638,
+        "canonical_url": "https://exp76.ru/fotogalereja/timoshkino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=timoshkino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/timoshkino/",
+        "post_type": "page",
+        "featured_media_id": 9017
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 10322,
+      "url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/",
+      "title": "Коттеджный поселок Коприно",
+      "location": "Коттеджный поселок Коприно",
+      "work_types": [
+        "мощение (тротуарная плитка)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#plitka.cases[2]",
+        "cases_by_category.json#plitka[2]",
+        "seo-content/cases/import/cases-seo-import.json#cases[31]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#plitka[2].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "мощение (тротуарная плитка)",
+          "source_ref": "cases_by_category.json#plitka[2].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 10322,
+        "canonical_url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=kottedzhnyjj-poselok-koprino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/kottedzhnyjj-poselok-koprino/",
+        "post_type": "page",
+        "featured_media_id": 10325
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 10084,
+      "url": "https://exp76.ru/pos-kamenniki/",
+      "title": "пос. Каменники",
+      "location": "пос. Каменники",
+      "work_types": [
+        "укладка тротуарной плитки (120 м²)"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#plitka.cases[5]",
+        "cases_by_category.json#plitka[5]",
+        "seo-content/cases/import/cases-seo-import.json#cases[32]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#plitka[5].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "укладка тротуарной плитки (120 м²)",
+          "source_ref": "cases_by_category.json#plitka[5].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 10084,
+        "canonical_url": "https://exp76.ru/pos-kamenniki/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=pos-kamenniki&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/pos-kamenniki/",
+        "post_type": "page",
+        "featured_media_id": 10087
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 10096,
+      "url": "https://exp76.ru/pos-slip/",
+      "title": "пос. Слип",
+      "location": "пос. Слип",
+      "work_types": [
+        "газон + посадка хвойных"
+      ],
+      "service_ids": [
+        "S2",
+        "S3"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp"
+      ],
+      "source_files": [
+        "cases_by_category.json",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "cases_by_category.json#blagoustroystvo[3]",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#proof.cases[0]",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#proof.cases[0]",
+        "seo-content/cases/import/cases-seo-import.json#cases[5]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#blagoustroystvo[3].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "газон + посадка хвойных",
+          "source_ref": "cases_by_category.json#blagoustroystvo[3].description"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S2",
+          "basis": "explicit_work",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#proof.cases[0]"
+        },
+        {
+          "service_id": "S3",
+          "basis": "explicit_work",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#proof.cases[0]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#proof.cases[0].image.url"
+        },
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#proof.cases[0].image.url"
+        }
+      ],
+      "page_audit": {
+        "page_id": 10096,
+        "canonical_url": "https://exp76.ru/pos-slip/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=pos-slip&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/pos-slip/",
+        "post_type": "page",
+        "featured_media_id": 10101
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-28",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 10107,
+      "url": "https://exp76.ru/poshekhone/",
+      "title": "Пошехонье",
+      "location": "Пошехонье",
+      "work_types": [
+        "мощение тротуарной плиткой",
+        "замена системы ливневой канализации"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#livnevka.cases[1]",
+        "acf_selected_works_map.json#plitka.cases[4]",
+        "cases_by_category.json#livnevka[1]",
+        "cases_by_category.json#plitka[4]",
+        "seo-content/cases/import/cases-seo-import.json#cases[33]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#livnevka[1].title",
+        "cases_by_category.json#plitka[4].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "мощение тротуарной плиткой",
+          "source_ref": "cases_by_category.json#plitka[4].description"
+        },
+        {
+          "value": "замена системы ливневой канализации",
+          "source_ref": "cases_by_category.json#livnevka[1].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 10107,
+        "canonical_url": "https://exp76.ru/poshekhone/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=poshekhone&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/poshekhone/",
+        "post_type": "page",
+        "featured_media_id": 10115
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 10136,
+      "url": "https://exp76.ru/rybinsk-ul-grazhdanskaja/",
+      "title": "Рыбинск ул. Гражданская",
+      "location": "Рыбинск ул. Гражданская",
+      "work_types": [
+        "комплексное благоустройство"
+      ],
+      "service_ids": [
+        "S1"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp"
+      ],
+      "source_files": [
+        "cases_by_category.json",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "cases_by_category.json#blagoustroystvo[2]",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[1]",
+        "seo-content/cases/import/cases-seo-import.json#cases[6]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#blagoustroystvo[2].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "комплексное благоустройство",
+          "source_ref": "cases_by_category.json#blagoustroystvo[2].description"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S1",
+          "basis": "hub_proof_only",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[1]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[1].image.url"
+        }
+      ],
+      "page_audit": {
+        "page_id": 10136,
+        "canonical_url": "https://exp76.ru/rybinsk-ul-grazhdanskaja/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinsk-ul-grazhdanskaja&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/rybinsk-ul-grazhdanskaja/",
+        "post_type": "page",
+        "featured_media_id": 10141
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-28",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 10125,
+      "url": "https://exp76.ru/rybinsk-ul-veretevskaja/",
+      "title": "Рыбинск ул. Веретьевская",
+      "location": "Рыбинск ул. Веретьевская",
+      "work_types": [
+        "укладка тротуарной плитки"
+      ],
+      "service_ids": [],
+      "image_urls": [],
+      "source_files": [
+        "acf_selected_works_map.json",
+        "cases_by_category.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": false,
+      "source_refs": [
+        "acf_selected_works_map.json#plitka.cases[3]",
+        "cases_by_category.json#plitka[3]",
+        "seo-content/cases/import/cases-seo-import.json#cases[34]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#plitka[3].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "укладка тротуарной плитки",
+          "source_ref": "cases_by_category.json#plitka[3].description"
+        }
+      ],
+      "service_support": [],
+      "image_sources": [],
+      "page_audit": {
+        "page_id": 10125,
+        "canonical_url": "https://exp76.ru/rybinsk-ul-veretevskaja/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinsk-ul-veretevskaja&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/rybinsk-ul-veretevskaja/",
+        "post_type": "page",
+        "featured_media_id": 10127
+      },
+      "image_audits": [],
+      "blocking_gaps": [
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof"
+      ]
+    },
+    {
+      "page_id": 10345,
+      "url": "https://exp76.ru/slip-ul-bugorok/",
+      "title": "Слип ул. Бугорок",
+      "location": "Слип ул. Бугорок",
+      "work_types": [
+        "комплексное благоустройство"
+      ],
+      "service_ids": [
+        "S1"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp"
+      ],
+      "source_files": [
+        "cases_by_category.json",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json",
+        "seo-content/cases/import/cases-seo-import.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "cases_by_category.json#blagoustroystvo[0]",
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[0]",
+        "seo-content/cases/import/cases-seo-import.json#cases[7]"
+      ],
+      "location_sources": [
+        "cases_by_category.json#blagoustroystvo[0].title"
+      ],
+      "work_type_sources": [
+        {
+          "value": "комплексное благоустройство",
+          "source_ref": "cases_by_category.json#blagoustroystvo[0].description"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S1",
+          "basis": "hub_proof_only",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[0]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+          "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[0].image.url"
+        }
+      ],
+      "page_audit": {
+        "page_id": 10345,
+        "canonical_url": "https://exp76.ru/slip-ul-bugorok/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-28",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=slip-ul-bugorok&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/slip-ul-bugorok/",
+        "post_type": "page",
+        "featured_media_id": 10354
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-28",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    }
+  ]
+}
