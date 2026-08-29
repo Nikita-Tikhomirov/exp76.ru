@@ -977,7 +977,7 @@ class ImporterSafetyTests(unittest.TestCase):
         build_body = php_function_body(source, "land76wp_service_hubs_build_plan")
         self.assertIn("land76wp_service_hubs_preflight_item_acf", build_body)
         preflight_body = php_function_body(source, "land76wp_service_hubs_preflight_item_acf")
-        self.assertIn("acf_get_field", preflight_body)
+        self.assertIn("land76wp_service_hubs_resolve_acf_field", preflight_body)
         self.assertIn("unknown_acf_field", preflight_body)
 
     def test_only_the_exact_known_legacy_blog_relation_schema_is_migratable(self):

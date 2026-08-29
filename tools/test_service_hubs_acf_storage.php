@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 define('ABSPATH', __DIR__ . DIRECTORY_SEPARATOR);
+define('ARRAY_A', 'ARRAY_A');
 
 $land76_test_theme = dirname(__DIR__) . '/ftp_dump_minimal/wp-content/themes/land76wp';
 $land76_test_posts = array();
@@ -9,6 +10,14 @@ $land76_test_meta = array();
 $land76_test_acf_values = array();
 $land76_test_fields_by_key = array();
 $land76_test_fields_by_name = array();
+$land76_test_fields_by_id = array();
+$land76_test_raw_fields_by_id = array();
+$land76_test_field_candidate_ids = array();
+$land76_test_acf_selectors = array();
+$land76_test_acf_db_rows = array();
+$land76_test_acf_group_rows = array();
+$land76_test_acf_raw_group = array();
+$land76_test_acf_update_hook = null;
 $land76_test_attachments_by_url = array();
 $land76_test_categories = array();
 $land76_test_thumbnails = array();
@@ -47,12 +56,58 @@ class WP_Term
     }
 }
 
+class Land76_Test_Wpdb
+{
+    public string $posts = 'wp_posts';
+    public string $last_error = '';
+
+    public function prepare($query, ...$args): string
+    {
+        foreach ($args as $arg) {
+            $query = preg_replace('/%s/', "'" . (string) $arg . "'", (string) $query, 1);
+        }
+        return (string) $query;
+    }
+
+    public function get_col($query): array
+    {
+        global $land76_test_field_candidate_ids;
+        if (preg_match("/post_name = '([^']+)'/", (string) $query, $matches) !== 1) {
+            $this->last_error = 'unrecognized fixture query';
+            return array();
+        }
+        $this->last_error = '';
+        return $land76_test_field_candidate_ids[$matches[1]] ?? array();
+    }
+
+    public function get_results($query, $output = ARRAY_A): array
+    {
+        global $land76_test_acf_db_rows, $land76_test_acf_group_rows;
+        $this->last_error = '';
+        if (strpos((string) $query, "post_type = 'acf-field-group'") !== false) {
+            return $land76_test_acf_group_rows;
+        }
+        if (strpos((string) $query, "post_type = 'acf-field'") !== false) {
+            return $land76_test_acf_db_rows;
+        }
+        $this->last_error = 'unrecognized fixture query';
+        return array();
+    }
+}
+
+$wpdb = new Land76_Test_Wpdb();
+
 function add_action($hook, $callback): void {}
 function wp_json_encode($value, $flags = 0, $depth = 512): string
 {
     return (string) json_encode($value, $flags, $depth);
 }
 function wp_strip_all_tags($value): string { return strip_tags((string) $value); }
+function maybe_unserialize($value)
+{
+    $decoded = is_string($value) ? json_decode($value, true) : null;
+    return is_array($decoded) ? $decoded : $value;
+}
 function wp_parse_url($url) { return parse_url((string) $url); }
 function home_url($path = ''): string { return 'https://exp76.ru/' . ltrim((string) $path, '/'); }
 function trailingslashit($value): string { return rtrim((string) $value, '/\\') . '/'; }
@@ -134,14 +189,46 @@ function land76wp_service_hub_by_service_id($service_id): array
 
 function land76_test_field_by_selector($selector)
 {
-    global $land76_test_fields_by_key, $land76_test_fields_by_name;
+    global $land76_test_fields_by_key, $land76_test_fields_by_name, $land76_test_fields_by_id;
+    if (is_int($selector) || (is_string($selector) && ctype_digit($selector))) {
+        return $land76_test_fields_by_id[(int) $selector] ?? false;
+    }
     $selector = (string) $selector;
     return $land76_test_fields_by_key[$selector] ?? $land76_test_fields_by_name[$selector] ?? false;
 }
 
 function acf_get_field($selector)
 {
+    global $land76_test_acf_selectors;
+    $land76_test_acf_selectors[] = array('acf_get_field', $selector);
     return land76_test_field_by_selector($selector);
+}
+
+function acf_get_raw_field($selector)
+{
+    global $land76_test_raw_fields_by_id;
+    return $land76_test_raw_fields_by_id[(int) $selector] ?? land76_test_field_by_selector($selector);
+}
+
+function acf_get_field_group($selector)
+{
+    global $land76_test_acf_raw_group;
+    if ((string) $selector === 'group_blogseo_post' || (int) $selector === 10745) {
+        return $land76_test_acf_raw_group;
+    }
+    return false;
+}
+
+function acf_get_raw_field_group($selector)
+{
+    return acf_get_field_group($selector);
+}
+
+function acf_get_value($post_id, array $field)
+{
+    global $land76_test_acf_values, $land76_test_acf_selectors;
+    $land76_test_acf_selectors[] = array('acf_get_value', (int) ($field['ID'] ?? 0));
+    return $land76_test_acf_values[(int) $post_id][$field['key']] ?? false;
 }
 
 function land76_test_format_acf_value($value, array $field)
@@ -266,6 +353,23 @@ function update_field($selector, $value, $post_id): bool
     return true;
 }
 
+function acf_update_value($value, $post_id, array $field): bool
+{
+    global $land76_test_acf_values, $land76_test_update_mode, $land76_test_acf_selectors;
+    global $land76_test_acf_update_hook;
+    if ($land76_test_update_mode === 'noop') {
+        return false;
+    }
+    $land76_test_acf_selectors[] = array('acf_update_value', (int) ($field['ID'] ?? 0));
+    $land76_test_acf_values[(int) $post_id][$field['key']] = land76_test_acf_update_storage($value, $field);
+    update_post_meta((int) $post_id, '_' . $field['name'], $field['key']);
+    land76_test_write_acf_references((int) $post_id, $value, $field, $field['name']);
+    if (is_callable($land76_test_acf_update_hook)) {
+        $land76_test_acf_update_hook($field);
+    }
+    return true;
+}
+
 require $land76_test_theme . '/inc/import-service-hubs.php';
 
 final class Land76_Acf_Storage_Test
@@ -325,15 +429,106 @@ final class Land76_Acf_Storage_Test
 
 function land76_test_register_field(array $field): void
 {
-    global $land76_test_fields_by_key, $land76_test_fields_by_name;
+    global $land76_test_fields_by_key, $land76_test_fields_by_name, $land76_test_fields_by_id;
+    global $land76_test_raw_fields_by_id;
+    global $land76_test_field_candidate_ids;
+    if (empty($field['ID'])) {
+        $field['ID'] = 12000 + count($land76_test_fields_by_id);
+    }
     $land76_test_fields_by_key[$field['key']] = $field;
     $land76_test_fields_by_name[$field['name']] = $field;
+    $land76_test_fields_by_id[(int) $field['ID']] = $field;
+    $land76_test_raw_fields_by_id[(int) $field['ID']] = $field;
+    $land76_test_field_candidate_ids[$field['key']][] = (int) $field['ID'];
+}
+
+function land76_test_register_blog_field_tree(array $definition, int $parent_id, int &$next_id, string $timestamp): array
+{
+    global $land76_test_fields_by_id, $land76_test_raw_fields_by_id;
+    global $land76_test_acf_db_rows, $land76_test_field_candidate_ids;
+    $field_id = $next_id++;
+    $children = isset($definition['sub_fields']) && is_array($definition['sub_fields'])
+        ? $definition['sub_fields']
+        : array();
+    $raw_field = $definition;
+    unset($raw_field['sub_fields']);
+    $raw_field['ID'] = $field_id;
+    $raw_field['parent'] = $parent_id;
+    $raw_field['menu_order'] = 0;
+    $resolved = $raw_field;
+    if ($children !== array()) {
+        $resolved['sub_fields'] = array();
+        foreach ($children as $child) {
+            $resolved['sub_fields'][] = land76_test_register_blog_field_tree(
+                $child,
+                $field_id,
+                $next_id,
+                $timestamp
+            );
+        }
+    }
+    $land76_test_fields_by_id[$field_id] = $resolved;
+    $land76_test_raw_fields_by_id[$field_id] = $raw_field;
+    $land76_test_field_candidate_ids[$definition['key']][] = $field_id;
+    $content_definition = $definition;
+    unset($content_definition['sub_fields']);
+    $land76_test_acf_db_rows[] = array(
+        'ID' => $field_id,
+        'post_parent' => $parent_id,
+        'post_name' => $definition['key'],
+        'post_status' => 'publish',
+        'menu_order' => 0,
+        'post_modified' => $timestamp,
+        'post_modified_gmt' => $timestamp,
+        'post_content' => json_encode($content_definition),
+        'post_excerpt' => $definition['name'],
+    );
+    return $resolved;
+}
+
+function land76_test_register_blog_generation(int $start_id, string $timestamp): array
+{
+    global $land76_test_theme, $land76_test_fields_by_key, $land76_test_fields_by_name;
+    global $land76_test_acf_group_rows, $land76_test_acf_raw_group;
+    $groups = json_decode(
+        (string) file_get_contents($land76_test_theme . '/import/acf-seo-blog-post-fields.json'),
+        true
+    );
+    $group = $groups[0];
+    $land76_test_acf_raw_group = $group;
+    unset($land76_test_acf_raw_group['fields']);
+    $land76_test_acf_raw_group['ID'] = 10745;
+    $land76_test_acf_group_rows = array(array(
+        'ID' => 10745,
+        'post_parent' => 0,
+        'post_name' => 'group_blogseo_post',
+        'post_status' => 'publish',
+        'menu_order' => 0,
+        'post_modified' => $timestamp,
+        'post_modified_gmt' => $timestamp,
+        'post_content' => json_encode(array_diff_key($group, array('fields' => true))),
+        'post_excerpt' => $group['title'],
+    ));
+    $next_id = $start_id;
+    $top_fields = array();
+    foreach ($group['fields'] as $definition) {
+        $resolved = land76_test_register_blog_field_tree($definition, 10745, $next_id, $timestamp);
+        $land76_test_fields_by_key[$resolved['key']] = $resolved;
+        $land76_test_fields_by_name[$resolved['name']] = $resolved;
+        $top_fields[$resolved['name']] = $resolved;
+    }
+    return $top_fields;
 }
 
 function land76_test_reset(): void
 {
     global $land76_test_posts, $land76_test_meta, $land76_test_acf_values;
-    global $land76_test_fields_by_key, $land76_test_fields_by_name;
+    global $land76_test_fields_by_key, $land76_test_fields_by_name, $land76_test_fields_by_id;
+    global $land76_test_raw_fields_by_id;
+    global $land76_test_field_candidate_ids, $land76_test_acf_selectors;
+    global $land76_test_acf_db_rows, $land76_test_acf_group_rows, $land76_test_acf_raw_group;
+    global $land76_test_acf_update_hook;
+    global $land76wp_service_hubs_blog_acf_generation;
     global $land76_test_attachments_by_url, $land76_test_categories;
     global $land76_test_thumbnails, $land76_test_permalinks, $land76_test_update_mode, $land76_test_registry;
     global $land76_test_skip_leaf_reference;
@@ -349,6 +544,8 @@ function land76_test_reset(): void
         ),
     );
     $sections_field = array(
+        'ID' => 10810,
+        'parent' => 10745,
         'key' => 'field_blogseo_sections',
         'name' => 'blogseo_sections',
         'type' => 'repeater',
@@ -402,9 +599,19 @@ function land76_test_reset(): void
     $land76_test_acf_values = array();
     $land76_test_fields_by_key = array();
     $land76_test_fields_by_name = array();
+    $land76_test_fields_by_id = array();
+    $land76_test_raw_fields_by_id = array();
+    $land76_test_field_candidate_ids = array();
+    $land76_test_acf_selectors = array();
+    $land76_test_acf_db_rows = array();
+    $land76_test_acf_group_rows = array();
+    $land76_test_acf_raw_group = array();
+    $land76_test_acf_update_hook = null;
+    $land76wp_service_hubs_blog_acf_generation = null;
     foreach (array($problem_field, $sections_field, $plain_field, $relationship_field, $related_services, $selected_projects) as $field) {
         land76_test_register_field($field);
     }
+    land76_test_register_blog_generation(11502, '2026-05-31 12:25:35');
     $land76_test_attachments_by_url = array(
         'https://exp76.ru/uploads/main.webp' => 501,
         'https://exp76.ru/uploads/problem.webp' => 601,
@@ -607,6 +814,288 @@ $test->run('verifier compares raw WYSIWYG bytes', function (Land76_Acf_Storage_T
         'blogseo_sections'
     );
     $test->same(array(), land76_test_verify($item, array('S1-CHILD-TEST' => 1001)), 'WYSIWYG formatting must not change the storage contract');
+});
+
+$test->run('managed blog fields bypass a 21-duplicate key alias through one exact canonical tree', function (Land76_Acf_Storage_Test $test): void {
+    global $land76_test_fields_by_key, $land76_test_fields_by_id, $land76_test_field_candidate_ids;
+    global $land76_test_acf_selectors, $land76_test_meta, $land76_test_acf_db_rows, $land76_test_acf_group_rows;
+    $canonical = $land76_test_fields_by_id[11508];
+    $canonical_group_rows = $land76_test_acf_group_rows;
+    for ($copy = 0; $copy < 18; $copy++) {
+        land76_test_register_blog_generation(10800 + ($copy * 30), '2026-05-' . sprintf('%02d', 7 + intdiv($copy, 6)) . ' 01:00:00');
+    }
+    $land76_test_acf_group_rows = $canonical_group_rows;
+    $orphan_with_duplicate_children = $canonical;
+    $orphan_with_duplicate_children['ID'] = 10752;
+    $orphan_with_duplicate_children['parent'] = 0;
+    $orphan_with_duplicate_children['sub_fields'] = array_merge(
+        $canonical['sub_fields'],
+        $canonical['sub_fields']
+    );
+    $orphan_without_children = $canonical;
+    $orphan_without_children['ID'] = 10781;
+    $orphan_without_children['parent'] = 0;
+    $orphan_without_children['sub_fields'] = array();
+    $land76_test_fields_by_id[10752] = $orphan_with_duplicate_children;
+    $land76_test_fields_by_id[10781] = $orphan_without_children;
+    foreach (array($orphan_with_duplicate_children, $orphan_without_children) as $orphan) {
+        $land76_test_field_candidate_ids['field_blogseo_sections'][] = $orphan['ID'];
+        $land76_test_acf_db_rows[] = array(
+            'ID' => $orphan['ID'], 'post_parent' => 0, 'post_name' => 'field_blogseo_sections',
+            'post_status' => 'publish', 'menu_order' => 0,
+            'post_modified' => '2026-05-07 00:00:00', 'post_modified_gmt' => '2026-05-07 00:00:00',
+            'post_content' => '{}', 'post_excerpt' => 'blogseo_sections',
+        );
+    }
+    usort($land76_test_acf_db_rows, function ($left, $right) { return $left['ID'] <=> $right['ID']; });
+    $land76_test_fields_by_key['field_blogseo_sections'] = $orphan_with_duplicate_children;
+
+    $item = land76_test_item('S9-ARTICLE-STUMP-DIY', array(
+        'blogseo_sections' => array(array(
+            'heading' => 'Как удалить пень',
+            'body' => '<p>Точный исходный текст.</p>',
+            'points' => array(array('title' => 'Подготовка', 'text' => 'Освободите площадку.')),
+        )),
+    ));
+    land76wp_service_hubs_apply_acf($item, 1001, array('S9-ARTICLE-STUMP-DIY' => 1001));
+
+    $test->true(
+        in_array(array('acf_update_value', 11508), $land76_test_acf_selectors, true),
+        'the timestamp-anchored canonical DB candidate must own the write'
+    );
+    $test->same(
+        'field_blogseo_sections',
+        $land76_test_meta[1001]['_blogseo_sections'] ?? '',
+        'the canonical object must still create the exact field-key companion'
+    );
+    $test->same(
+        array(),
+        land76_test_verify($item, array('S9-ARTICLE-STUMP-DIY' => 1001)),
+        'the same canonical object must own the raw round-trip verifier'
+    );
+    $test->true(
+        in_array(array('acf_get_value', 11508), $land76_test_acf_selectors, true),
+        'raw verification must not return to the ambiguous field-key alias'
+    );
+});
+
+$test->run('managed blog generation fails before writes on zero duplicate or newer partial anchors', function (Land76_Acf_Storage_Test $test): void {
+    global $land76_test_acf_group_rows, $land76_test_acf_db_rows, $land76_test_acf_selectors;
+    global $land76wp_service_hubs_blog_acf_generation;
+    $item = land76_test_item('S9-ARTICLE-STUMP-DIY', array(
+        'blogseo_sections' => array(array('heading' => 'H', 'body' => '<p>B</p>', 'points' => array())),
+    ));
+    $land76_test_acf_group_rows[0]['post_modified'] = '2026-06-01 00:00:00';
+    $land76_test_acf_group_rows[0]['post_modified_gmt'] = '2026-05-31 21:00:00';
+    $land76wp_service_hubs_blog_acf_generation = null;
+    $test->throws(
+        function () use ($item): void {
+            land76wp_service_hubs_apply_acf($item, 1001, array('S9-ARTICLE-STUMP-DIY' => 1001));
+        },
+        'acf_schema_incompatible',
+        'a group timestamp without one complete field forest must fail closed'
+    );
+    $test->same(
+        array(),
+        array_values(array_filter($land76_test_acf_selectors, function ($call) {
+            return $call[0] === 'acf_update_value';
+        })),
+        'schema selection must finish before the first content value write'
+    );
+
+    land76_test_reset();
+    $land76_test_acf_db_rows[] = array(
+        'ID' => 10000, 'post_parent' => 10745, 'post_name' => 'field_blogseo_hero_title',
+        'post_status' => 'publish', 'menu_order' => 0,
+        'post_modified' => '2026-06-01 00:00:00', 'post_modified_gmt' => '2026-05-31 21:00:00',
+        'post_content' => '{}', 'post_excerpt' => 'blogseo_hero_title',
+    );
+    $land76wp_service_hubs_blog_acf_generation = null;
+    $test->throws(
+        function () use ($item): void {
+            land76wp_service_hubs_apply_acf($item, 1001, array('S9-ARTICLE-STUMP-DIY' => 1001));
+        },
+        'newer_blogseo_generation',
+        'a newer partial generation must not fall back to the older complete forest'
+    );
+
+    land76_test_reset();
+    $land76_test_acf_db_rows[] = array(
+        'ID' => 20000, 'post_parent' => 10745, 'post_name' => 'field_blogseo_hero_title',
+        'post_status' => 'publish', 'menu_order' => 0,
+        'post_modified' => '2026-05-30 12:25:35', 'post_modified_gmt' => '2026-05-30 09:25:35',
+        'post_content' => '{}', 'post_excerpt' => 'blogseo_hero_title',
+    );
+    $land76wp_service_hubs_blog_acf_generation = null;
+    land76wp_service_hubs_apply_acf($item, 1001, array('S9-ARTICLE-STUMP-DIY' => 1001));
+    $test->same(
+        'field_blogseo_sections',
+        get_post_meta(1001, '_blogseo_sections', true),
+        'a later-created row with an older valid timestamp must not outrank the group generation'
+    );
+});
+
+$test->run('blog generation timestamps reject zero and impossible calendar values', function (Land76_Acf_Storage_Test $test): void {
+    foreach (array(
+        array('post_modified' => '0000-00-00 00:00:00', 'post_modified_gmt' => '0000-00-00 00:00:00'),
+        array('post_modified' => '2026-02-30 12:00:00', 'post_modified_gmt' => '2026-02-30 09:00:00'),
+        array('post_modified' => '2026-05-31 24:00:00', 'post_modified_gmt' => '2026-05-31 21:00:00'),
+    ) as $row) {
+        $test->throws(
+            function () use ($row): void {
+                land76wp_service_hubs_blog_acf_row_tuple($row, 'invalid_timestamp_fixture');
+            },
+            'acf_schema_incompatible',
+            'invalid ACF schema timestamps must fail exact calendar validation'
+        );
+    }
+});
+
+$test->run('managed blog generation rejects timestamp collisions and numeric ACF cache shadows', function (Land76_Acf_Storage_Test $test): void {
+    global $land76_test_acf_db_rows, $land76_test_raw_fields_by_id, $land76_test_fields_by_id;
+    global $land76wp_service_hubs_blog_acf_generation;
+    $item = land76_test_item('S9-ARTICLE-STUMP-DIY', array('blogseo_hero_title' => 'Title'));
+    $duplicate = $land76_test_acf_db_rows[0];
+    $duplicate['ID'] = 11499;
+    $land76_test_acf_db_rows[] = $duplicate;
+    $raw_duplicate = $land76_test_raw_fields_by_id[(int) $land76_test_acf_db_rows[0]['ID']];
+    $raw_duplicate['ID'] = 11499;
+    $land76_test_raw_fields_by_id[11499] = $raw_duplicate;
+    $land76wp_service_hubs_blog_acf_generation = null;
+    $test->throws(
+        function () use ($item): void {
+            land76wp_service_hubs_apply_acf($item, 1001, array('S9-ARTICLE-STUMP-DIY' => 1001));
+        },
+        'acf_schema_incompatible',
+        'two same-timestamp candidates for one frozen path must fail closed'
+    );
+
+    land76_test_reset();
+    $shadow = $land76_test_fields_by_id[11508];
+    $shadow['sub_fields'] = array_reverse($shadow['sub_fields']);
+    $land76_test_fields_by_id[11508] = $shadow;
+    $land76wp_service_hubs_blog_acf_generation = null;
+    $test->throws(
+        function (): void {
+            land76wp_service_hubs_apply_acf(
+                land76_test_item('S9-ARTICLE-STUMP-DIY', array('blogseo_sections' => array())),
+                1001,
+                array('S9-ARTICLE-STUMP-DIY' => 1001)
+            );
+        },
+        '.resolved',
+        'numeric ACF lookup must reproduce the raw selected child IDs and order'
+    );
+});
+
+$test->run('all eleven article payloads use exact blog generation storage and companions', function (Land76_Acf_Storage_Test $test): void {
+    global $land76_test_theme, $land76_test_meta;
+    $payload = json_decode(
+        (string) file_get_contents($land76_test_theme . '/import/service-hubs-import.json'),
+        true
+    );
+    $operations = isset($payload['operations']) ? $payload['operations'] : $payload['items'];
+    $articles = array_values(array_filter($operations, function ($item) {
+        return strpos((string) $item['page_key'], '-ARTICLE-') !== false;
+    }));
+    $post_ids = array();
+    foreach ($operations as $index => $operation) {
+        $post_ids[$operation['page_key']] = 20000 + $index;
+    }
+    $test->same(11, count($articles), 'the production fixture must retain all eleven article operations');
+    foreach ($articles as $article) {
+        $post_ids[$article['page_key']] = 1001;
+        land76wp_service_hubs_apply_acf($article, 1001, $post_ids);
+        foreach ($article['acf'] as $field_name => $expected_value) {
+            $field = land76wp_service_hubs_resolve_acf_field($field_name);
+            $overrides = array();
+            $references = array();
+            $expected_raw = land76wp_service_hubs_prepare_acf_storage_value(
+                $expected_value,
+                $field,
+                'expected',
+                $field_name,
+                $overrides,
+                $article['page_key'] . '.' . $field_name,
+                $references
+            );
+            $test->true(
+                land76wp_service_hubs_storage_values_equal($expected_raw, acf_get_value(1001, $field)),
+                $article['page_key'] . '.' . $field_name . ' must round-trip exact raw storage'
+            );
+            $test->same(
+                $field['key'],
+                $land76_test_meta[1001]['_' . $field_name] ?? '',
+                $article['page_key'] . '.' . $field_name . ' must retain the exact companion key'
+            );
+        }
+    }
+});
+
+$test->run('managed blog generation freezes schema while idempotent values remain valid', function (Land76_Acf_Storage_Test $test): void {
+    global $land76_test_update_mode, $land76_test_acf_db_rows, $land76_test_acf_values;
+    global $land76wp_service_hubs_blog_acf_generation;
+    $item = land76_test_item('S9-ARTICLE-STUMP-DIY', array('blogseo_hero_title' => 'Stable title'));
+    land76wp_service_hubs_apply_acf($item, 1001, array('S9-ARTICLE-STUMP-DIY' => 1001));
+    $land76_test_update_mode = 'noop';
+    land76wp_service_hubs_apply_acf($item, 1001, array('S9-ARTICLE-STUMP-DIY' => 1001));
+    $test->same(
+        'Stable title',
+        $land76_test_acf_values[1001]['field_blogseo_hero_title'] ?? '',
+        'false from an idempotent acf_update_value call must be accepted when raw storage remains exact'
+    );
+    $test->same(
+        false,
+        land76wp_service_hubs_is_managed_blog_acf_field('blogseo_related_services'),
+        'the separately reviewed relationship field must stay outside the timestamp generation'
+    );
+
+    $land76_test_update_mode = 'write';
+    $land76wp_service_hubs_blog_acf_generation = land76wp_service_hubs_blog_acf_generation();
+    foreach ($land76_test_acf_db_rows as &$row) {
+        if ((int) $row['ID'] === 11502) {
+            $row['post_content'] .= ' ';
+            break;
+        }
+    }
+    unset($row);
+    $test->throws(
+        function (): void {
+            land76wp_service_hubs_blog_acf_generation(true);
+        },
+        'stage_target_changed',
+        'the frozen raw schema fingerprint must reject mutation between writes'
+    );
+});
+
+$test->run('post-write generation revalidation catches schema mutation inside acf_update_value', function (Land76_Acf_Storage_Test $test): void {
+    global $land76_test_acf_update_hook, $land76_test_acf_db_rows, $land76_test_meta;
+    $land76_test_acf_update_hook = function () use (&$land76_test_acf_update_hook, &$land76_test_acf_db_rows): void {
+        $land76_test_acf_update_hook = null;
+        foreach ($land76_test_acf_db_rows as &$row) {
+            if ((int) $row['ID'] === 11502) {
+                $row['post_content'] .= ' ';
+                break;
+            }
+        }
+        unset($row);
+    };
+    $item = land76_test_item('S9-ARTICLE-STUMP-DIY', array(
+        'blogseo_hero_title' => 'First write',
+        'blogseo_hero_subtitle' => 'Must never be written',
+    ));
+    $test->throws(
+        function () use ($item): void {
+            land76wp_service_hubs_apply_acf($item, 1001, array('S9-ARTICLE-STUMP-DIY' => 1001));
+        },
+        'stage_target_changed',
+        'schema mutation during acf_update_value must fail the immediate post-write fingerprint check'
+    );
+    $test->same(
+        '',
+        $land76_test_meta[1001]['_blogseo_hero_subtitle'] ?? '',
+        'post-write schema drift must stop before the next field write'
+    );
 });
 
 $test->run('fresh generic ACF write uses the field key and round-trips storage', function (Land76_Acf_Storage_Test $test): void {
