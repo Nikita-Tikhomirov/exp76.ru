@@ -908,10 +908,29 @@ class ImporterSafetyTests(unittest.TestCase):
             "'return_format' => 'id'",
         ):
             self.assertIn(marker, legacy_body)
+        self.assertIn("land76wp_service_hubs_acf_group_definition_matches", legacy_body)
+        self.assertNotIn("land76wp_service_hubs_acf_group_matches", legacy_body)
         verify_body = php_function_body(source, "land76wp_service_hubs_verify_acf_schema")
-        self.assertIn("land76wp_service_hubs_is_exact_legacy_blog_relation", verify_body)
+        self.assertIn("land76wp_service_hubs_inspect_blog_relation", verify_body)
         self.assertIn("$result['migrations'][]", verify_body)
-        self.assertIn("acf_schema_incompatible", verify_body)
+        inspect_body = php_function_body(
+            source, "land76wp_service_hubs_inspect_blog_relation"
+        )
+        self.assertIn("land76wp_service_hubs_is_exact_legacy_blog_relation", inspect_body)
+        self.assertIn("land76wp_service_hubs_blog_relation_candidate_fields", inspect_body)
+        self.assertIn("acf_schema_incompatible", inspect_body)
+        candidates_body = php_function_body(
+            source, "land76wp_service_hubs_blog_relation_candidate_fields"
+        )
+        for marker in (
+            "post_type = %s",
+            "post_status = %s",
+            "post_name = %s",
+            "ORDER BY ID ASC",
+            "FOR UPDATE",
+            "acf_get_raw_field",
+        ):
+            self.assertIn(marker, candidates_body)
 
     def test_legacy_acf_migration_is_targeted_and_runs_inside_stage_transaction(self):
         source = self.source()
@@ -920,7 +939,19 @@ class ImporterSafetyTests(unittest.TestCase):
         )
         self.assertIn("field_blogseo_related_services", migrate_body)
         self.assertIn("acf_update_field", migrate_body)
+        self.assertIn("land76wp_service_hubs_inspect_blog_relation", migrate_body)
+        self.assertIn("$candidate_ids", migrate_body)
+        self.assertIn("$verified_ids", migrate_body)
+        self.assertIn("$target_field['ID']", migrate_body)
+        self.assertIn("$target_field['parent']", migrate_body)
         self.assertNotIn("acf_update_field_group", migrate_body)
+        for destructive_marker in (
+            "acf_delete_field",
+            "wp_delete_post",
+            "wp_trash_post",
+            "DELETE FROM",
+        ):
+            self.assertNotIn(destructive_marker, migrate_body)
         install_body = php_function_body(source, "land76wp_service_hubs_install_missing_acf_schema")
         self.assertIn("$migrations", install_body)
         self.assertIn("land76wp_service_hubs_migrate_legacy_blog_relation", install_body)
