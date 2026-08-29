@@ -287,15 +287,80 @@ check(Land76_Release_Deployer::importer_bootstrap_target() === ABSPATH . 'wp-con
 $frozen = Land76_Release_Deployer::expected();
 $default_state = Land76_Release_Deployer::default_state();
 $storage_path = new ReflectionMethod(Land76_Release_Deployer::class, 'storage_path');
-check($default_state['release_id'] === 'exp76-production-release-20260829-140000-r3', 'R3 uses a distinct frozen production release identity');
-check(str_ends_with($storage_path->invoke(null), '.land76-release-deployer-r3'), 'R3 uses isolated protected state and rollback storage');
+check($default_state['release_id'] === 'exp76-production-release-20260829-150000-r4', 'R4 uses a distinct frozen production release identity');
+check(str_ends_with($storage_path->invoke(null), '.land76-release-deployer-r4'), 'R4 uses isolated protected state and rollback storage');
 check(count($frozen['A1']['files']) === 26 && count($frozen['A2']['files']) === 23 && count($frozen['C']['files']) === 1 && count($frozen['B']['files']) === 30, 'frozen inventories contain all 80 verified entries');
+$expected_a1_members = array(
+    'wp-content/themes/land76wp/import/service-hubs-import.json',
+    'wp-content/themes/land76wp/import/service-hubs-release-manifest.json',
+    'wp-content/themes/land76wp/import/acf-service-hub-relations.json',
+    'wp-content/themes/land76wp/import/acf-seo-blog-post-fields.json',
+    'wp-content/themes/land76wp/inc/import-service-hubs.php',
+    'wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-flowerbed-care.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-greenhouse-misting.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-hedge-planting.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-high-resolution-carport.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-landscape-3d-visualization.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-large-tree-planting.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-lighting-design.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-private-garden-fountain.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-stone-retaining-wall.webp',
+    'wp-content/themes/land76wp/generated/context/context-photo-tree-pruning.webp',
+);
+$expected_a2_members = array(
+    'wp-content/themes/land76wp/functions.php',
+    'wp-content/themes/land76wp/index.php',
+    'wp-content/themes/land76wp/casenew.php',
+    'wp-content/themes/land76wp/category-87.php',
+    'wp-content/themes/land76wp/category-88.php',
+    'wp-content/themes/land76wp/category-89.php',
+    'wp-content/themes/land76wp/category-90.php',
+    'wp-content/themes/land76wp/category-91.php',
+    'wp-content/themes/land76wp/category-92.php',
+    'wp-content/themes/land76wp/inc/service-hub-registry.php',
+    'wp-content/themes/land76wp/inc/service-v2.php',
+    'wp-content/themes/land76wp/inc/newservicepost.php',
+    'wp-content/themes/land76wp/inc/seoblogpost.php',
+    'wp-content/themes/land76wp/inc/legal-pages.php',
+    'wp-content/themes/land76wp/inc/legal-page-template.php',
+    'wp-content/themes/land76wp/servicepost.php',
+    'wp-content/themes/land76wp/single.php',
+    'wp-content/themes/land76wp/js/form-submit.js',
+    'wp-content/themes/land76wp/js/main.js',
+    'wp-content/themes/land76wp/css/servicepost.css',
+    'wp-content/themes/land76wp/css/styles.css',
+    'wp-content/themes/land76wp/css/legal-pages.css',
+    'wp-content/themes/land76wp/page-service-hub-region.php',
+);
+check(array_keys($frozen['A1']['files']) === $expected_a1_members, 'A1 frozen membership is exact and ordered');
+check(array_keys($frozen['A2']['files']) === $expected_a2_members, 'A2 frozen membership is exact and ordered');
+$release_source_root = dirname(__DIR__, 3) . '/ftp_dump_minimal';
+foreach (array('A1', 'A2') as $phase_id) {
+    foreach ($frozen[$phase_id]['files'] as $relative_path => $expected_hash) {
+        $source_path = $release_source_root . '/' . $relative_path;
+        check(is_file($source_path) && hash_file('sha256', $source_path) === $expected_hash, $phase_id . ' frozen hash matches source bytes for ' . $relative_path);
+    }
+}
 check(($frozen['A2']['files']['wp-content/themes/land76wp/page-service-hub-region.php'] ?? null) === 'a32a12a1987db2c7e4f829f24ed63e8ec6249917423357dd5ad59736c7a29432', 'A2 frozen inventory deploys the exact regional service-hub renderer');
 check($frozen['A2']['files']['wp-content/themes/land76wp/inc/service-hub-registry.php'] === '87aa0a611cdc9bd62f9b46edfae39274977a13d6863e0d5140cbf923242f99e5', 'vendored bridge registry hash is frozen');
-check($frozen['A1']['files']['wp-content/themes/land76wp/inc/import-service-hubs.php'] === '85217effdf3efdd05592ac35c42d7af106fd98e49bdbe7685e914b3413a288bd', 'A1 importer bootstrap hash is frozen');
+check($frozen['A1']['files']['wp-content/themes/land76wp/inc/import-service-hubs.php'] === 'bc00b6c973185ebc432b9a41cfc794900b21e1f9e0679d0abc9aefdd3e585cde', 'R4 A1 importer bootstrap hash is frozen');
+check($frozen['A2']['files']['wp-content/themes/land76wp/inc/newservicepost.php'] === 'dd8d7d9144b17526eccc9bdca34478d0ea3ca20ebdfef52e6505eda6a05269dd', 'R4 A2 managed problem-image renderer hash is frozen');
 check(hash_file('sha256', dirname(__DIR__) . '/land76-release-deployer/vendor/service-hub-registry.php') === $frozen['A2']['files']['wp-content/themes/land76wp/inc/service-hub-registry.php'], 'vendored bridge registry is byte-exact A2 content');
 $source = file_get_contents(dirname(__DIR__) . '/land76-release-deployer/land76-release-deployer.php');
-check(is_string($source) && str_contains($source, ' * Version: 1.0.2'), 'R3 plugin version is frozen');
+check(is_string($source) && str_contains($source, ' * Version: 1.0.3'), 'R4 plugin version is frozen');
+check(is_string($source) && str_contains($source, "private const HUB_RELEASE_ID = 'service-hubs-2026-08-28';"), 'R4 preserves the importer release identity');
+check(is_string($source) && !str_contains($source, '.land76-release-deployer-r3'), 'R4 code has no R3 storage migration path');
 check(is_string($source) && str_contains($source, "'land76wp_is_supported_case_template'"), 'bridge requires the shared case-template predicate');
 check(
     land76wp_is_supported_case_template('casenew.php')
