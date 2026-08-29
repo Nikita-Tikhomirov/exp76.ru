@@ -287,9 +287,10 @@ check(Land76_Release_Deployer::importer_bootstrap_target() === ABSPATH . 'wp-con
 $frozen = Land76_Release_Deployer::expected();
 $default_state = Land76_Release_Deployer::default_state();
 $storage_path = new ReflectionMethod(Land76_Release_Deployer::class, 'storage_path');
-check($default_state['release_id'] === 'exp76-production-release-20260829-150000-r4', 'R4 uses a distinct frozen production release identity');
-check(str_ends_with($storage_path->invoke(null), '.land76-release-deployer-r4'), 'R4 uses isolated protected state and rollback storage');
+check($default_state['release_id'] === 'exp76-production-release-20260829-180000-r5', 'R5 uses a distinct frozen production release identity');
+check(str_ends_with($storage_path->invoke(null), '.land76-release-deployer-r5'), 'R5 uses isolated protected state and rollback storage');
 check(count($frozen['A1']['files']) === 26 && count($frozen['A2']['files']) === 23 && count($frozen['C']['files']) === 1 && count($frozen['B']['files']) === 30, 'frozen inventories contain all 80 verified entries');
+check($frozen['A1']['archive_sha256'] === '9fdcd63914bd0c2cc2e1241dddd70fb63c1603ee486382cc7fa1af06ae93f001', 'R5 freezes the single reviewed A1 candidate archive');
 $expected_a1_members = array(
     'wp-content/themes/land76wp/import/service-hubs-import.json',
     'wp-content/themes/land76wp/import/service-hubs-release-manifest.json',
@@ -354,13 +355,13 @@ foreach (array('A1', 'A2') as $phase_id) {
 }
 check(($frozen['A2']['files']['wp-content/themes/land76wp/page-service-hub-region.php'] ?? null) === 'a32a12a1987db2c7e4f829f24ed63e8ec6249917423357dd5ad59736c7a29432', 'A2 frozen inventory deploys the exact regional service-hub renderer');
 check($frozen['A2']['files']['wp-content/themes/land76wp/inc/service-hub-registry.php'] === '87aa0a611cdc9bd62f9b46edfae39274977a13d6863e0d5140cbf923242f99e5', 'vendored bridge registry hash is frozen');
-check($frozen['A1']['files']['wp-content/themes/land76wp/inc/import-service-hubs.php'] === 'bc00b6c973185ebc432b9a41cfc794900b21e1f9e0679d0abc9aefdd3e585cde', 'R4 A1 importer bootstrap hash is frozen');
-check($frozen['A2']['files']['wp-content/themes/land76wp/inc/newservicepost.php'] === 'dd8d7d9144b17526eccc9bdca34478d0ea3ca20ebdfef52e6505eda6a05269dd', 'R4 A2 managed problem-image renderer hash is frozen');
+check($frozen['A1']['files']['wp-content/themes/land76wp/inc/import-service-hubs.php'] === 'b5aecab014fa6c61bc2d55bf9cc0dfa283c54b25ba87cf4c67a1b37d3ec4d9ad', 'R5 A1 importer bootstrap hash is frozen');
+check($frozen['A2']['files']['wp-content/themes/land76wp/inc/newservicepost.php'] === 'dd8d7d9144b17526eccc9bdca34478d0ea3ca20ebdfef52e6505eda6a05269dd', 'R5 reuses the exact R4 A2 managed problem-image renderer');
 check(hash_file('sha256', dirname(__DIR__) . '/land76-release-deployer/vendor/service-hub-registry.php') === $frozen['A2']['files']['wp-content/themes/land76wp/inc/service-hub-registry.php'], 'vendored bridge registry is byte-exact A2 content');
 $source = file_get_contents(dirname(__DIR__) . '/land76-release-deployer/land76-release-deployer.php');
-check(is_string($source) && str_contains($source, ' * Version: 1.0.3'), 'R4 plugin version is frozen');
-check(is_string($source) && str_contains($source, "private const HUB_RELEASE_ID = 'service-hubs-2026-08-28';"), 'R4 preserves the importer release identity');
-check(is_string($source) && !str_contains($source, '.land76-release-deployer-r3'), 'R4 code has no R3 storage migration path');
+check(is_string($source) && str_contains($source, ' * Version: 1.0.4'), 'R5 plugin version is frozen');
+check(is_string($source) && str_contains($source, "private const HUB_RELEASE_ID = 'service-hubs-2026-08-28';"), 'R5 preserves the importer release identity');
+check(is_string($source) && !str_contains($source, '.land76-release-deployer-r4'), 'R5 code has no R4 storage migration or read path');
 check(is_string($source) && str_contains($source, "'land76wp_is_supported_case_template'"), 'bridge requires the shared case-template predicate');
 check(
     land76wp_is_supported_case_template('casenew.php')
