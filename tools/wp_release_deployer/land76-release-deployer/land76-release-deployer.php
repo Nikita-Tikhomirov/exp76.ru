@@ -54,6 +54,19 @@ final class Land76_Release_Deployer {
     private const HUB_RELEASE_ID = 'service-hubs-2026-08-28';
     private const MAX_UPLOAD_BYTES = 15_000_000;
     private const ORDER = array('A1', 'A2', 'C', 'B');
+    private const ACTIVATION_ERROR_CODES = array(
+        'ACTIVATION_LINT_UNAVAILABLE', 'ACTIVATION_STORAGE_SCAN_FAILED', 'ACTIVATION_STORAGE_NOT_EMPTY',
+        'ACTIVATION_STORAGE_UNSAFE', 'ACTIVATION_STATE_VERIFY_FAILED', 'DIRECTORY_SYNC_UNSUPPORTED',
+        'DIRECTORY_SYNC_TARGET_UNSAFE', 'DIRECTORY_SYNC_OPEN_FAILED', 'DIRECTORY_SYNC_FAILED',
+        'NAMESPACE_PIN_UNSUPPORTED', 'ROLLBACK_STORAGE_INSIDE_DOCROOT', 'ROLLBACK_STORAGE_PATH_UNSAFE',
+        'ROLLBACK_STORAGE_LSTAT_FAILED', 'ROLLBACK_STORAGE_NOT_INITIALIZED', 'ROLLBACK_STORAGE_MODE_INVALID',
+        'ROLLBACK_STORAGE_NAMESPACE_RACE', 'LOCK_PATH_UNSAFE', 'LOCK_PATH_LSTAT_FAILED', 'LOCK_OPEN_FAILED',
+        'LOCK_PATH_RACE', 'LOCK_INITIALIZE_FAILED', 'LOCK_NAMESPACE_RACE', 'LOCK_BUSY',
+        'STATE_TEMP_CREATE_FAILED', 'STATE_TEMP_RACE', 'STATE_WRITE_FAILED', 'STATE_RENAME_FAILED',
+        'DURABLE_COMMIT_UNCERTAIN_AFTER_RENAME', 'STATE_CORRUPT_OR_MISSING', 'STATE_SCHEMA_INVALID',
+        'STATE_RELEASE_INVALID', 'STATE_GENERATION_INVALID', 'STATE_SHAPE_INVALID', 'STATE_PHASE_INVALID',
+        'JOURNAL_CORRUPT', 'JOURNAL_CORRUPT_OR_MISSING', 'JOURNAL_REQUIRES_LOCKED_RECOVERY',
+    );
     private const REGISTRY_FUNCTIONS = array(
         'land76wp_service_hub_registry',
         'land76wp_service_hub_by_service_id',
@@ -93,6 +106,14 @@ final class Land76_Release_Deployer {
     }
 
     public static function expected(): array { return require __DIR__ . '/frozen-expectations.php'; }
+    /** Show administrators a safe activation failure code instead of a generic WordPress fatal screen. */
+    public static function activate(): void {
+        try {
+            self::activation_preflight();
+        } catch (Throwable $error) {
+            wp_die(esc_html(self::activation_error_code($error)), 500);
+        }
+    }
     public static function activation_preflight(): void {
         self::assert_durability_preflight();
         self::storage_root(true); self::require_ziparchive();
@@ -131,6 +152,15 @@ final class Land76_Release_Deployer {
             $state = array();
             self::recover_journal($state);
         });
+    }
+    private static function activation_error_code(Throwable $error): string {
+        $message = $error->getMessage();
+        if (in_array($message, self::ACTIVATION_ERROR_CODES, true)) return $message;
+        return match ($message) {
+            'ZipArchive is unavailable. This deployer fails closed; install/enable PHP Zip before use.' => 'ACTIVATION_ZIPARCHIVE_UNAVAILABLE',
+            'The parent of ABSPATH is not writable; refusing to store rollback data in the public document root.' => 'ACTIVATION_STORAGE_PARENT_UNWRITABLE',
+            default => 'ACTIVATION_PREFLIGHT_FAILED',
+        };
     }
     public static function early_recovery(): void {
         // A missing storage directory means activation has never initialized this plugin.
@@ -1934,4 +1964,4 @@ final class Land76_Release_Deployer {
     <?php }
 }
 Land76_Release_Deployer::init();
-if (function_exists('register_activation_hook')) register_activation_hook(__FILE__, array('Land76_Release_Deployer', 'activation_preflight'));
+if (function_exists('register_activation_hook')) register_activation_hook(__FILE__, array('Land76_Release_Deployer', 'activate'));

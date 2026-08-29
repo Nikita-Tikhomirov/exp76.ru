@@ -74,6 +74,90 @@ check(isset($registered_hooks['admin_post_land76_release_apply']), 'admin post a
 check(isset($registered_hooks['admin_post_land76_release_backup']), 'admin post backup hook registers even before admin menu API is loaded');
 check(count($activation_callbacks) === 1, 'activation preflight is registered without frontend storage access');
 
+$activation_root = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'land76-activation-' . bin2hex(random_bytes(8));
+$activation_docroot = $activation_root . DIRECTORY_SEPARATOR . 'wordpress';
+$activation_storage = $activation_root . DIRECTORY_SEPARATOR . 'storage';
+$activation_state_file = $activation_storage . DIRECTORY_SEPARATOR . 'state.json';
+$activation_journal_file = $activation_storage . DIRECTORY_SEPARATOR . 'journal.json';
+$activation_result = array('message' => '', 'status' => 0);
+$activation_integration_config = new ReflectionProperty(Land76_Release_Deployer::class, 'integration_config');
+wp_mkdir_p($activation_docroot);
+wp_mkdir_p($activation_storage);
+try {
+    $activation_integration_config->setValue(null, array(
+        'docroot' => $activation_docroot,
+        'storage_root' => $activation_storage,
+        'state_file' => $activation_state_file,
+        'journal_file' => $activation_journal_file,
+        'expected_phases' => array('A1' => array()),
+        'read_option' => fn(string $key, mixed $default = false): mixed => $default,
+        'sync_directory' => static function (string $directory): bool {
+            throw new RuntimeException('UNTRUSTED_SECRET_CODE');
+        },
+        'mode_adapter' => fn(string $operation, string $path, int $mode): bool => true,
+    ));
+    ($activation_callbacks[0])();
+} catch (RuntimeException $error) {
+    $activation_result = array('message' => $error->getMessage(), 'status' => $error->getCode());
+} finally {
+    $activation_integration_config->setValue(null, null);
+}
+check(
+    $activation_result === array('message' => 'ACTIVATION_PREFLIGHT_FAILED', 'status' => 500),
+    'registered activation callback exposes only a stable preflight error code'
+);
+$activation_result = array('message' => '', 'status' => 0);
+try {
+    $activation_integration_config->setValue(null, array(
+        'docroot' => $activation_docroot,
+        'storage_root' => $activation_storage,
+        'state_file' => $activation_state_file,
+        'journal_file' => $activation_journal_file,
+        'expected_phases' => array('A1' => array()),
+        'read_option' => fn(string $key, mixed $default = false): mixed => $default,
+        'sync_directory' => static function (string $directory): bool {
+            throw new RuntimeException('activation preflight path C:\\private\\release-secret');
+        },
+        'mode_adapter' => fn(string $operation, string $path, int $mode): bool => true,
+    ));
+    ($activation_callbacks[0])();
+} catch (RuntimeException $error) {
+    $activation_result = array('message' => $error->getMessage(), 'status' => $error->getCode());
+} finally {
+    $activation_integration_config->setValue(null, null);
+}
+check(
+    $activation_result === array('message' => 'ACTIVATION_PREFLIGHT_FAILED', 'status' => 500),
+    'registered activation callback does not expose a preflight path'
+);
+$activation_result = array('message' => '', 'status' => 0);
+try {
+    $activation_integration_config->setValue(null, array(
+        'docroot' => $activation_docroot,
+        'storage_root' => $activation_storage,
+        'state_file' => $activation_state_file,
+        'journal_file' => $activation_journal_file,
+        'expected_phases' => array('A1' => array()),
+        'read_option' => fn(string $key, mixed $default = false): mixed => $default,
+        'sync_directory' => static fn(string $directory): bool => false,
+        'mode_adapter' => fn(string $operation, string $path, int $mode): bool => true,
+    ));
+    ($activation_callbacks[0])();
+} catch (RuntimeException $error) {
+    $activation_result = array('message' => $error->getMessage(), 'status' => $error->getCode());
+} finally {
+    $activation_integration_config->setValue(null, null);
+}
+check(
+    $activation_result === array('message' => 'DIRECTORY_SYNC_FAILED', 'status' => 500),
+    'registered activation callback preserves an allowlisted preflight failure code'
+);
+check(
+    !file_exists($activation_state_file) && !file_exists($activation_journal_file),
+    'activation failure does not persist diagnostic state or journal files'
+);
+remove_test_tree($activation_root);
+
 $expected = array('wp-content/themes/land76wp/a.php' => hash('sha256', 'a'));
 check(Land76_Release_Deployer::validate_inventory(array(array('name' => 'wp-content/themes/land76wp/a.php', 'sha256' => hash('sha256', 'a'), 'size' => 1)), $expected) === true, 'exact inventory accepted');
 throws(fn() => Land76_Release_Deployer::validate_inventory(array(array('name' => '../wp-config.php', 'sha256' => hash('sha256', 'a'), 'size' => 1)), $expected), 'traversal rejected');
