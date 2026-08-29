@@ -324,6 +324,37 @@ class ReleaseDependencyClosureTests(unittest.TestCase):
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn("PASS release package dependency closure", result.stdout)
 
+    def test_release_gate_script_accepts_direct_execution(self) -> None:
+        """Catches the checked-in gate importing only when invoked as a module."""
+        with tempfile.TemporaryDirectory() as temporary:
+            deploy_list = Path(temporary) / "phase-A2-public-runtime-DEPLOY-FILES.txt"
+            deploy_list.write_text(
+                "\n".join(
+                    sorted(BASE_DEPLOYMENT | EXPECTED_RUNTIME_DEPENDENCIES)
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(ROOT / "tools" / "check_release_package.py"),
+                    "--source-root",
+                    str(SOURCE_ROOT),
+                    "--public-runtime-deploy-list",
+                    str(deploy_list),
+                ],
+                cwd=ROOT,
+                check=False,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+            )
+
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn("PASS release package dependency closure", result.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
