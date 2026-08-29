@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from collections.abc import Callable
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -25,7 +26,9 @@ from tools.service_v2 import (
 from tools.site_content.contracts import (
     load_case_catalog,
     load_page_architecture,
+    load_release_manifest,
     numeric_fact_claims,
+    validate_release_manifest,
 )
 
 
@@ -34,11 +37,18 @@ THEME = ROOT / "ftp_dump_minimal" / "wp-content" / "themes" / "land76wp"
 DATA_DIR = THEME / "content" / "service-v2"
 HUB_SOURCE_DIR = ROOT / "seo-content" / "service-hubs" / "hubs"
 ARCHITECTURE_PATH = (
-    ROOT / "seo-data" / "2026-08-exp76-services" / "processed" / "page_architecture.csv"
+    ROOT
+    / "seo-data"
+    / "2026-08-exp76-services"
+    / "processed"
+    / "complete_page_architecture.csv"
 )
 CASE_CATALOG_PATH = ROOT / "seo-content" / "service-hubs" / "case-catalog.json"
 RELEASE_MANIFEST_PATH = ROOT / "seo-content" / "service-hubs" / "release-manifest.json"
 RELEASE_ID = "service-hubs-2026-08-28"
+HUB_COUNT = 15
+CHILD_SERVICE_COUNT = 65
+ARTICLE_COUNT = 23
 
 EXPECTED_SERVICES = {
     "S1": (673, "landshaftnoe-proektirovanie"),
@@ -49,6 +59,16 @@ EXPECTED_SERVICES = {
     "S6": (676, "podpornye-stenki"),
     "S7": (6918, "ulichnoe-osveshhenie-uchastka"),
     "S8": (9282, "vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch"),
+    "S9": (6870, "vykorchevyvanie-pnejj-spil-derevev"),
+    "S10": (
+        6900,
+        "sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev",
+    ),
+    "S11": (6922, "sistemy-tumanoobrazovaniya"),
+    "S12": (9138, "fundament-na-zhelezobetonnykh-svajakh"),
+    "S13": (9312, "navesy-iz-metalla"),
+    "S14": (9775, "kaminy-pechi-barbekju"),
+    "S15": (9838, "snos-i-demontazh-zdanijj-domov"),
 }
 
 EXPECTED_CASES = {
@@ -60,6 +80,13 @@ EXPECTED_CASES = {
     "S6": [],
     "S7": [],
     "S8": [],
+    "S9": [8613],
+    "S10": [8608],
+    "S11": [],
+    "S12": [],
+    "S13": [],
+    "S14": [],
+    "S15": [],
 }
 
 EXPECTED_SCOPE_COUNTS = {
@@ -71,7 +98,15 @@ EXPECTED_SCOPE_COUNTS = {
     "S6": 5,
     "S7": 5,
     "S8": 5,
+    "S9": 4,
+    "S10": 5,
+    "S11": 4,
+    "S12": 4,
+    "S13": 5,
+    "S14": 5,
+    "S15": 6,
 }
+SCOPE_CARD_COUNT = sum(EXPECTED_SCOPE_COUNTS.values())
 
 EXPECTED_LEGACY_WORDS = {
     "S1": 1259,
@@ -82,6 +117,13 @@ EXPECTED_LEGACY_WORDS = {
     "S6": 1296,
     "S7": 1254,
     "S8": 1306,
+    "S9": 1368,
+    "S10": 1446,
+    "S11": 1313,
+    "S12": 1357,
+    "S13": 1338,
+    "S14": 1392,
+    "S15": 1417,
 }
 
 EXPECTED_LEGACY_FINGERPRINTS = {
@@ -93,72 +135,36 @@ EXPECTED_LEGACY_FINGERPRINTS = {
     "S6": "85126de28e06c94bfb2083d56fb3d9f5d857f62c99673faf708ef1f86db95df9",
     "S7": "5f75cbcfbcb89981934bedc0fc0459c36a47167106533cd41faae4da37b8b6d2",
     "S8": "f998456dd56c25e636d3160a772c4754073209e73d3c27ebf12c642015e2cad7",
+    "S9": "06f817f285e559bdb033debf38f34277ec5bb3d6350e9d5480885df4fa9425de",
+    "S10": "4143c5b91e40dffd6f2b0b28ae53f55473ff8c05240f50180b5aa4f3376304dd",
+    "S11": "60af92d515fbb0abab0168bc9a6a0c64c6487ed2deb6a24aceaddb57437d3f1b",
+    "S12": "e39b4273f6d348f995fa3582dd7a2ce285aff423bc714737d6680a3ad87a219d",
+    "S13": "fa3a9098ed8dd2576cb4159cc168514008a528b2d26f8bf8442ebff1da81ca19",
+    "S14": "4d2ede878e07023b02725256394e7b58695d30d801c68f24877f4e7da02051e3",
+    "S15": "0112566de03cb783ebaf6cdb981ef65b204cdd3062e1d2059d9b0681a40e8c6b",
 }
 
-EXPECTED_NAVIGATION = {
-    "S1": {
-        "services": {},
-        "articles": {
-            "S1-ARTICLE-505521C7EF8C": "https://exp76.ru/kak-rasschitat-stoimost-blagoustrojstva-sa-sotku/",
-            "S1-ARTICLE-72FBB49E67C8": "https://exp76.ru/kak-rasschitat-inzhenernoe-blagoustrojstvo-uchastka/",
-            "S1-ARTICLE-DIY-DESIGN": "https://exp76.ru/dizajn-proekt-uchastka-svoimi-rukami/",
-        },
-    },
-    "S2": {
-        "services": {
-            "S2-CHILD-POSEVNOY-GAZON": "https://exp76.ru/posevnoj-gazon-pod-kljuch/",
-            "S2-CHILD-RULONNY-GAZON": "https://exp76.ru/rulonnyj-gazon-pod-kljuch/",
-        },
-        "articles": {
-            "S2-ARTICLE-15A8258BC551": "https://exp76.ru/ustrojstvo-gazona-shema/",
-            "S2-ARTICLE-182825428CBD": "https://exp76.ru/kak-ukladyvat-rulonnyj-gazon/",
-        },
-    },
-    "S3": {
-        "services": {
-            "S3-CHILD-KRUPNOMERY": "https://exp76.ru/posadka-krupnomerov/",
-        },
-        "articles": {
-            "S3-ARTICLE-PLANTING-SCHEMES": "https://exp76.ru/normy-posadki-derevev/",
-        },
-    },
-    "S4": {
-        "services": {
-            "S4-CHILD-OBREZKA": "https://exp76.ru/obrezka-derevev-i-kustarnikov/",
-        },
-        "articles": {
-            "S4-ARTICLE-F668FF6F6190": "https://exp76.ru/shema-uhoda-za-sadom/",
-            "S4-ARTICLE-PRUNING-GUIDE": "https://exp76.ru/obrezka-derevev-shema/",
-        },
-    },
-    "S5": {
-        "services": {
-            "S5-CHILD-VYRAVNIVANIE": "https://exp76.ru/vyravnivanie-uchastka/",
-        },
-        "articles": {
-            "S5-ARTICLE-74B3B2B18DA4": "https://exp76.ru/vyravnivanie-uchastka-svoimi-rukami/",
-            "S5-ARTICLE-FF3B04A53D72": "https://exp76.ru/shema-planirovki-uchastka/",
-        },
-    },
-    "S6": {
-        "services": {},
-        "articles": {
-            "S6-ARTICLE-DIY-RETAINING-WALL": "https://exp76.ru/podpornaya-stenka-na-uchastke-svoimi-rukami/",
-        },
-    },
-    "S7": {
-        "services": {},
-        "articles": {
-            "S7-ARTICLE-DIY-LIGHTING": "https://exp76.ru/kak-sdelat-osveschenie-na-uchastke/",
-        },
-    },
-    "S8": {
-        "services": {},
-        "articles": {
-            "S8-ARTICLE-DIY-ENTRANCE": "https://exp76.ru/kak-sdelat-vezd-na-uchastok-cherez-kanavu/",
-        },
-    },
-}
+def _expected_navigation() -> dict[str, dict[str, dict[str, str]]]:
+    """Build the exact 15-hub navigation contract from the completed ledger."""
+    architecture = load_page_architecture(ARCHITECTURE_PATH)
+    navigation = {
+        service_id: {"services": {}, "articles": {}}
+        for service_id in EXPECTED_SERVICES
+    }
+    field_by_role = {"child_service": "services", "article": "articles"}
+    for destination in architecture.values():
+        field = field_by_role.get(destination.page_role)
+        if field is None or destination.service_id not in navigation:
+            continue
+        if destination.parent_destination_id != f"{destination.service_id}-HUB":
+            continue
+        navigation[destination.service_id][field][destination.destination_id] = (
+            destination.canonical_url
+        )
+    return navigation
+
+
+EXPECTED_NAVIGATION = _expected_navigation()
 
 EXPECTED_FROZEN_LINKS = {
     "S1": {
@@ -181,54 +187,35 @@ EXPECTED_FROZEN_LINKS = {
         "https://exp76.ru/category/drenazh-uchastka/",
         "https://exp76.ru/category/livnevaya-kanalizatsiya/",
     },
+    "S9": set(),
+    "S10": {
+        "https://exp76.ru/category/drenazh-uchastka/",
+        "https://exp76.ru/category/livnevaya-kanalizatsiya/",
+    },
+    "S11": set(),
+    "S12": set(),
+    "S13": set(),
+    "S14": set(),
+    "S15": set(),
 }
 
 UPLOADS = "https://exp76.ru/wp-content/uploads/"
-EXPECTED_IMAGE_POOLS = {
-    "S1": {
-        UPLOADS + "2015/07/lanshaftnoe-proektirovanie.webp",
-        UPLOADS + "2019/02/IMG_20181015_110705_HDR.webp",
-        UPLOADS + "2020/10/Ila-CrwKkL4.webp",
-        UPLOADS + "2023/12/20230817_084022-1-scaled.webp",
-    },
-    "S2": {
-        UPLOADS + "2017/01/gazoni-rulonniy-posevnoy.webp",
-        UPLOADS + "2019/02/NEwk9KFYTXY.webp",
-        UPLOADS + "2020/10/20200514_085626.webp",
-    },
-    "S3": {
-        UPLOADS + "2017/01/ozelenenie.webp",
-        UPLOADS + "2020/10/20200514_085626.webp",
-    },
-    "S4": {
-        UPLOADS + "2015/07/lanshaftnoe-proektirovanie.webp",
-        UPLOADS + "2017/01/gazoni-rulonniy-posevnoy.webp",
-        UPLOADS + "2017/01/landshaftnoe-osveshenie.webp",
-        UPLOADS + "2017/01/ozelenenie.webp",
-        UPLOADS + "2018/12/uhod1.webp",
-        UPLOADS + "2018/12/uhod2.webp",
-    },
-    "S5": {
-        UPLOADS + "2015/07/lanshaftnoe-proektirovanie.webp",
-        UPLOADS + "2015/07/planirovka-territorii.webp",
-        UPLOADS + "2017/01/ozelenenie.webp",
-        UPLOADS + "2017/01/planirovka_territorii10.webp",
-        UPLOADS + "2017/01/planirovka_territorii2.webp",
-        UPLOADS + "2017/01/planirovka_territorii6.webp",
-    },
-    "S6": {
-        UPLOADS + "2015/07/Подпорные-стенки.webp",
-        *(UPLOADS + f"2015/07/podporki{index}.webp" for index in range(1, 6)),
-    },
-    "S7": {
-        UPLOADS + "2017/01/landshaftnoe-osveshenie.webp",
-        UPLOADS + "2017/01/naruzhnoe-osveshhenie_752.webp",
-        UPLOADS + "2017/01/osvescheniezdaniya.webp",
-    },
-    "S8": {
-        UPLOADS + "2018/12/vjezd.webp",
-        UPLOADS + "2018/12/vjezd2.webp",
-    },
+EXPECTED_IMAGE_POOL_FINGERPRINTS = {
+    "S1": "2b801329c986a55b138c9a70aa9e5bb48632ff7fdd9cf27a69ddd0d9b1e9dfd9",
+    "S2": "c2b0573a1399ff1679ca41fdb4ebd763c36713f274e0dfbb82346c7f7c74123b",
+    "S3": "c2f106d121fa2f50a371e0d7c3d7f6db5efced614a2817d159dce3456323fba4",
+    "S4": "dc86943e19a98d96610198c0c515e4bb9ccb821ed409bf307fcdfe30369eb17f",
+    "S5": "7751a05e2eeb1aa3deef3c306e91c98812793144852cebf01b4f0f8c6066ca95",
+    "S6": "c63a49f1452a5a20f2da6275207a092b153758f3c7b6d95e238faef92c42bd91",
+    "S7": "808104c196b5ade5d7c44788918b7eabb9607101cc831361647ddcd63e85e1a6",
+    "S8": "c530e04414ea9dc88431535d63b85f44a35975c0777b3f56a186fce0c6012465",
+    "S9": "6a722580fb4cae2cdb05ada8fb6632f4e2144760aa321565e9356357dee1b4e6",
+    "S10": "8660c134541e827699defdc8b0fb3db4f509606c1889e4f017c8caaee53ec9a9",
+    "S11": "a1007121d462c3ead7316c861477543c0030448540444d7f83501fba35deb582",
+    "S12": "bb53e0d8c424893bc94e7a2e05b5b44c7c165d7ad92aafcc76a06472d5d574ea",
+    "S13": "124b31a412dd38357b2159b4b4869d7a907743980db085e97730fed768d75139",
+    "S14": "b9f8a3f0ea16cd9fae5310e7165c75951064872868a863c14c6fa0b3b2671f9c",
+    "S15": "5b5924cd5ef6f4cd8e7856d949d725d257e4f82d3d8341f7fea135ef2960ed49",
 }
 
 EXPECTED_FACT_PATHS = {
@@ -240,6 +227,13 @@ EXPECTED_FACT_PATHS = {
     "S6": set(),
     "S7": set(),
     "S8": set(),
+    "S9": set(),
+    "S10": set(),
+    "S11": set(),
+    "S12": set(),
+    "S13": set(),
+    "S14": set(),
+    "S15": set(),
 }
 
 LEGACY_RELATED_COUNTS = {
@@ -251,6 +245,13 @@ LEGACY_RELATED_COUNTS = {
     "S6": 3,
     "S7": 3,
     "S8": 4,
+    "S9": 4,
+    "S10": 4,
+    "S11": 4,
+    "S12": 4,
+    "S13": 3,
+    "S14": 3,
+    "S15": 3,
 }
 
 
@@ -301,6 +302,11 @@ def _payload_fingerprint(payload: dict[str, object]) -> str:
     return hashlib.sha256(serialized).hexdigest()
 
 
+def _url_set_fingerprint(urls: set[str]) -> str:
+    """Keep the exact audited image pool contract compact but fail closed."""
+    return hashlib.sha256("\n".join(sorted(urls)).encode("utf-8")).hexdigest()
+
+
 def _embedded_image_urls(value: object) -> set[str]:
     urls: set[str] = set()
     if isinstance(value, dict):
@@ -317,22 +323,20 @@ def _embedded_image_urls(value: object) -> set[str]:
 
 
 def schema_two_fixture(service: dict[str, object]) -> dict[str, object]:
-    """Return a valid v2 fixture, promoting preserved v1 input when necessary."""
+    """Return a complete 15-owner v2 fixture aligned with the current ledger."""
     payload = copy.deepcopy(service)
-    if payload.get("schema_version") == 2:
-        payload["rendered_sha256"] = hashlib.sha256(
-            render_service(payload).encode("utf-8")
-        ).hexdigest()
-        return payload
-
     service_id = str(payload["service_id"])
     architecture = load_page_architecture(ARCHITECTURE_PATH)
+    if payload.get("schema_version") == 1:
+        payload["scope"] = payload.pop("services")
+    elif payload.get("schema_version") != 2:
+        raise AssertionError(f"unsupported fixture schema for {service_id}")
+
     payload["schema_version"] = 2
     payload["release_id"] = RELEASE_ID
     payload["release_status"] = "draft"
     payload["page_key"] = f"{service_id}-HUB"
     payload["page_type"] = "hub"
-    payload["scope"] = payload.pop("services")
     image = copy.deepcopy(payload["hero"]["image"])
 
     children = sorted(
@@ -383,7 +387,9 @@ def schema_two_fixture(service: dict[str, object]) -> dict[str, object]:
             for destination in articles
         ],
     }
-    if service_id == "S5":
+    if service_id == "S5" and "Раздел относится к планировке территории." not in str(
+        payload["related_links"]["items"][2]["text"]
+    ):
         payload["related_links"]["items"][2]["text"] += " Раздел относится к планировке территории."
     payload["evidence_gaps"] = [
         {
@@ -402,6 +408,7 @@ def schema_two_fixture(service: dict[str, object]) -> dict[str, object]:
                 "status": "missing",
             }
         )
+    payload["fact_evidence"] = []
     payload["fact_evidence"] = [
         {
             "path": path,
@@ -422,15 +429,72 @@ def write_schema_two_sources(source_dir: Path) -> list[dict[str, object]]:
     source_dir.mkdir(parents=True, exist_ok=True)
     services = [
         schema_two_fixture(json.loads(path.read_text(encoding="utf-8")))
-        for path in sorted(DATA_DIR.glob("*.json"))
+        for path in sorted(HUB_SOURCE_DIR.glob("*.json"))
     ]
+    if len(services) != HUB_COUNT:
+        raise AssertionError(
+            f"fixture source must contain {HUB_COUNT} hubs, found {len(services)}"
+        )
     for service in services:
         path = source_dir / f'{service["service_id"]}.json'
         path.write_text(
             json.dumps(service, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
+    write_fixture_release_manifest(source_dir.parent / "release-manifest.json")
     return services
+
+
+def write_fixture_release_manifest(path: Path) -> None:
+    """Write a strict draft manifest for sync mechanics tests only."""
+    architecture = load_page_architecture(ARCHITECTURE_PATH)
+    managed_roles = {"hub", "child_service", "article"}
+    managed_pages: list[dict[str, object]] = []
+    preserved_pages: list[dict[str, object]] = []
+    for destination in sorted(
+        architecture.values(), key=lambda item: item.destination_id
+    ):
+        row: dict[str, object] = {
+            "page_key": destination.destination_id,
+            "service_id": destination.service_id,
+            "page_role": destination.page_role,
+            "parent_page_key": destination.parent_destination_id,
+            "canonical": destination.canonical_url,
+            "architecture_status": destination.publication_status,
+        }
+        if destination.page_role in managed_roles:
+            row["content_status"] = "content_pending"
+            managed_pages.append(row)
+        else:
+            preserved_pages.append(row)
+    payload = {
+        "schema_version": 1,
+        "release_id": RELEASE_ID,
+        "release_status": "draft",
+        "managed_pages": managed_pages,
+        "preserved_pages": preserved_pages,
+    }
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
+def sync_fixture_services(
+    source_dir: Path,
+    target_dir: Path,
+    *,
+    allow_draft: bool = False,
+    _replace: Callable[[os.PathLike[str], os.PathLike[str]], None] = os.replace,
+) -> dict[str, int]:
+    """Run sync against the complete fixture manifest, not repository state."""
+    return sync_services(
+        source_dir,
+        target_dir,
+        allow_draft=allow_draft,
+        release_manifest_path=source_dir.parent / "release-manifest.json",
+        _replace=_replace,
+    )
 
 
 def directory_snapshot(path: Path) -> dict[str, bytes]:
@@ -456,7 +520,7 @@ class ServiceV2Test(unittest.TestCase):
     def load_services(self) -> list[dict[str, object]]:
         self.assertTrue(DATA_DIR.is_dir(), "production service-v2 data directory is missing")
         files = sorted(DATA_DIR.glob("*.json"))
-        self.assertEqual(len(files), 8, "exactly eight approved service payloads must ship")
+        self.assertTrue(files, "production service-v2 data directory is empty")
         return [json.loads(path.read_text(encoding="utf-8")) for path in files]
 
     def test_real_payloads_pass_the_production_contract(self) -> None:
@@ -465,11 +529,11 @@ class ServiceV2Test(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         summary = json.loads(result.stdout)
-        self.assertEqual(summary["services"], 8)
+        self.assertEqual(summary["services"], HUB_COUNT)
         self.assertEqual(summary["errors"], 0)
-        self.assertGreaterEqual(summary["words"], 7000)
+        self.assertGreaterEqual(summary["words"], HUB_COUNT * 900)
 
-    def test_payloads_keep_the_eight_existing_url_owners(self) -> None:
+    def test_payloads_keep_all_fifteen_existing_url_owners(self) -> None:
         """Catches accidental URL, ID or canonical changes that would lose page history."""
         services = self.load_services()
         actual = {
@@ -495,7 +559,7 @@ class ServiceV2Test(unittest.TestCase):
         self.assertEqual(actual, EXPECTED_CASES)
 
     def test_seo_titles_descriptions_and_h1_are_unique(self) -> None:
-        """Catches duplicate snippets or generic H1 values across the eight owners."""
+        """Catches duplicate snippets or generic H1 values across all 15 owners."""
         services = self.load_services()
         titles = [str(service["seo"]["title"]) for service in services]
         descriptions = [str(service["seo"]["description"]) for service in services]
@@ -532,7 +596,7 @@ class ServiceV2Test(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
             rendered = sorted(Path(temp_dir).glob("*.html"))
-            self.assertEqual(len(rendered), 8)
+            self.assertEqual(len(rendered), HUB_COUNT)
             for path in rendered:
                 html = path.read_text(encoding="utf-8")
                 self.assertEqual(html.count("<h1"), 1, path.name)
@@ -557,7 +621,7 @@ class ServiceV2Test(unittest.TestCase):
     def test_committed_fragments_match_validated_payloads(self) -> None:
         """Catches stale production HTML after a content or renderer change."""
         rendered_dir = DATA_DIR / "rendered"
-        self.assertEqual(len(list(rendered_dir.glob("*.html"))), 8)
+        self.assertEqual(len(list(rendered_dir.glob("*.html"))), HUB_COUNT)
 
         services = {str(item["slug"]): item for item in load_services_auto(DATA_DIR)}
         for json_path in sorted(DATA_DIR.glob("*.json")):
@@ -627,8 +691,18 @@ class ServiceV2Test(unittest.TestCase):
 class SchemaTwoProductionDataTest(unittest.TestCase):
     def load_sources(self) -> list[dict[str, object]]:
         files = sorted(HUB_SOURCE_DIR.glob("*.json"))
-        self.assertEqual(8, len(files), "canonical hub source must contain S1-S8")
+        self.assertEqual(
+            HUB_COUNT,
+            len(files),
+            "canonical hub source must contain every S1-S15 owner",
+        )
         return [json.loads(path.read_text(encoding="utf-8")) for path in files]
+
+    def test_release_manifest_matches_the_complete_architecture(self) -> None:
+        architecture = load_page_architecture(ARCHITECTURE_PATH)
+        manifest = load_release_manifest(RELEASE_MANIFEST_PATH)
+
+        self.assertEqual([], validate_release_manifest(manifest, architecture))
 
     def test_canonical_hubs_bind_exact_legacy_owners_and_content(self) -> None:
         services = self.load_sources()
@@ -677,8 +751,8 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
             )
             total_words += words
             total_scope_cards += len(scope_items)
-        self.assertEqual(9950, total_words)
-        self.assertEqual(39, total_scope_cards)
+        self.assertEqual(sum(EXPECTED_LEGACY_WORDS.values()), total_words)
+        self.assertEqual(SCOPE_CARD_COUNT, total_scope_cards)
 
     def test_every_hub_has_the_exact_child_and_article_destinations_once(self) -> None:
         services = self.load_sources()
@@ -697,9 +771,15 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
                     self.assertGreaterEqual(len(str(item["text"]).strip()), 45)
                     self.assertEqual(1, rendered.count(f'href="{item["url"]}"'))
                 navigation_count += len(items)
-        self.assertEqual(5, sum(len(item["services"]) for item in EXPECTED_NAVIGATION.values()))
-        self.assertEqual(13, sum(len(item["articles"]) for item in EXPECTED_NAVIGATION.values()))
-        self.assertEqual(18, navigation_count)
+        self.assertEqual(
+            CHILD_SERVICE_COUNT,
+            sum(len(item["services"]) for item in EXPECTED_NAVIGATION.values()),
+        )
+        self.assertEqual(
+            ARTICLE_COUNT,
+            sum(len(item["articles"]) for item in EXPECTED_NAVIGATION.values()),
+        )
+        self.assertEqual(CHILD_SERVICE_COUNT + ARTICLE_COUNT, navigation_count)
 
     def test_cases_images_frozen_links_and_draft_gaps_are_exact(self) -> None:
         services = self.load_sources()
@@ -711,7 +791,10 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
                 EXPECTED_CASES[service_id],
                 [int(case["page_id"]) for case in service["proof"]["cases"]],
             )
-            self.assertEqual(EXPECTED_IMAGE_POOLS[service_id], _embedded_image_urls(service))
+            self.assertEqual(
+                EXPECTED_IMAGE_POOL_FINGERPRINTS[service_id],
+                _url_set_fingerprint(_embedded_image_urls(service)),
+            )
             related_urls = {
                 str(item["url"]) for item in service["related_links"]["items"]
             }
@@ -728,6 +811,7 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
                 )
                 for field in ("services", "articles")
                 for destination_id in EXPECTED_NAVIGATION[service_id][field]
+                if architecture[destination_id].publication_status != "ready"
             }
             if not EXPECTED_CASES[service_id]:
                 expected_gaps.add(("missing_verified_case", f"{service_id}-HUB", "missing"))
@@ -768,7 +852,7 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
             str(service["service_id"]): service for service in self.load_sources()
         }
         installed_files = sorted(DATA_DIR.glob("*.json"))
-        self.assertEqual(8, len(installed_files))
+        self.assertEqual(HUB_COUNT, len(installed_files))
         for installed_path in installed_files:
             installed = json.loads(installed_path.read_text(encoding="utf-8"))
             service_id = str(installed["service_id"])
@@ -820,14 +904,18 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
             linked_cards += rendered.count(
                 '<a class="service-v2__card service-v2__card--linked"'
             )
-            if EXPECTED_CASES[service_id]:
+            proof = service["proof"]
+            if proof["cases"] or proof["gallery"]:
                 self.assertIn('id="service-v2-cases"', rendered)
-                self.assertIn('href="#service-v2-cases"', rendered)
+                for case in proof["cases"]:
+                    self.assertIn(f'href="{case["url"]}"', rendered)
+                for image in proof["gallery"]:
+                    self.assertIn(str(image["caption"]), rendered)
             else:
                 self.assertNotIn('id="service-v2-cases"', rendered)
                 self.assertNotIn('href="#service-v2-cases"', rendered)
-        self.assertEqual(39, scope_cards)
-        self.assertEqual(18, linked_cards)
+        self.assertEqual(SCOPE_CARD_COUNT, scope_cards)
+        self.assertEqual(CHILD_SERVICE_COUNT + ARTICLE_COUNT, linked_cards)
 
         css = (THEME / "css" / "service-v2.css").read_text(encoding="utf-8")
         self.assertIn(".service-v2__card--linked:focus-visible", css)
@@ -879,10 +967,11 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
         )
 
         helper = (THEME / "inc" / "service-v2.php").read_text(encoding="utf-8")
-        self.assertIn(
-            "673 => array('slug' => 'landshaftnoe-proektirovanie', 'service_id' => 'S1')",
-            helper,
-        )
+        for service_id, (page_id, slug) in EXPECTED_SERVICES.items():
+            self.assertIn(
+                f"{page_id} => array('slug' => '{slug}', 'service_id' => '{service_id}')",
+                helper,
+            )
         self.assertIn("$payload['service_id'] === $expected_service_id", helper)
         self.assertIn("$payload['page_key'] === $expected_service_id . '-HUB'", helper)
         self.assertIn("strpos($rendered_html, $expected_root_marker) !== 0", helper)
@@ -917,13 +1006,17 @@ class SchemaTwoSyncTest(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.architecture = load_page_architecture(ARCHITECTURE_PATH)
         cls.cases = load_case_catalog(CASE_CATALOG_PATH)
-        cls.v1_services = [
+        cls.service_seeds = [
             json.loads(path.read_text(encoding="utf-8"))
-            for path in sorted(DATA_DIR.glob("*.json"))
+            for path in sorted(HUB_SOURCE_DIR.glob("*.json"))
         ]
+        if len(cls.service_seeds) != HUB_COUNT:
+            raise AssertionError(
+                f"sync fixtures require {HUB_COUNT} hub seeds, found {len(cls.service_seeds)}"
+            )
 
     def test_schema_two_preserves_descriptive_scope_and_renders_linked_cards(self) -> None:
-        service = schema_two_fixture(self.v1_services[0])
+        service = schema_two_fixture(self.service_seeds[0])
 
         validate_service_v2(service, self.architecture, self.cases)
         rendered = render_service(service)
@@ -958,22 +1051,24 @@ class SchemaTwoSyncTest(unittest.TestCase):
             )
 
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-            self.assertEqual(8, json.loads(result.stdout)["services"])
+            self.assertEqual(HUB_COUNT, json.loads(result.stdout)["services"])
 
     def test_schema_two_rejects_owner_and_architecture_drift(self) -> None:
-        service = schema_two_fixture(self.v1_services[0])
+        service = schema_two_fixture(self.service_seeds[0])
         service["canonical"] = "https://exp76.ru/services/not-the-owner/"
 
         with self.assertRaisesRegex(ContractError, "canonical"):
             validate_service_v2(service, self.architecture, self.cases)
 
-        service = schema_two_fixture(self.v1_services[0])
+        service = schema_two_fixture(self.service_seeds[0])
         service["services"]["items"][0]["url"] = "https://exp76.ru/not-approved/"
         with self.assertRaisesRegex(ContractError, "architecture"):
             validate_service_v2(service, self.architecture, self.cases)
 
     def test_schema_two_requires_renderable_navigation_sections_even_when_empty(self) -> None:
-        s6 = next(payload for payload in self.v1_services if payload["service_id"] == "S6")
+        s6 = next(
+            payload for payload in self.service_seeds if payload["service_id"] == "S6"
+        )
         service = schema_two_fixture(s6)
         service["services"] = {}
 
@@ -983,7 +1078,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
     def test_draft_gaps_are_explicit_and_production_ready_validation_fails_closed(self) -> None:
         service = next(
             schema_two_fixture(payload)
-            for payload in self.v1_services
+            for payload in self.service_seeds
             if payload["service_id"] == "S4"
         )
 
@@ -1010,8 +1105,12 @@ class SchemaTwoSyncTest(unittest.TestCase):
             validate_service_v2(service, self.architecture, self.cases)
 
     def test_schema_two_rejects_another_services_audited_illustration(self) -> None:
-        s1 = next(payload for payload in self.v1_services if payload["service_id"] == "S1")
-        s8 = next(payload for payload in self.v1_services if payload["service_id"] == "S8")
+        s1 = next(
+            payload for payload in self.service_seeds if payload["service_id"] == "S1"
+        )
+        s8 = next(
+            payload for payload in self.service_seeds if payload["service_id"] == "S8"
+        )
         service = schema_two_fixture(s8)
         service["hero"]["image"] = copy.deepcopy(s1["hero"]["image"])
 
@@ -1019,13 +1118,13 @@ class SchemaTwoSyncTest(unittest.TestCase):
             validate_service_v2(service, self.architecture, self.cases)
 
     def test_schema_two_rejects_stale_rendered_fragment_hash(self) -> None:
-        service = schema_two_fixture(self.v1_services[0])
+        service = schema_two_fixture(self.service_seeds[0])
         service["hero"]["lead"] += " Изменение после генерации фрагмента."
 
         with self.assertRaisesRegex(ContractError, "rendered_sha256 does not match"):
             validate_service_v2(service, self.architecture, self.cases)
 
-    def test_sync_writes_only_eight_slug_json_and_html_outputs(self) -> None:
+    def test_sync_writes_all_fifteen_slug_json_and_html_outputs(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             source = root / "sources"
@@ -1038,10 +1137,10 @@ class SchemaTwoSyncTest(unittest.TestCase):
             )
             fixtures = write_schema_two_sources(source)
 
-            summary = sync_services(source, target, allow_draft=True)
+            summary = sync_fixture_services(source, target, allow_draft=True)
 
-            self.assertEqual(8, summary["services"])
-            self.assertEqual(16, summary["outputs"])
+            self.assertEqual(HUB_COUNT, summary["services"])
+            self.assertEqual(HUB_COUNT * 2, summary["outputs"])
             self.assertEqual("preserve me", (target / "unrelated.txt").read_text())
             self.assertEqual(
                 "preserve rendered",
@@ -1072,7 +1171,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
             before = directory_snapshot(target)
 
             with self.assertRaisesRegex(ContractError, "allow_draft"):
-                sync_services(source, target)
+                sync_fixture_services(source, target)
             self.assertEqual(before, directory_snapshot(target))
 
             services[0]["release_id"] = "different-release"
@@ -1081,7 +1180,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
                 encoding="utf-8",
             )
             with self.assertRaisesRegex(ContractError, "release manifest"):
-                sync_services(source, target, allow_draft=True)
+                sync_fixture_services(source, target, allow_draft=True)
             self.assertEqual(before, directory_snapshot(target))
 
     def test_sync_rejects_incomplete_or_invalid_set_before_target_write(self) -> None:
@@ -1108,7 +1207,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
                 before = directory_snapshot(target)
 
                 with self.assertRaises(ContractError):
-                    sync_services(source, target, allow_draft=True)
+                    sync_fixture_services(source, target, allow_draft=True)
 
                 self.assertEqual(before, directory_snapshot(target))
 
@@ -1140,7 +1239,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
                 os.replace(source_path, target_path)
 
             with self.assertRaisesRegex(ContractError, "injected replacement failure"):
-                sync_services(
+                sync_fixture_services(
                     source,
                     target,
                     allow_draft=True,
@@ -1178,7 +1277,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
                 os.replace(source_path, target_path)
 
             with self.assertRaises(KeyboardInterrupt):
-                sync_services(
+                sync_fixture_services(
                     source,
                     target,
                     allow_draft=True,
@@ -1217,7 +1316,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
                 os.replace(source_path, target_path)
 
             with self.assertRaisesRegex(ContractError, "preserved backup") as raised:
-                sync_services(
+                sync_fixture_services(
                     source,
                     target,
                     allow_draft=True,
@@ -1247,7 +1346,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
             before = directory_snapshot(target)
 
             with self.assertRaisesRegex(ContractError, "symbolic link"):
-                sync_services(source, target, allow_draft=True)
+                sync_fixture_services(source, target, allow_draft=True)
 
             self.assertTrue(managed.is_symlink())
             self.assertEqual(b"outside-owner", outside.read_bytes())
@@ -1270,7 +1369,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
             before = directory_snapshot(target)
 
             with self.assertRaisesRegex(ContractError, "source is a symbolic link"):
-                sync_services(source, target, allow_draft=True)
+                sync_fixture_services(source, target, allow_draft=True)
 
             self.assertEqual(before, directory_snapshot(target))
 
@@ -1363,7 +1462,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
                     self.skipTest(f"symbolic links are unavailable: {exc}")
 
                 with self.assertRaisesRegex(ContractError, "symbolic link"):
-                    sync_services(source, target, allow_draft=True)
+                    sync_fixture_services(source, target, allow_draft=True)
 
                 self.assertEqual({}, directory_snapshot(outside))
 

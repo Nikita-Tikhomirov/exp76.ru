@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import csv
 import json
 from pathlib import Path
@@ -13,6 +13,7 @@ import unicodedata
 from tools.seo_semantics.architecture import PageDestination
 from tools.site_content.cases import (
     CaseEvidence,
+    ImageAudit,
     catalog_from_document,
     validate_case_reference,
     validate_catalog_document,
@@ -53,6 +54,13 @@ SERVICE_SOURCE_SLUGS = {
     "S6": "podpornye-stenki",
     "S7": "ulichnoe-osveshhenie-uchastka",
     "S8": "vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch",
+    "S9": "vykorchevyvanie-pnejj-spil-derevev",
+    "S10": "sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev",
+    "S11": "sistemy-tumanoobrazovaniya",
+    "S12": "fundament-na-zhelezobetonnykh-svajakh",
+    "S13": "navesy-iz-metalla",
+    "S14": "kaminy-pechi-barbekju",
+    "S15": "snos-i-demontazh-zdanijj-domov",
 }
 
 _NUMBER_PATTERN = r"\d+(?:[ \u00a0]\d{3})*(?:[.,]\d+)?"
@@ -226,6 +234,166 @@ def load_page_architecture(path: Path) -> dict[str, PageDestination]:
     return architecture
 
 
+def _load_hub_evidence_supplement(
+    path: Path,
+) -> tuple[tuple[CaseEvidence, ...], dict[str, set[str]]]:
+    """Load independently audited S1-S15 cases and service images."""
+
+    try:
+        document = json.loads(
+            path.read_text(encoding="utf-8"),
+            object_pairs_hook=_strict_object,
+        )
+    except ContractError:
+        raise
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise ContractError(f"cannot load hub evidence supplement {path}: {exc}") from exc
+    if not isinstance(document, Mapping):
+        raise ContractError("hub evidence supplement must contain an object")
+    if set(document) != {
+        "schema_version",
+        "checked_date",
+        "sources",
+        "service_images",
+        "cases",
+    }:
+        raise ContractError("hub evidence supplement keys differ")
+    if document.get("schema_version") != 1:
+        raise ContractError("hub evidence supplement schema_version must be 1")
+    if not isinstance(document.get("checked_date"), str) or not document["checked_date"]:
+        raise ContractError("hub evidence supplement checked_date is missing")
+
+    try:
+        cases = catalog_from_document(document)
+    except (TypeError, ValueError) as exc:
+        raise ContractError(f"invalid hub evidence cases: {exc}") from exc
+    expected_cases = {
+        8604: {"S7"},
+        8608: {"S10"},
+        8613: {"S2", "S5", "S9"},
+        8620: {"S1", "S7"},
+        8636: {"S2", "S5"},
+        8638: {"S6"},
+        9415: {"S5"},
+        9567: {"S5"},
+        9684: {"S7"},
+        10107: {"S6"},
+    }
+    if {case.page_id: set(case.service_ids) for case in cases} != expected_cases:
+        raise ContractError("hub evidence exact cases differ")
+    for case in cases:
+        if (
+            not case.seo_ready
+            or case.blocking_gaps
+            or case.page_audit is None
+            or not case.page_audit.is_valid
+            or case.page_audit.page_id != case.page_id
+            or not case.image_urls
+            or any(not audit.is_valid for audit in case.image_audits)
+            or set(case.image_urls) != {audit.url for audit in case.image_audits}
+        ):
+            raise ContractError(f"hub evidence case is not verified: {case.page_id}")
+        errors = validate_case_reference(
+            case.page_id,
+            case.image_urls[0],
+            cases,
+        )
+        if errors:
+            raise ContractError("; ".join(errors))
+
+    rows = document.get("service_images")
+    if not isinstance(rows, list) or not rows:
+        raise ContractError("hub evidence service_images must be a non-empty array")
+    verified_by_service = {
+        service_id: set()
+        for service_id in SERVICE_SOURCE_SLUGS
+    }
+    seen: set[tuple[str, str]] = set()
+    for index, row in enumerate(rows):
+        if not isinstance(row, Mapping) or set(row) != {
+            "service_id",
+            "url",
+            "audit",
+            "source_ref",
+        }:
+            raise ContractError(f"hub evidence service_images[{index}] keys differ")
+        service_id = row.get("service_id")
+        url = row.get("url")
+        source_ref = row.get("source_ref")
+        audit_row = row.get("audit")
+        if (
+            service_id not in verified_by_service
+            or not isinstance(url, str)
+            or not url.startswith("https://exp76.ru/wp-content/uploads/")
+            or not isinstance(source_ref, str)
+            or not source_ref.startswith(
+                f"seo-content/service-hubs/hubs/{service_id}.json#"
+            )
+            or not isinstance(audit_row, Mapping)
+        ):
+            raise ContractError(f"hub evidence service image differs: {index}")
+        try:
+            audit = ImageAudit(**audit_row)
+        except TypeError as exc:
+            raise ContractError(f"invalid hub image audit {index}: {exc}") from exc
+        if audit.url != url or not audit.is_valid:
+            raise ContractError(f"hub service image is not verified: {url}")
+        key = (str(service_id), url)
+        if key in seen:
+            raise ContractError(f"duplicate hub service image: {service_id} {url}")
+        seen.add(key)
+        verified_by_service[str(service_id)].add(url)
+    if any(not urls for urls in verified_by_service.values()):
+        raise ContractError("every S1-S15 hub needs a verified service image")
+    return cases, verified_by_service
+
+
+def _merge_case_evidence(base: CaseEvidence, supplement: CaseEvidence) -> CaseEvidence:
+    """Merge a stricter public audit into an existing catalog case owner."""
+
+    if base.page_id != supplement.page_id or base.url != supplement.url:
+        raise ContractError(f"supplement case owner differs: {supplement.page_id}")
+
+    def unique(values: Iterable[Any]) -> tuple[Any, ...]:
+        result: list[Any] = []
+        for value in values:
+            if value not in result:
+                result.append(value)
+        return tuple(result)
+
+    resolved_gaps = {
+        "no S1-S8 support in service-v2 proof",
+        "no case-owned selected image in service-v2 proof",
+    }
+    remaining_gaps = tuple(
+        gap for gap in base.blocking_gaps if gap not in resolved_gaps
+    )
+    return replace(
+        base,
+        title=supplement.title or base.title,
+        location=supplement.location or base.location,
+        work_types=unique((*base.work_types, *supplement.work_types)),
+        service_ids=unique((*base.service_ids, *supplement.service_ids)),
+        image_urls=unique((*base.image_urls, *supplement.image_urls)),
+        source_files=unique((*base.source_files, *supplement.source_files)),
+        seo_ready=not remaining_gaps and (base.seo_ready or supplement.seo_ready),
+        source_refs=unique((*base.source_refs, *supplement.source_refs)),
+        location_sources=unique(
+            (*base.location_sources, *supplement.location_sources)
+        ),
+        work_type_sources=unique(
+            (*base.work_type_sources, *supplement.work_type_sources)
+        ),
+        service_support=unique(
+            (*base.service_support, *supplement.service_support)
+        ),
+        image_sources=unique((*base.image_sources, *supplement.image_sources)),
+        page_audit=supplement.page_audit or base.page_audit,
+        image_audits=unique((*base.image_audits, *supplement.image_audits)),
+        blocking_gaps=remaining_gaps,
+    )
+
+
 def load_case_catalog(path: Path) -> CaseCatalogIndex:
     """Load and validate the committed Task 3 catalog without network access."""
     try:
@@ -264,8 +432,27 @@ def load_case_catalog(path: Path) -> CaseCatalogIndex:
                     for service_id, slug in SERVICE_SOURCE_SLUGS.items():
                         if any(f"/{slug}.json#" in ref for ref in normalized_refs):
                             verified_by_service[service_id].add(row["url"])
+    supplement_cases, supplemental_images = _load_hub_evidence_supplement(
+        path.with_name("hub-evidence-supplement.json")
+    )
+    combined_by_id = {case.page_id: case for case in cases}
+    for case in supplement_cases:
+        existing = combined_by_id.get(case.page_id)
+        combined_by_id[case.page_id] = (
+            _merge_case_evidence(existing, case)
+            if existing is not None
+            else case
+        )
+    combined_cases = tuple(combined_by_id.values())
+    if len({case.url for case in combined_cases}) != len(combined_cases):
+        raise ContractError("supplement duplicates a case canonical")
+    for service_id, urls in supplemental_images.items():
+        verified_by_service.setdefault(service_id, set()).update(urls)
+        verified_images.extend(urls)
+    for case in supplement_cases:
+        verified_images.extend(case.image_urls)
     return CaseCatalogIndex(
-        cases,
+        combined_cases,
         verified_image_urls=verified_images,
         verified_image_urls_by_service=verified_by_service,
     )

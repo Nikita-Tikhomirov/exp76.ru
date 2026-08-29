@@ -20,6 +20,89 @@ function land76wp_service_hubs_import_owner()
     return 'land76-service-hubs';
 }
 
+function land76wp_service_hubs_reuse_contracts()
+{
+    static $contracts = null;
+    if (is_array($contracts)) {
+        return $contracts;
+    }
+
+    $json = <<<'LAND76_SERVICE_HUB_REUSE_CONTRACTS_JSON'
+{
+  "S7-CHILD-HOLIDAY": {
+    "page_key": "S7-CHILD-HOLIDAY",
+    "service_id": "S7",
+    "post_id": 10381,
+    "post_type": "page",
+    "post_status": "publish",
+    "slug": "novogodnee-osveshhenie-zagorodnogo-doma-v-rybinske-i-jaroslavskojj-oblasti",
+    "parent_id": 0,
+    "current_url": "https://exp76.ru/novogodnee-osveshhenie-zagorodnogo-doma-v-rybinske-i-jaroslavskojj-oblasti/",
+    "target_url": "https://exp76.ru/novogodnee-osveshhenie-zagorodnogo-doma-v-rybinske-i-jaroslavskojj-oblasti/",
+    "legacy_template": "servicepost.php",
+    "target_template": "servicepost.php"
+  }
+}
+LAND76_SERVICE_HUB_REUSE_CONTRACTS_JSON;
+    $decoded = json_decode($json, true);
+    if (!is_array($decoded) || $decoded === array()) {
+        throw new RuntimeException('Invalid frozen service-hub reuse contracts.');
+    }
+    $required_fields = array(
+        'page_key',
+        'service_id',
+        'post_id',
+        'post_type',
+        'post_status',
+        'slug',
+        'parent_id',
+        'current_url',
+        'target_url',
+        'legacy_template',
+        'target_template',
+    );
+    sort($required_fields, SORT_STRING);
+    foreach ($decoded as $page_key => $contract) {
+        $contract_fields = is_array($contract) ? array_keys($contract) : array();
+        sort($contract_fields, SORT_STRING);
+        if (!is_string($page_key)
+            || preg_match('/^S(?:[1-9]|1[0-5])-CHILD-[A-Z0-9-]+$/D', $page_key) !== 1
+            || !is_array($contract)
+            || $contract_fields !== $required_fields
+            || !hash_equals($page_key, (string) $contract['page_key'])
+            || preg_match('/^S(?:[1-9]|1[0-5])$/D', (string) $contract['service_id']) !== 1
+            || strpos($page_key, (string) $contract['service_id'] . '-CHILD-') !== 0
+            || !is_int($contract['post_id'])
+            || $contract['post_id'] <= 0
+            || !hash_equals('page', (string) $contract['post_type'])
+            || !hash_equals('publish', (string) $contract['post_status'])
+            || preg_match('/^[a-z0-9-]+$/D', (string) $contract['slug']) !== 1
+            || !is_int($contract['parent_id'])
+            || $contract['parent_id'] < 0
+            || !is_string($contract['current_url'])
+            || !is_string($contract['target_url'])
+            || !hash_equals($contract['current_url'], $contract['target_url'])
+            || !hash_equals($contract['current_url'], land76wp_service_hubs_normalize_url($contract['current_url']))
+            || !is_string($contract['legacy_template'])
+            || !hash_equals('servicepost.php', (string) $contract['target_template'])) {
+            throw new RuntimeException('Invalid frozen service-hub reuse contract: ' . (string) $page_key);
+        }
+    }
+    $contracts = $decoded;
+
+    return $contracts;
+}
+
+function land76wp_service_hubs_reuse_contract_for_item(array $item)
+{
+    $page_key = isset($item['page_key']) && is_string($item['page_key'])
+        ? $item['page_key']
+        : '';
+    $contracts = land76wp_service_hubs_reuse_contracts();
+
+    return isset($contracts[$page_key]) ? $contracts[$page_key] : null;
+}
+
 function land76wp_service_hubs_default_json_path()
 {
     return trailingslashit(get_template_directory()) . 'import/service-hubs-import.json';
@@ -135,6 +218,10 @@ function land76wp_service_hubs_item_checksum(array $item)
 
 function land76wp_service_hubs_expected_item_url(array $item)
 {
+    $reuse_contract = land76wp_service_hubs_reuse_contract_for_item($item);
+    if (is_array($reuse_contract)) {
+        return (string) $reuse_contract['target_url'];
+    }
     $slug = isset($item['slug']) ? (string) $item['slug'] : '';
     if (isset($item['role']) && $item['role'] === 'geo') {
         $parent_slug = isset($item['city_parent_slug']) ? (string) $item['city_parent_slug'] : '';
@@ -240,10 +327,10 @@ function land76wp_service_hubs_validate_item(array $item, array &$seen_page_keys
     $canonical = (string) $item['canonical'];
     $checksum = strtolower((string) $item['checksum']);
 
-    if (!preg_match('/^S[1-8]-(?:CHILD|ARTICLE|GEO)-[A-Z0-9-]+$/', $page_key)) {
+    if (!preg_match('/^S(?:[1-9]|1[0-5])-(?:CHILD|ARTICLE|GEO)-[A-Z0-9-]+$/', $page_key)) {
         $errors[] = land76wp_service_hubs_error('invalid_page_key', $page_key);
     }
-    if (!preg_match('/^S[1-8]$/', $service_id) || !hash_equals($service_id, $topic_key)) {
+    if (!preg_match('/^S(?:[1-9]|1[0-5])$/', $service_id) || !hash_equals($service_id, $topic_key)) {
         $errors[] = land76wp_service_hubs_error('ownership_drift', $page_key);
     }
     if (land76wp_service_hub_by_service_id($service_id) === null) {
@@ -407,7 +494,7 @@ function land76wp_service_hubs_validate_payload(array $payload)
     if (isset($payload['release_status']) && $payload['release_status'] === 'ready' && $payload['items'] === array()) {
         $errors[] = land76wp_service_hubs_error('empty_payload');
     }
-    if (count(land76wp_service_hub_registry()) !== 8) {
+    if (count(land76wp_service_hub_registry()) !== 15) {
         $errors[] = land76wp_service_hubs_error('invalid_registry');
     }
 
@@ -902,8 +989,154 @@ function land76wp_service_hubs_plan_geo_item(array $item)
     );
 }
 
+function land76wp_service_hubs_plan_reuse_item(array $item, array $contract)
+{
+    $errors = array();
+    $operation = array(
+        'kind' => 'post',
+        'action' => 'reuse_update',
+        'post_id' => (int) $contract['post_id'],
+        'post_type' => (string) $contract['post_type'],
+        'parent_id' => (int) $contract['parent_id'],
+        'template' => (string) $contract['target_template'],
+        'reuse_claim_state' => '',
+        'reuse_contract' => $contract,
+        'item' => $item,
+    );
+
+    if (!isset($item['page_key'], $item['service_id'], $item['topic_key'], $item['role'], $item['slug'], $item['canonical'])
+        || !hash_equals((string) $contract['page_key'], (string) $item['page_key'])
+        || !hash_equals((string) $contract['service_id'], (string) $item['service_id'])
+        || !hash_equals((string) $contract['service_id'], (string) $item['topic_key'])
+        || !hash_equals('child_service', (string) $item['role'])
+        || !hash_equals((string) $contract['slug'], (string) $item['slug'])
+        || !hash_equals((string) $contract['current_url'], (string) $item['canonical'])
+        || !hash_equals((string) $contract['current_url'], (string) $contract['target_url'])) {
+        $errors[] = land76wp_service_hubs_error('reuse_contract_mismatch', (string) $contract['page_key']);
+    }
+
+    $post = get_post((int) $contract['post_id']);
+    if (!$post instanceof WP_Post) {
+        $errors[] = land76wp_service_hubs_error('reuse_missing_post', (string) $contract['page_key']);
+        return array('operation' => $operation, 'errors' => array_values(array_unique($errors)));
+    }
+    if ((int) $post->ID !== (int) $contract['post_id']) {
+        $errors[] = land76wp_service_hubs_error('reuse_id_mismatch', (string) $contract['page_key']);
+    }
+    if (!hash_equals((string) $contract['post_type'], (string) $post->post_type)) {
+        $errors[] = land76wp_service_hubs_error('reuse_type_mismatch', (string) $contract['page_key']);
+    }
+    if (!hash_equals((string) $contract['post_status'], (string) $post->post_status)) {
+        $errors[] = land76wp_service_hubs_error('reuse_status_mismatch', (string) $contract['page_key']);
+    }
+    if (!hash_equals((string) $contract['slug'], (string) $post->post_name)) {
+        $errors[] = land76wp_service_hubs_error('reuse_slug_mismatch', (string) $contract['page_key']);
+    }
+    if ((int) $post->post_parent !== (int) $contract['parent_id']) {
+        $errors[] = land76wp_service_hubs_error('reuse_parent_mismatch', (string) $contract['page_key']);
+    }
+    $permalink = land76wp_service_hubs_normalize_url(get_permalink($post));
+    if (!hash_equals((string) $contract['current_url'], $permalink)
+        || !hash_equals((string) $contract['target_url'], $permalink)) {
+        $errors[] = land76wp_service_hubs_error('reuse_url_mismatch', (string) $contract['page_key']);
+    }
+
+    $page_key_posts = land76wp_service_hubs_find_page_key_posts($item['page_key']);
+    foreach ($page_key_posts as $page_key_post) {
+        if ((int) $page_key_post->ID !== (int) $contract['post_id']) {
+            $errors[] = land76wp_service_hubs_error('reuse_owner_mismatch', (string) $contract['page_key']);
+        }
+    }
+    $slug_posts = land76wp_service_hubs_find_global_slug_posts($item['slug']);
+    if (count($slug_posts) !== 1 || (int) $slug_posts[0]->ID !== (int) $contract['post_id']) {
+        $errors[] = land76wp_service_hubs_error('reuse_owner_mismatch', (string) $contract['page_key']);
+    }
+
+    $owner = (string) get_post_meta($post->ID, '_land76_import_owner', true);
+    $stored_page_key = (string) get_post_meta($post->ID, '_land76_page_key', true);
+    $stored_service_id = (string) get_post_meta($post->ID, '_land76_service_id', true);
+    $stored_topic_key = (string) get_post_meta($post->ID, '_land76_topic_key', true);
+    $stored_canonical = (string) get_post_meta($post->ID, '_land76_canonical', true);
+    $expected_template = (string) $contract['legacy_template'];
+    if ($owner === '') {
+        $operation['reuse_claim_state'] = 'legacy_exact_match';
+        $management_meta_keys = array(
+            '_land76_release_id',
+            '_land76_manifest_sha256',
+            '_land76_page_key',
+            '_land76_service_id',
+            '_land76_topic_key',
+            '_land76_canonical',
+            '_land76_import_checksum',
+            '_land76_main_image_url',
+            '_land76_main_image_alt',
+            '_land76_related_article_ids',
+            '_land76_region',
+            '_land76_local_evidence',
+        );
+        foreach ($management_meta_keys as $management_meta_key) {
+            if ((string) get_post_meta($post->ID, $management_meta_key, true) !== '') {
+                $errors[] = land76wp_service_hubs_error('reuse_partial_owner', (string) $contract['page_key']);
+                break;
+            }
+        }
+    } elseif (hash_equals(land76wp_service_hubs_import_owner(), $owner)) {
+        $operation['reuse_claim_state'] = 'managed_exact_match';
+        $expected_template = (string) $contract['target_template'];
+        if (!hash_equals((string) $contract['page_key'], $stored_page_key)
+            || !hash_equals((string) $contract['service_id'], $stored_service_id)
+            || !hash_equals((string) $contract['service_id'], $stored_topic_key)
+            || !hash_equals((string) $contract['target_url'], $stored_canonical)) {
+            $errors[] = land76wp_service_hubs_error('reuse_owner_mismatch', (string) $contract['page_key']);
+        }
+    } else {
+        $errors[] = land76wp_service_hubs_error('reuse_owner_mismatch', (string) $contract['page_key']);
+    }
+    $current_template = (string) get_page_template_slug($post->ID);
+    if (!hash_equals($expected_template, $current_template)) {
+        $errors[] = land76wp_service_hubs_error('reuse_template_mismatch', (string) $contract['page_key']);
+    }
+
+    return array('operation' => $operation, 'errors' => array_values(array_unique($errors)));
+}
+
+function land76wp_service_hubs_verify_reuse_target(array $operation, $required_claim_state = '')
+{
+    if (!isset($operation['item']) || !is_array($operation['item'])) {
+        return array(land76wp_service_hubs_error('reuse_contract_mismatch', 'missing item'));
+    }
+    $contract = land76wp_service_hubs_reuse_contract_for_item($operation['item']);
+    if (!is_array($contract)
+        || !isset($operation['reuse_contract'])
+        || !is_array($operation['reuse_contract'])
+        || $operation['reuse_contract'] !== $contract
+        || !isset($operation['action'], $operation['post_id'], $operation['post_type'], $operation['parent_id'], $operation['template'])
+        || $operation['action'] !== 'reuse_update'
+        || (int) $operation['post_id'] !== (int) $contract['post_id']
+        || !hash_equals((string) $operation['post_type'], (string) $contract['post_type'])
+        || (int) $operation['parent_id'] !== (int) $contract['parent_id']
+        || !hash_equals((string) $operation['template'], (string) $contract['target_template'])) {
+        return array(land76wp_service_hubs_error('reuse_contract_mismatch', (string) $operation['item']['page_key']));
+    }
+
+    $planned = land76wp_service_hubs_plan_reuse_item($operation['item'], $contract);
+    $errors = $planned['errors'];
+    $claim_state = isset($planned['operation']['reuse_claim_state'])
+        ? (string) $planned['operation']['reuse_claim_state']
+        : '';
+    if ($required_claim_state !== '' && !hash_equals((string) $required_claim_state, $claim_state)) {
+        $errors[] = land76wp_service_hubs_error('reuse_owner_mismatch', (string) $contract['page_key']);
+    }
+
+    return array_values(array_unique($errors));
+}
+
 function land76wp_service_hubs_plan_item(array $item, $release_id, $manifest_sha256)
 {
+    $reuse_contract = land76wp_service_hubs_reuse_contract_for_item($item);
+    if (is_array($reuse_contract)) {
+        return land76wp_service_hubs_plan_reuse_item($item, $reuse_contract);
+    }
     $errors = array();
     $post_type = land76wp_service_hubs_post_type_for_role($item['role']);
     $owned_posts = land76wp_service_hubs_find_owned_posts($item['page_key'], $post_type);
@@ -1053,7 +1286,7 @@ function land76wp_service_hubs_preflight_external_relations(array $items)
                     && in_array($available[$page_key]['role'], array('hub', 'child_service'), true)) {
                     $has_primary_commercial = true;
                 }
-                if (is_string($page_key) && preg_match('/^S[1-8]-HUB$/', $page_key)) {
+                if (is_string($page_key) && preg_match('/^S(?:[1-9]|1[0-5])-HUB$/', $page_key)) {
                     if (!land76wp_service_hubs_resolve_page_key($page_key, array())) {
                         $errors[] = land76wp_service_hubs_error('unresolved_relation', $item['page_key'] . ' -> ' . $page_key);
                     }
@@ -1333,10 +1566,14 @@ function land76wp_service_hubs_snapshot_post($post_id)
     }
     return array(
         'post_id' => (int) $post_id,
+        'post_type' => $post->post_type,
         'post_status' => $post->post_status,
         'post_name' => $post->post_name,
         'post_parent' => (int) $post->post_parent,
+        'permalink' => land76wp_service_hubs_normalize_url(get_permalink($post)),
+        'template' => (string) get_page_template_slug($post_id),
         'post_title' => $post->post_title,
+        'post_excerpt' => $post->post_excerpt,
         'post_content_sha256' => hash('sha256', (string) $post->post_content),
         'categories' => wp_get_post_categories($post_id),
         'owner' => (string) get_post_meta($post_id, '_land76_import_owner', true),
@@ -1370,6 +1607,13 @@ function land76wp_service_hubs_revalidate_stage_targets(array $plan)
             continue;
         }
         $item = $operation['item'];
+        if ($operation['action'] === 'reuse_update') {
+            $errors = array_merge(
+                $errors,
+                land76wp_service_hubs_verify_reuse_target($operation)
+            );
+            continue;
+        }
         if ($operation['action'] === 'published') {
             $errors[] = land76wp_service_hubs_error('published_record_cannot_be_restaged', $item['page_key']);
             continue;
@@ -1493,7 +1737,7 @@ function land76wp_service_hubs_resolve_page_key($page_key, array $post_ids)
     if (isset($post_ids[$page_key])) {
         return (int) $post_ids[$page_key];
     }
-    if (preg_match('/^(S[1-8])-HUB$/', (string) $page_key, $matches)) {
+    if (preg_match('/^(S(?:[1-9]|1[0-5]))-HUB$/', (string) $page_key, $matches)) {
         $hub = land76wp_service_hub_by_service_id($matches[1]);
         if ($hub === null) {
             return 0;
@@ -1504,6 +1748,36 @@ function land76wp_service_hubs_resolve_page_key($page_key, array $post_ids)
         }
         $permalink = land76wp_service_hubs_normalize_url(get_permalink($post));
         return hash_equals($hub['canonical'], $permalink) ? (int) $post->ID : 0;
+    }
+
+    $reuse_contracts = land76wp_service_hubs_reuse_contracts();
+    if (isset($reuse_contracts[$page_key])) {
+        $contract = $reuse_contracts[$page_key];
+        $post = get_post((int) $contract['post_id']);
+        if (!$post instanceof WP_Post
+            || (int) $post->ID !== (int) $contract['post_id']
+            || !hash_equals((string) $contract['post_type'], (string) $post->post_type)
+            || !hash_equals((string) $contract['post_status'], (string) $post->post_status)
+            || !hash_equals((string) $contract['slug'], (string) $post->post_name)
+            || (int) $post->post_parent !== (int) $contract['parent_id']
+            || !hash_equals((string) $contract['target_url'], land76wp_service_hubs_normalize_url(get_permalink($post)))
+            || !hash_equals((string) $contract['target_template'], (string) get_page_template_slug($post->ID))
+            || !hash_equals(land76wp_service_hubs_import_owner(), (string) get_post_meta($post->ID, '_land76_import_owner', true))
+            || !hash_equals((string) $contract['page_key'], (string) get_post_meta($post->ID, '_land76_page_key', true))
+            || !hash_equals((string) $contract['service_id'], (string) get_post_meta($post->ID, '_land76_service_id', true))
+            || !hash_equals((string) $contract['service_id'], (string) get_post_meta($post->ID, '_land76_topic_key', true))) {
+            return 0;
+        }
+        $page_key_matches = land76wp_service_hubs_find_page_key_posts($page_key);
+        $slug_matches = land76wp_service_hubs_find_global_slug_posts($contract['slug']);
+        if (count($page_key_matches) !== 1
+            || (int) $page_key_matches[0]->ID !== (int) $contract['post_id']
+            || count($slug_matches) !== 1
+            || (int) $slug_matches[0]->ID !== (int) $contract['post_id']) {
+            return 0;
+        }
+
+        return (int) $contract['post_id'];
     }
 
     $matches = land76wp_service_hubs_find_owned_posts((string) $page_key, 'post');
@@ -1592,6 +1866,40 @@ function land76wp_service_hubs_apply_post_metadata(array $item, $post_id, $relea
         throw new RuntimeException(land76wp_service_hubs_error('unresolved_main_image', $item['main_image']['url']));
     }
     set_post_thumbnail($post_id, $attachment_id);
+}
+
+function land76wp_service_hubs_apply_reuse_item(array $operation, $release_id, $manifest_sha256, array $post_ids, array $grouping_ids, array $all_grouping_ids)
+{
+    $item = $operation['item'];
+    $contract = $operation['reuse_contract'];
+    $post_id = (int) $contract['post_id'];
+    $updated_id = wp_update_post(wp_slash(array(
+        'ID' => $post_id,
+        'post_title' => wp_strip_all_tags($item['post_title']),
+        'post_content' => $item['post_content'],
+        'post_excerpt' => isset($item['post_excerpt']) ? (string) $item['post_excerpt'] : '',
+    )), true);
+    if (is_wp_error($updated_id) || (int) $updated_id !== $post_id) {
+        $message = is_wp_error($updated_id) ? $updated_id->get_error_message() : 'post id changed';
+        throw new RuntimeException(land76wp_service_hubs_error('reuse_publish_failed', $message));
+    }
+
+    $current_categories = wp_get_post_categories($post_id);
+    $categories = land76wp_service_hubs_merge_categories(
+        $current_categories,
+        74,
+        $grouping_ids[$item['service_id']],
+        $all_grouping_ids
+    );
+    wp_set_post_categories($post_id, $categories, false);
+    land76wp_service_hubs_apply_post_metadata(
+        $item,
+        $post_id,
+        $release_id,
+        $manifest_sha256,
+        $post_ids
+    );
+    update_post_meta($post_id, '_wp_page_template', (string) $contract['target_template']);
 }
 
 function land76wp_service_hubs_release_lock_name($release_id)
@@ -1791,7 +2099,7 @@ function land76wp_service_hubs_execute_stage(array $plan)
 
     $is_noop = empty($plan['acf_missing']) && empty($plan['acf_migrations']);
     foreach ($plan['operations'] as $operation) {
-        if ($operation['action'] !== 'unchanged') {
+        if (!in_array($operation['action'], array('unchanged', 'reuse_update'), true)) {
             $is_noop = false;
             break;
         }
@@ -1800,10 +2108,17 @@ function land76wp_service_hubs_execute_stage(array $plan)
         $stats['errors'] = array_merge($stats['errors'], land76wp_service_hubs_verify_grouping_terms($plan));
         foreach ($plan['operations'] as $operation) {
             if ($operation['kind'] === 'post') {
-                $stats['errors'] = array_merge(
-                    $stats['errors'],
-                    land76wp_service_hubs_verify_staged_item($operation, $plan['release_id'], $plan['manifest_sha256'], 'draft')
-                );
+                if ($operation['action'] === 'reuse_update') {
+                    $stats['errors'] = array_merge(
+                        $stats['errors'],
+                        land76wp_service_hubs_verify_reuse_target($operation)
+                    );
+                } else {
+                    $stats['errors'] = array_merge(
+                        $stats['errors'],
+                        land76wp_service_hubs_verify_staged_item($operation, $plan['release_id'], $plan['manifest_sha256'], 'draft')
+                    );
+                }
             }
         }
         $stats['errors'] = array_values(array_unique($stats['errors']));
@@ -1868,6 +2183,11 @@ function land76wp_service_hubs_execute_stage(array $plan)
                 continue;
             }
             $item = $operation['item'];
+            if ($operation['action'] === 'reuse_update') {
+                $post_ids[$item['page_key']] = (int) $operation['post_id'];
+                $stats['unchanged']++;
+                continue;
+            }
             if ($operation['action'] === 'unchanged') {
                 $post_ids[$item['page_key']] = (int) $operation['post_id'];
                 $stats['unchanged']++;
@@ -1904,7 +2224,8 @@ function land76wp_service_hubs_execute_stage(array $plan)
 
         $all_grouping_ids = array_values($grouping_ids);
         foreach ($plan['operations'] as $operation) {
-            if ($operation['kind'] !== 'post' || $operation['action'] === 'unchanged') {
+            if ($operation['kind'] !== 'post'
+                || in_array($operation['action'], array('unchanged', 'reuse_update'), true)) {
                 continue;
             }
             $item = $operation['item'];
@@ -1941,15 +2262,22 @@ function land76wp_service_hubs_execute_stage(array $plan)
             if ($verification_operation['kind'] !== 'post') {
                 continue;
             }
-            $verification_errors = array_merge(
-                $verification_errors,
-                land76wp_service_hubs_verify_staged_item(
-                    $verification_operation,
-                    $plan['release_id'],
-                    $plan['manifest_sha256'],
-                    'draft'
-                )
-            );
+            if ($verification_operation['action'] === 'reuse_update') {
+                $verification_errors = array_merge(
+                    $verification_errors,
+                    land76wp_service_hubs_verify_reuse_target($verification_operation)
+                );
+            } else {
+                $verification_errors = array_merge(
+                    $verification_errors,
+                    land76wp_service_hubs_verify_staged_item(
+                        $verification_operation,
+                        $plan['release_id'],
+                        $plan['manifest_sha256'],
+                        'draft'
+                    )
+                );
+            }
         }
         if ($verification_errors !== array()) {
             throw new RuntimeException(
@@ -2178,6 +2506,10 @@ function land76wp_service_hubs_verify_staged_item(array $operation, $release_id,
             $errors[] = land76wp_service_hubs_error('staged_geo_mismatch', $item['page_key'] . '._wp_page_template');
         }
     }
+    if ($operation['action'] === 'reuse_update'
+        && !hash_equals((string) $operation['template'], (string) get_page_template_slug($post_id))) {
+        $errors[] = land76wp_service_hubs_error('staged_template_mismatch', $item['page_key']);
+    }
 
     return array_values(array_unique($errors));
 }
@@ -2245,9 +2577,28 @@ function land76wp_service_hubs_publish_plan(array $plan)
 
     $stats['errors'] = array_merge($stats['errors'], land76wp_service_hubs_verify_grouping_terms($plan));
     $publish_ids = array();
+    $reuse_operations = array();
+    $post_ids = array();
+    $grouping_ids = array();
 
     foreach ($plan['operations'] as $operation) {
+        if ($operation['kind'] === 'grouping_term') {
+            $term = get_term_by('slug', $operation['slug'], 'category');
+            if ($term instanceof WP_Term) {
+                $grouping_ids[$operation['service_id']] = (int) $term->term_id;
+            }
+            continue;
+        }
         if ($operation['kind'] !== 'post') {
+            continue;
+        }
+        $post_ids[$operation['item']['page_key']] = (int) $operation['post_id'];
+        if ($operation['action'] === 'reuse_update') {
+            $reuse_operations[] = $operation;
+            $stats['errors'] = array_merge(
+                $stats['errors'],
+                land76wp_service_hubs_verify_reuse_target($operation)
+            );
             continue;
         }
         $item_errors = land76wp_service_hubs_verify_staged_item(
@@ -2267,15 +2618,38 @@ function land76wp_service_hubs_publish_plan(array $plan)
     if ($stats['errors'] !== array()) {
         return $stats;
     }
-    if ($publish_ids === array()) {
+    if ($publish_ids === array() && $reuse_operations === array()) {
         return $stats;
     }
+    $all_grouping_ids = array_values(array_unique(array_map('intval', $grouping_ids)));
 
     if ($wpdb->query('START TRANSACTION') === false) {
         $stats['errors'][] = land76wp_service_hubs_error('transaction_start_failed', (string) $wpdb->last_error);
         return $stats;
     }
     try {
+        foreach ($reuse_operations as $operation) {
+            if (!land76wp_service_hubs_owns_release_lock($release_lock)) {
+                throw new RuntimeException(land76wp_service_hubs_error('publish_lock_lost'));
+            }
+            $reuse_errors = land76wp_service_hubs_verify_reuse_target($operation);
+            if ($reuse_errors !== array()) {
+                throw new RuntimeException(implode('; ', $reuse_errors));
+            }
+            $stats['rollback_snapshot'][] = land76wp_service_hubs_snapshot_post($operation['post_id']);
+            land76wp_service_hubs_apply_reuse_item(
+                $operation,
+                $plan['release_id'],
+                $plan['manifest_sha256'],
+                $post_ids,
+                $grouping_ids,
+                $all_grouping_ids
+            );
+            if (!land76wp_service_hubs_owns_release_lock($release_lock)) {
+                throw new RuntimeException(land76wp_service_hubs_error('publish_lock_lost'));
+            }
+            $stats['updated']++;
+        }
         foreach ($publish_ids as $post_id) {
             if (!land76wp_service_hubs_owns_release_lock($release_lock)) {
                 throw new RuntimeException(land76wp_service_hubs_error('publish_lock_lost'));
@@ -2295,6 +2669,12 @@ function land76wp_service_hubs_publish_plan(array $plan)
         foreach ($plan['operations'] as $operation) {
             if ($operation['kind'] !== 'post') {
                 continue;
+            }
+            if ($operation['action'] === 'reuse_update') {
+                $verification_errors = array_merge(
+                    $verification_errors,
+                    land76wp_service_hubs_verify_reuse_target($operation, 'managed_exact_match')
+                );
             }
             $verification_errors = array_merge(
                 $verification_errors,

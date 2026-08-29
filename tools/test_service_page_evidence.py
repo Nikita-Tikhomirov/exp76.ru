@@ -6,7 +6,9 @@ import json
 import unittest
 from pathlib import Path
 
-from tools.seo_semantics.final_service_architecture import build_final_service_rows
+from tools.seo_semantics.complete_service_architecture import (
+    build_complete_service_rows,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,8 +34,32 @@ VALID_ASSET_KINDS = {
     "illustration",
     "missing",
 }
-EXPECTED_CLASS_COUNTS = {"A": 15, "B": 13, "C": 9}
+EXPECTED_CLASS_COUNTS = {"A": 17, "B": 38, "C": 10}
 ILLUSTRATION_POOLS = {"M1", "M7", "M9", "M10"}
+LEGACY_SERVICE_IDS = {f"S{number}" for number in range(9, 16)}
+LEGACY_EXACT_CASES = {
+    "S9-CHILD-STUMPS": {8613},
+    "S10-CHILD-DECORATIVE-POND": {8608},
+    "S10-CHILD-WATERFALL-CASCADE": {8608},
+}
+AUDITED_LEGACY_MEDIA = {
+    "S9": {7035, 8523},
+    "S10": {8481, 9196, 10305},
+    "S11": {7039},
+    "S12": {9186},
+    "S13": {9313},
+    "S14": {9782},
+    "S15": {9840},
+}
+AUDITED_LEGACY_SOURCES = {
+    "S9": {6870, 8613},
+    "S10": {6900, 8608, 10303},
+    "S11": {6922},
+    "S12": {9138},
+    "S13": {9312},
+    "S14": {9775},
+    "S15": {9838},
+}
 
 
 class ServicePageEvidenceTests(unittest.TestCase):
@@ -42,16 +68,17 @@ class ServicePageEvidenceTests(unittest.TestCase):
         cls.registry = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
         cls.services = cls.registry["services"]
 
-    def test_registry_covers_the_exact_final_37_once(self) -> None:
+    def test_registry_covers_the_exact_complete_65_once(self) -> None:
         expected_ids = {
-            row["destination_id"] for row in build_final_service_rows()
+            row["destination_id"] for row in build_complete_service_rows()
         }
         actual_ids = [row["destination_id"] for row in self.services]
 
         self.assertEqual(1, self.registry["schema_version"])
-        self.assertEqual(37, len(actual_ids))
-        self.assertEqual(37, len(set(actual_ids)))
+        self.assertEqual(65, len(actual_ids))
+        self.assertEqual(65, len(set(actual_ids)))
         self.assertEqual(expected_ids, set(actual_ids))
+        self.assertNotIn("S5-CHILD-STUMPS", actual_ids)
         self.assertEqual(
             EXPECTED_CLASS_COUNTS,
             {
@@ -192,6 +219,72 @@ class ServicePageEvidenceTests(unittest.TestCase):
                 rule = row["safe_caption_rule"].lower()
                 self.assertIn("не называть", rule)
                 self.assertIn("выполненным объектом", rule)
+
+    def test_legacy_evidence_uses_only_audited_cases_media_and_sources(self) -> None:
+        legacy_rows = {
+            row["destination_id"]: row
+            for row in self.services
+            if row["destination_id"].split("-", 1)[0] in LEGACY_SERVICE_IDS
+        }
+        expected_legacy_ids = {
+            row["destination_id"]
+            for row in build_complete_service_rows()
+            if row["service_id"] in LEGACY_SERVICE_IDS
+        }
+
+        self.assertEqual(29, len(legacy_rows))
+        self.assertEqual(expected_legacy_ids, set(legacy_rows))
+        for destination_id, row in legacy_rows.items():
+            service_id = destination_id.split("-", 1)[0]
+            with self.subTest(destination_id=destination_id):
+                self.assertEqual(
+                    LEGACY_EXACT_CASES.get(destination_id, set()),
+                    set(row["exact_case_ids"]),
+                )
+                self.assertTrue(row["media"])
+                self.assertTrue(
+                    {
+                        media["attachment_id"]
+                        for media in row["media"]
+                    }.issubset(AUDITED_LEGACY_MEDIA[service_id])
+                )
+                self.assertTrue(
+                    {
+                        media["source_page_id"]
+                        for media in row["media"]
+                    }.issubset(AUDITED_LEGACY_SOURCES[service_id])
+                )
+                if destination_id not in LEGACY_EXACT_CASES:
+                    self.assertIn(
+                        row["asset_kind"],
+                        {"service_photo", "context_photo"},
+                    )
+                    self.assertTrue(
+                        all(
+                            media["asset_kind"]
+                            in {"service_photo", "context_photo"}
+                            for media in row["media"]
+                        )
+                    )
+                    safe_rule = row["safe_caption_rule"].lower()
+                    self.assertIn("не называть", safe_rule)
+                    self.assertIn("нашей работой", safe_rule)
+
+    def test_legacy_exact_case_urls_match_the_two_audited_case_pages(self) -> None:
+        by_id = {row["destination_id"]: row for row in self.services}
+
+        self.assertEqual(
+            ["https://exp76.ru/fotogalereja/poselok-koprino/"],
+            by_id["S9-CHILD-STUMPS"]["exact_case_urls"],
+        )
+        for destination_id in (
+            "S10-CHILD-DECORATIVE-POND",
+            "S10-CHILD-WATERFALL-CASCADE",
+        ):
+            self.assertEqual(
+                ["https://exp76.ru/fotogalereja/marievka/"],
+                by_id[destination_id]["exact_case_urls"],
+            )
 
 
 if __name__ == "__main__":

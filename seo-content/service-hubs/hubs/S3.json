@@ -257,18 +257,70 @@
     ]
   },
   "services": {
-    "heading": "Отдельные услуги по направлению",
-    "lead": "Страницы услуг, выделенные в утверждённой архитектуре по самостоятельным поисковым намерениям хаба «Посадка деревьев и кустарников».",
+    "heading": "Посадка растений по типу и задаче",
+    "lead": "Отдельные услуги помогают подобрать работы для плодового сада, хвойных и кустарниковых групп, крупномеров или живой изгороди.",
     "items": [
       {
-        "title": "Посадка крупномеров",
-        "text": "Посадка крупномеров. Посадка деревьев требует заранее оценить место, будущий размер растения, расстояние до строений и доступ для доставки. Способ выполнения подбирают по фактическим условиям объекта.",
+        "page_key": "S3-CHILD-FRUIT",
+        "url": "https://exp76.ru/posadka-plodovyh-derevev/",
+        "title": "Посадка плодовых деревьев",
+        "text": "Размещение плодовых деревьев с учётом места, будущего развития крон и задач сада; декоративные группы рассматриваются отдельно.",
         "image": {
           "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
-          "alt": "Озеленение участка деревьями"
-        },
-        "page_key": "S3-CHILD-KRUPNOMERY",
-        "url": "https://exp76.ru/posadka-krupnomerov/"
+          "alt": "Контекстная фотография: озеленённая территория",
+          "asset_kind": "context_photo",
+          "source_page_id": 6871
+        }
+      },
+      {
+        "page_key": "S3-CHILD-CONIFERS",
+        "url": "https://exp76.ru/posadka-hvojnyh-derevev/",
+        "title": "Посадка хвойных деревьев",
+        "text": "Создание одиночных и групповых хвойных посадок; последующее постоянное обслуживание растений остаётся отдельным направлением ухода.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+          "alt": "Подтверждённый объект с посадкой хвойных растений",
+          "asset_kind": "case_photo",
+          "source_page_id": 10096,
+          "case_id": 10096
+        }
+      },
+      {
+        "page_key": "S3-CHILD-SHRUBS",
+        "url": "https://exp76.ru/posadka-kustarnikov/",
+        "title": "Посадка кустарников",
+        "text": "Подбор места и устройство кустарниковых групп без включения формирующей стрижки и регулярного содержания взрослых посадок.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+          "alt": "Подтверждённый объект с посадкой кустарников",
+          "asset_kind": "case_photo",
+          "source_page_id": 10096,
+          "case_id": 10096
+        }
+      },
+      {
+        "page_key": "S3-CHILD-LARGE",
+        "url": "https://exp76.ru/posadka-krupnomerov/",
+        "title": "Посадка крупномеров",
+        "text": "Работы с крупными посадочными формами после оценки размеров растений, доступа для доставки и условий размещения на территории.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+          "alt": "Контекстная фотография: общее озеленение участка",
+          "asset_kind": "context_photo",
+          "source_page_id": 6871
+        }
+      },
+      {
+        "page_key": "S3-CHILD-HEDGE",
+        "url": "https://exp76.ru/posadka-zhivoj-izgorodi/",
+        "title": "Посадка живой изгороди",
+        "text": "Создание линейной посадки для границы или зонирования участка; последующая стрижка изгороди относится к самостоятельной услуге ухода.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+          "alt": "Фотография озеленения со старой страницы услуги",
+          "asset_kind": "service_photo",
+          "source_page_id": 6871
+        }
       }
     ]
   },
@@ -291,15 +343,10 @@
   "evidence_gaps": [
     {
       "kind": "nonready_destination",
-      "page_key": "S3-CHILD-KRUPNOMERY",
-      "status": "blocked_facts"
-    },
-    {
-      "kind": "nonready_destination",
       "page_key": "S3-ARTICLE-PLANTING-SCHEMES",
       "status": "backlog"
     }
   ],
   "fact_evidence": [],
-  "rendered_sha256": "3eac4cb0ee602f52447640797b013bfd89af8cafe197dd00abb171eb5a0934f3"
+  "rendered_sha256": "9010aa819f4502495a8e2a933a6df305ddbc959b730d85ee2df4d607648f0bec"
 }

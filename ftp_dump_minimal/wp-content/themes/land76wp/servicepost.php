@@ -13,6 +13,26 @@ Template Name: Услуга
   <?php return; ?>
 <?php endif; ?>
 
+<?php
+$land76_managed_child_page = false;
+$land76_queried_page_id = (int) get_queried_object_id();
+if ($land76_queried_page_id > 0
+    && function_exists('land76wp_service_hubs_import_owner')
+    && get_post_type($land76_queried_page_id) === 'page'
+    && get_page_template_slug($land76_queried_page_id) === 'servicepost.php') {
+  $land76_import_owner = (string) get_post_meta($land76_queried_page_id, '_land76_import_owner', true);
+  $land76_page_key = (string) get_post_meta($land76_queried_page_id, '_land76_page_key', true);
+  $land76_managed_child_page = hash_equals(land76wp_service_hubs_import_owner(), $land76_import_owner)
+    && preg_match('/^S(?:[1-9]|1[0-5])-CHILD-[A-Z0-9-]+$/D', $land76_page_key) === 1;
+}
+if ($land76_managed_child_page) {
+  get_header('seo');
+  require get_template_directory() . '/inc/newservicepost.php';
+  get_footer();
+  return;
+}
+?>
+
 <?php get_header('service'); ?>
 
 

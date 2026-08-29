@@ -2,7 +2,8 @@
   "schema_version": 1,
   "checked_date": "2026-08-29",
   "sources": [
-    "seo-data/2026-08-exp76-services/processed/final_service_children.csv",
+    "seo-data/2026-08-exp76-services/processed/complete_service_children.csv",
+    "seo-data/2026-08-exp76-services/reviews/legacy_service_scope_audit.md",
     "seo-content/service-hubs/case-catalog.json",
     "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/*.json",
     "https://exp76.ru/wp-json/wp/v2/pages",
@@ -596,55 +597,6 @@
       "needs_client_asset_or_generated_illustration": false
     },
     {
-      "destination_id": "S5-CHILD-STUMPS",
-      "evidence_class": "A",
-      "exact_case_ids": [8613],
-      "exact_case_urls": ["https://exp76.ru/fotogalereja/poselok-koprino/"],
-      "contextual_page_ids": [667, 6870],
-      "media_pool": "CASE-8613+M6",
-      "media": [
-        {
-          "attachment_id": 8523,
-          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
-          "pool": "CASE-8613",
-          "asset_kind": "case_photo",
-          "source_page_id": 8613
-        },
-        {
-          "attachment_id": 7501,
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
-          "pool": "M6",
-          "asset_kind": "service_photo",
-          "source_page_id": 6870
-        },
-        {
-          "attachment_id": 7502,
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil2.webp",
-          "pool": "M6",
-          "asset_kind": "service_photo",
-          "source_page_id": 6870
-        },
-        {
-          "attachment_id": 7503,
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil3.webp",
-          "pool": "M6",
-          "asset_kind": "service_photo",
-          "source_page_id": 6870
-        },
-        {
-          "attachment_id": 7499,
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil6.webp",
-          "pool": "M6",
-          "asset_kind": "service_photo",
-          "source_page_id": 6870
-        }
-      ],
-      "asset_kind": "case_photo",
-      "safe_caption_rule": "Кадр CASE-8613 связывать только с подтверждённым кейсом; фото M6 описывать по видимому сюжету и не называть отдельным выполненным объектом.",
-      "caveat": "Кейс подтверждает корчевание пней; M6 — старые фотографии страницы услуги без отдельного адресного кейса.",
-      "needs_client_asset_or_generated_illustration": false
-    },
-    {
       "destination_id": "S6-CHILD-CONCRETE",
       "evidence_class": "A",
       "exact_case_ids": [10107],
@@ -957,6 +909,615 @@
       "asset_kind": "illustration",
       "safe_caption_rule": "Начинать подпись с «Иллюстрация:»; не указывать объект, адрес, срок, заказчика или факт выполнения компанией.",
       "caveat": "9699 подтверждает только въезд с плиткой; точного кейса перехода через канаву с парковочной площадкой нет, M10 — визуализация.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S9-CHILD-TREE-REMOVAL",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6870],
+      "media_pool": "SERVICE-6870",
+      "media": [
+        {
+          "attachment_id": 7035,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp",
+          "pool": "SERVICE-6870",
+          "asset_kind": "service_photo",
+          "source_page_id": 6870
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы услуги по расчистке; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото размещено на странице услуги WP 6870, но не имеет адресной подписи и отдельного case provenance.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S9-CHILD-STUMPS",
+      "evidence_class": "A",
+      "exact_case_ids": [8613],
+      "exact_case_urls": ["https://exp76.ru/fotogalereja/poselok-koprino/"],
+      "contextual_page_ids": [6870],
+      "media_pool": "CASE-8613",
+      "media": [
+        {
+          "attachment_id": 8523,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
+          "pool": "CASE-8613",
+          "asset_kind": "case_photo",
+          "source_page_id": 8613
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Связывать изображение только с подтверждённым кейсом WP 8613 о корчевании пней; не приписывать кадру неподтверждённые отдельные операции.",
+      "caveat": "Текст кейса подтверждает корчевание пней и планировку участка, но не подтверждает смету, сроки или каждое действие на отдельном кадре.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S9-CHILD-CLEARING",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6870],
+      "media_pool": "SERVICE-6870",
+      "media": [
+        {
+          "attachment_id": 7035,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp",
+          "pool": "SERVICE-6870",
+          "asset_kind": "service_photo",
+          "source_page_id": 6870
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы услуги по расчистке; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото подтверждает визуальный контекст направления, но не происхождение конкретного объекта и не весь состав расчистки.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S10-CHILD-DECORATIVE-POND",
+      "evidence_class": "A",
+      "exact_case_ids": [8608],
+      "exact_case_urls": ["https://exp76.ru/fotogalereja/marievka/"],
+      "contextual_page_ids": [6900],
+      "media_pool": "CASE-8608",
+      "media": [
+        {
+          "attachment_id": 8481,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp",
+          "pool": "CASE-8608",
+          "asset_kind": "case_photo",
+          "source_page_id": 8608
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Связывать изображение только с кейсом WP 8608, где прямо подтверждены пруд и каскад водопадов; не переносить старое утверждение о сроке.",
+      "caveat": "Кейс подтверждает строительство пруда и каскада, но не подтверждает характеристики, смету или сроки для другого участка.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S10-CHILD-SWIMMING-POND",
+      "evidence_class": "C",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [10303],
+      "media_pool": "CONTEXT-10303",
+      "media": [
+        {
+          "attachment_id": 10305,
+          "url": "https://exp76.ru/wp-content/uploads/2023/12/20231011_131925-scaled.webp",
+          "pool": "CONTEXT-10303",
+          "asset_kind": "context_photo",
+          "source_page_id": 10303
+        }
+      ],
+      "asset_kind": "context_photo",
+      "safe_caption_rule": "Подписывать как контекстное фото купального пруда; не называть выполненным объектом или нашей работой.",
+      "caveat": "Страница WP 10303 посвящена пруду для купания и фильтрации, но её текст не содержит прямого утверждения о выполнении работ компанией.",
+      "needs_client_asset_or_generated_illustration": true
+    },
+    {
+      "destination_id": "S10-CHILD-WATERFALL-CASCADE",
+      "evidence_class": "A",
+      "exact_case_ids": [8608],
+      "exact_case_urls": ["https://exp76.ru/fotogalereja/marievka/"],
+      "contextual_page_ids": [6900],
+      "media_pool": "CASE-8608",
+      "media": [
+        {
+          "attachment_id": 8481,
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp",
+          "pool": "CASE-8608",
+          "asset_kind": "case_photo",
+          "source_page_id": 8608
+        }
+      ],
+      "asset_kind": "case_photo",
+      "safe_caption_rule": "Связывать изображение только с кейсом WP 8608, где прямо подтверждён каскад водопадов; не переносить старое утверждение о сроке.",
+      "caveat": "Кейс подтверждает каскад водопадов и пруд, но не подтверждает характеристики, смету или сроки для другого участка.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S10-CHILD-STREAM",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6900],
+      "media_pool": "SERVICE-6900",
+      "media": [
+        {
+          "attachment_id": 9196,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/ustroistvo-vodoemov.webp",
+          "pool": "SERVICE-6900",
+          "asset_kind": "service_photo",
+          "source_page_id": 6900
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как изображение со страницы устройства водоёмов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Изображение относится к странице водных объектов, но не имеет подписи, подтверждающей отдельный реализованный ручей.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S10-CHILD-FOUNTAIN",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6900],
+      "media_pool": "SERVICE-6900",
+      "media": [
+        {
+          "attachment_id": 9196,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/ustroistvo-vodoemov.webp",
+          "pool": "SERVICE-6900",
+          "asset_kind": "service_photo",
+          "source_page_id": 6900
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как изображение со страницы устройства водоёмов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Изображение относится к странице водных объектов, но не подтверждает отдельный реализованный фонтан или его инженерные характеристики.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S11-CHILD-TERRACE-VERANDA",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6922],
+      "media_pool": "SERVICE-6922",
+      "media": [
+        {
+          "attachment_id": 7039,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp",
+          "pool": "SERVICE-6922",
+          "asset_kind": "service_photo",
+          "source_page_id": 6922
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как изображение со страницы систем туманообразования; не называть выполненным объектом или нашей работой.",
+      "caveat": "Изображение не имеет адресной подписи и не подтверждает результат, производительность или снижение температуры.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S11-CHILD-CAFE-OUTDOOR",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6922],
+      "media_pool": "SERVICE-6922",
+      "media": [
+        {
+          "attachment_id": 7039,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp",
+          "pool": "SERVICE-6922",
+          "asset_kind": "service_photo",
+          "source_page_id": 6922
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как изображение со страницы систем туманообразования; не называть выполненным объектом или нашей работой.",
+      "caveat": "Изображение не имеет привязки к коммерческой летней площадке и не подтверждает эффект или характеристики системы.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S11-CHILD-GREENHOUSE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [6922],
+      "media_pool": "SERVICE-6922",
+      "media": [
+        {
+          "attachment_id": 7039,
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp",
+          "pool": "SERVICE-6922",
+          "asset_kind": "service_photo",
+          "source_page_id": 6922
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как изображение со страницы систем туманообразования; не называть выполненным объектом или нашей работой.",
+      "caveat": "Изображение не подтверждает конкретную теплицу, агрономический результат или параметры микроклимата.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S12-CHILD-DRIVING",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9138],
+      "media_pool": "SERVICE-9138",
+      "media": [
+        {
+          "attachment_id": 9186,
+          "url": "https://exp76.ru/wp-content/uploads/2018/11/fundament.webp",
+          "pool": "SERVICE-9138",
+          "asset_kind": "service_photo",
+          "source_page_id": 9138
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как изображение со страницы железобетонных свай; не называть выполненным объектом или нашей работой.",
+      "caveat": "Изображение не подтверждает применённую технику, параметры свай, геологию, ростверк или несущую способность.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S12-CHILD-PRIVATE-HOUSE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9138],
+      "media_pool": "SERVICE-9138",
+      "media": [
+        {
+          "attachment_id": 9186,
+          "url": "https://exp76.ru/wp-content/uploads/2018/11/fundament.webp",
+          "pool": "SERVICE-9138",
+          "asset_kind": "service_photo",
+          "source_page_id": 9138
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как изображение со страницы железобетонных свай; не называть выполненным объектом или нашей работой.",
+      "caveat": "Изображение не подтверждает конкретный частный дом, конструкцию фундамента или расчётные характеристики.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S12-CHILD-BATHHOUSE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9138],
+      "media_pool": "SERVICE-9138",
+      "media": [
+        {
+          "attachment_id": 9186,
+          "url": "https://exp76.ru/wp-content/uploads/2018/11/fundament.webp",
+          "pool": "SERVICE-9138",
+          "asset_kind": "service_photo",
+          "source_page_id": 9138
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как изображение со страницы железобетонных свай; не называть выполненным объектом или нашей работой.",
+      "caveat": "Изображение не подтверждает конкретную баню, конструкцию фундамента или расчётные характеристики.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S13-CHILD-CARPORT",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9312],
+      "media_pool": "SERVICE-9312",
+      "media": [
+        {
+          "attachment_id": 9313,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/naves.webp",
+          "pool": "SERVICE-9312",
+          "asset_kind": "service_photo",
+          "source_page_id": 9312
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы металлических навесов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не имеет case provenance и не подтверждает конкретную конструкцию, материал, срок или гарантию.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S13-CHILD-TERRACE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9312],
+      "media_pool": "SERVICE-9312",
+      "media": [
+        {
+          "attachment_id": 9313,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/naves.webp",
+          "pool": "SERVICE-9312",
+          "asset_kind": "service_photo",
+          "source_page_id": 9312
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы металлических навесов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает конкретную террасу или веранду, материал, срок или гарантию.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S13-CHILD-BARBECUE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9312],
+      "media_pool": "SERVICE-9312",
+      "media": [
+        {
+          "attachment_id": 9313,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/naves.webp",
+          "pool": "SERVICE-9312",
+          "asset_kind": "service_photo",
+          "source_page_id": 9312
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы металлических навесов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает конкретную зону барбекю, конструкцию навеса, срок или гарантию.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S13-CHILD-POLYCARBONATE-HOME",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9312],
+      "media_pool": "SERVICE-9312",
+      "media": [
+        {
+          "attachment_id": 9313,
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/naves.webp",
+          "pool": "SERVICE-9312",
+          "asset_kind": "service_photo",
+          "source_page_id": 9312
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы металлических навесов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает марку поликарбоната, конкретное примыкание к дому, срок или гарантию.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S14-CHILD-FIREPLACE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9775],
+      "media_pool": "SERVICE-9775",
+      "media": [
+        {
+          "attachment_id": 9782,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp",
+          "pool": "SERVICE-9775",
+          "asset_kind": "service_photo",
+          "source_page_id": 9775
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы печей и каминов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не имеет case provenance и не подтверждает конструкцию, материалы, технические параметры или гарантию камина.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S14-CHILD-HEATING-STOVE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9775],
+      "media_pool": "SERVICE-9775",
+      "media": [
+        {
+          "attachment_id": 9782,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp",
+          "pool": "SERVICE-9775",
+          "asset_kind": "service_photo",
+          "source_page_id": 9775
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы печей и каминов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает конкретную отопительную печь, расчёт мощности, материалы или гарантию.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S14-CHILD-BARBECUE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9775],
+      "media_pool": "SERVICE-9775",
+      "media": [
+        {
+          "attachment_id": 9782,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp",
+          "pool": "SERVICE-9775",
+          "asset_kind": "service_photo",
+          "source_page_id": 9775
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы печей и каминов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает конкретный барбекю-комплекс, его комплектацию, материалы или гарантию.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S14-CHILD-BRICK-GRILL",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9775],
+      "media_pool": "SERVICE-9775",
+      "media": [
+        {
+          "attachment_id": 9782,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp",
+          "pool": "SERVICE-9775",
+          "asset_kind": "service_photo",
+          "source_page_id": 9775
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы печей и каминов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает конкретный кирпичный мангал, его конструкцию, материалы или гарантию.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S14-CHILD-CAULDRON-SMOKEHOUSE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9775],
+      "media_pool": "SERVICE-9775",
+      "media": [
+        {
+          "attachment_id": 9782,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp",
+          "pool": "SERVICE-9775",
+          "asset_kind": "service_photo",
+          "source_page_id": 9775
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы печей и каминов; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает комплектацию печи казаном или коптильней, материалы, технические параметры или гарантию.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S15-CHILD-PRIVATE-HOUSE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9838],
+      "media_pool": "SERVICE-9838",
+      "media": [
+        {
+          "attachment_id": 9840,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
+          "pool": "SERVICE-9838",
+          "asset_kind": "service_photo",
+          "source_page_id": 9838
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы демонтажа зданий; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает конкретный частный дом, способ работ, разрешения, сроки или объём вывоза.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S15-CHILD-COUNTRY-HOUSE",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9838],
+      "media_pool": "SERVICE-9838",
+      "media": [
+        {
+          "attachment_id": 9840,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
+          "pool": "SERVICE-9838",
+          "asset_kind": "service_photo",
+          "source_page_id": 9838
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы демонтажа зданий; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает конкретный дачный дом, способ разборки, сроки или объём вывоза.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S15-CHILD-DANGEROUS-BUILDING",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9838],
+      "media_pool": "SERVICE-9838",
+      "media": [
+        {
+          "attachment_id": 9840,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
+          "pool": "SERVICE-9838",
+          "asset_kind": "service_photo",
+          "source_page_id": 9838
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы демонтажа зданий; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает аварийный статус конкретного здания, допустимый масштаб, разрешения или способ демонтажа.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S15-CHILD-MANUAL",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9838],
+      "media_pool": "SERVICE-9838",
+      "media": [
+        {
+          "attachment_id": 9840,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
+          "pool": "SERVICE-9838",
+          "asset_kind": "service_photo",
+          "source_page_id": 9838
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы демонтажа зданий; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает ручной способ разборки конкретного здания, условия доступа, сроки или объём работ.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S15-CHILD-MECHANIZED",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9838],
+      "media_pool": "SERVICE-9838",
+      "media": [
+        {
+          "attachment_id": 9840,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
+          "pool": "SERVICE-9838",
+          "asset_kind": "service_photo",
+          "source_page_id": 9838
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы демонтажа зданий; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает состав доступной техники, масштаб конкретного объекта, сроки или производительность.",
+      "needs_client_asset_or_generated_illustration": false
+    },
+    {
+      "destination_id": "S15-CHILD-DEBRIS",
+      "evidence_class": "B",
+      "exact_case_ids": [],
+      "exact_case_urls": [],
+      "contextual_page_ids": [9838],
+      "media_pool": "SERVICE-9838",
+      "media": [
+        {
+          "attachment_id": 9840,
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
+          "pool": "SERVICE-9838",
+          "asset_kind": "service_photo",
+          "source_page_id": 9838
+        }
+      ],
+      "asset_kind": "service_photo",
+      "safe_caption_rule": "Подписывать как фото со страницы демонтажа зданий; не называть выполненным объектом или нашей работой.",
+      "caveat": "Фото не подтверждает отдельную услугу общего вывоза мусора, транспорт, объём или условия утилизации.",
       "needs_client_asset_or_generated_illustration": false
     }
   ]

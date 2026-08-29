@@ -1,6 +1,6 @@
 <?php
 /**
- * Production routing and metadata for the eight upgraded legacy service pages.
+ * Production routing and metadata for the fifteen upgraded legacy service pages.
  *
  * The exact WordPress page ID, slug, parent and template must all match before
  * the new version is shown. Any incomplete deployment therefore falls back to
@@ -20,6 +20,13 @@ function land76_service_v2_owners() {
     676 => array('slug' => 'podpornye-stenki', 'service_id' => 'S6'),
     6918 => array('slug' => 'ulichnoe-osveshhenie-uchastka', 'service_id' => 'S7'),
     9282 => array('slug' => 'vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch', 'service_id' => 'S8'),
+    6870 => array('slug' => 'vykorchevyvanie-pnejj-spil-derevev', 'service_id' => 'S9'),
+    6900 => array('slug' => 'sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev', 'service_id' => 'S10'),
+    6922 => array('slug' => 'sistemy-tumanoobrazovaniya', 'service_id' => 'S11'),
+    9138 => array('slug' => 'fundament-na-zhelezobetonnykh-svajakh', 'service_id' => 'S12'),
+    9312 => array('slug' => 'navesy-iz-metalla', 'service_id' => 'S13'),
+    9775 => array('slug' => 'kaminy-pechi-barbekju', 'service_id' => 'S14'),
+    9838 => array('slug' => 'snos-i-demontazh-zdanijj-domov', 'service_id' => 'S15'),
   );
 }
 

@@ -259,28 +259,59 @@
     ]
   },
   "services": {
-    "heading": "Отдельные услуги по направлению",
-    "lead": "Страницы услуг, выделенные в утверждённой архитектуре по самостоятельным поисковым намерениям хаба «Рулонный и посевной газон под ключ».",
+    "heading": "Устройство и восстановление газона",
+    "lead": "Направления разделены по способу создания покрытия, подготовке основания и ремонту уже существующего газона.",
     "items": [
       {
-        "title": "Посевной газон",
-        "text": "Посевной газон. Семена распределяют по подготовленному грунту. В дальнейшем важно соблюдать режим увлажнения и бережно относиться к молодой траве, пока покрытие формируется.",
-        "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
-          "alt": "Посевной газон на подготовленном участке"
-        },
-        "page_key": "S2-CHILD-POSEVNOY-GAZON",
-        "url": "https://exp76.ru/posevnoj-gazon-pod-kljuch/"
-      },
-      {
-        "title": "Рулонный газон",
-        "text": "Рулонный газон. Рулоны укладывают на подготовленную поверхность, сохраняя аккуратное сопряжение полотен. Такой вариант выбирают, когда нужен готовый травяной покров после завершения укладки.",
+        "page_key": "S2-CHILD-ROLL",
+        "url": "https://exp76.ru/rulonnyj-gazon-pod-kljuch/",
+        "title": "Рулонный газон под ключ",
+        "text": "Подготовка поверхности и укладка готового травяного покрытия с согласованием примыканий, полива и первых действий после завершения работ.",
         "image": {
           "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
-          "alt": "Рулонный газон на объекте в Нестерово"
-        },
-        "page_key": "S2-CHILD-RULONNY-GAZON",
-        "url": "https://exp76.ru/rulonnyj-gazon-pod-kljuch/"
+          "alt": "Подтверждённый объект с подготовкой почвы и рулонным газоном",
+          "asset_kind": "case_photo",
+          "source_page_id": 9554,
+          "case_id": 9554
+        }
+      },
+      {
+        "page_key": "S2-CHILD-SEED",
+        "url": "https://exp76.ru/posevnoj-gazon-pod-kljuch/",
+        "title": "Посевной газон под ключ",
+        "text": "Создание покрытия посевом по подготовленному грунту с учётом распределения семян и режима ухода в период формирования молодой травы.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+          "alt": "Подтверждённый объект с устройством посевного газона",
+          "asset_kind": "case_photo",
+          "source_page_id": 10096,
+          "case_id": 10096
+        }
+      },
+      {
+        "page_key": "S2-CHILD-SOIL",
+        "url": "https://exp76.ru/podgotovka-grunta-pod-gazon/",
+        "title": "Подготовка грунта под газон",
+        "text": "Формирование верхнего слоя и основания будущего покрытия без присвоения работ по общему изменению рельефа и вертикальной планировке участка.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+          "alt": "Объект, где подтверждены подготовка почвы и укладка газона",
+          "asset_kind": "case_photo",
+          "source_page_id": 9554,
+          "case_id": 9554
+        }
+      },
+      {
+        "page_key": "S2-CHILD-RESTORE",
+        "url": "https://exp76.ru/vosstanovlenie-i-remont-gazona/",
+        "title": "Восстановление и ремонт газона",
+        "text": "Разовое восстановление повреждённых или разреженных участков покрытия; регулярная стрижка и сезонное обслуживание относятся к уходу за газоном.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+          "alt": "Контекстная фотография: работа на существующем газоне",
+          "asset_kind": "context_photo",
+          "source_page_id": 9357
+        }
       }
     ]
   },
@@ -311,16 +342,6 @@
     ]
   },
   "evidence_gaps": [
-    {
-      "kind": "nonready_destination",
-      "page_key": "S2-CHILD-POSEVNOY-GAZON",
-      "status": "blocked_facts"
-    },
-    {
-      "kind": "nonready_destination",
-      "page_key": "S2-CHILD-RULONNY-GAZON",
-      "status": "blocked_facts"
-    },
     {
       "kind": "nonready_destination",
       "page_key": "S2-ARTICLE-15A8258BC551",
@@ -364,5 +385,5 @@
       "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/js/main.js#tab-grass-total"
     }
   ],
-  "rendered_sha256": "82340e438142f4d560b2af1e9348d650b89400e5f4ef4fb8f353740f8f693d85"
+  "rendered_sha256": "a8da3aa921eabd8c349b73adefeea8e0f57bc06a12f917c3e81b3aa9722b84ea"
 }

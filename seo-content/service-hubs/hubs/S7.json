@@ -251,9 +251,72 @@
     ]
   },
   "services": {
-    "heading": "Отдельные услуги по направлению",
-    "lead": "Страницы услуг, выделенные в утверждённой архитектуре по самостоятельным поисковым намерениям хаба «Уличное и ландшафтное освещение участка».",
-    "items": []
+    "heading": "Проектирование и монтаж освещения",
+    "lead": "Направления разделены по этапу и сценарию: проект, общий монтаж, свет в саду, постоянная подсветка фасада или сезонное оформление дома.",
+    "items": [
+      {
+        "page_key": "S7-CHILD-DESIGN",
+        "url": "https://exp76.ru/proekt-osveshcheniya-uchastka/",
+        "title": "Проект освещения участка",
+        "text": "Схема размещения и сценариев света до физического монтажа; фотография карточки показывает только контекст освещённого здания, а не проектный документ.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/osvescheniezdaniya.webp",
+          "alt": "Контекстная фотография: освещённое здание, не схема проекта",
+          "asset_kind": "context_photo",
+          "source_page_id": 6918
+        }
+      },
+      {
+        "page_key": "S7-CHILD-INSTALL",
+        "url": "https://exp76.ru/montazh-osveshcheniya-uchastka/",
+        "title": "Монтаж уличного освещения участка",
+        "text": "Комплексная установка уличного света по согласованной схеме, объединяющая линии и точки освещения без подмены отдельных декоративных сценариев.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/EvxPksHMjgc.webp",
+          "alt": "Опубликованный объект с подтверждённым монтажом уличного освещения",
+          "asset_kind": "case_photo",
+          "source_page_id": 9684,
+          "case_id": 9684
+        }
+      },
+      {
+        "page_key": "S7-CHILD-LANDSCAPE",
+        "url": "https://exp76.ru/landshaftnoe-osveshchenie-uchastka/",
+        "title": "Ландшафтное и декоративное освещение сада",
+        "text": "Световые акценты для дорожек, растений и композиций сада; постоянная архитектурная подсветка дома раскрывается отдельно.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+          "alt": "Фотография ландшафтного света со старой страницы услуги",
+          "asset_kind": "service_photo",
+          "source_page_id": 6918
+        }
+      },
+      {
+        "page_key": "S7-CHILD-ARCHITECTURAL",
+        "url": "https://exp76.ru/arhitekturnaya-podsvetka-doma/",
+        "title": "Архитектурная подсветка частного дома",
+        "text": "Постоянное освещение фасада и архитектурных элементов дома, не смешиваемое с садовыми светильниками или временным праздничным декором.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/DbDKG2WLtEk.webp",
+          "alt": "Подтверждённый объект с архитектурным освещением",
+          "asset_kind": "case_photo",
+          "source_page_id": 8604,
+          "case_id": 8604
+        }
+      },
+      {
+        "page_key": "S7-CHILD-HOLIDAY",
+        "url": "https://exp76.ru/novogodnee-osveshhenie-zagorodnogo-doma-v-rybinske-i-jaroslavskojj-oblasti/",
+        "title": "Новогоднее освещение загородного дома",
+        "text": "Сезонное праздничное оформление дома и территории; постоянная фасадная система остаётся направлением архитектурной подсветки.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2024/02/image1.webp",
+          "alt": "Иллюстрация: праздничное освещение загородного дома",
+          "asset_kind": "illustration",
+          "source_page_id": 10381
+        }
+      }
+    ]
   },
   "articles": {
     "heading": "Материалы по теме",
@@ -284,5 +347,5 @@
     }
   ],
   "fact_evidence": [],
-  "rendered_sha256": "d788ccb96b799dfd657ec843e9491be0bd37a7e47a5bc8763d06c9cf5472afbb"
+  "rendered_sha256": "1755af4b983ce0ac4fae140c8d4be21f6f4a02b2b93691c598893173a66d264d"
 }

@@ -1,0 +1,308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://exp76.ru/schemas/service-child-content-v1.json",
+  "title": "EXP76 production child-service content source",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "destination_id",
+    "service_id",
+    "deployment",
+    "slug",
+    "canonical",
+    "post_title",
+    "seo",
+    "h1",
+    "lead",
+    "scope",
+    "audience",
+    "process",
+    "pricing",
+    "proof",
+    "geo",
+    "faq",
+    "links",
+    "cta",
+    "boundary"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "destination_id": {
+      "type": "string",
+      "pattern": "^S[1-9][0-9]*-CHILD-[A-Z0-9-]+$"
+    },
+    "service_id": {
+      "type": "string",
+      "pattern": "^S[1-9][0-9]*$"
+    },
+    "deployment": { "$ref": "#/$defs/deployment" },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "canonical": {
+      "type": "string",
+      "pattern": "^https://exp76\\.ru/[^?#]+/$"
+    },
+    "post_title": { "type": "string", "minLength": 5 },
+    "seo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "description"],
+      "properties": {
+        "title": { "type": "string", "minLength": 20 },
+        "description": { "type": "string", "minLength": 60 }
+      }
+    },
+    "h1": { "type": "string", "minLength": 12 },
+    "lead": { "type": "string", "minLength": 60 },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heading", "text", "results"],
+      "properties": {
+        "heading": { "type": "string", "minLength": 12 },
+        "text": { "type": "string", "minLength": 40 },
+        "results": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/titledText" }
+        }
+      }
+    },
+    "audience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heading", "text", "items"],
+      "properties": {
+        "heading": { "type": "string", "minLength": 12 },
+        "text": { "type": "string", "minLength": 40 },
+        "items": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/titledText" }
+        }
+      }
+    },
+    "process": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heading", "steps"],
+      "properties": {
+        "heading": { "type": "string", "minLength": 10 },
+        "steps": {
+          "type": "array",
+          "minItems": 5,
+          "items": { "$ref": "#/$defs/titledText" }
+        }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heading", "text", "factors"],
+      "properties": {
+        "heading": { "type": "string", "minLength": 10 },
+        "text": { "type": "string", "minLength": 40 },
+        "factors": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "$ref": "#/$defs/titledText" }
+        }
+      }
+    },
+    "proof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_ref",
+        "case_ids",
+        "main_image_attachment_id",
+        "main_image_alt",
+        "caption"
+      ],
+      "properties": {
+        "evidence_ref": {
+          "type": "string",
+          "pattern": "^S[1-9][0-9]*-CHILD-[A-Z0-9-]+$"
+        },
+        "case_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1 }
+        },
+        "main_image_attachment_id": { "type": "integer", "minimum": 1 },
+        "main_image_alt": { "type": "string", "minLength": 12 },
+        "caption": { "type": "string", "minLength": 20 }
+      }
+    },
+    "geo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heading", "text", "areas"],
+      "properties": {
+        "heading": { "type": "string", "minLength": 10 },
+        "text": { "type": "string", "minLength": 50 },
+        "areas": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 3 }
+        }
+      }
+    },
+    "faq": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["heading", "items"],
+      "properties": {
+        "heading": { "type": "string", "minLength": 10 },
+        "items": {
+          "type": "array",
+          "minItems": 5,
+          "items": { "$ref": "#/$defs/faqItem" }
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parent", "related_services"],
+      "properties": {
+        "parent": { "$ref": "#/$defs/internalLink" },
+        "related_services": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/internalLink" }
+        }
+      }
+    },
+    "cta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "heading",
+        "text",
+        "primary_label",
+        "primary_url",
+        "secondary_label",
+        "secondary_url"
+      ],
+      "properties": {
+        "heading": { "type": "string", "minLength": 10 },
+        "text": { "type": "string", "minLength": 40 },
+        "primary_label": { "type": "string", "minLength": 5 },
+        "primary_url": { "$ref": "#/$defs/ctaUrl" },
+        "secondary_label": { "type": "string", "minLength": 5 },
+        "secondary_url": { "$ref": "#/$defs/ctaUrl" }
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "excluded_intents"],
+      "properties": {
+        "summary": { "type": "string", "minLength": 20 },
+        "excluded_intents": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 3 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "titledText": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "text"],
+      "properties": {
+        "title": { "type": "string", "minLength": 3 },
+        "text": { "type": "string", "minLength": 20 }
+      }
+    },
+    "faqItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question", "answer"],
+      "properties": {
+        "question": { "type": "string", "minLength": 12 },
+        "answer": { "type": "string", "minLength": 30 }
+      }
+    },
+    "internalLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["page_key", "url", "label"],
+      "properties": {
+        "page_key": { "type": "string", "minLength": 4 },
+        "url": {
+          "type": "string",
+          "pattern": "^https://exp76\\.ru/(?:[^?#]*/)?$"
+        },
+        "label": { "type": "string", "minLength": 5 }
+      }
+    },
+    "ctaUrl": {
+      "type": "string",
+      "anyOf": [
+        { "pattern": "^#[A-Za-z][A-Za-z0-9_-]*$" },
+        { "pattern": "^https://exp76\\.ru/(?:[^?#]*/)?$" }
+      ]
+    },
+    "deployment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "current_wp_id",
+        "current_post_type",
+        "current_url",
+        "target_template",
+        "preserve_id",
+        "preserve_permalink"
+      ],
+      "properties": {
+        "action": { "enum": ["create", "reuse"] },
+        "current_wp_id": { "type": ["integer", "null"], "minimum": 1 },
+        "current_post_type": { "type": ["string", "null"] },
+        "current_url": {
+          "type": ["string", "null"],
+          "pattern": "^https://exp76\\.ru/[^?#]+/$"
+        },
+        "target_template": { "type": ["string", "null"] },
+        "preserve_id": { "type": "boolean" },
+        "preserve_permalink": { "type": "boolean" }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "action": { "const": "create" },
+            "current_wp_id": { "type": "null" },
+            "current_post_type": { "type": "null" },
+            "current_url": { "type": "null" },
+            "target_template": { "type": "null" },
+            "preserve_id": { "const": false },
+            "preserve_permalink": { "const": false }
+          }
+        },
+        {
+          "properties": {
+            "action": { "const": "reuse" },
+            "current_wp_id": { "type": "integer", "minimum": 1 },
+            "current_post_type": { "type": "string", "minLength": 1 },
+            "current_url": {
+              "type": "string",
+              "pattern": "^https://exp76\\.ru/[^?#]+/$"
+            },
+            "target_template": { "type": "string", "minLength": 1 },
+            "preserve_id": { "const": true },
+            "preserve_permalink": { "const": true }
+          }
+        }
+      ]
+    }
+  }
+}

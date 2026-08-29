@@ -297,9 +297,72 @@
     ]
   },
   "services": {
-    "heading": "Отдельные услуги по направлению",
-    "lead": "Страницы услуг, выделенные в утверждённой архитектуре по самостоятельным поисковым намерениям хаба «Ландшафтное проектирование участка».",
-    "items": []
+    "heading": "Состав ландшафтного проекта",
+    "lead": "Выберите отдельный проектный результат: от первоначального эскиза и генерального плана до дендроплана, визуализации и схемы рельефа.",
+    "items": [
+      {
+        "page_key": "S1-CHILD-SKETCH",
+        "url": "https://exp76.ru/eskiznyj-proekt-uchastka/",
+        "title": "Эскизный проект участка",
+        "text": "Эскиз помогает согласовать концепцию, зонирование и основные связи участка до детализации полного комплекта ландшафтного проекта.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe_proektirovanie2.webp",
+          "alt": "Иллюстрация: концептуальный план участка",
+          "asset_kind": "illustration",
+          "source_page_id": 673
+        }
+      },
+      {
+        "page_key": "S1-CHILD-MASTERPLAN",
+        "url": "https://exp76.ru/generalnyj-plan-uchastka/",
+        "title": "Генеральный план участка",
+        "text": "Ландшафтный генплан объединяет зонирование, дорожки, озеленение и инженерные решения; строительный генплан и ГПЗУ в услугу не входят.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+          "alt": "Подтверждённый объект с работами по генеральному плану участка",
+          "asset_kind": "case_photo",
+          "source_page_id": 10345,
+          "case_id": 10345
+        }
+      },
+      {
+        "page_key": "S1-CHILD-DENDROPLAN",
+        "url": "https://exp76.ru/dendroplan-uchastka/",
+        "title": "Дендроплан участка",
+        "text": "Дендроплан задаёт проектное размещение и перечень растений, тогда как закупка и физическая посадка относятся к отдельному этапу озеленения.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe_proektirovanie2.webp",
+          "alt": "Иллюстрация: план участка с посадочными обозначениями",
+          "asset_kind": "illustration",
+          "source_page_id": 673
+        }
+      },
+      {
+        "page_key": "S1-CHILD-3D",
+        "url": "https://exp76.ru/3d-vizualizatsiya-landshaftnogo-dizajna/",
+        "title": "3D-визуализация ландшафтного дизайна",
+        "text": "Объёмная визуализация показывает будущую композицию, материалы и взаимное расположение элементов до начала работ на территории.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1814.webp",
+          "alt": "Подтверждённый объект с 3D-визуализацией проекта",
+          "asset_kind": "case_photo",
+          "source_page_id": 8620,
+          "case_id": 8620
+        }
+      },
+      {
+        "page_key": "S1-CHILD-RELIEF",
+        "url": "https://exp76.ru/proekt-vertikalnoj-planirovki-uchastka/",
+        "title": "Проект вертикальной планировки участка",
+        "text": "Проект определяет отметки и направления уклонов, но не включает физическое перемещение грунта, выравнивание или отсыпку территории.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+          "alt": "Контекстная фотография: подготовленная поверхность участка",
+          "asset_kind": "context_photo",
+          "source_page_id": 667
+        }
+      }
+    ]
   },
   "articles": {
     "heading": "Материалы по теме",
@@ -307,19 +370,9 @@
     "items": [
       {
         "page_key": "S1-ARTICLE-505521C7EF8C",
-        "url": "https://exp76.ru/kak-rasschitat-stoimost-blagoustrojstva-sa-sotku/",
-        "title": "Как рассчитать стоимость благоустройства са сотку",
-        "text": "Как рассчитать стоимость благоустройства са сотку: краткий ответ, условия и ограничения, пошаговый разбор, типовые ошибки, когда нужен подрядчик, связанная услуга.",
-        "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
-          "alt": "Благоустроенный участок после ландшафтного проектирования"
-        }
-      },
-      {
-        "page_key": "S1-ARTICLE-72FBB49E67C8",
-        "url": "https://exp76.ru/kak-rasschitat-inzhenernoe-blagoustrojstvo-uchastka/",
-        "title": "Как рассчитать инженерное благоустройство участка",
-        "text": "Как рассчитать инженерное благоустройство участка: краткий ответ, условия и ограничения, пошаговый разбор, типовые ошибки, когда нужен подрядчик, связанная услуга.",
+        "url": "https://exp76.ru/kak-rasschitat-stoimost-blagoustrojstva-za-sotku/",
+        "title": "Как рассчитать стоимость благоустройства за сотку",
+        "text": "Разбираем состав предварительного бюджета на благоустройство участка, включая проектные и инженерные работы, и объясняем, как пользоваться калькулятором без обещания фиксированной цены.",
         "image": {
           "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
           "alt": "Благоустроенный участок после ландшафтного проектирования"
@@ -341,11 +394,6 @@
     {
       "kind": "nonready_destination",
       "page_key": "S1-ARTICLE-505521C7EF8C",
-      "status": "backlog"
-    },
-    {
-      "kind": "nonready_destination",
-      "page_key": "S1-ARTICLE-72FBB49E67C8",
       "status": "backlog"
     },
     {
@@ -398,5 +446,5 @@
       "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/js/main.js#tab-project-total"
     }
   ],
-  "rendered_sha256": "a07a5ccc1c97e9c9b0e27cf89c006fefbfc410e58bb10b43b046853f36cdb94f"
+  "rendered_sha256": "ae4375534782951a32b4cecea542394d3842e3c76a194ec56f91f0ed5b3895cd"
 }

@@ -23,6 +23,7 @@ NEW_SERVICE = INC / "newservicepost.php"
 SEO_BLOG = INC / "seoblogpost.php"
 SEO_INDEXING = INC / "seo-category-indexing.php"
 REGION_TEMPLATE = THEME / "page-service-hub-region.php"
+SERVICEPOST = THEME / "servicepost.php"
 DRENAZH_BLOG_IMPORTER = INC / "import-drenazh-blog.php"
 
 RELEASE_ID = "service-hubs-2026-08-28"
@@ -38,6 +39,13 @@ EXPECTED_REGISTRY = {
     "S6": (676, "podpornye-stenki"),
     "S7": (6918, "ulichnoe-osveshhenie-uchastka"),
     "S8": (9282, "vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch"),
+    "S9": (6870, "vykorchevyvanie-pnejj-spil-derevev"),
+    "S10": (6900, "sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev"),
+    "S11": (6922, "sistemy-tumanoobrazovaniya"),
+    "S12": (9138, "fundament-na-zhelezobetonnykh-svajakh"),
+    "S13": (9312, "navesy-iz-metalla"),
+    "S14": (9775, "kaminy-pechi-barbekju"),
+    "S15": (9838, "snos-i-demontazh-zdanijj-domov"),
 }
 
 LEGACY_IMPORT_HASHES = {
@@ -52,7 +60,7 @@ LEGACY_IMPORT_HASHES = {
     "import-plitka.php": "d6a3d8c762c2ae8d1b20fa4971f171257f48037e308d1159cde48f0f093cee40",
     "import-plitka-blog.php": "6d6c3dcda02f15986a9e1a4435a39988b882f3e3e2b295dcbc9c3043326385f4",
     "import-drenazh.php": "bd13a0e750bf5310ad617b46b88904959860e6c5645af30a26f6ef8cfccdea86",
-    "import-drenazh-blog.php": "56462a033fc08aedc106337ff08239e35d563e8d4eabb5c492be35c52fe12538",
+    "import-drenazh-blog.php": "3a05d971062528c788245e596687f5ce1e810695ec0aa94be287e64d888ef838",
     "import-case-seo.php": "b8341aa87a8b26e95d9cdc67da7090eb3e6bfb9151446e6f530bd8fd9fd607c0",
     "import-service-previews.php": "cf00ad108fb6edf6c9bbc925594dfe6ef805c0d05232f45d945eccb4330af562",
 }
@@ -131,7 +139,7 @@ class ServiceHubRegistryTests(unittest.TestCase):
         self.assertIsNotNone(match, "registry must keep its single JSON source in a PHP 7.4 nowdoc")
         return json.loads(match.group(1).strip())
 
-    def test_registry_has_exact_eight_frozen_hubs(self):
+    def test_registry_has_exact_fifteen_frozen_hubs(self):
         registry = self.registry()
         self.assertEqual(set(registry), set(EXPECTED_REGISTRY))
         for service_id, (post_id, slug) in EXPECTED_REGISTRY.items():
@@ -186,20 +194,28 @@ class ServiceHubRegistryTests(unittest.TestCase):
 
 
 class ImportPayloadAndAcfTests(unittest.TestCase):
-    def test_import_payload_is_empty_draft_bound_to_exact_release_inventory(self):
+    def test_import_payload_is_ready_and_bound_to_exact_release_inventory(self):
         payload = json.loads(read(IMPORT_PAYLOAD))
         self.assertTrue(IMPORT_RELEASE_MANIFEST.is_file(), "release inventory must ship with payload")
         release_manifest = json.loads(read(IMPORT_RELEASE_MANIFEST))
         self.assertEqual(payload["schema_version"], 1)
         self.assertEqual(payload["release_id"], RELEASE_ID)
-        self.assertEqual(payload["release_status"], "draft")
-        self.assertEqual(payload["items"], [])
+        self.assertEqual(payload["release_status"], "ready")
+        self.assertEqual(65, len(payload["items"]))
         self.assertEqual(payload["manifest_sha256"], sha256(IMPORT_RELEASE_MANIFEST))
         self.assertEqual(release_manifest["schema_version"], 1)
         self.assertEqual(release_manifest["release_id"], RELEASE_ID)
-        self.assertEqual(release_manifest["release_status"], "draft")
-        self.assertEqual(release_manifest["items"], [])
+        self.assertEqual(release_manifest["release_status"], "ready")
+        self.assertEqual(65, len(release_manifest["items"]))
         self.assertEqual(release_manifest["source_manifest_sha256"], sha256(RELEASE_MANIFEST))
+        expected_inventory = sorted(
+            (
+                {"page_key": item["page_key"], "checksum": item["checksum"]}
+                for item in payload["items"]
+            ),
+            key=lambda item: (item["page_key"], item["checksum"]),
+        )
+        self.assertEqual(expected_inventory, release_manifest["items"])
         self.assertTrue(FORBIDDEN_KEYS.isdisjoint(recursive_keys(payload)))
         self.assertTrue(FORBIDDEN_KEYS.isdisjoint(recursive_keys(release_manifest)))
 
@@ -321,6 +337,206 @@ class ImporterSafetyTests(unittest.TestCase):
         self.assertIn("land76wp_service_hubs_find_page_key_posts", source)
         self.assertIn("page_key_conflict", source)
 
+    def test_reuse_contract_allowlist_is_exact_and_frozen(self):
+        source = self.source()
+        match = re.search(
+            r"<<<'LAND76_SERVICE_HUB_REUSE_CONTRACTS_JSON'\s*(.*?)\s*"
+            r"LAND76_SERVICE_HUB_REUSE_CONTRACTS_JSON;",
+            source,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(match, "reuse owners need one frozen JSON allowlist")
+        contracts = json.loads(match.group(1).strip())
+        required_contracts = {
+            "S7-CHILD-HOLIDAY": {
+                "page_key": "S7-CHILD-HOLIDAY",
+                "service_id": "S7",
+                "post_id": 10381,
+                "post_type": "page",
+                "post_status": "publish",
+                "slug": "novogodnee-osveshhenie-zagorodnogo-doma-v-rybinske-i-jaroslavskojj-oblasti",
+                "parent_id": 0,
+                "current_url": "https://exp76.ru/novogodnee-osveshhenie-zagorodnogo-doma-v-rybinske-i-jaroslavskojj-oblasti/",
+                "target_url": "https://exp76.ru/novogodnee-osveshhenie-zagorodnogo-doma-v-rybinske-i-jaroslavskojj-oblasti/",
+                "legacy_template": "servicepost.php",
+                "target_template": "servicepost.php",
+            },
+        }
+        self.assertEqual(required_contracts, contracts)
+        self.assertNotIn("S5-CHILD-STUMPS", contracts)
+        reuse_registry = php_function_body(
+            source, "land76wp_service_hubs_reuse_contracts"
+        )
+        self.assertNotIn("count($decoded) !== 2", reuse_registry)
+        for marker in (
+            "foreach ($decoded",
+            "array_keys",
+            "page_key",
+            "post_id",
+            "current_url",
+            "target_url",
+            "legacy_template",
+            "target_template",
+        ):
+            self.assertIn(marker, reuse_registry)
+
+    def test_reuse_planner_accepts_only_exact_legacy_or_managed_owner(self):
+        source = self.source()
+        body = php_function_body(source, "land76wp_service_hubs_plan_reuse_item")
+        for marker in (
+            "get_post",
+            "get_permalink",
+            "get_page_template_slug",
+            "land76wp_service_hubs_find_page_key_posts",
+            "land76wp_service_hubs_find_global_slug_posts",
+            "reuse_contract_mismatch",
+            "reuse_missing_post",
+            "reuse_id_mismatch",
+            "reuse_type_mismatch",
+            "reuse_status_mismatch",
+            "reuse_slug_mismatch",
+            "reuse_parent_mismatch",
+            "reuse_url_mismatch",
+            "reuse_template_mismatch",
+            "reuse_owner_mismatch",
+            "reuse_partial_owner",
+            "reuse_update",
+        ):
+            self.assertIn(marker, body)
+        self.assertIn("land76wp_service_hubs_import_owner", body)
+        self.assertIn("_land76_import_owner", body)
+        self.assertIn("_land76_page_key", body)
+        self.assertIn("_land76_service_id", body)
+        self.assertIn("_land76_topic_key", body)
+        self.assertIn("_land76_canonical", body)
+        self.assertIn("_land76_release_id", body)
+        self.assertIn("_land76_manifest_sha256", body)
+        self.assertIn("_land76_import_checksum", body)
+        plan_body = php_function_body(source, "land76wp_service_hubs_plan_item")
+        self.assertIn("land76wp_service_hubs_reuse_contract_for_item", plan_body)
+        self.assertIn("land76wp_service_hubs_plan_reuse_item", plan_body)
+
+    def test_stage_verifies_but_never_mutates_published_reuse_owners(self):
+        source = self.source()
+        revalidate = php_function_body(
+            source, "land76wp_service_hubs_revalidate_stage_targets"
+        )
+        self.assertIn("reuse_update", revalidate)
+        self.assertIn("land76wp_service_hubs_verify_reuse_target", revalidate)
+        stage = php_function_body(source, "land76wp_service_hubs_execute_stage")
+        self.assertGreaterEqual(stage.count("reuse_update"), 3)
+        self.assertIn("land76wp_service_hubs_verify_reuse_target", stage)
+        self.assertLess(
+            stage.index("land76wp_service_hubs_revalidate_stage_targets"),
+            stage.index("START TRANSACTION"),
+        )
+
+    def test_reuse_publish_revalidates_snapshots_and_rolls_back(self):
+        source = self.source()
+        publish = php_function_body(source, "land76wp_service_hubs_publish_plan")
+        self.assertGreaterEqual(
+            publish.count("land76wp_service_hubs_verify_reuse_target"), 3
+        )
+        self.assertLess(
+            publish.index("land76wp_service_hubs_verify_reuse_target"),
+            publish.index("START TRANSACTION"),
+        )
+        inside_verify = publish.index(
+            "land76wp_service_hubs_verify_reuse_target",
+            publish.index("START TRANSACTION"),
+        )
+        snapshot = publish.index("land76wp_service_hubs_snapshot_post", inside_verify)
+        apply_update = publish.index(
+            "land76wp_service_hubs_apply_reuse_item", snapshot
+        )
+        self.assertLess(inside_verify, snapshot)
+        self.assertLess(snapshot, apply_update)
+        self.assertIn("ROLLBACK", publish)
+        self.assertIn("publish_rollback", publish)
+
+    def test_reuse_update_preserves_id_type_slug_parent_status_and_permalink(self):
+        source = self.source()
+        body = php_function_body(source, "land76wp_service_hubs_apply_reuse_item")
+        for marker in (
+            "wp_update_post",
+            "_wp_page_template",
+            "target_template",
+            "land76wp_service_hubs_apply_post_metadata",
+            "wp_set_post_categories",
+        ):
+            self.assertIn(marker, body)
+        for forbidden in ("post_type", "post_status", "post_name", "post_parent"):
+            self.assertNotIn(forbidden, body)
+        snapshot = php_function_body(source, "land76wp_service_hubs_snapshot_post")
+        for marker in (
+            "post_type",
+            "post_status",
+            "post_name",
+            "post_parent",
+            "permalink",
+            "template",
+            "post_content_sha256",
+        ):
+            self.assertIn(marker, snapshot)
+
+    def test_reuse_page_keys_resolve_only_through_the_frozen_managed_owner(self):
+        body = php_function_body(
+            self.source(), "land76wp_service_hubs_resolve_page_key"
+        )
+        for marker in (
+            "land76wp_service_hubs_reuse_contracts",
+            "get_post",
+            "get_permalink",
+            "get_page_template_slug",
+            "_land76_import_owner",
+            "_land76_page_key",
+            "_land76_service_id",
+            "_land76_topic_key",
+            "target_template",
+            "target_url",
+        ):
+            self.assertIn(marker, body)
+
+    def test_servicepost_routes_only_managed_child_pages_to_new_template(self):
+        source = read(SERVICEPOST)
+        for marker in (
+            "land76_service_v2_current",
+            "$land76_managed_child_page",
+            "get_queried_object_id",
+            "_land76_import_owner",
+            "_land76_page_key",
+            "land76wp_service_hubs_import_owner",
+            "S(?:[1-9]|1[0-5])-CHILD-",
+            "get_post_type",
+            "'page'",
+            "get_page_template_slug",
+            "servicepost.php",
+            "get_header('seo')",
+            "/inc/newservicepost.php",
+            "get_footer()",
+            "return;",
+            "get_header('service')",
+        ):
+            self.assertIn(marker, source)
+        self.assertLess(
+            source.index("land76_service_v2_current"),
+            source.index("$land76_managed_child_page"),
+        )
+        self.assertLess(
+            source.index("$land76_managed_child_page"),
+            source.index("get_header('service')"),
+        )
+
+    def test_importer_accepts_exact_service_range_s1_s15(self):
+        source = self.source()
+        for marker in (
+            "S(?:[1-9]|1[0-5])-(?:CHILD|ARTICLE|GEO)-",
+            "S(?:[1-9]|1[0-5])-CHILD-",
+            "S(?:[1-9]|1[0-5])-HUB",
+        ):
+            self.assertIn(marker, source)
+        self.assertNotIn("S[1-8]", source)
+
     def test_item_contract_binds_page_key_role_and_requires_seo(self):
         body = php_function_body(self.source(), "land76wp_service_hubs_validate_item")
         for marker in (
@@ -372,10 +588,11 @@ class ImporterSafetyTests(unittest.TestCase):
         stage_body = php_function_body(source, "land76wp_service_hubs_execute_stage")
         self.assertIn("$operation['action'] === 'create' ? array()", stage_body)
 
-    def test_publish_is_status_only_after_exact_staged_verification(self):
+    def test_publish_keeps_normal_records_status_only_and_isolates_reuse_updates(self):
         source = self.source()
         body = php_function_body(source, "land76wp_service_hubs_publish_plan")
         self.assertIn("land76wp_service_hubs_verify_staged_item", body)
+        self.assertIn("land76wp_service_hubs_apply_reuse_item", body)
         self.assertIn("wp_update_post", body)
         self.assertIn("'post_status' => 'publish'", body)
         for mutation in (
@@ -387,7 +604,9 @@ class ImporterSafetyTests(unittest.TestCase):
             "update_field",
         ):
             self.assertNotIn(mutation, body)
-        self.assertIn("if ($publish_ids === array())", body)
+        self.assertIn(
+            "if ($publish_ids === array() && $reuse_operations === array())", body
+        )
         self.assertGreaterEqual(body.count("land76wp_service_hubs_verify_staged_item"), 2)
 
     def test_stage_revalidates_targets_and_verifies_outputs_before_commit(self):

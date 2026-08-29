@@ -241,18 +241,68 @@
     ]
   },
   "services": {
-    "heading": "Отдельные услуги по направлению",
-    "lead": "Страницы услуг, выделенные в утверждённой архитектуре по самостоятельным поисковым намерениям хаба «Профессиональный уход за садом».",
+    "heading": "Работы по уходу за садом",
+    "lead": "Выберите уход за деревьями, кустарниками, газоном или цветниками либо отдельную диагностику и обработку растений.",
     "items": [
       {
+        "page_key": "S4-CHILD-TREE-PRUNING",
+        "url": "https://exp76.ru/obrezka-derevev/",
         "title": "Обрезка деревьев",
-        "text": "Обрезка деревьев. Санитарная, формирующая или омолаживающая обрезка начинается с оценки растения: его возраста, состояния кроны, расположения ветвей и сезона. Удаление сухих, повреждённых и мешающих ветвей помогает привести крону в порядок. Для плодовых, декоративных и хвойных растений подход различается, поэтому одинаковую схему не переносят с одного сада на другой.",
+        "text": "Санитарная, формирующая или омолаживающая обрезка после оценки состояния дерева; полный спил и удаление относятся к расчистке участка.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
-          "alt": "Иллюстрация сезонного ухода за садом"
-        },
-        "page_key": "S4-CHILD-OBREZKA",
-        "url": "https://exp76.ru/obrezka-derevev-i-kustarnikov/"
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
+          "alt": "Контекстная фотография: работы с деревом на участке",
+          "asset_kind": "context_photo",
+          "source_page_id": 6870
+        }
+      },
+      {
+        "page_key": "S4-CHILD-SHRUB-PRUNING",
+        "url": "https://exp76.ru/obrezka-kustarnikov-i-zhivoj-izgorodi/",
+        "title": "Обрезка кустарников и живой изгороди",
+        "text": "Формирование кустарников и линейных изгородей с учётом их состояния и задачи, не смешивая эту работу с обрезкой взрослых деревьев.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona1.webp",
+          "alt": "Фотография стрижки кустарника со страницы ухода за садом",
+          "asset_kind": "service_photo",
+          "source_page_id": 9357
+        }
+      },
+      {
+        "page_key": "S4-CHILD-LAWN-CARE",
+        "url": "https://exp76.ru/uhod-za-gazonom/",
+        "title": "Уход и обслуживание газона",
+        "text": "Регулярные операции для существующего травяного покрытия; первичное устройство и капитальное восстановление газона сохраняют отдельные страницы.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+          "alt": "Фотография ухода за газоном со старой страницы услуги",
+          "asset_kind": "service_photo",
+          "source_page_id": 9357
+        }
+      },
+      {
+        "page_key": "S4-CHILD-FLOWERBEDS",
+        "url": "https://exp76.ru/uhod-za-cvetnikami-i-klumbami/",
+        "title": "Уход за цветниками и клумбами",
+        "text": "Обслуживание существующих цветочных композиций и посадок без присвоения работ по созданию нового озеленения участка.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+          "alt": "Контекстная фотография: озеленённая территория с посадками",
+          "asset_kind": "context_photo",
+          "source_page_id": 6871
+        }
+      },
+      {
+        "page_key": "S4-CHILD-PEST",
+        "url": "https://exp76.ru/obrabotka-sada-ot-boleznej-i-vreditelej/",
+        "title": "Обработка сада от болезней и вредителей",
+        "text": "Диагностика состояния и обработка растений; борьба с клещами, комарами и санитарная обработка всей территории в услугу не входят.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+          "alt": "Контекстная фотография: обработка территории распылителем",
+          "asset_kind": "context_photo",
+          "source_page_id": 9357
+        }
       }
     ]
   },
@@ -285,11 +335,6 @@
   "evidence_gaps": [
     {
       "kind": "nonready_destination",
-      "page_key": "S4-CHILD-OBREZKA",
-      "status": "blocked_facts"
-    },
-    {
-      "kind": "nonready_destination",
       "page_key": "S4-ARTICLE-F668FF6F6190",
       "status": "backlog"
     },
@@ -305,5 +350,5 @@
     }
   ],
   "fact_evidence": [],
-  "rendered_sha256": "58639941fe210580f12374030005eb57de64fccde218b36a1412a0065600f9b0"
+  "rendered_sha256": "d976473331fd3f90eaae6332b13a374c13ae08984e68775136b9643d1acb541c"
 }

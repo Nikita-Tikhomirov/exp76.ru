@@ -53,11 +53,25 @@ EXACT_SERVICE_OWNERS = {
     "S6": (676, "podpornye-stenki"),
     "S7": (6918, "ulichnoe-osveshhenie-uchastka"),
     "S8": (9282, "vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch"),
+    "S9": (6870, "vykorchevyvanie-pnejj-spil-derevev"),
+    "S10": (
+        6900,
+        "sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev",
+    ),
+    "S11": (6922, "sistemy-tumanoobrazovaniya"),
+    "S12": (9138, "fundament-na-zhelezobetonnykh-svajakh"),
+    "S13": (9312, "navesy-iz-metalla"),
+    "S14": (9775, "kaminy-pechi-barbekju"),
+    "S15": (9838, "snos-i-demontazh-zdanijj-domov"),
 }
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE_ARCHITECTURE_PATH = (
-    ROOT / "seo-data" / "2026-08-exp76-services" / "processed" / "page_architecture.csv"
+    ROOT
+    / "seo-data"
+    / "2026-08-exp76-services"
+    / "processed"
+    / "complete_page_architecture.csv"
 )
 CASE_CATALOG_PATH = ROOT / "seo-content" / "service-hubs" / "case-catalog.json"
 
@@ -251,7 +265,9 @@ def load_services(data_dir: Path) -> list[dict[str, Any]]:
         raise ContractError(f"data directory does not exist: {data_dir}")
     files = sorted(data_dir.glob("*.json"))
     if len(files) != len(EXACT_SERVICE_OWNERS):
-        raise ContractError(f"expected 8 JSON payloads, found {len(files)}")
+        raise ContractError(
+            f"expected {len(EXACT_SERVICE_OWNERS)} JSON payloads, found {len(files)}"
+        )
 
     services: list[dict[str, Any]] = []
     for path in files:
@@ -267,7 +283,7 @@ def load_services(data_dir: Path) -> list[dict[str, Any]]:
 
     service_ids = [str(service["service_id"]) for service in services]
     if set(service_ids) != set(EXACT_SERVICE_OWNERS):
-        raise ContractError("payloads must contain every S1-S8 owner exactly once")
+        raise ContractError("payloads must contain every S1-S15 owner exactly once")
     if len(service_ids) != len(set(service_ids)):
         raise ContractError("duplicate service_id in production payloads")
 
@@ -404,7 +420,7 @@ def load_hub_services(
 
     service_ids = [str(service["service_id"]) for service in services]
     if set(service_ids) != set(EXACT_SERVICE_OWNERS):
-        raise ContractError("schema-v2 payloads must contain every S1-S8 owner exactly once")
+        raise ContractError("schema-v2 payloads must contain every S1-S15 owner exactly once")
     if len(service_ids) != len(set(service_ids)):
         raise ContractError("duplicate service_id in schema-v2 payloads")
     collection_errors = validate_content_collection(
@@ -423,7 +439,9 @@ def load_services_auto(data_dir: Path) -> list[dict[str, Any]]:
         raise ContractError(f"data directory does not exist: {data_dir}")
     files = sorted(data_dir.glob("*.json"))
     if len(files) != len(EXACT_SERVICE_OWNERS):
-        raise ContractError(f"expected 8 JSON payloads, found {len(files)}")
+        raise ContractError(
+            f"expected {len(EXACT_SERVICE_OWNERS)} JSON payloads, found {len(files)}"
+        )
     versions: set[Any] = set()
     for path in files:
         try:
@@ -839,7 +857,7 @@ def sync_services(
     release_manifest_path: Path = ROOT / "seo-content" / "service-hubs" / "release-manifest.json",
     _replace: ReplaceFunction = os.replace,
 ) -> dict[str, int]:
-    """Validate all eight sources, then transactionally install exactly 16 outputs."""
+    """Validate every owned source, then transactionally install two outputs per hub."""
     try:
         architecture = load_page_architecture(PAGE_ARCHITECTURE_PATH)
         cases = load_case_catalog(CASE_CATALOG_PATH)

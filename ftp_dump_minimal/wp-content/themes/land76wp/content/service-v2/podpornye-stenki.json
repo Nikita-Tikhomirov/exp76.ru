@@ -245,9 +245,48 @@
     ]
   },
   "services": {
-    "heading": "Отдельные услуги по направлению",
-    "lead": "Страницы услуг, выделенные в утверждённой архитектуре по самостоятельным поисковым намерениям хаба «Устройство подпорных стенок».",
-    "items": []
+    "heading": "Подпорные стенки по материалу",
+    "lead": "Выберите монолитное бетонное решение, кладку из камня или кирпича либо деревянную конструкцию после проверки её применимости.",
+    "items": [
+      {
+        "page_key": "S6-CHILD-CONCRETE",
+        "url": "https://exp76.ru/betonnaya-podpornaya-stenka/",
+        "title": "Бетонные подпорные стенки",
+        "text": "Монолитная конструкция для удержания грунта по подтверждённому решению; кладка и сборные варианты не смешиваются с этой страницей.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/DSC01487.webp",
+          "alt": "Подпорная стенка на опубликованном объекте",
+          "asset_kind": "case_photo",
+          "source_page_id": 10107,
+          "case_id": 10107
+        }
+      },
+      {
+        "page_key": "S6-CHILD-STONE",
+        "url": "https://exp76.ru/podpornaya-stenka-iz-kamnya-i-kirpicha/",
+        "title": "Подпорные стенки из камня и кирпича",
+        "text": "Каменная или кирпичная кладка с учётом рельефа и задачи конструкции; монолитный бетон остаётся отдельным технологическим направлением.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1983.webp",
+          "alt": "Подтверждённый объект с подпорной стенкой из плитняка",
+          "asset_kind": "case_photo",
+          "source_page_id": 8638,
+          "case_id": 8638
+        }
+      },
+      {
+        "page_key": "S6-CHILD-WOOD",
+        "url": "https://exp76.ru/podpornaya-stenka-iz-dereva/",
+        "title": "Деревянные подпорные стенки",
+        "text": "Деревянная или бревенчатая конструкция применяется только после оценки условий; декоративные ограждения и заборы сюда не относятся.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
+          "alt": "Иллюстрация: вариант деревянной подпорной конструкции",
+          "asset_kind": "illustration",
+          "source_page_id": 676
+        }
+      }
+    ]
   },
   "articles": {
     "heading": "Материалы по теме",
@@ -278,5 +317,5 @@
     }
   ],
   "fact_evidence": [],
-  "rendered_sha256": "248eddc9cefe4b733add91a72ace74553c55fdaf379dbd9e1fb57516ec0fd344"
+  "rendered_sha256": "5f31f2717e2c02bbaf5ce2ce38eac2c6d8e3cecb6333dc3e7d2acce77b21cc8b"
 }

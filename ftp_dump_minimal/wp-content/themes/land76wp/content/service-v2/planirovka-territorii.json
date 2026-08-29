@@ -256,18 +256,71 @@
     ]
   },
   "services": {
-    "heading": "Отдельные услуги по направлению",
-    "lead": "Страницы услуг, выделенные в утверждённой архитектуре по самостоятельным поисковым намерениям хаба «Планировка и выравнивание территории участка».",
+    "heading": "Работы по подготовке рельефа и грунта",
+    "lead": "Направления разделены по результату: ровная поверхность, заданные уклоны, механизированная планировка, подъём отметок или культивация земли.",
     "items": [
       {
+        "page_key": "S5-CHILD-LEVEL",
+        "url": "https://exp76.ru/vyravnivanie-uchastka/",
         "title": "Выравнивание участка",
-        "text": "Выравнивание участка. Работы могут касаться отдельной площадки, прохода, зоны перед домом, основания под газон или другой части участка. Задача состоит в том, чтобы получить поверхность, соответствующую дальнейшему использованию, а не просто переместить грунт. При обсуждении учитывают границы зон, соседние покрытия, существующие посадки и то, как изменится движение воды после преобразований.",
+        "text": "Получение ровной поверхности для дальнейшего использования территории без автоматического включения специальных технологий, отсыпки или устройства покрытий.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
-          "alt": "Иллюстрация выравнивания территории"
-        },
-        "page_key": "S5-CHILD-VYRAVNIVANIE",
-        "url": "https://exp76.ru/vyravnivanie-uchastka/"
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20180919_165532_HDR.webp",
+          "alt": "Подтверждённый объект с работами по выравниванию участка",
+          "asset_kind": "case_photo",
+          "source_page_id": 9415,
+          "case_id": 9415
+        }
+      },
+      {
+        "page_key": "S5-CHILD-VERTICAL",
+        "url": "https://exp76.ru/vertikalnaya-planirovka-uchastka/",
+        "title": "Вертикальная планировка и формирование уклонов",
+        "text": "Физическое изменение отметок и уклонов по согласованному решению; разработка самого проекта рельефа относится к ландшафтному проектированию.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+          "alt": "Контекстная фотография: подготовленная поверхность участка",
+          "asset_kind": "context_photo",
+          "source_page_id": 667
+        }
+      },
+      {
+        "page_key": "S5-CHILD-MACHINERY",
+        "url": "https://exp76.ru/planirovka-uchastka-spectehnikoj/",
+        "title": "Планировка участка спецтехникой",
+        "text": "Механизированные работы с оператором и согласованным результатом на территории, а не аренда машины без выполнения планировки.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
+          "alt": "Фотография спецтехники со старой страницы планировки участка",
+          "asset_kind": "service_photo",
+          "source_page_id": 667
+        }
+      },
+      {
+        "page_key": "S5-CHILD-FILL",
+        "url": "https://exp76.ru/otsypka-i-podem-uchastka/",
+        "title": "Отсыпка и подъём участка грунтом",
+        "text": "Добавление согласованного материала для изменения отметок территории; отдельная продажа грунта без работ в эту услугу не включается.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
+          "alt": "Объект, где подтверждён завоз плодородного грунта",
+          "asset_kind": "case_photo",
+          "source_page_id": 8613,
+          "case_id": 8613
+        }
+      },
+      {
+        "page_key": "S5-CHILD-CULTIVATION",
+        "url": "https://exp76.ru/kultivaciya-uchastka/",
+        "title": "Культивация участка",
+        "text": "Самостоятельная механическая обработка земли без присвоения планировки рельефа, посева семян или полного устройства газона.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0843.webp",
+          "alt": "Подтверждённый объект с культивацией земли",
+          "asset_kind": "case_photo",
+          "source_page_id": 8636,
+          "case_id": 8636
+        }
       }
     ]
   },
@@ -300,11 +353,6 @@
   "evidence_gaps": [
     {
       "kind": "nonready_destination",
-      "page_key": "S5-CHILD-VYRAVNIVANIE",
-      "status": "blocked_facts"
-    },
-    {
-      "kind": "nonready_destination",
       "page_key": "S5-ARTICLE-74B3B2B18DA4",
       "status": "backlog"
     },
@@ -320,5 +368,5 @@
     }
   ],
   "fact_evidence": [],
-  "rendered_sha256": "4652381839757b63f3bb77fd164f24192f3294b732b20a7cf9e8c257e435e0d7"
+  "rendered_sha256": "cce48bc23f59be837a4d6f34535bdcdd809c1ccd8023926eb3708511a35128bf"
 }

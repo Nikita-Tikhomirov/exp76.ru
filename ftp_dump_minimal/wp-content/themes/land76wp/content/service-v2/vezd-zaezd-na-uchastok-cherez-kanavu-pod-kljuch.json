@@ -265,9 +265,58 @@
     ]
   },
   "services": {
-    "heading": "Отдельные услуги по направлению",
-    "lead": "Страницы услуг, выделенные в утверждённой архитектуре по самостоятельным поисковым намерениям хаба «Въезд и заезд на участок через канаву».",
-    "items": []
+    "heading": "Варианты въезда через канаву",
+    "lead": "Выберите отдельную задачу по водопропускной трубе, щебёночной или бетонной конструкции либо въезду с площадкой за канавой.",
+    "items": [
+      {
+        "page_key": "S8-CHILD-PIPE",
+        "url": "https://exp76.ru/truba-v-kanavu-dlya-zaezda/",
+        "title": "Укладка водопропускной трубы в канаву",
+        "text": "Устройство водопропускной части под будущим проездом с сохранением движения воды; отдельная продажа трубы без работ не входит в услугу.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+          "alt": "Иллюстрация: конструкция въезда с трубой через канаву",
+          "asset_kind": "illustration",
+          "source_page_id": 9282
+        }
+      },
+      {
+        "page_key": "S8-CHILD-GRAVEL",
+        "url": "https://exp76.ru/shchebenochnyy-vezd-na-uchastok/",
+        "title": "Щебёночный въезд на участок",
+        "text": "Щебёночное исполнение проезда по согласованному основанию без переноса характеристик слоёв с чужого объекта и без подмены бетонного варианта.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
+          "alt": "Иллюстрация: вариант устройства въезда через канаву",
+          "asset_kind": "illustration",
+          "source_page_id": 9282
+        }
+      },
+      {
+        "page_key": "S8-CHILD-CONCRETE",
+        "url": "https://exp76.ru/betonnyy-vezd-cherez-kanavu/",
+        "title": "Бетонный въезд через канаву",
+        "text": "Бетонная конструкция проезда с учётом водопропуска и основания; декоративное мощение сохраняет собственного владельца услуги.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+          "alt": "Иллюстрация: устройство проезда через канаву",
+          "asset_kind": "illustration",
+          "source_page_id": 9282
+        }
+      },
+      {
+        "page_key": "S8-CHILD-PARKING",
+        "url": "https://exp76.ru/vezd-cherez-kanavu-s-parkovochnoj-ploshchadkoj/",
+        "title": "Въезд через канаву с парковочной площадкой",
+        "text": "Переход через канаву и непосредственно связанная с ним площадка; отдельная парковка, плитка и мощение в этот состав не включаются.",
+        "image": {
+          "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+          "alt": "Иллюстрация: въезд через канаву с площадкой за проездом",
+          "asset_kind": "illustration",
+          "source_page_id": 9282
+        }
+      }
+    ]
   },
   "articles": {
     "heading": "Материалы по теме",
@@ -298,5 +347,5 @@
     }
   ],
   "fact_evidence": [],
-  "rendered_sha256": "c7d03e332a9a43f9880e42c5f40b2830bef86efe13ff8afb8019b0dcda08651b"
+  "rendered_sha256": "82525dbbcb9ba9fce9f013a7392a4752047ee8e59877db31711810b5b9c6a859"
 }

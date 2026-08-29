@@ -1,0 +1,1737 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-08-29",
+  "sources": [
+    {
+      "path": "seo-content/service-pages/evidence.json",
+      "role": "legacy capability, exact case and media provenance"
+    },
+    {
+      "path": "seo-content/service-hubs/hubs/S1.json..S15.json",
+      "role": "selected hub media"
+    },
+    {
+      "url": "https://exp76.ru/wp-json/wp/v2/pages",
+      "role": "public case owner and publish status"
+    }
+  ],
+  "service_images": [
+    {
+      "service_id": "S1",
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S1.json#selected-image"
+    },
+    {
+      "service_id": "S1",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe_proektirovanie2.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe_proektirovanie2.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe_proektirovanie2.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S1.json#selected-image"
+    },
+    {
+      "service_id": "S1",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S1.json#selected-image"
+    },
+    {
+      "service_id": "S1",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S1.json#selected-image"
+    },
+    {
+      "service_id": "S1",
+      "url": "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S1.json#selected-image"
+    },
+    {
+      "service_id": "S1",
+      "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S1.json#selected-image"
+    },
+    {
+      "service_id": "S2",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S2.json#selected-image"
+    },
+    {
+      "service_id": "S2",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S2.json#selected-image"
+    },
+    {
+      "service_id": "S2",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S2.json#selected-image"
+    },
+    {
+      "service_id": "S2",
+      "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S2.json#selected-image"
+    },
+    {
+      "service_id": "S3",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S3.json#selected-image"
+    },
+    {
+      "service_id": "S3",
+      "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S3.json#selected-image"
+    },
+    {
+      "service_id": "S4",
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S4.json#selected-image"
+    },
+    {
+      "service_id": "S4",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S4.json#selected-image"
+    },
+    {
+      "service_id": "S4",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S4.json#selected-image"
+    },
+    {
+      "service_id": "S4",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S4.json#selected-image"
+    },
+    {
+      "service_id": "S4",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S4.json#selected-image"
+    },
+    {
+      "service_id": "S4",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona1.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona1.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona1.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S4.json#selected-image"
+    },
+    {
+      "service_id": "S4",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S4.json#selected-image"
+    },
+    {
+      "service_id": "S4",
+      "url": "https://exp76.ru/wp-content/uploads/2018/12/uhod1.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2018/12/uhod1.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2018/12/uhod1.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S4.json#selected-image"
+    },
+    {
+      "service_id": "S4",
+      "url": "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S4.json#selected-image"
+    },
+    {
+      "service_id": "S5",
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S5.json#selected-image"
+    },
+    {
+      "service_id": "S5",
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S5.json#selected-image"
+    },
+    {
+      "service_id": "S5",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S5.json#selected-image"
+    },
+    {
+      "service_id": "S5",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S5.json#selected-image"
+    },
+    {
+      "service_id": "S5",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S5.json#selected-image"
+    },
+    {
+      "service_id": "S5",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S5.json#selected-image"
+    },
+    {
+      "service_id": "S6",
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S6.json#selected-image"
+    },
+    {
+      "service_id": "S6",
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki2.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki2.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki2.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S6.json#selected-image"
+    },
+    {
+      "service_id": "S6",
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki3.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki3.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki3.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S6.json#selected-image"
+    },
+    {
+      "service_id": "S6",
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki4.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki4.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki4.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S6.json#selected-image"
+    },
+    {
+      "service_id": "S6",
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki5.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2015/07/podporki5.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki5.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S6.json#selected-image"
+    },
+    {
+      "service_id": "S6",
+      "url": "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S6.json#selected-image"
+    },
+    {
+      "service_id": "S7",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S7.json#selected-image"
+    },
+    {
+      "service_id": "S7",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S7.json#selected-image"
+    },
+    {
+      "service_id": "S7",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/osvescheniezdaniya.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/osvescheniezdaniya.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/osvescheniezdaniya.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S7.json#selected-image"
+    },
+    {
+      "service_id": "S7",
+      "url": "https://exp76.ru/wp-content/uploads/2024/02/image1.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2024/02/image1.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2024/02/image1.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S7.json#selected-image"
+    },
+    {
+      "service_id": "S8",
+      "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S8.json#selected-image"
+    },
+    {
+      "service_id": "S8",
+      "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S8.json#selected-image"
+    },
+    {
+      "service_id": "S9",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S9.json#selected-image"
+    },
+    {
+      "service_id": "S9",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/spil2.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/spil2.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/spil2.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S9.json#selected-image"
+    },
+    {
+      "service_id": "S9",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/spil3.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/spil3.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/spil3.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S9.json#selected-image"
+    },
+    {
+      "service_id": "S9",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/spil6.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/spil6.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/spil6.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S9.json#selected-image"
+    },
+    {
+      "service_id": "S9",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S9.json#selected-image"
+    },
+    {
+      "service_id": "S10",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/ustroistvo-vodoemov.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/ustroistvo-vodoemov.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/ustroistvo-vodoemov.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S10.json#selected-image"
+    },
+    {
+      "service_id": "S10",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem1.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem1.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem1.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S10.json#selected-image"
+    },
+    {
+      "service_id": "S10",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem3.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem3.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem3.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S10.json#selected-image"
+    },
+    {
+      "service_id": "S10",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem6.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem6.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem6.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S10.json#selected-image"
+    },
+    {
+      "service_id": "S10",
+      "url": "https://exp76.ru/wp-content/uploads/2023/12/20231011_131925-scaled.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2023/12/20231011_131925-scaled.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2023/12/20231011_131925-scaled.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S10.json#selected-image"
+    },
+    {
+      "service_id": "S11",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/tuman1.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/tuman1.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/tuman1.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S11.json#selected-image"
+    },
+    {
+      "service_id": "S11",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/tuman2.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/tuman2.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/tuman2.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S11.json#selected-image"
+    },
+    {
+      "service_id": "S11",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/tuman3.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/tuman3.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/tuman3.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S11.json#selected-image"
+    },
+    {
+      "service_id": "S11",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/tuman4.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/tuman4.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/tuman4.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S11.json#selected-image"
+    },
+    {
+      "service_id": "S11",
+      "url": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S11.json#selected-image"
+    },
+    {
+      "service_id": "S12",
+      "url": "https://exp76.ru/wp-content/uploads/2018/11/fundament.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2018/11/fundament.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2018/11/fundament.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S12.json#selected-image"
+    },
+    {
+      "service_id": "S12",
+      "url": "https://exp76.ru/wp-content/uploads/2018/11/gbs.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2018/11/gbs.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2018/11/gbs.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S12.json#selected-image"
+    },
+    {
+      "service_id": "S13",
+      "url": "https://exp76.ru/wp-content/uploads/2018/12/naves.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2018/12/naves.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2018/12/naves.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S13.json#selected-image"
+    },
+    {
+      "service_id": "S13",
+      "url": "https://exp76.ru/wp-content/uploads/2018/12/naves1.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2018/12/naves1.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2018/12/naves1.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S13.json#selected-image"
+    },
+    {
+      "service_id": "S14",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin01.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin01.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/kamin01.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S14.json#selected-image"
+    },
+    {
+      "service_id": "S14",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin02.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin02.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/kamin02.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S14.json#selected-image"
+    },
+    {
+      "service_id": "S14",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin04.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin04.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/kamin04.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S14.json#selected-image"
+    },
+    {
+      "service_id": "S14",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin07.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin07.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/kamin07.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S14.json#selected-image"
+    },
+    {
+      "service_id": "S14",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin08.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin08.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/kamin08.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S14.json#selected-image"
+    },
+    {
+      "service_id": "S14",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin10.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin10.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/kamin10.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S14.json#selected-image"
+    },
+    {
+      "service_id": "S14",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin12.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin12.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/kamin12.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S14.json#selected-image"
+    },
+    {
+      "service_id": "S14",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin13.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/kamin13.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/kamin13.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S14.json#selected-image"
+    },
+    {
+      "service_id": "S15",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S15.json#selected-image"
+    },
+    {
+      "service_id": "S15",
+      "url": "https://exp76.ru/wp-content/uploads/2019/02/snos2.webp",
+      "audit": {
+        "url": "https://exp76.ru/wp-content/uploads/2019/02/snos2.webp",
+        "http_status": 200,
+        "content_type": "image/webp",
+        "checked_date": "2026-08-29",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/wp-content/uploads/2019/02/snos2.webp",
+        "error": ""
+      },
+      "source_ref": "seo-content/service-hubs/hubs/S15.json#selected-image"
+    }
+  ],
+  "cases": [
+    {
+      "page_id": 8604,
+      "url": "https://exp76.ru/fotogalereja/kamenniki/",
+      "title": "Каменники",
+      "location": "Каменники",
+      "work_types": [
+        "архитектурное освещение"
+      ],
+      "service_ids": [
+        "S7"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2018/02/DbDKG2WLtEk.webp"
+      ],
+      "source_files": [
+        "seo-content/service-pages/evidence.json",
+        "seo-content/service-hubs/hubs/S7.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S7-CHILD-ARCHITECTURAL]"
+      ],
+      "location_sources": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S7-CHILD-ARCHITECTURAL]"
+      ],
+      "work_type_sources": [
+        {
+          "value": "архитектурное освещение",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S7-CHILD-ARCHITECTURAL]"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S7",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S7-CHILD-ARCHITECTURAL]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2018/02/DbDKG2WLtEk.webp",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S7-CHILD-ARCHITECTURAL]"
+        }
+      ],
+      "page_audit": {
+        "page_id": 8604,
+        "canonical_url": "https://exp76.ru/fotogalereja/kamenniki/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-29",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=kamenniki&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/kamenniki/",
+        "post_type": "page",
+        "featured_media_id": 8431
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/DbDKG2WLtEk.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-29",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2018/02/DbDKG2WLtEk.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 8608,
+      "url": "https://exp76.ru/fotogalereja/marievka/",
+      "title": "Мариевка",
+      "location": "Мариевка",
+      "work_types": [
+        "каскад водопадов",
+        "пруд"
+      ],
+      "service_ids": [
+        "S10"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp"
+      ],
+      "source_files": [
+        "seo-content/service-pages/evidence.json",
+        "seo-content/service-hubs/hubs/S10.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S10-CHILD-DECORATIVE-POND]"
+      ],
+      "location_sources": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S10-CHILD-DECORATIVE-POND]"
+      ],
+      "work_type_sources": [
+        {
+          "value": "каскад водопадов",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S10-CHILD-DECORATIVE-POND]"
+        },
+        {
+          "value": "пруд",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S10-CHILD-DECORATIVE-POND]"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S10",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S10-CHILD-DECORATIVE-POND]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S10-CHILD-DECORATIVE-POND]"
+        }
+      ],
+      "page_audit": {
+        "page_id": 8608,
+        "canonical_url": "https://exp76.ru/fotogalereja/marievka/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-29",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=marievka&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/marievka/",
+        "post_type": "page",
+        "featured_media_id": 8481
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-29",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 8613,
+      "url": "https://exp76.ru/fotogalereja/poselok-koprino/",
+      "title": "Посёлок Коприно",
+      "location": "посёлок Коприно",
+      "work_types": [
+        "корчевание пней",
+        "планировка участка",
+        "завоз плодородного грунта",
+        "посев газона"
+      ],
+      "service_ids": [
+        "S2",
+        "S5",
+        "S9"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp"
+      ],
+      "source_files": [
+        "seo-content/service-pages/evidence.json",
+        "seo-content/service-hubs/hubs/S2.json",
+        "seo-content/service-hubs/hubs/S5.json",
+        "seo-content/service-hubs/hubs/S9.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S9-CHILD-STUMPS]"
+      ],
+      "location_sources": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S9-CHILD-STUMPS]"
+      ],
+      "work_type_sources": [
+        {
+          "value": "корчевание пней",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S9-CHILD-STUMPS]"
+        },
+        {
+          "value": "планировка участка",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S9-CHILD-STUMPS]"
+        },
+        {
+          "value": "завоз плодородного грунта",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S9-CHILD-STUMPS]"
+        },
+        {
+          "value": "посев газона",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S9-CHILD-STUMPS]"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S2",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S9-CHILD-STUMPS]"
+        },
+        {
+          "service_id": "S5",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S9-CHILD-STUMPS]"
+        },
+        {
+          "service_id": "S9",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S9-CHILD-STUMPS]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S9-CHILD-STUMPS]"
+        }
+      ],
+      "page_audit": {
+        "page_id": 8613,
+        "canonical_url": "https://exp76.ru/fotogalereja/poselok-koprino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-29",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=poselok-koprino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/poselok-koprino/",
+        "post_type": "page",
+        "featured_media_id": 8523
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-29",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 8620,
+      "url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/",
+      "title": "Рыбинск, Шанхай",
+      "location": "Рыбинск, Шанхай",
+      "work_types": [
+        "3D-визуализация",
+        "архитектурное освещение"
+      ],
+      "service_ids": [
+        "S1",
+        "S7"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2018/02/IMG_1814.webp"
+      ],
+      "source_files": [
+        "seo-content/service-pages/evidence.json",
+        "seo-content/service-hubs/hubs/S1.json",
+        "seo-content/service-hubs/hubs/S7.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S1-CHILD-3D]"
+      ],
+      "location_sources": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S1-CHILD-3D]"
+      ],
+      "work_type_sources": [
+        {
+          "value": "3D-визуализация",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S1-CHILD-3D]"
+        },
+        {
+          "value": "архитектурное освещение",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S1-CHILD-3D]"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S1",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S1-CHILD-3D]"
+        },
+        {
+          "service_id": "S7",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S1-CHILD-3D]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1814.webp",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S1-CHILD-3D]"
+        }
+      ],
+      "page_audit": {
+        "page_id": 8620,
+        "canonical_url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-29",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinsk-shankhajj&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/rybinsk-shankhajj/",
+        "post_type": "page",
+        "featured_media_id": 8685
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1814.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-29",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1814.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 8636,
+      "url": "https://exp76.ru/fotogalereja/sudoverf/",
+      "title": "Судоверфь",
+      "location": "Судоверфь",
+      "work_types": [
+        "культивирование земли",
+        "планировка территории",
+        "посев газона"
+      ],
+      "service_ids": [
+        "S2",
+        "S5"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2018/02/IMG_0843.webp"
+      ],
+      "source_files": [
+        "seo-content/service-pages/evidence.json",
+        "seo-content/service-hubs/hubs/S2.json",
+        "seo-content/service-hubs/hubs/S5.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-CULTIVATION]"
+      ],
+      "location_sources": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-CULTIVATION]"
+      ],
+      "work_type_sources": [
+        {
+          "value": "культивирование земли",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-CULTIVATION]"
+        },
+        {
+          "value": "планировка территории",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-CULTIVATION]"
+        },
+        {
+          "value": "посев газона",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-CULTIVATION]"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S2",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-CULTIVATION]"
+        },
+        {
+          "service_id": "S5",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-CULTIVATION]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0843.webp",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-CULTIVATION]"
+        }
+      ],
+      "page_audit": {
+        "page_id": 8636,
+        "canonical_url": "https://exp76.ru/fotogalereja/sudoverf/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-29",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=sudoverf&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/sudoverf/",
+        "post_type": "page",
+        "featured_media_id": 8973
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0843.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-29",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0843.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 8638,
+      "url": "https://exp76.ru/fotogalereja/timoshkino/",
+      "title": "Тимошкино",
+      "location": "Тимошкино",
+      "work_types": [
+        "подпорная стенка из плитняка методом сухой кладки"
+      ],
+      "service_ids": [
+        "S6"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2018/02/IMG_1983.webp"
+      ],
+      "source_files": [
+        "seo-content/service-pages/evidence.json",
+        "seo-content/service-hubs/hubs/S6.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S6-CHILD-STONE]"
+      ],
+      "location_sources": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S6-CHILD-STONE]"
+      ],
+      "work_type_sources": [
+        {
+          "value": "подпорная стенка из плитняка методом сухой кладки",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S6-CHILD-STONE]"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S6",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S6-CHILD-STONE]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1983.webp",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S6-CHILD-STONE]"
+        }
+      ],
+      "page_audit": {
+        "page_id": 8638,
+        "canonical_url": "https://exp76.ru/fotogalereja/timoshkino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-29",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=timoshkino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/timoshkino/",
+        "post_type": "page",
+        "featured_media_id": 9017
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1983.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-29",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_1983.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 9415,
+      "url": "https://exp76.ru/fotogalereja/c-glebovo-rybinskijj-r-on/",
+      "title": "с. Глебово, Рыбинский район",
+      "location": "с. Глебово, Рыбинский район",
+      "work_types": [
+        "выравнивание земельного участка"
+      ],
+      "service_ids": [
+        "S5"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2019/02/IMG_20180919_165532_HDR.webp"
+      ],
+      "source_files": [
+        "seo-content/service-pages/evidence.json",
+        "seo-content/service-hubs/hubs/S5.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-LEVEL]"
+      ],
+      "location_sources": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-LEVEL]"
+      ],
+      "work_type_sources": [
+        {
+          "value": "выравнивание земельного участка",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-LEVEL]"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S5",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-LEVEL]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20180919_165532_HDR.webp",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-LEVEL]"
+        }
+      ],
+      "page_audit": {
+        "page_id": 9415,
+        "canonical_url": "https://exp76.ru/fotogalereja/c-glebovo-rybinskijj-r-on/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-29",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=c-glebovo-rybinskijj-r-on&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/c-glebovo-rybinskijj-r-on/",
+        "post_type": "page",
+        "featured_media_id": 9421
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20180919_165532_HDR.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-29",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20180919_165532_HDR.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 9567,
+      "url": "https://exp76.ru/fotogalereja/d-timoshkino/",
+      "title": "д. Тимошкино",
+      "location": "д. Тимошкино",
+      "work_types": [
+        "выравнивание земельного участка"
+      ],
+      "service_ids": [
+        "S5"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181103_121527_HDR.webp"
+      ],
+      "source_files": [
+        "seo-content/service-pages/evidence.json",
+        "seo-content/service-hubs/hubs/S5.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-LEVEL]"
+      ],
+      "location_sources": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-LEVEL]"
+      ],
+      "work_type_sources": [
+        {
+          "value": "выравнивание земельного участка",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-LEVEL]"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S5",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-LEVEL]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181103_121527_HDR.webp",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S5-CHILD-LEVEL]"
+        }
+      ],
+      "page_audit": {
+        "page_id": 9567,
+        "canonical_url": "https://exp76.ru/fotogalereja/d-timoshkino/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-29",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=d-timoshkino&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/d-timoshkino/",
+        "post_type": "page",
+        "featured_media_id": 9579
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181103_121527_HDR.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-29",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181103_121527_HDR.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 9684,
+      "url": "https://exp76.ru/fotogalereja/rybinsk-marievka/",
+      "title": "Рыбинск, Мариевка",
+      "location": "Рыбинск, Мариевка",
+      "work_types": [
+        "монтаж уличного освещения"
+      ],
+      "service_ids": [
+        "S7"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2019/02/EvxPksHMjgc.webp"
+      ],
+      "source_files": [
+        "seo-content/service-pages/evidence.json",
+        "seo-content/service-hubs/hubs/S7.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S7-CHILD-INSTALL]"
+      ],
+      "location_sources": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S7-CHILD-INSTALL]"
+      ],
+      "work_type_sources": [
+        {
+          "value": "монтаж уличного освещения",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S7-CHILD-INSTALL]"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S7",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S7-CHILD-INSTALL]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2019/02/EvxPksHMjgc.webp",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S7-CHILD-INSTALL]"
+        }
+      ],
+      "page_audit": {
+        "page_id": 9684,
+        "canonical_url": "https://exp76.ru/fotogalereja/rybinsk-marievka/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-29",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=rybinsk-marievka&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/fotogalereja/rybinsk-marievka/",
+        "post_type": "page",
+        "featured_media_id": 9689
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2019/02/EvxPksHMjgc.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-29",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2019/02/EvxPksHMjgc.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    },
+    {
+      "page_id": 10107,
+      "url": "https://exp76.ru/poshekhone/",
+      "title": "Пошехонье",
+      "location": "Пошехонье",
+      "work_types": [
+        "устройство подпорной стенки"
+      ],
+      "service_ids": [
+        "S6"
+      ],
+      "image_urls": [
+        "https://exp76.ru/wp-content/uploads/2020/10/DSC01487.webp"
+      ],
+      "source_files": [
+        "seo-content/service-pages/evidence.json",
+        "seo-content/service-hubs/hubs/S6.json"
+      ],
+      "seo_ready": true,
+      "source_refs": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S6-CHILD-CONCRETE]"
+      ],
+      "location_sources": [
+        "seo-content/service-pages/evidence.json#services[destination_id=S6-CHILD-CONCRETE]"
+      ],
+      "work_type_sources": [
+        {
+          "value": "устройство подпорной стенки",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S6-CHILD-CONCRETE]"
+        }
+      ],
+      "service_support": [
+        {
+          "service_id": "S6",
+          "basis": "explicit_work",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S6-CHILD-CONCRETE]"
+        }
+      ],
+      "image_sources": [
+        {
+          "value": "https://exp76.ru/wp-content/uploads/2020/10/DSC01487.webp",
+          "source_ref": "seo-content/service-pages/evidence.json#services[destination_id=S6-CHILD-CONCRETE]"
+        }
+      ],
+      "page_audit": {
+        "page_id": 10107,
+        "canonical_url": "https://exp76.ru/poshekhone/",
+        "post_status": "publish",
+        "http_status": 200,
+        "content_type": "text/html",
+        "checked_date": "2026-08-29",
+        "rest_url": "https://exp76.ru/wp-json/wp/v2/pages?slug=poshekhone&per_page=100&_fields=id%2Clink%2Cstatus%2Ctype%2Cfeatured_media",
+        "method": "HEAD",
+        "final_url": "https://exp76.ru/poshekhone/",
+        "post_type": "page",
+        "featured_media_id": 10115
+      },
+      "image_audits": [
+        {
+          "url": "https://exp76.ru/wp-content/uploads/2020/10/DSC01487.webp",
+          "http_status": 200,
+          "content_type": "image/webp",
+          "checked_date": "2026-08-29",
+          "method": "HEAD",
+          "final_url": "https://exp76.ru/wp-content/uploads/2020/10/DSC01487.webp",
+          "error": ""
+        }
+      ],
+      "blocking_gaps": []
+    }
+  ]
+}

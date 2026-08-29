@@ -85,6 +85,69 @@ function land76wp_service_hub_registry()
     "grouping_slug": "vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch",
     "canonical": "https://exp76.ru/services/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch/",
     "archive_policy": "redirect_to_hub"
+  },
+  "S9": {
+    "service_id": "S9",
+    "topic_key": "S9",
+    "hub_post_id": 6870,
+    "hub_slug": "vykorchevyvanie-pnejj-spil-derevev",
+    "grouping_slug": "vykorchevyvanie-pnejj-spil-derevev",
+    "canonical": "https://exp76.ru/services/vykorchevyvanie-pnejj-spil-derevev/",
+    "archive_policy": "redirect_to_hub"
+  },
+  "S10": {
+    "service_id": "S10",
+    "topic_key": "S10",
+    "hub_post_id": 6900,
+    "hub_slug": "sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev",
+    "grouping_slug": "sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev",
+    "canonical": "https://exp76.ru/services/sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev/",
+    "archive_policy": "redirect_to_hub"
+  },
+  "S11": {
+    "service_id": "S11",
+    "topic_key": "S11",
+    "hub_post_id": 6922,
+    "hub_slug": "sistemy-tumanoobrazovaniya",
+    "grouping_slug": "sistemy-tumanoobrazovaniya",
+    "canonical": "https://exp76.ru/services/sistemy-tumanoobrazovaniya/",
+    "archive_policy": "redirect_to_hub"
+  },
+  "S12": {
+    "service_id": "S12",
+    "topic_key": "S12",
+    "hub_post_id": 9138,
+    "hub_slug": "fundament-na-zhelezobetonnykh-svajakh",
+    "grouping_slug": "fundament-na-zhelezobetonnykh-svajakh",
+    "canonical": "https://exp76.ru/services/fundament-na-zhelezobetonnykh-svajakh/",
+    "archive_policy": "redirect_to_hub"
+  },
+  "S13": {
+    "service_id": "S13",
+    "topic_key": "S13",
+    "hub_post_id": 9312,
+    "hub_slug": "navesy-iz-metalla",
+    "grouping_slug": "navesy-iz-metalla",
+    "canonical": "https://exp76.ru/services/navesy-iz-metalla/",
+    "archive_policy": "redirect_to_hub"
+  },
+  "S14": {
+    "service_id": "S14",
+    "topic_key": "S14",
+    "hub_post_id": 9775,
+    "hub_slug": "kaminy-pechi-barbekju",
+    "grouping_slug": "kaminy-pechi-barbekju",
+    "canonical": "https://exp76.ru/services/kaminy-pechi-barbekju/",
+    "archive_policy": "redirect_to_hub"
+  },
+  "S15": {
+    "service_id": "S15",
+    "topic_key": "S15",
+    "hub_post_id": 9838,
+    "hub_slug": "snos-i-demontazh-zdanijj-domov",
+    "grouping_slug": "snos-i-demontazh-zdanijj-domov",
+    "canonical": "https://exp76.ru/services/snos-i-demontazh-zdanijj-domov/",
+    "archive_policy": "redirect_to_hub"
   }
 }
 LAND76_SERVICE_HUB_REGISTRY_JSON;

@@ -32,6 +32,11 @@ if (file_exists($land76_drenazh_blog_import_file)) {
   require_once $land76_drenazh_blog_import_file;
 }
 
+$land76_legacy_services_blog_import_file = __DIR__ . '/inc/import-legacy-services-blog.php';
+if (file_exists($land76_legacy_services_blog_import_file)) {
+  require_once $land76_legacy_services_blog_import_file;
+}
+
 $land76_otmostka_import_file = __DIR__ . '/inc/import-otmostka.php';
 if (file_exists($land76_otmostka_import_file)) {
   require_once $land76_otmostka_import_file;

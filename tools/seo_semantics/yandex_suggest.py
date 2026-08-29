@@ -352,7 +352,7 @@ def _validate_queue(rows: Sequence[Mapping[str, str]]) -> None:
         seen_ids.add(query_id)
         if not all(row[field].strip() for field in QUEUE_COLUMNS):
             raise ValueError(f"suggest queue row contains a blank field: {query_id}")
-        if row["service_id"] not in {f"S{index}" for index in range(1, 9)}:
+        if row["service_id"] not in {f"S{index}" for index in range(1, 16)}:
             raise ValueError(f"invalid suggest service id: {query_id}")
         if row["page_role"] not in {"hub", "child_service", "article"}:
             raise ValueError(f"invalid suggest page role: {query_id}")

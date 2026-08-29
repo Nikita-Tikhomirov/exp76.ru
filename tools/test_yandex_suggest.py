@@ -32,6 +32,34 @@ class FakeSuggestTransport:
 
 
 class YandexSuggestTests(unittest.TestCase):
+    def test_manual_legacy_hub_queue_accepts_services_through_s15(self) -> None:
+        row = {
+            "query_id": "YS000901",
+            "seed": "снос дома",
+            "service_id": "S15",
+            "destination_id": "S15-CHILD-HOUSE",
+            "page_role": "child_service",
+            "region_id": "10841",
+            "reason": "legacy_hub_suggest_root[S15-CHILD-HOUSE]",
+        }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            queue_path = Path(tmp) / "suggest-queue.csv"
+            queue_path.write_text(
+                ",".join(row) + "\n" + ",".join(row.values()) + "\n",
+                encoding="utf-8",
+            )
+            self.assertEqual([row], read_suggest_queue(queue_path))
+
+            invalid_path = Path(tmp) / "invalid-queue.csv"
+            invalid = dict(row, service_id="S16")
+            invalid_path.write_text(
+                ",".join(invalid) + "\n" + ",".join(invalid.values()) + "\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "invalid suggest service id"):
+                read_suggest_queue(invalid_path)
+
     def test_checked_in_reviewed_v6_is_exact_and_provenance_bound(self) -> None:
         data_root = (
             Path(__file__).resolve().parents[1]

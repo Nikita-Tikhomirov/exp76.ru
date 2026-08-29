@@ -2,6 +2,7 @@ import copy
 import json
 import tempfile
 import unittest
+from collections import Counter
 from dataclasses import replace
 from pathlib import Path
 
@@ -25,7 +26,11 @@ IMAGE_URL = "https://exp76.ru/wp-content/uploads/2026/08/verified.webp"
 CASE_URL = "https://exp76.ru/verified-case/"
 ROOT = Path(__file__).resolve().parents[1]
 PAGE_ARCHITECTURE_PATH = (
-    ROOT / "seo-data" / "2026-08-exp76-services" / "processed" / "page_architecture.csv"
+    ROOT
+    / "seo-data"
+    / "2026-08-exp76-services"
+    / "processed"
+    / "complete_page_architecture.csv"
 )
 CASE_CATALOG_PATH = ROOT / "seo-content" / "service-hubs" / "case-catalog.json"
 RELEASE_MANIFEST_PATH = ROOT / "seo-content" / "service-hubs" / "release-manifest.json"
@@ -685,9 +690,9 @@ class ContentContractTest(unittest.TestCase):
 
         allowlist = build_release_link_allowlist(architecture, cases)
 
-        self.assertEqual(26, len(allowlist.managed_urls))
+        self.assertEqual(103, len(allowlist.managed_urls))
         self.assertEqual(9, len(allowlist.preserved_urls))
-        self.assertEqual(35, len(allowlist.case_urls))
+        self.assertEqual(38, len(allowlist.case_urls))
         self.assertNotIn("https://exp76.ru/not-approved/", allowlist.internal_urls)
 
     def test_numeric_guarantee_claim_requires_exact_fact_evidence(self) -> None:
@@ -883,11 +888,27 @@ class ContentContractTest(unittest.TestCase):
         architecture = load_page_architecture(PAGE_ARCHITECTURE_PATH)
         cases = load_case_catalog(CASE_CATALOG_PATH)
 
-        self.assertEqual(35, len(architecture))
-        self.assertEqual(35, len(cases))
-        self.assertEqual(25, len(cases.verified_image_urls))
+        self.assertEqual(112, len(architecture))
+        self.assertEqual(38, len(cases))
+        self.assertEqual(68, len(cases.verified_image_urls))
         self.assertEqual(
-            {"S1": 4, "S2": 3, "S3": 2, "S4": 6, "S5": 6, "S6": 6, "S7": 3, "S8": 2},
+            {
+                "S1": 6,
+                "S2": 4,
+                "S3": 2,
+                "S4": 9,
+                "S5": 6,
+                "S6": 6,
+                "S7": 4,
+                "S8": 2,
+                "S9": 5,
+                "S10": 5,
+                "S11": 5,
+                "S12": 2,
+                "S13": 2,
+                "S14": 8,
+                "S15": 2,
+            },
             {
                 service_id: len(urls)
                 for service_id, urls in cases.verified_image_urls_by_service.items()
@@ -1066,10 +1087,11 @@ class ReleaseManifestTest(unittest.TestCase):
         manifest = load_release_manifest(RELEASE_MANIFEST_PATH)
 
         self.assertEqual("draft", manifest["release_status"])
-        self.assertEqual(26, len(manifest["managed_pages"]))
+        self.assertEqual(103, len(manifest["managed_pages"]))
         self.assertEqual(9, len(manifest["preserved_pages"]))
-        self.assertTrue(
-            all(row["content_status"] == "content_pending" for row in manifest["managed_pages"])
+        self.assertEqual(
+            {"validated": 91, "content_pending": 12},
+            dict(Counter(row["content_status"] for row in manifest["managed_pages"])),
         )
         self.assertEqual([], validate_release_manifest(manifest, self.architecture))
 

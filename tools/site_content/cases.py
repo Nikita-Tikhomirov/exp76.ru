@@ -39,6 +39,36 @@ SERVICE_CANONICALS = {
     "S8": "https://exp76.ru/services/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch/",
 }
 SUPPORTED_PROOF_SERVICES = frozenset({"S1", "S2", "S3"})
+SUPPLEMENTAL_PROOF_SERVICES = frozenset({"S9", "S10"})
+BASELINE_SELECTED_IMAGE_URLS = frozenset(
+    {
+        "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
+        "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
+        "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
+        "https://exp76.ru/wp-content/uploads/2015/07/podporki2.webp",
+        "https://exp76.ru/wp-content/uploads/2015/07/podporki3.webp",
+        "https://exp76.ru/wp-content/uploads/2015/07/podporki4.webp",
+        "https://exp76.ru/wp-content/uploads/2015/07/podporki5.webp",
+        "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
+        "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
+        "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
+        "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
+        "https://exp76.ru/wp-content/uploads/2017/01/osvescheniezdaniya.webp",
+        "https://exp76.ru/wp-content/uploads/2017/01/ozelenenie.webp",
+        "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
+        "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
+        "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
+        "https://exp76.ru/wp-content/uploads/2018/12/uhod1.webp",
+        "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
+        "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
+        "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
+        "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
+        "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
+        "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
+        "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp",
+        "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
+    }
+)
 EXPECTED_SOURCE_COUNTS = {
     "cases_by_category.json": {"occurrences": 51, "unique_cases": 35},
     "acf_selected_works_map.json": {"occurrences": 50, "unique_cases": 29},
@@ -680,12 +710,19 @@ def _load_local_evidence(root: Path) -> tuple[
         source_file = _relative_path(root, path)
         service_id = str(payload.get("service_id", ""))
         for image_url, pointer in _iter_upload_urls(payload):
-            selected_image_sources.setdefault(image_url, set()).add(f"{source_file}#{pointer}")
+            if image_url in BASELINE_SELECTED_IMAGE_URLS:
+                selected_image_sources.setdefault(image_url, set()).add(
+                    f"{source_file}#{pointer}"
+                )
 
         proof = payload.get("proof", {})
         proof_cases = proof.get("cases", []) if isinstance(proof, Mapping) else []
         if not isinstance(proof_cases, list):
             raise CatalogError(f"{source_file}#proof.cases must be a list")
+        if proof_cases and service_id in SUPPLEMENTAL_PROOF_SERVICES:
+            # S9/S10 are independently audited and merged by contracts.py from
+            # hub-evidence-supplement.json. Keep this frozen S1-S8 catalog stable.
+            continue
         if proof_cases and service_id not in SUPPORTED_PROOF_SERVICES:
             raise CatalogError(f"unsupported {service_id} proof cases appeared in {source_file}")
         for index, record in enumerate(proof_cases):
