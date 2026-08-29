@@ -2112,14 +2112,14 @@ if (DIRECTORY_SEPARATOR === '/') {
         $t->same(0600, fileperms($fixture['stage']) & 0777, 'production POSIX mode verification must observe exact permission bits');
     });
 
-    $suite->run('POSIX integration namespace pins retain real handles for every ancestor', static function (Land76_State_Journal_Red_Suite $t): void {
+    $suite->run('POSIX integration namespace pins retain real handles for every managed ancestor', static function (Land76_State_Journal_Red_Suite $t): void {
         $fixture = land76_red_fixture();
         $pins = land76_red_with_config($fixture, static function () use ($fixture): array {
             return land76_red_invoke_private('pin_directory_namespace', array($fixture['storage'], 'POSIX_PIN_FAILED'));
         });
         try {
             $t->check($pins !== array(), 'POSIX pin chain must not be empty');
-            foreach ($pins as $pin) $t->check(is_resource($pin['handle'] ?? null), 'every POSIX ancestor pin must retain a real directory handle');
+            foreach ($pins as $pin) $t->check(is_resource($pin['handle'] ?? null), 'every managed POSIX ancestor pin must retain a real directory handle');
         } finally {
             land76_red_invoke_private('close_directory_namespace', array($pins));
         }

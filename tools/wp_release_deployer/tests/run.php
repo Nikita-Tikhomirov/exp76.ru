@@ -173,9 +173,19 @@ foreach (array(
     );
 }
 $pin_directory_namespace = new ReflectionMethod(Land76_Release_Deployer::class, 'pin_directory_namespace');
+$managed_config = array(
+    'docroot' => $activation_docroot,
+    'storage_root' => $activation_storage,
+    'state_file' => $activation_state_file,
+    'journal_file' => $activation_journal_file,
+    'expected_phases' => array('A1' => array()),
+    'read_option' => fn(string $key, mixed $default = false): mixed => $default,
+    'sync_directory' => static fn(string $directory): bool => true,
+    'mode_adapter' => fn(string $operation, string $path, int $mode): bool => true,
+);
 $missing_pin_error = '';
 try {
-    $activation_integration_config->setValue(null, array());
+    $activation_integration_config->setValue(null, $managed_config);
     $pin_directory_namespace->invoke(null, $activation_root . DIRECTORY_SEPARATOR . 'missing-pin-target', 'DIRECTORY_SYNC_TARGET_UNSAFE');
 } catch (Throwable $error) {
     $missing_pin_error = $error->getMessage();
@@ -187,7 +197,7 @@ $not_directory_pin = tempnam(sys_get_temp_dir(), 'land76-pin-file-');
 $not_directory_pin_error = '';
 try {
     if (!is_string($not_directory_pin)) throw new RuntimeException('Cannot create namespace pin test file.');
-    $activation_integration_config->setValue(null, array());
+    $activation_integration_config->setValue(null, $managed_config);
     $pin_directory_namespace->invoke(null, $not_directory_pin, 'DIRECTORY_SYNC_TARGET_UNSAFE');
 } catch (Throwable $error) {
     $not_directory_pin_error = $error->getMessage();
@@ -196,6 +206,54 @@ try {
     if (is_string($not_directory_pin)) @unlink($not_directory_pin);
 }
 check($not_directory_pin_error === 'DIRECTORY_SYNC_PIN_NOT_DIRECTORY', 'directory sync pin reports a safe node-type failure class without a path');
+$managed_nested = $activation_storage . DIRECTORY_SEPARATOR . 'managed' . DIRECTORY_SEPARATOR . 'nested';
+wp_mkdir_p($managed_nested);
+$namespace_anchor_for = new ReflectionMethod(Land76_Release_Deployer::class, 'namespace_anchor_for');
+try {
+    $activation_integration_config->setValue(null, $managed_config);
+    $storage_parent_anchor = $namespace_anchor_for->invoke(null, dirname($activation_storage));
+    $upload_temp_anchor = $namespace_anchor_for->invoke(null, sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'land76-upload-probe');
+} finally {
+    $activation_integration_config->setValue(null, null);
+}
+check($storage_parent_anchor === dirname($activation_storage), 'storage creation pins its exact managed parent anchor');
+check($upload_temp_anchor === rtrim(sys_get_temp_dir(), '/\\'), 'uploaded archives pin from the PHP temp root');
+$managed_pins = array();
+try {
+    $activation_integration_config->setValue(null, $managed_config);
+    $managed_pins = $pin_directory_namespace->invoke(null, $managed_nested, 'MANAGED_PIN_FAILED');
+} finally {
+    $close_directory_namespace = new ReflectionMethod(Land76_Release_Deployer::class, 'close_directory_namespace');
+    $close_directory_namespace->invoke(null, $managed_pins);
+    $activation_integration_config->setValue(null, null);
+}
+check(
+    ($managed_pins[0]['path'] ?? null) === $activation_storage,
+    'storage namespace pinning starts at the managed storage root instead of a host ancestor'
+);
+$managed_docroot_pins = array();
+try {
+    $activation_integration_config->setValue(null, $managed_config);
+    $managed_docroot_pins = $pin_directory_namespace->invoke(null, $activation_docroot, 'MANAGED_PIN_FAILED');
+} finally {
+    $close_directory_namespace->invoke(null, $managed_docroot_pins);
+    $activation_integration_config->setValue(null, null);
+}
+check(
+    ($managed_docroot_pins[0]['path'] ?? null) === $activation_docroot,
+    'release namespace pinning starts at the managed document root instead of a host ancestor'
+);
+$outside_managed_error = '';
+$outside_managed_root = DIRECTORY_SEPARATOR === '\\' ? substr(__DIR__, 0, 3) : DIRECTORY_SEPARATOR;
+try {
+    $activation_integration_config->setValue(null, $managed_config);
+    $pin_directory_namespace->invoke(null, $outside_managed_root, 'MANAGED_PIN_FAILED');
+} catch (Throwable $error) {
+    $outside_managed_error = $error->getMessage();
+} finally {
+    $activation_integration_config->setValue(null, null);
+}
+check($outside_managed_error === 'MANAGED_PIN_FAILED', 'namespace pinning rejects directories outside managed or upload-temp roots');
 check(
     !file_exists($activation_state_file) && !file_exists($activation_journal_file),
     'activation failure does not persist diagnostic state or journal files'

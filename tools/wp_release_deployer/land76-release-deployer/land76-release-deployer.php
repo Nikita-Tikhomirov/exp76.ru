@@ -457,23 +457,26 @@ final class Land76_Release_Deployer {
     }
     /**
      * PHP has no openat/renameat/unlinkat API. On production POSIX we therefore
-     * retain handles for every directory in the resolved chain and revalidate
+     * retain handles for every directory in the managed chain and revalidate
      * each (dev, ino) immediately around pathname operations. This fails closed
      * on deterministic namespace replacement, but the supported threat model
      * excludes an active same-UID filesystem attacker racing the final check
      * and the following pathname syscall.
      */
     private static function pin_directory_namespace(string $directory, string $error): array {
-        $directory = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $directory);
-        if ($directory !== DIRECTORY_SEPARATOR) $directory = rtrim($directory, DIRECTORY_SEPARATOR);
+        $directory = self::normalize_directory_path($directory);
         if ($directory === '') self::fail($error);
-        $paths = array();
-        $current = $directory;
-        while (true) {
-            array_unshift($paths, $current);
-            $parent = dirname($current);
-            if ($parent === $current || $parent === '' || $parent === '.') break;
-            $current = $parent;
+        $anchor = self::namespace_anchor_for($directory);
+        if ($anchor === '' || !self::path_is_within($directory, $anchor)) self::fail($error);
+        $paths = array($anchor);
+        if (!self::paths_equal($directory, $anchor)) {
+            $relative = ltrim(substr($directory, strlen($anchor)), DIRECTORY_SEPARATOR);
+            $current = $anchor;
+            foreach (explode(DIRECTORY_SEPARATOR, $relative) as $segment) {
+                if ($segment === '' || $segment === '.' || $segment === '..') self::fail($error);
+                $current = rtrim($current, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $segment;
+                $paths[] = $current;
+            }
         }
         $pins = array();
         try {
@@ -521,6 +524,45 @@ final class Land76_Release_Deployer {
             if (!array_key_exists($key, $left) || !array_key_exists($key, $right) || !is_int($left[$key]) || !is_int($right[$key]) || $left[$key] !== $right[$key]) return false;
         }
         return true;
+    }
+    private static function normalize_directory_path(string $path): string {
+        $path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+        if ($path === DIRECTORY_SEPARATOR || preg_match('/\A[A-Za-z]:\\\\\z/', $path) === 1) return $path;
+        return rtrim($path, DIRECTORY_SEPARATOR);
+    }
+    private static function paths_equal(string $left, string $right): bool {
+        $left = self::normalize_directory_path($left); $right = self::normalize_directory_path($right);
+        return DIRECTORY_SEPARATOR === '\\' ? strcasecmp($left, $right) === 0 : $left === $right;
+    }
+    private static function path_is_within(string $path, string $root): bool {
+        $path = self::normalize_directory_path($path); $root = self::normalize_directory_path($root);
+        if (self::paths_equal($path, $root)) return true;
+        $compare_path = DIRECTORY_SEPARATOR === '\\' ? strtolower($path) : $path;
+        $compare_root = DIRECTORY_SEPARATOR === '\\' ? strtolower($root) : $root;
+        return str_starts_with($compare_path, rtrim($compare_root, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+    }
+    /** Host-owned ancestors may be execute-only; pin every node inside the managed namespace. */
+    private static function namespace_anchor_for(string $directory): string {
+        $directory = self::normalize_directory_path($directory);
+        $storage = self::normalize_directory_path(self::storage_path());
+        $upload_tmp = ini_get('upload_tmp_dir');
+        $wordpress_tmp = function_exists('get_temp_dir') ? get_temp_dir() : '';
+        $candidates = array(
+            self::normalize_directory_path(self::docroot()),
+            self::normalize_directory_path(__DIR__),
+            $storage,
+            self::normalize_directory_path(dirname($storage)),
+            self::normalize_directory_path(sys_get_temp_dir()),
+            self::normalize_directory_path(is_string($upload_tmp) ? $upload_tmp : ''),
+            self::normalize_directory_path(is_string($wordpress_tmp) ? $wordpress_tmp : ''),
+        );
+        $anchor = ''; $best_length = -1;
+        foreach (array_unique($candidates) as $candidate) {
+            if ($candidate !== '' && self::path_is_within($directory, $candidate) && strlen($candidate) > $best_length) {
+                $anchor = $candidate; $best_length = strlen($candidate);
+            }
+        }
+        return $anchor;
     }
     /** Preserve legacy failure contracts while exposing only safe target-preflight failure classes. */
     private static function fail_namespace(string $error, string $detail): void {
@@ -956,9 +998,11 @@ final class Land76_Release_Deployer {
         $compare_docroot = DIRECTORY_SEPARATOR === '\\' ? strtolower($docroot) : $docroot;
         if ($compare_root === $compare_docroot || str_starts_with($compare_root, $compare_docroot . DIRECTORY_SEPARATOR)) self::fail('ROLLBACK_STORAGE_INSIDE_DOCROOT');
     }
-    /** Lstat the complete existing directory chain so no storage ancestor can redirect through a link. */
+    /** Lstat the complete managed storage chain so no site-owned node can redirect through a link. */
     private static function assert_storage_directory_chain(string $root): void {
-        $current = rtrim(str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $root), DIRECTORY_SEPARATOR);
+        $current = self::normalize_directory_path($root);
+        $boundary = self::normalize_directory_path(dirname(self::storage_path()));
+        if (!self::path_is_within($current, $boundary)) self::fail('ROLLBACK_STORAGE_PATH_UNSAFE');
         while ($current !== '') {
             clearstatcache(true, $current);
             $stat = @lstat($current);
@@ -967,8 +1011,9 @@ final class Land76_Release_Deployer {
             } elseif (file_exists($current) || is_link($current)) {
                 self::fail('ROLLBACK_STORAGE_LSTAT_FAILED');
             }
+            if (self::paths_equal($current, $boundary)) break;
             $parent = dirname($current);
-            if ($parent === $current || $parent === '' || $parent === '.') break;
+            if ($parent === $current || $parent === '' || $parent === '.' || !self::path_is_within($parent, $boundary)) self::fail('ROLLBACK_STORAGE_PATH_UNSAFE');
             $current = $parent;
         }
     }
