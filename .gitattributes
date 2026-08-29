@@ -17,3 +17,4 @@ seo-data/2026-08-exp76-services/reviews/** text eol=lf
 seo-content/service-hubs/hubs/*.json text eol=lf
 ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/*.json text eol=lf
 ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/rendered/*.html text eol=lf
+tools/wp_release_deployer/land76-release-deployer/vendor/service-hub-registry.php -text

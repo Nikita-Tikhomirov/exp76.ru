@@ -1,0 +1,281 @@
+<?php
+declare(strict_types=1);
+
+define('ABSPATH', __DIR__ . '/wordpress/');
+define('ARRAY_A', 'ARRAY_A');
+$registered_hooks = array();
+function add_action($hook, $callback, $priority = 10) { global $registered_hooks; $registered_hooks[$hook][] = $callback; }
+$activation_callbacks = array();
+function register_activation_hook($file, $callback) { global $activation_callbacks; $activation_callbacks[] = $callback; }
+function wp_json_encode($value) { return json_encode($value, JSON_UNESCAPED_SLASHES); }
+function wp_mkdir_p($path) { return is_dir($path) || mkdir($path, 0700, true); }
+function wp_upload_dir() { return array('basedir' => sys_get_temp_dir()); }
+function untrailingslashit($path) { return rtrim($path, '/\\'); }
+function current_user_can($cap) { return $cap === 'manage_options'; }
+function is_admin() { return true; }
+function get_stylesheet_directory() { return ABSPATH . 'wp-content/themes/land76wp'; }
+function wp_verify_nonce($nonce, $action) { return $nonce === 'valid:' . $action; }
+function get_option($key, $default = false) { global $test_options; return $test_options[$key] ?? $default; }
+function update_option($key, $value, $autoload = false) { global $test_options; $test_options[$key] = $value; return true; }
+function esc_html__($text, $domain = '') { return (string)$text; }
+function esc_html($text) { return htmlspecialchars((string)$text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }
+function esc_url($url) { return (string)$url; }
+function admin_url($path = '') { return '/wp-admin/' . ltrim((string)$path, '/'); }
+function wp_nonce_field($action) { echo '<input type="hidden" value="' . esc_html($action) . '">'; }
+function submit_button($text) { echo '<button>' . esc_html($text) . '</button>'; }
+function wp_die($message, $status = 500) { throw new RuntimeException((string)$message, (int)$status); }
+
+require_once dirname(__DIR__) . '/land76-release-deployer/land76-release-deployer.php';
+
+$failures = array();
+$assertions = 0;
+function check($condition, string $message): void { global $failures, $assertions; $assertions++; if (!$condition) { $failures[] = $message; } }
+function throws(callable $callback, string $message): void { try { $callback(); check(false, $message); } catch (RuntimeException $ignored) {} }
+function remove_test_tree(string $path): void {
+    if (!is_dir($path)) return;
+    $items = scandir($path);
+    if (!is_array($items)) return;
+    foreach ($items as $item) {
+        if ($item === '.' || $item === '..') continue;
+        $target = $path . DIRECTORY_SEPARATOR . $item;
+        is_dir($target) ? remove_test_tree($target) : @unlink($target);
+    }
+    @rmdir($path);
+}
+function lint_gate_result(array $process_result): array {
+    $stage_file = tempnam(sys_get_temp_dir(), 'land76-stage-');
+    $live_marker = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'land76-live-' . bin2hex(random_bytes(8));
+    $journal = array();
+    $error_message = '';
+    try {
+        if (!is_string($stage_file) || file_put_contents($stage_file, '<?php syntax error') === false) {
+            throw new RuntimeException('TEST_STAGE_SETUP_FAILED');
+        }
+        $gate = new ReflectionMethod(Land76_Release_Deployer::class, 'with_php_lint_gate');
+        $gate->invoke(
+            null,
+            array('wp-content/themes/land76wp/inc/import-service-hubs.php' => $stage_file),
+            function () use (&$journal, $live_marker): void {
+                $journal[] = 'wp-content/themes/land76wp/inc/import-service-hubs.php';
+                file_put_contents($live_marker, 'mutated');
+            },
+            fn(array $command, int $timeout_seconds): array => $process_result
+        );
+    } catch (Throwable $error) {
+        $error_message = $error->getMessage();
+    } finally {
+        if (is_string($stage_file)) @unlink($stage_file);
+        $live_exists = file_exists($live_marker);
+        @unlink($live_marker);
+    }
+    return array('error' => $error_message, 'journal' => $journal, 'live_exists' => $live_exists);
+}
+check(isset($registered_hooks['admin_post_land76_release_apply']), 'admin post apply hook registers even before admin menu API is loaded');
+check(isset($registered_hooks['admin_post_land76_release_backup']), 'admin post backup hook registers even before admin menu API is loaded');
+check(count($activation_callbacks) === 1, 'activation preflight is registered without frontend storage access');
+
+$expected = array('wp-content/themes/land76wp/a.php' => hash('sha256', 'a'));
+check(Land76_Release_Deployer::validate_inventory(array(array('name' => 'wp-content/themes/land76wp/a.php', 'sha256' => hash('sha256', 'a'), 'size' => 1)), $expected) === true, 'exact inventory accepted');
+throws(fn() => Land76_Release_Deployer::validate_inventory(array(array('name' => '../wp-config.php', 'sha256' => hash('sha256', 'a'), 'size' => 1)), $expected), 'traversal rejected');
+throws(fn() => Land76_Release_Deployer::validate_inventory(array(array('name' => 'wp-content/themes/land76wp/a.php', 'sha256' => hash('sha256', 'a'), 'size' => 1), array('name' => 'wp-content/themes/land76wp/a.php', 'sha256' => hash('sha256', 'a'), 'size' => 1)), $expected), 'duplicate rejected');
+throws(fn() => Land76_Release_Deployer::validate_inventory(array(array('name' => 'wp-content/themes/land76wp/a.php', 'sha256' => hash('sha256', 'b'), 'size' => 1)), $expected), 'entry hash rejected');
+throws(fn() => Land76_Release_Deployer::validate_upload_name_hash('bad.zip', 'x', array('filename' => 'ok.zip', 'archive_sha256' => 'x')), 'wrong filename rejected');
+
+$state = array('backup' => array('verified' => true), 'phases' => array('A1' => array('status' => 'pending'), 'A2' => array('status' => 'pending'), 'C' => array('status' => 'pending'), 'B' => array('status' => 'pending')));
+check(Land76_Release_Deployer::may_apply('A1', $state), 'A1 allowed after backup');
+check(!Land76_Release_Deployer::may_apply('A2', $state), 'phase order gate');
+$state['phases']['A1']['status'] = 'applied';
+check(!Land76_Release_Deployer::may_apply('A2', $state), 'A2 requires explicit Stage checkpoint');
+$state['stage_verified'] = true;
+check(Land76_Release_Deployer::may_apply('A2', $state), 'A2 unlocked by A1 and Stage checkpoint');
+$state['backup']['verified'] = false;
+check(!Land76_Release_Deployer::may_apply('A2', $state), 'backup gate');
+
+$manifest = Land76_Release_Deployer::rollback_manifest(array('x.php' => array('exists' => false), 'y.php' => array('exists' => true, 'sha256' => 'abc', 'bytes' => 3, 'mode' => 0644)), 'release-test');
+check($manifest['paths']['x.php']['exists'] === false && $manifest['paths']['y.php']['sha256'] === 'abc', 'rollback manifest maps missing and existing files');
+check(Land76_Release_Deployer::request_is_authorized(array('REQUEST_METHOD' => 'POST', 'nonce' => 'valid:land76_release_deployer:apply:A1'), 'apply:A1'), 'phase-bound POST nonce accepts exact phase');
+check(!Land76_Release_Deployer::request_is_authorized(array('REQUEST_METHOD' => 'POST', 'nonce' => 'valid:land76_release_deployer:apply:A2'), 'apply:A1'), 'phase-bound nonce rejects another phase');
+check(!Land76_Release_Deployer::request_is_authorized(array('REQUEST_METHOD' => 'GET', 'nonce' => 'valid:land76_release_deployer:apply:A1'), 'apply:A1'), 'no public endpoint / POST guard');
+check(!Land76_Release_Deployer::request_is_authorized(array('REQUEST_METHOD' => 'POST', 'nonce' => 'bad'), 'apply:A1'), 'nonce guard');
+check(Land76_Release_Deployer::importer_bootstrap_target() === ABSPATH . 'wp-content/themes/land76wp/inc/import-service-hubs.php', 'admin-only importer bootstrap targets active theme import file');
+$frozen = Land76_Release_Deployer::expected();
+check(count($frozen['A1']['files']) === 26 && count($frozen['A2']['files']) === 22 && count($frozen['C']['files']) === 1 && count($frozen['B']['files']) === 30, 'frozen inventories contain all 79 verified entries');
+check($frozen['A2']['files']['wp-content/themes/land76wp/inc/service-hub-registry.php'] === '467220e5c953cce729805a33f28c0cc19d2542ff1adc8ffd0381e3a54d0cc412', 'vendored bridge registry hash is frozen');
+check($frozen['A1']['files']['wp-content/themes/land76wp/inc/import-service-hubs.php'] === '8a636fad8fb9b744873b1a1ef9d96dd2fedceb41fadcc9ecb8ded21b3b3b6206', 'A1 importer bootstrap hash is frozen');
+check(hash_file('sha256', dirname(__DIR__) . '/land76-release-deployer/vendor/service-hub-registry.php') === $frozen['A2']['files']['wp-content/themes/land76wp/inc/service-hub-registry.php'], 'vendored bridge registry is byte-exact A2 content');
+$source = file_get_contents(dirname(__DIR__) . '/land76-release-deployer/land76-release-deployer.php');
+check(is_string($source) && str_contains($source, "wp_nonce_field(self::nonce_action('backup'))"), 'backup form uses its action-specific nonce');
+check(is_string($source) && str_contains($source, "wp_nonce_field(self::nonce_action('apply', \$phase))"), 'apply form binds nonce to rendered phase');
+check(is_string($source) && str_contains($source, "wp_nonce_url(admin_url('admin-post.php?action=land76_release_download'), self::nonce_action('download'))"), 'download link uses a download-specific nonce');
+
+$lint_file = tempnam(sys_get_temp_dir(), 'land76-lint-');
+if (is_string($lint_file)) {
+    file_put_contents($lint_file, '<?php if (');
+    try {
+        $lint_status = Land76_Release_Deployer::lint_php(
+            array('wp-content/themes/land76wp/inc/import-service-hubs.php' => $lint_file),
+            fn(array $command, int $timeout_seconds): array => array('status' => 'ran', 'exit_code' => 0)
+        );
+        check($lint_status === 'ran', 'successful injected PHP lint returns ran');
+    } catch (Throwable $error) {
+        check(false, 'successful injected PHP lint returns ran');
+    } finally {
+        @unlink($lint_file);
+    }
+} else {
+    check(false, 'successful injected PHP lint returns ran');
+}
+
+$lint_relative = 'wp-content/themes/land76wp/inc/import-service-hubs.php';
+$unavailable = lint_gate_result(array('status' => 'unavailable', 'exit_code' => null));
+check(
+    $unavailable === array('error' => 'PHP_LINT_UNAVAILABLE:' . $lint_relative, 'journal' => array(), 'live_exists' => false),
+    'unavailable process runner hard-stops before journal and live writes with a stable relative error'
+);
+$timed_out = lint_gate_result(array('status' => 'timeout', 'exit_code' => null));
+check(
+    $timed_out === array('error' => 'PHP_LINT_TIMEOUT:' . $lint_relative, 'journal' => array(), 'live_exists' => false),
+    'timed-out PHP lint hard-stops before journal and live writes with a stable relative error'
+);
+$nonzero = lint_gate_result(array('status' => 'ran', 'exit_code' => 255));
+check(
+    $nonzero === array('error' => 'PHP_LINT_FAILED:' . $lint_relative, 'journal' => array(), 'live_exists' => false),
+    'nonzero PHP lint hard-stops before journal and live writes with a stable relative error'
+);
+
+$runner_timeout = null;
+$runner_marker = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'land76-runner-' . bin2hex(random_bytes(8));
+$runner_code = 'usleep(1500000); file_put_contents(' . var_export($runner_marker, true) . ', "late");';
+$runner_started = microtime(true);
+try {
+    $process_runner = new ReflectionMethod(Land76_Release_Deployer::class, 'run_process');
+    $runner_timeout = $process_runner->invoke(null, array(PHP_BINARY, '-r', $runner_code), 0.02);
+} catch (Throwable $error) {
+    $runner_timeout = array('status' => 'test-error', 'exit_code' => null);
+}
+$runner_elapsed = microtime(true) - $runner_started;
+usleep(1_700_000);
+$runner_wrote_late = file_exists($runner_marker);
+@unlink($runner_marker);
+check(
+    ($runner_timeout['status'] ?? '') === 'timeout' && $runner_elapsed < 0.75 && !$runner_wrote_late,
+    'real process runner terminates a PHP lint command without a delayed child side effect'
+);
+
+$unknown_lint_file = tempnam(sys_get_temp_dir(), 'land76-unknown-lint-');
+$unknown_lint_error = '';
+try {
+    if (!is_string($unknown_lint_file)) throw new RuntimeException('TEST_LINT_SETUP_FAILED');
+    Land76_Release_Deployer::lint_php(
+        array('wp-content/themes/land76wp/not-in-frozen-release.php' => $unknown_lint_file),
+        fn(array $command, int $timeout_seconds): array => array('status' => 'ran', 'exit_code' => 255)
+    );
+} catch (Throwable $error) {
+    $unknown_lint_error = $error->getMessage();
+} finally {
+    if (is_string($unknown_lint_file)) @unlink($unknown_lint_file);
+}
+check(
+    $unknown_lint_error === 'PHP_LINT_PATH_INVALID',
+    'PHP lint refuses a non-frozen relative path without persisting it'
+);
+
+$persist_root = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'land76-persist-' . bin2hex(random_bytes(8));
+$persist_docroot = $persist_root . DIRECTORY_SEPARATOR . 'wordpress';
+$persist_storage = $persist_root . DIRECTORY_SEPARATOR . 'storage';
+wp_mkdir_p($persist_docroot);
+wp_mkdir_p($persist_storage);
+$persist_state_file = $persist_storage . DIRECTORY_SEPARATOR . 'state.json';
+$persist_journal_file = $persist_storage . DIRECTORY_SEPARATOR . 'journal.json';
+$persist_state = array(
+    'schema' => 1,
+    'release_id' => 'lint-persistence-test',
+    'generation' => 1,
+    'backup' => array('verified' => false),
+    'phases' => array('A1' => array('status' => 'pending')),
+    'stage_verified' => false,
+    'last_error' => '',
+    'last_committed_txid' => '',
+);
+$checksummed_document = new ReflectionMethod(Land76_Release_Deployer::class, 'checksummed_document');
+$persist_state = $checksummed_document->invoke(null, $persist_state, 'state');
+file_put_contents($persist_state_file, json_encode($persist_state, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+$integration_config = new ReflectionProperty(Land76_Release_Deployer::class, 'integration_config');
+$absolute_lint_path = $persist_root . DIRECTORY_SEPARATOR . 'stage' . DIRECTORY_SEPARATOR . 'import-service-hubs.php';
+try {
+    $integration_config->setValue(null, array(
+        'docroot' => $persist_docroot,
+        'storage_root' => $persist_storage,
+        'state_file' => $persist_state_file,
+        'journal_file' => $persist_journal_file,
+        'expected_phases' => array('A1' => array($lint_relative => hash('sha256', 'target'))),
+        'read_option' => fn(string $key, mixed $default = false): mixed => $default,
+        'sync_directory' => fn(string $directory): bool => true,
+        'mode_adapter' => fn(string $operation, string $path, int $mode): bool => true,
+    ));
+    $record_error = new ReflectionMethod(Land76_Release_Deployer::class, 'record_error');
+    $record_error->invoke(null, 'PHP_LINT_FAILED:' . $lint_relative . ':' . $absolute_lint_path);
+} finally {
+    $integration_config->setValue(null, null);
+}
+$persisted_state = json_decode((string)file_get_contents($persist_state_file), true);
+check(
+    is_array($persisted_state) && ($persisted_state['generation'] ?? 0) === 2,
+    'record_error durably commits a new checksummed state generation'
+);
+check(
+    is_array($persisted_state)
+        && ($persisted_state['last_error'] ?? '') === 'PHP_LINT_FAILED:' . $lint_relative
+        && !str_contains((string)file_get_contents($persist_state_file), $absolute_lint_path),
+    'persisted lint error contains only its stable code and frozen relative path'
+);
+remove_test_tree($persist_root);
+
+$ui_root = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'land76-ui-' . bin2hex(random_bytes(8));
+$ui_docroot = $ui_root . DIRECTORY_SEPARATOR . 'wordpress';
+$ui_storage = $ui_root . DIRECTORY_SEPARATOR . 'storage';
+wp_mkdir_p($ui_docroot);
+wp_mkdir_p($ui_storage);
+$ui_state_file = $ui_storage . DIRECTORY_SEPARATOR . 'state.json';
+$ui_state = array(
+    'schema' => 1,
+    'release_id' => 'lint-ui-test',
+    'generation' => 1,
+    'backup' => array('verified' => false),
+    'phases' => array(
+        'A1' => array('status' => 'applied', 'applied_utc' => '2026-08-29T00:00:00+00:00', 'lint' => 'ran'),
+        'A2' => array('status' => 'pending'),
+        'C' => array('status' => 'pending'),
+        'B' => array('status' => 'pending'),
+    ),
+    'stage_verified' => false,
+    'last_error' => '',
+    'last_committed_txid' => '',
+);
+$ui_state = $checksummed_document->invoke(null, $ui_state, 'state');
+file_put_contents($ui_state_file, json_encode($ui_state, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+$ui_html = '';
+try {
+    $integration_config->setValue(null, array(
+        'docroot' => $ui_docroot,
+        'storage_root' => $ui_storage,
+        'state_file' => $ui_state_file,
+        'journal_file' => $ui_storage . DIRECTORY_SEPARATOR . 'journal.json',
+        'expected_phases' => array('A1' => array(), 'A2' => array(), 'C' => array(), 'B' => array()),
+        'read_option' => fn(string $key, mixed $default = false): mixed => $default,
+        'sync_directory' => fn(string $directory): bool => true,
+        'mode_adapter' => fn(string $operation, string $path, int $mode): bool => true,
+    ));
+    ob_start();
+    Land76_Release_Deployer::page();
+    $ui_html = (string)ob_get_clean();
+} catch (Throwable $error) {
+    if (ob_get_level() > 0) ob_end_clean();
+} finally {
+    $integration_config->setValue(null, null);
+}
+check(str_contains($ui_html, 'PHP lint: ran'), 'admin UI displays the recorded PHP lint status');
+remove_test_tree($ui_root);
+
+if ($failures) { fwrite(STDERR, implode("\n", $failures) . "\n"); exit(1); }
+echo "PASS " . $assertions . " assertions\n";
