@@ -152,6 +152,50 @@ check(
     $activation_result === array('message' => 'DIRECTORY_SYNC_FAILED', 'status' => 500),
     'registered activation callback preserves an allowlisted preflight failure code'
 );
+$activation_error_code = new ReflectionMethod(Land76_Release_Deployer::class, 'activation_error_code');
+foreach (array(
+    'DIRECTORY_SYNC_PIN_LSTAT_FAILED',
+    'DIRECTORY_SYNC_PIN_LINK_REFUSED',
+    'DIRECTORY_SYNC_PIN_NOT_DIRECTORY',
+    'DIRECTORY_SYNC_PIN_OPEN_FAILED',
+    'DIRECTORY_SYNC_PIN_FSTAT_FAILED',
+    'DIRECTORY_SYNC_PIN_HANDLE_NOT_DIRECTORY',
+    'DIRECTORY_SYNC_PIN_IDENTITY_MISMATCH',
+    'DIRECTORY_SYNC_VERIFY_LSTAT_FAILED',
+    'DIRECTORY_SYNC_VERIFY_LINK_REFUSED',
+    'DIRECTORY_SYNC_VERIFY_NOT_DIRECTORY',
+    'DIRECTORY_SYNC_VERIFY_IDENTITY_MISMATCH',
+    'DIRECTORY_SYNC_VERIFY_HANDLE_FAILED',
+) as $diagnostic_code) {
+    check(
+        $activation_error_code->invoke(null, new RuntimeException($diagnostic_code)) === $diagnostic_code,
+        'activation callback preserves safe namespace diagnostic code ' . $diagnostic_code
+    );
+}
+$pin_directory_namespace = new ReflectionMethod(Land76_Release_Deployer::class, 'pin_directory_namespace');
+$missing_pin_error = '';
+try {
+    $activation_integration_config->setValue(null, array());
+    $pin_directory_namespace->invoke(null, $activation_root . DIRECTORY_SEPARATOR . 'missing-pin-target', 'DIRECTORY_SYNC_TARGET_UNSAFE');
+} catch (Throwable $error) {
+    $missing_pin_error = $error->getMessage();
+} finally {
+    $activation_integration_config->setValue(null, null);
+}
+check($missing_pin_error === 'DIRECTORY_SYNC_PIN_LSTAT_FAILED', 'directory sync pin reports a safe lstat failure class without a path');
+$not_directory_pin = tempnam(sys_get_temp_dir(), 'land76-pin-file-');
+$not_directory_pin_error = '';
+try {
+    if (!is_string($not_directory_pin)) throw new RuntimeException('Cannot create namespace pin test file.');
+    $activation_integration_config->setValue(null, array());
+    $pin_directory_namespace->invoke(null, $not_directory_pin, 'DIRECTORY_SYNC_TARGET_UNSAFE');
+} catch (Throwable $error) {
+    $not_directory_pin_error = $error->getMessage();
+} finally {
+    $activation_integration_config->setValue(null, null);
+    if (is_string($not_directory_pin)) @unlink($not_directory_pin);
+}
+check($not_directory_pin_error === 'DIRECTORY_SYNC_PIN_NOT_DIRECTORY', 'directory sync pin reports a safe node-type failure class without a path');
 check(
     !file_exists($activation_state_file) && !file_exists($activation_journal_file),
     'activation failure does not persist diagnostic state or journal files'

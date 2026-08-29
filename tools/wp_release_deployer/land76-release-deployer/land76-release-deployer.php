@@ -58,6 +58,12 @@ final class Land76_Release_Deployer {
         'ACTIVATION_LINT_UNAVAILABLE', 'ACTIVATION_STORAGE_SCAN_FAILED', 'ACTIVATION_STORAGE_NOT_EMPTY',
         'ACTIVATION_STORAGE_UNSAFE', 'ACTIVATION_STATE_VERIFY_FAILED', 'DIRECTORY_SYNC_UNSUPPORTED',
         'DIRECTORY_SYNC_TARGET_UNSAFE', 'DIRECTORY_SYNC_OPEN_FAILED', 'DIRECTORY_SYNC_FAILED',
+        'DIRECTORY_SYNC_PIN_LSTAT_FAILED', 'DIRECTORY_SYNC_PIN_LINK_REFUSED',
+        'DIRECTORY_SYNC_PIN_NOT_DIRECTORY', 'DIRECTORY_SYNC_PIN_OPEN_FAILED',
+        'DIRECTORY_SYNC_PIN_FSTAT_FAILED', 'DIRECTORY_SYNC_PIN_HANDLE_NOT_DIRECTORY',
+        'DIRECTORY_SYNC_PIN_IDENTITY_MISMATCH', 'DIRECTORY_SYNC_VERIFY_LSTAT_FAILED',
+        'DIRECTORY_SYNC_VERIFY_LINK_REFUSED', 'DIRECTORY_SYNC_VERIFY_NOT_DIRECTORY',
+        'DIRECTORY_SYNC_VERIFY_IDENTITY_MISMATCH', 'DIRECTORY_SYNC_VERIFY_HANDLE_FAILED',
         'NAMESPACE_PIN_UNSUPPORTED', 'ROLLBACK_STORAGE_INSIDE_DOCROOT', 'ROLLBACK_STORAGE_PATH_UNSAFE',
         'ROLLBACK_STORAGE_LSTAT_FAILED', 'ROLLBACK_STORAGE_NOT_INITIALIZED', 'ROLLBACK_STORAGE_MODE_INVALID',
         'ROLLBACK_STORAGE_NAMESPACE_RACE', 'LOCK_PATH_UNSAFE', 'LOCK_PATH_LSTAT_FAILED', 'LOCK_OPEN_FAILED',
@@ -474,15 +480,17 @@ final class Land76_Release_Deployer {
             foreach ($paths as $path) {
                 clearstatcache(true, $path);
                 $stat = @lstat($path);
-                if (!is_array($stat) || self::path_is_link_or_reparse($path, $stat) || (($stat['mode'] & 0170000) !== 0040000)) self::fail($error);
+                if (!is_array($stat)) self::fail_namespace($error, 'PIN_LSTAT_FAILED');
+                if (self::path_is_link_or_reparse($path, $stat)) self::fail_namespace($error, 'PIN_LINK_REFUSED');
+                if (($stat['mode'] & 0170000) !== 0040000) self::fail_namespace($error, 'PIN_NOT_DIRECTORY');
                 $handle = null;
                 if (DIRECTORY_SEPARATOR === '/') {
                     $handle = @fopen($path, 'rb');
-                    $handle_stat = is_resource($handle) ? fstat($handle) : false;
-                    if (!is_array($handle_stat) || (($handle_stat['mode'] & 0170000) !== 0040000) || ($stat['dev'] ?? null) !== ($handle_stat['dev'] ?? null) || ($stat['ino'] ?? null) !== ($handle_stat['ino'] ?? null)) {
-                        if (is_resource($handle)) fclose($handle);
-                        self::fail($error);
-                    }
+                    if (!is_resource($handle)) self::fail_namespace($error, 'PIN_OPEN_FAILED');
+                    $handle_stat = @fstat($handle);
+                    if (!is_array($handle_stat)) { fclose($handle); self::fail_namespace($error, 'PIN_FSTAT_FAILED'); }
+                    if (($handle_stat['mode'] & 0170000) !== 0040000) { fclose($handle); self::fail_namespace($error, 'PIN_HANDLE_NOT_DIRECTORY'); }
+                    if (!self::same_stat_identity($stat, $handle_stat)) { fclose($handle); self::fail_namespace($error, 'PIN_IDENTITY_MISMATCH'); }
                 } elseif (self::$integration_config === null) self::fail('NAMESPACE_PIN_UNSUPPORTED');
                 $pins[] = array('path' => $path, 'stat' => $stat, 'handle' => $handle);
             }
@@ -498,12 +506,25 @@ final class Land76_Release_Deployer {
             $path = $pin['path']; $expected = $pin['stat']; $handle = $pin['handle'];
             clearstatcache(true, $path);
             $actual = @lstat($path);
-            if (!is_array($actual) || self::path_is_link_or_reparse($path, $actual) || (($actual['mode'] & 0170000) !== 0040000) || ($actual['dev'] ?? null) !== ($expected['dev'] ?? null) || ($actual['ino'] ?? null) !== ($expected['ino'] ?? null)) self::fail($error);
+            if (!is_array($actual)) self::fail_namespace($error, 'VERIFY_LSTAT_FAILED');
+            if (self::path_is_link_or_reparse($path, $actual)) self::fail_namespace($error, 'VERIFY_LINK_REFUSED');
+            if (($actual['mode'] & 0170000) !== 0040000) self::fail_namespace($error, 'VERIFY_NOT_DIRECTORY');
+            if (!self::same_stat_identity($actual, $expected)) self::fail_namespace($error, 'VERIFY_IDENTITY_MISMATCH');
             if (is_resource($handle)) {
-                $handle_stat = fstat($handle);
-                if (!is_array($handle_stat) || (($handle_stat['mode'] & 0170000) !== 0040000) || ($handle_stat['dev'] ?? null) !== ($expected['dev'] ?? null) || ($handle_stat['ino'] ?? null) !== ($expected['ino'] ?? null)) self::fail($error);
+                $handle_stat = @fstat($handle);
+                if (!is_array($handle_stat) || (($handle_stat['mode'] & 0170000) !== 0040000) || !self::same_stat_identity($handle_stat, $expected)) self::fail_namespace($error, 'VERIFY_HANDLE_FAILED');
             }
         }
+    }
+    private static function same_stat_identity(array $left, array $right): bool {
+        foreach (array('dev', 'ino') as $key) {
+            if (!array_key_exists($key, $left) || !array_key_exists($key, $right) || !is_int($left[$key]) || !is_int($right[$key]) || $left[$key] !== $right[$key]) return false;
+        }
+        return true;
+    }
+    /** Preserve legacy failure contracts while exposing only safe target-preflight failure classes. */
+    private static function fail_namespace(string $error, string $detail): void {
+        self::fail($error === 'DIRECTORY_SYNC_TARGET_UNSAFE' ? 'DIRECTORY_SYNC_' . $detail : $error);
     }
     private static function close_directory_namespace(array $pins): void {
         foreach (array_reverse($pins) as $pin) if (is_resource($pin['handle'] ?? null)) fclose($pin['handle']);
