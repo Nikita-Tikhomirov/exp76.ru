@@ -3,9 +3,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function land76wp_is_supported_case_template($template)
-{
-    return in_array((string) $template, array('casenew.php', 'portfoliopost.php'), true);
+if (!function_exists('land76wp_is_supported_case_template')) {
+    function land76wp_is_supported_case_template($template)
+    {
+        return in_array((string) $template, array('casenew.php', 'portfoliopost.php'), true);
+    }
 }
 
 /** Return the immutable service-hub ownership registry. */

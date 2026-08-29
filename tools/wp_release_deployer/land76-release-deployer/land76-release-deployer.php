@@ -8,6 +8,13 @@ declare(strict_types=1);
 
 if (!defined('ABSPATH')) { exit; }
 
+if (!function_exists('land76wp_is_supported_case_template')) {
+    function land76wp_is_supported_case_template($template)
+    {
+        return in_array((string) $template, array('casenew.php', 'portfoliopost.php'), true);
+    }
+}
+
 if (defined('LAND76_RELEASE_DEPLOYER_INTEGRATION_TEST') && LAND76_RELEASE_DEPLOYER_INTEGRATION_TEST === true) {
     /** Test-only entry point. The production class has no adapter method unless the test constant exists before load. */
     trait Land76_Release_Deployer_Integration_Test_Seam {
@@ -203,8 +210,8 @@ final class Land76_Release_Deployer {
         $registry_hash = $a2_files['wp-content/themes/land76wp/inc/service-hub-registry.php'] ?? null;
         if (!is_string($importer_hash)) self::fail('A1_IMPORTER_HASH_MISMATCH');
 
-        $present = array_filter(self::REGISTRY_FUNCTIONS, 'function_exists');
-        if ($present === array()) {
+        $present = array_values(array_filter(self::REGISTRY_FUNCTIONS, 'function_exists'));
+        if ($present === array('land76wp_is_supported_case_template')) {
             if (!is_string($registry_hash)) self::fail('A2_VENDOR_REGISTRY_HASH_MISMATCH');
             self::require_exact_php_file($registry, $registry_hash, 'A2_VENDOR_REGISTRY_HASH_MISMATCH');
         } elseif (count($present) !== count(self::REGISTRY_FUNCTIONS)) {

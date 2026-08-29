@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-if ($argc !== 2 || !in_array($argv[1], array('present', 'absent', 'partial', 'a2-noop', 'a1-drift'), true)) {
-    fwrite(STDERR, "Usage: php bridge-lifecycle.php <present|absent|partial|a2-noop|a1-drift>\n");
+if ($argc !== 2 || !in_array($argv[1], array('present', 'absent', 'exact-r2', 'partial', 'a2-noop', 'a1-drift'), true)) {
+    fwrite(STDERR, "Usage: php bridge-lifecycle.php <present|absent|exact-r2|partial|a2-noop|a1-drift>\n");
     exit(2);
 }
 
@@ -71,6 +71,8 @@ $registry_functions = array(
 );
 if ($scenario === 'present') {
     foreach ($registry_functions as $function) eval('function ' . $function . '(...$args) { return array(); }');
+} elseif ($scenario === 'exact-r2') {
+    foreach (array_slice($registry_functions, 1) as $function) eval('function ' . $function . '(...$args) { return array(); }');
 } elseif ($scenario === 'partial') {
     eval('function land76wp_service_hub_registry(...$args) { return array(); }');
 }
@@ -83,7 +85,7 @@ $expected = array(
         'wp-content/themes/land76wp/inc/a1-probe.php' => hash('sha256', $probe_bytes),
     ),
     'A2' => array(
-        'wp-content/themes/land76wp/inc/service-hub-registry.php' => 'd3529b114146a0a7e510995a372f40e65b6eeef029c957844b37a9a92bff58d0',
+        'wp-content/themes/land76wp/inc/service-hub-registry.php' => '87aa0a611cdc9bd62f9b46edfae39274977a13d6863e0d5140cbf923242f99e5',
     ),
 );
 $config = array(
@@ -128,7 +130,7 @@ try {
 
 $imported = !empty($GLOBALS['land76_bridge_imported']);
 $ok = match ($scenario) {
-    'present', 'absent' => $error === '' && $imported,
+    'present', 'absent', 'exact-r2' => $error === '' && $imported,
     'partial' => $error === 'SERVICE_HUB_REGISTRY_PARTIAL' && !$imported,
     'a2-noop' => $error === '' && !$imported,
     'a1-drift' => $error === 'A1_LIVE_HASH_MISMATCH' && !$imported,
