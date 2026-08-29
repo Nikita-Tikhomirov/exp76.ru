@@ -285,9 +285,13 @@ check(!Land76_Release_Deployer::request_is_authorized(array('REQUEST_METHOD' => 
 check(!Land76_Release_Deployer::request_is_authorized(array('REQUEST_METHOD' => 'POST', 'nonce' => 'bad'), 'apply:A1'), 'nonce guard');
 check(Land76_Release_Deployer::importer_bootstrap_target() === ABSPATH . 'wp-content/themes/land76wp/inc/import-service-hubs.php', 'admin-only importer bootstrap targets active theme import file');
 $frozen = Land76_Release_Deployer::expected();
+$default_state = Land76_Release_Deployer::default_state();
+$storage_path = new ReflectionMethod(Land76_Release_Deployer::class, 'storage_path');
+check($default_state['release_id'] === 'exp76-production-release-20260829-133000-r2', 'R2 uses a distinct frozen production release identity');
+check(str_ends_with($storage_path->invoke(null), '.land76-release-deployer-r2'), 'R2 uses isolated protected state and rollback storage');
 check(count($frozen['A1']['files']) === 26 && count($frozen['A2']['files']) === 22 && count($frozen['C']['files']) === 1 && count($frozen['B']['files']) === 30, 'frozen inventories contain all 79 verified entries');
 check($frozen['A2']['files']['wp-content/themes/land76wp/inc/service-hub-registry.php'] === '467220e5c953cce729805a33f28c0cc19d2542ff1adc8ffd0381e3a54d0cc412', 'vendored bridge registry hash is frozen');
-check($frozen['A1']['files']['wp-content/themes/land76wp/inc/import-service-hubs.php'] === '8a636fad8fb9b744873b1a1ef9d96dd2fedceb41fadcc9ecb8ded21b3b3b6206', 'A1 importer bootstrap hash is frozen');
+check($frozen['A1']['files']['wp-content/themes/land76wp/inc/import-service-hubs.php'] === '112d5bb3d1975736c8520775f28c0087a28ee0146d0e48f3900d96bc6c0fce95', 'A1 importer bootstrap hash is frozen');
 check(hash_file('sha256', dirname(__DIR__) . '/land76-release-deployer/vendor/service-hub-registry.php') === $frozen['A2']['files']['wp-content/themes/land76wp/inc/service-hub-registry.php'], 'vendored bridge registry is byte-exact A2 content');
 $source = file_get_contents(dirname(__DIR__) . '/land76-release-deployer/land76-release-deployer.php');
 check(is_string($source) && str_contains($source, "wp_nonce_field(self::nonce_action('backup'))"), 'backup form uses its action-specific nonce');

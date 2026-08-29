@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Land76 Release Deployer
  * Description: One-time, administrator-only deployer for the verified exp76.ru release.
- * Version: 1.0.0
+ * Version: 1.0.1
  */
 declare(strict_types=1);
 
@@ -50,7 +50,7 @@ final class Land76_Release_Deployer {
     use Land76_Release_Deployer_Integration_Test_Seam;
 
     private const NONCE = 'land76_release_deployer';
-    private const RELEASE_ID = 'exp76-production-release-20260829-043116';
+    private const RELEASE_ID = 'exp76-production-release-20260829-133000-r2';
     private const HUB_RELEASE_ID = 'service-hubs-2026-08-28';
     private const MAX_UPLOAD_BYTES = 15_000_000;
     private const ORDER = array('A1', 'A2', 'C', 'B');
@@ -989,7 +989,7 @@ final class Land76_Release_Deployer {
     }
     private static function storage_path(): string {
         if (self::$integration_config !== null) return self::$integration_config['storage_root'];
-        return dirname(self::docroot()) . DIRECTORY_SEPARATOR . '.land76-release-deployer';
+        return dirname(self::docroot()) . DIRECTORY_SEPARATOR . '.land76-release-deployer-r2';
     }
     private static function assert_storage_outside_docroot(string $root): void {
         $root = rtrim(str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $root), DIRECTORY_SEPARATOR);
