@@ -52,6 +52,7 @@ function current_user_can($capability): bool { return $capability === 'manage_op
 function get_stylesheet_directory(): string { return untrailingslashit(ABSPATH) . '/wp-content/themes/land76wp'; }
 
 $registry_functions = array(
+    'land76wp_is_supported_case_template',
     'land76wp_service_hub_registry',
     'land76wp_service_hub_by_service_id',
     'land76wp_service_hub_by_grouping_slug',
@@ -82,7 +83,7 @@ $expected = array(
         'wp-content/themes/land76wp/inc/a1-probe.php' => hash('sha256', $probe_bytes),
     ),
     'A2' => array(
-        'wp-content/themes/land76wp/inc/service-hub-registry.php' => '467220e5c953cce729805a33f28c0cc19d2542ff1adc8ffd0381e3a54d0cc412',
+        'wp-content/themes/land76wp/inc/service-hub-registry.php' => 'd3529b114146a0a7e510995a372f40e65b6eeef029c957844b37a9a92bff58d0',
     ),
 );
 $config = array(

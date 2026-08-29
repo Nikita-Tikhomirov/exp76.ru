@@ -1386,7 +1386,7 @@ function land76wp_service_hubs_validate_case_ids(array $case_ids, $page_key)
         if (!$case_post instanceof WP_Post
             || $case_post->post_type !== 'page'
             || $case_post->post_status !== 'publish'
-            || get_page_template_slug($case_id) !== 'casenew.php') {
+            || !land76wp_is_supported_case_template(get_page_template_slug($case_id))) {
             $errors[] = land76wp_service_hubs_error('unresolved_case', (string) $case_id);
         }
     }

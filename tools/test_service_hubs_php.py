@@ -978,11 +978,45 @@ class ImporterSafetyTests(unittest.TestCase):
         self.assertLess(stage_body.index("land76wp_service_hubs_install_missing_acf_schema"), stage_body.index("COMMIT"))
 
     def test_case_ids_must_resolve_to_published_case_pages(self):
-        body = php_function_body(self.source(), "land76wp_service_hubs_validate_case_ids")
-        self.assertIn("post_type !== 'page'", body)
-        self.assertIn("post_status !== 'publish'", body)
-        self.assertIn("get_page_template_slug", body)
-        self.assertIn("casenew.php", body)
+        registry = read(REGISTRY)
+        predicate = php_function_body(
+            registry, "land76wp_is_supported_case_template"
+        )
+        self.assertIn(
+            "return in_array((string) $template, array('casenew.php', 'portfoliopost.php'), true);",
+            predicate,
+        )
+        self.assertEqual(1, registry.count("'casenew.php'"))
+        self.assertEqual(1, registry.count("'portfoliopost.php'"))
+
+        importer = php_function_body(
+            self.source(), "land76wp_service_hubs_validate_case_ids"
+        )
+        self.assertIn("post_type !== 'page'", importer)
+        self.assertIn("post_status !== 'publish'", importer)
+        self.assertIn(
+            "land76wp_is_supported_case_template(get_page_template_slug($case_id))",
+            importer,
+        )
+
+        schema = php_function_body(read(FUNCTIONS), "land76_schema_is_case_template")
+        self.assertIn(
+            "land76wp_is_supported_case_template(get_page_template_slug(get_queried_object_id()))",
+            schema,
+        )
+
+        region = read(REGION_TEMPLATE)
+        self.assertIn(
+            "land76wp_is_supported_case_template(get_page_template_slug($land76_region_case->ID))",
+            region,
+        )
+        for consumer in (importer, schema, region):
+            self.assertNotIn("casenew.php", consumer)
+            self.assertNotIn("portfoliopost.php", consumer)
+
+        seo_case = php_function_body(read(FUNCTIONS), "land76_is_case_seo_template")
+        self.assertIn("is_page_template('casenew.php')", seo_case)
+        self.assertNotIn("portfoliopost.php", seo_case)
 
     def test_main_image_must_resolve_to_an_image_attachment(self):
         body = php_function_body(self.source(), "land76wp_service_hubs_validate_item")
@@ -1221,7 +1255,7 @@ class ThemeRoutingTests(unittest.TestCase):
             "_land76_main_image_url",
             "_land76_main_image_alt",
             "selected_real_projects",
-            "casenew.php",
+            "land76wp_is_supported_case_template",
         ):
             self.assertIn(marker, source)
 

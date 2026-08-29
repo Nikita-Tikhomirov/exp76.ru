@@ -6,7 +6,7 @@ from pathlib import Path
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 REGISTRY_PATH = "tools/wp_release_deployer/land76-release-deployer/vendor/service-hub-registry.php"
-REGISTRY_SHA256 = "467220e5c953cce729805a33f28c0cc19d2542ff1adc8ffd0381e3a54d0cc412"
+REGISTRY_SHA256 = "d3529b114146a0a7e510995a372f40e65b6eeef029c957844b37a9a92bff58d0"
 
 
 class VendorGitContractTest(unittest.TestCase):

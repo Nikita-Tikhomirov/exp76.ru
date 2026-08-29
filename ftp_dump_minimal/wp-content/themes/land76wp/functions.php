@@ -348,7 +348,7 @@ function land76_is_case_seo_template() {
 }
 
 function land76_schema_is_case_template() {
-  return is_page_template(array('casenew.php', 'portfoliopost.php'));
+  return land76wp_is_supported_case_template(get_page_template_slug(get_queried_object_id()));
 }
 
 function land76_schema_is_service_page_template() {

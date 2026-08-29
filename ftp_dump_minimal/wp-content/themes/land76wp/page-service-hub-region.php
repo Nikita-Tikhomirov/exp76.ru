@@ -102,7 +102,7 @@ get_header();
             if (!$land76_region_case instanceof WP_Post
                 || $land76_region_case->post_type !== 'page'
                 || $land76_region_case->post_status !== 'publish'
-                || get_page_template_slug($land76_region_case->ID) !== 'casenew.php') {
+                || !land76wp_is_supported_case_template(get_page_template_slug($land76_region_case->ID))) {
                 continue;
             }
             ?>
