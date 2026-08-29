@@ -683,6 +683,15 @@ $ns87_hero_btn_secondary_url = function_exists('get_field') ? get_field('ns87_he
 $ns87_problem_title = function_exists('get_field') ? get_field('ns87_problem_title', $ns87_post_context) : '';
 $ns87_problem_text = function_exists('get_field') ? get_field('ns87_problem_text', $ns87_post_context) : '';
 $ns87_problem_items = function_exists('get_field') ? get_field('ns87_problem_items', $ns87_post_context) : array();
+if ($land76_managed_service_hub_post
+    && function_exists('get_field')
+    && function_exists('land76wp_service_hubs_merge_problem_item_images')) {
+    $ns87_problem_items_raw = get_field('field_ns87_problem_items', $ns87_post_context, false);
+    $ns87_problem_items = land76wp_service_hubs_merge_problem_item_images(
+        $ns87_problem_items,
+        $ns87_problem_items_raw
+    );
+}
 $ns87_solution_title = function_exists('get_field') ? get_field('ns87_solution_title', $ns87_post_context) : '';
 $ns87_solution_text = function_exists('get_field') ? get_field('ns87_solution_text', $ns87_post_context) : '';
 $ns87_solution_points = function_exists('get_field') ? get_field('ns87_solution_points', $ns87_post_context) : array();

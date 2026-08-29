@@ -1,5 +1,6 @@
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -26,6 +27,7 @@ REGION_TEMPLATE = THEME / "page-service-hub-region.php"
 SERVICEPOST = THEME / "servicepost.php"
 SERVICEPOST_CSS = THEME / "css" / "servicepost.css"
 DRENAZH_BLOG_IMPORTER = INC / "import-drenazh-blog.php"
+ACF_STORAGE_BEHAVIOR = ROOT / "tools" / "test_service_hubs_acf_storage.php"
 
 RELEASE_ID = "service-hubs-2026-08-28"
 IMPORT_OWNER = "land76-service-hubs"
@@ -257,6 +259,91 @@ class ImportPayloadAndAcfTests(unittest.TestCase):
 class ImporterSafetyTests(unittest.TestCase):
     def source(self):
         return read(IMPORTER)
+
+    def test_generic_acf_storage_behavior_fixture(self):
+        php = os.environ.get("LAND76_PHP_BINARY") or shutil.which("php")
+        if php is None:
+            self.skipTest("PHP runtime is not installed")
+        completed = subprocess.run(
+            [php, str(ACF_STORAGE_BEHAVIOR)],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+        )
+        self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+
+    def test_stage_and_publish_pass_complete_post_map_to_every_verifier_call(self):
+        source = self.source()
+        build_body = php_function_body(source, "land76wp_service_hubs_build_plan")
+        stage_body = php_function_body(source, "land76wp_service_hubs_execute_stage")
+        publish_body = php_function_body(source, "land76wp_service_hubs_publish_plan")
+        self.assertIn("land76wp_service_hubs_build_relation_post_ids", build_body)
+        self.assertIn(
+            "land76wp_service_hubs_build_validated_hub_relation_post_ids",
+            build_body,
+        )
+        self.assertIn(
+            "land76wp_service_hubs_validate_relation_operation_namespace",
+            build_body,
+        )
+        self.assertIsNotNone(
+            re.search(
+                r"land76wp_service_hubs_verify_staged_item\(.*?,\s*\$relation_post_ids\s*,\s*\$required_status\s*\)",
+                build_body,
+                re.DOTALL,
+            )
+        )
+        for body, expected_calls in ((stage_body, 2), (publish_body, 3)):
+            calls = re.findall(
+                r"land76wp_service_hubs_verify_staged_item\((.*?)\)",
+                body,
+                re.DOTALL,
+            )
+            self.assertEqual(expected_calls, len(calls))
+            for call in calls:
+                self.assertRegex(
+                    call,
+                    r",\s*\$post_ids(?:\s*,\s*'(?:draft|publish)')?\s*$",
+                )
+
+    def test_generic_acf_write_and_verify_are_bound_to_exact_schema_keys(self):
+        source = self.source()
+        apply_body = php_function_body(source, "land76wp_service_hubs_apply_acf")
+        verify_body = php_function_body(source, "land76wp_service_hubs_verify_staged_item")
+        self.assertIn("land76wp_service_hubs_resolve_acf_field", apply_body)
+        self.assertIn("update_field($field['key']", apply_body)
+        self.assertIn("land76wp_service_hubs_restore_raw_acf_storage", apply_body)
+        self.assertIn("get_field($field['key'], $post_id, false)", verify_body)
+        self.assertIn("'_' . $field_name", verify_body)
+        image_validator = php_function_body(
+            source,
+            "land76wp_service_hubs_validate_image_attachment_id",
+        )
+        self.assertIn("wp_attachment_is_image($attachment_id)", image_validator)
+        theme_validator = php_function_body(
+            source,
+            "land76wp_service_hubs_is_allowed_theme_context_image_url",
+        )
+        self.assertIn("is_file($image_path)", theme_validator)
+
+    def test_managed_problem_images_merge_raw_keys_without_changing_legacy_reads(self):
+        source = read(NEW_SERVICE)
+        formatted_call = "get_field('ns87_problem_items', $ns87_post_context)"
+        managed_guard = "if ($land76_managed_service_hub_post"
+        raw_call = "get_field('field_ns87_problem_items', $ns87_post_context, false)"
+        merge_call = "land76wp_service_hubs_merge_problem_item_images("
+        self.assertEqual(1, source.count(raw_call))
+        formatted_index = source.index(formatted_call)
+        managed_index = source.index(managed_guard, formatted_index)
+        raw_index = source.index(raw_call, managed_index)
+        merge_index = source.index(merge_call, raw_index)
+        managed_close = source.index("\n}", merge_index)
+        self.assertLess(formatted_index, managed_index)
+        self.assertLess(managed_index, raw_index)
+        self.assertLess(raw_index, merge_index)
+        self.assertLess(merge_index, managed_close)
+        self.assertNotIn(raw_call, source[:managed_index])
 
     def test_importer_defaults_to_preview_and_contains_no_delete_api(self):
         source = self.source()
