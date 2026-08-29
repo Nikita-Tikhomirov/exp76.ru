@@ -7,29 +7,40 @@ $land76_theme_directory = dirname(__DIR__) . '/ftp_dump_minimal/wp-content/theme
 $land76_fields = array();
 $land76_groups = array();
 $land76_raw_fields = array();
+$land76_raw_groups = array();
+$land76_field_cache = array();
+$land76_group_cache = array();
 $land76_updated_fields = array();
 $land76_updated_groups = 0;
 $land76_candidate_query_failed = false;
+$land76_group_query_failed = false;
+$land76_forced_parent = null;
+$land76_skip_field_write = false;
 
 final class Land76_Test_Wpdb
 {
     public string $posts = 'wp_posts';
     public string $last_error = '';
+    public array $prepared_args = array();
 
     public function prepare($query, ...$args)
     {
+        $this->prepared_args = $args;
         return $query;
     }
 
     public function get_col($query)
     {
-        global $land76_raw_fields, $land76_candidate_query_failed;
-        if ($land76_candidate_query_failed) {
+        global $land76_raw_fields, $land76_raw_groups;
+        global $land76_candidate_query_failed, $land76_group_query_failed;
+        $is_group = isset($this->prepared_args[0]) && $this->prepared_args[0] === 'acf-field-group';
+        if (($is_group && $land76_group_query_failed)
+            || (!$is_group && $land76_candidate_query_failed)) {
             $this->last_error = 'injected candidate query failure';
             return array();
         }
         $this->last_error = '';
-        $ids = array_keys($land76_raw_fields);
+        $ids = array_keys($is_group ? $land76_raw_groups : $land76_raw_fields);
         sort($ids, SORT_NUMERIC);
         return $ids;
     }
@@ -43,12 +54,39 @@ function get_template_directory(): string { global $land76_theme_directory; retu
 function wp_json_encode($value, $flags = 0, $depth = 512): string { return (string) json_encode($value, $flags, $depth); }
 function acf_get_field($key) { global $land76_fields; return $land76_fields[$key] ?? false; }
 function acf_get_field_group($key) { global $land76_groups; return $land76_groups[$key] ?? false; }
-function acf_get_raw_field($id) { global $land76_raw_fields; return $land76_raw_fields[(int) $id] ?? false; }
+function acf_get_raw_field($id) {
+    global $land76_raw_fields, $land76_field_cache;
+    $id = (int) $id;
+    if (!array_key_exists($id, $land76_field_cache)) {
+        $land76_field_cache[$id] = $land76_raw_fields[$id] ?? false;
+    }
+    return $land76_field_cache[$id];
+}
+function acf_get_raw_field_group($id) {
+    global $land76_raw_groups, $land76_group_cache;
+    $id = (int) $id;
+    if (!array_key_exists($id, $land76_group_cache)) {
+        $land76_group_cache[$id] = $land76_raw_groups[$id] ?? false;
+    }
+    return $land76_group_cache[$id];
+}
+function clean_post_cache($id): void {
+    global $land76_field_cache, $land76_group_cache;
+    unset($land76_field_cache[(int) $id], $land76_group_cache[(int) $id]);
+}
 function acf_update_field($field) {
     global $land76_fields, $land76_raw_fields, $land76_updated_fields;
+    global $land76_forced_parent, $land76_skip_field_write;
     $land76_updated_fields[] = $field;
-    $land76_raw_fields[(int) $field['ID']] = $field;
-    $land76_fields[$field['key']] = $field;
+    $stored = $field;
+    if ($land76_forced_parent !== null) {
+        $stored['parent'] = $land76_forced_parent;
+    }
+    if (!$land76_skip_field_write) {
+        $land76_raw_fields[(int) $field['ID']] = $stored;
+        $land76_fields[$field['key']] = $stored;
+    }
+    clean_post_cache((int) $field['ID']);
     return $field;
 }
 function acf_update_field_group($group) {
@@ -182,6 +220,9 @@ $land76_raw_fields = array(
 );
 $land76_fields = array('field_blogseo_related_services' => $orphan);
 $land76_groups = array('group_blogseo_post' => $group);
+$land76_raw_groups = array(10745 => $group);
+$land76_field_cache = array();
+$land76_group_cache = array();
 $land76_updated_fields = array();
 $land76_updated_groups = 0;
 land76wp_service_hubs_migrate_legacy_blog_relation();
@@ -203,6 +244,7 @@ $desired_orphan = $land76_raw_fields[10762];
 $legacy_canonical = land76_test_legacy_field(10745);
 $legacy_canonical['ID'] = 10820;
 $land76_raw_fields = array(10762 => $desired_orphan, 10820 => $legacy_canonical);
+$land76_field_cache = array();
 $land76_updated_fields = array();
 land76wp_service_hubs_migrate_legacy_blog_relation();
 $test->same(1, count($land76_updated_fields), 'A retry must update only the remaining exact legacy duplicate.');
@@ -225,6 +267,7 @@ $test->same(0, count($land76_updated_fields), 'Unknown duplicate data must be re
 $foreign_parent = land76_test_legacy_field(99999);
 $foreign_parent['ID'] = 11000;
 $land76_raw_fields = array(10820 => $legacy_canonical, 11000 => $foreign_parent);
+$land76_field_cache = array();
 $foreign_inspection = land76wp_service_hubs_inspect_blog_relation($group, false);
 $test->true(
     count(array_filter($foreign_inspection['errors'], static function ($error) {
@@ -241,6 +284,86 @@ $test->true(
         return str_contains($error, 'acf_schema_query_failed');
     })) === 1,
     'A failed duplicate inventory query must fail closed.'
+);
+
+$stale_a = land76_test_legacy_field(0);
+$stale_b = land76_test_legacy_field(10745);
+$stale_b['ID'] = 10820;
+$land76_raw_fields = array(10762 => $stale_a, 10820 => $stale_b);
+$land76_field_cache = array();
+$stale_preview = land76wp_service_hubs_inspect_blog_relation($group, false);
+$test->true($stale_preview['migration'], 'Preview must cache a clean known legacy inventory for the race fixture.');
+$land76_raw_fields[10820]['taxonomy'] = array('category:999');
+$land76_updated_fields = array();
+$stale_thrown = '';
+try {
+    land76wp_service_hubs_migrate_legacy_blog_relation();
+} catch (RuntimeException $error) {
+    $stale_thrown = $error->getMessage();
+}
+$test->true(str_contains($stale_thrown, 'acf_schema_incompatible'), 'Stage must reject a post-lock field change hidden by Preview cache.');
+$test->same(0, count($land76_updated_fields), 'A stale Preview cache must be invalidated before the first update.');
+
+$land76_raw_fields = array(10762 => $stale_a, 10820 => $stale_b);
+$land76_field_cache = array();
+$land76_raw_groups = array(10745 => $group);
+$land76_group_cache = array();
+$cached_group = land76wp_service_hubs_blog_relation_group(false);
+$test->same(array(), $cached_group['errors'], 'Preview must cache the canonical group for the race fixture.');
+$land76_raw_groups[10745] = $wrong_location;
+$land76_updated_fields = array();
+$group_race_thrown = '';
+try {
+    land76wp_service_hubs_migrate_legacy_blog_relation();
+} catch (RuntimeException $error) {
+    $group_race_thrown = $error->getMessage();
+}
+$test->true(str_contains($group_race_thrown, 'acf_group_incompatible'), 'Stage must reject a post-lock group change hidden by Preview cache.');
+$test->same(0, count($land76_updated_fields), 'A stale group cache must be invalidated before the first update.');
+
+$land76_raw_groups = array(10745 => $group);
+$land76_group_cache = array();
+$land76_raw_fields = array(10762 => $stale_a, 10820 => $stale_b);
+$land76_field_cache = array();
+$land76_forced_parent = 10745;
+$parent_thrown = '';
+try {
+    land76wp_service_hubs_migrate_legacy_blog_relation();
+} catch (RuntimeException $error) {
+    $parent_thrown = $error->getMessage();
+}
+$land76_forced_parent = null;
+$test->true(str_contains($parent_thrown, 'acf_schema_migration_failed'), 'A field hook that changes a preserved parent must abort Stage.');
+
+$land76_raw_fields = array(10762 => $stale_a, 10820 => $stale_b);
+$land76_field_cache = array();
+$land76_skip_field_write = true;
+$write_thrown = '';
+try {
+    land76wp_service_hubs_migrate_legacy_blog_relation();
+} catch (RuntimeException $error) {
+    $write_thrown = $error->getMessage();
+}
+$land76_skip_field_write = false;
+$test->true(str_contains($write_thrown, 'acf_schema_migration_failed'), 'A false-positive ACF update result must fail the raw post-write verification.');
+
+$all_orphan_b = land76_test_legacy_field(0);
+$all_orphan_b['ID'] = 10791;
+$land76_raw_fields = array(10762 => $stale_a, 10791 => $all_orphan_b);
+$land76_field_cache = array();
+$land76_updated_fields = array();
+land76wp_service_hubs_migrate_legacy_blog_relation();
+$test->same(10745, $land76_raw_fields[10762]['parent'], 'An all-orphan known set must attach only its lowest ID to the canonical group.');
+$test->same(0, $land76_raw_fields[10791]['parent'], 'The remaining known orphan must stay hidden from the duplicated group UI.');
+
+$land76_group_query_failed = true;
+$group_query_failure = land76wp_service_hubs_blog_relation_group(false);
+$land76_group_query_failed = false;
+$test->true(
+    count(array_filter($group_query_failure['errors'], static function ($error) {
+        return str_contains($error, 'acf_group_incompatible');
+    })) === 1,
+    'A failed canonical-group query must fail closed.'
 );
 
 echo 'PASS ' . $test->count() . " assertions\n";

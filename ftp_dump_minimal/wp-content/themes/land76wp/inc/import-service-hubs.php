@@ -1032,6 +1032,9 @@ function land76wp_service_hubs_blog_relation_candidate_fields($for_update = fals
             );
         }
         $seen[$candidate_id] = true;
+        if ($for_update) {
+            clean_post_cache($candidate_id);
+        }
         $field = acf_get_raw_field($candidate_id);
         if (!is_array($field)
             || (int) (isset($field['ID']) ? $field['ID'] : 0) !== $candidate_id
@@ -1048,6 +1051,61 @@ function land76wp_service_hubs_blog_relation_candidate_fields($for_update = fals
     return array('errors' => array(), 'fields' => $fields);
 }
 
+/** Load the one canonical field-group row, with a fresh locked read during Stage. */
+function land76wp_service_hubs_blog_relation_group($for_update = false)
+{
+    global $wpdb;
+
+    $group_key = 'group_blogseo_post';
+    $query = $wpdb->prepare(
+        "SELECT ID FROM {$wpdb->posts} WHERE post_type = %s AND post_status = %s AND post_name = %s ORDER BY ID ASC",
+        'acf-field-group',
+        'publish',
+        $group_key
+    );
+    if (!is_string($query) || $query === '') {
+        return array(
+            'errors' => array(land76wp_service_hubs_error('acf_group_query_failed', $group_key)),
+            'group' => null,
+        );
+    }
+    if ($for_update) {
+        $query .= ' FOR UPDATE';
+    }
+    $ids = $wpdb->get_col($query);
+    if (!is_array($ids)
+        || (isset($wpdb->last_error) && (string) $wpdb->last_error !== '')
+        || count($ids) !== 1) {
+        return array(
+            'errors' => array(land76wp_service_hubs_error('acf_group_incompatible', $group_key)),
+            'group' => null,
+        );
+    }
+
+    $group_id = (int) $ids[0];
+    if ($group_id <= 0) {
+        return array(
+            'errors' => array(land76wp_service_hubs_error('acf_group_incompatible', $group_key)),
+            'group' => null,
+        );
+    }
+    if ($for_update) {
+        clean_post_cache($group_id);
+    }
+    $group = acf_get_raw_field_group($group_id);
+    if (!is_array($group)
+        || (int) (isset($group['ID']) ? $group['ID'] : 0) !== $group_id
+        || !isset($group['key'])
+        || !hash_equals($group_key, (string) $group['key'])) {
+        return array(
+            'errors' => array(land76wp_service_hubs_error('acf_group_incompatible', $group_key)),
+            'group' => null,
+        );
+    }
+
+    return array('errors' => array(), 'group' => $group);
+}
+
 /** Inspect the full duplicate set so ACF's nondeterministic single-key lookup cannot hide stale rows. */
 function land76wp_service_hubs_inspect_blog_relation(array $group, $for_update = false)
 {
@@ -1056,6 +1114,7 @@ function land76wp_service_hubs_inspect_blog_relation(array $group, $for_update =
         'fields' => array(),
         'missing' => false,
         'migration' => false,
+        'canonical_parent_count' => 0,
     );
     $expected_group = land76wp_service_hubs_required_acf_groups()['field_blogseo_related_services'];
     if (!land76wp_service_hubs_acf_group_definition_matches($group, $expected_group)) {
@@ -1107,8 +1166,9 @@ function land76wp_service_hubs_inspect_blog_relation(array $group, $for_update =
         }
     }
     if ($canonical_parent_count === 0) {
-        $result['errors'][] = land76wp_service_hubs_error('acf_group_incompatible', 'blogseo_related_services.parent');
+        $result['migration'] = true;
     }
+    $result['canonical_parent_count'] = $canonical_parent_count;
 
     $result['errors'] = array_values(array_unique($result['errors']));
     return $result;
@@ -1117,7 +1177,15 @@ function land76wp_service_hubs_inspect_blog_relation(array $group, $for_update =
 function land76wp_service_hubs_verify_acf_schema($allow_missing = true)
 {
     $result = array('errors' => array(), 'missing' => array(), 'migrations' => array());
-    $required_functions = array('get_field', 'update_field', 'acf_get_field', 'acf_get_raw_field', 'acf_get_field_group');
+    $required_functions = array(
+        'get_field',
+        'update_field',
+        'clean_post_cache',
+        'acf_get_field',
+        'acf_get_raw_field',
+        'acf_get_field_group',
+        'acf_get_raw_field_group',
+    );
     foreach ($required_functions as $function_name) {
         if (!function_exists($function_name)) {
             $result['errors'][] = land76wp_service_hubs_error('acf_unavailable', $function_name);
@@ -1131,9 +1199,13 @@ function land76wp_service_hubs_verify_acf_schema($allow_missing = true)
     foreach (land76wp_service_hubs_required_acf_fields() as $field_key => $expected) {
         $field_name = $expected['name'];
         $expected_group = $required_groups[$field_key];
-        $group = acf_get_field_group($expected_group['key']);
-        if ($field_key === 'field_blogseo_related_services' && is_array($group)) {
-            $inspection = land76wp_service_hubs_inspect_blog_relation($group, false);
+        if ($field_key === 'field_blogseo_related_services') {
+            $group_result = land76wp_service_hubs_blog_relation_group(false);
+            if ($group_result['errors'] !== array()) {
+                $result['errors'] = array_merge($result['errors'], $group_result['errors']);
+                continue;
+            }
+            $inspection = land76wp_service_hubs_inspect_blog_relation($group_result['group'], false);
             if ($inspection['missing']) {
                 $result['missing'][] = $field_key;
             }
@@ -1143,6 +1215,7 @@ function land76wp_service_hubs_verify_acf_schema($allow_missing = true)
             }
             continue;
         }
+        $group = acf_get_field_group($expected_group['key']);
         $field = acf_get_field($field_key);
         if (!$field || !is_array($field)) {
             $result['missing'][] = $field_key;
@@ -1916,10 +1989,11 @@ function land76wp_service_hubs_migrate_legacy_blog_relation()
 {
     $field_key = 'field_blogseo_related_services';
     $group_key = 'group_blogseo_post';
-    $group = acf_get_field_group($group_key);
-    if (!is_array($group)) {
+    $group_result = land76wp_service_hubs_blog_relation_group(true);
+    if ($group_result['errors'] !== array() || !is_array($group_result['group'])) {
         throw new RuntimeException(land76wp_service_hubs_error('acf_schema_incompatible', $field_key));
     }
+    $group = $group_result['group'];
     $inspection = land76wp_service_hubs_inspect_blog_relation($group, true);
     if ($inspection['missing'] || $inspection['errors'] !== array() || !$inspection['migration']) {
         throw new RuntimeException(
@@ -1932,20 +2006,30 @@ function land76wp_service_hubs_migrate_legacy_blog_relation()
     $paths = land76wp_service_hubs_default_acf_json_paths();
     $bundled = land76wp_service_hubs_bundled_acf_group_field($paths[1], $group_key, $field_key);
     $candidate_ids = array();
+    $candidate_parents = array();
+    $repair_parent_id = $inspection['canonical_parent_count'] === 0
+        ? (int) $inspection['fields'][0]['ID']
+        : 0;
     foreach ($inspection['fields'] as $field) {
-        $candidate_ids[] = (int) $field['ID'];
-        if (land76wp_service_hubs_acf_schema_matches(
+        $candidate_id = (int) $field['ID'];
+        $candidate_ids[] = $candidate_id;
+        $candidate_parents[$candidate_id] = isset($field['parent']) ? (string) $field['parent'] : '';
+        $is_desired = land76wp_service_hubs_acf_schema_matches(
             $field,
             land76wp_service_hubs_blog_relation_desired_schema()
-        )) {
+        );
+        if ($is_desired && $candidate_id !== $repair_parent_id) {
             continue;
         }
-        if (!land76wp_service_hubs_is_exact_legacy_blog_relation($field, $group)) {
+        if (!$is_desired && !land76wp_service_hubs_is_exact_legacy_blog_relation($field, $group)) {
             throw new RuntimeException(land76wp_service_hubs_error('acf_schema_incompatible', (string) $field['ID']));
         }
         $target_field = $bundled['field'];
-        $target_field['ID'] = (int) $field['ID'];
-        $target_field['parent'] = isset($field['parent']) ? $field['parent'] : 0;
+        $target_field['ID'] = $candidate_id;
+        $target_field['parent'] = $candidate_id === $repair_parent_id
+            ? (int) $group['ID']
+            : (isset($field['parent']) ? $field['parent'] : 0);
+        $candidate_parents[$candidate_id] = (string) $target_field['parent'];
         $updated = acf_update_field($target_field);
         if (!is_array($updated)
             || (int) (isset($updated['ID']) ? $updated['ID'] : 0) !== (int) $field['ID']
@@ -1957,13 +2041,17 @@ function land76wp_service_hubs_migrate_legacy_blog_relation()
 
     $verified = land76wp_service_hubs_inspect_blog_relation($group, true);
     $verified_ids = array();
+    $verified_parents = array();
     foreach ($verified['fields'] as $field) {
-        $verified_ids[] = (int) $field['ID'];
+        $verified_id = (int) $field['ID'];
+        $verified_ids[] = $verified_id;
+        $verified_parents[$verified_id] = isset($field['parent']) ? (string) $field['parent'] : '';
     }
     if ($verified['missing']
         || $verified['errors'] !== array()
         || $verified['migration']
-        || $verified_ids !== $candidate_ids) {
+        || $verified_ids !== $candidate_ids
+        || $verified_parents !== $candidate_parents) {
         throw new RuntimeException(land76wp_service_hubs_error('acf_schema_migration_failed', $field_key));
     }
 }
@@ -2007,7 +2095,14 @@ function land76wp_service_hubs_install_missing_acf_schema(array $missing, array 
     if ($missing === array() && $migrations === array()) {
         return;
     }
-    foreach (array('acf_update_field_group', 'acf_update_field', 'acf_get_raw_field', 'acf_get_field_group') as $function_name) {
+    foreach (array(
+        'clean_post_cache',
+        'acf_update_field_group',
+        'acf_update_field',
+        'acf_get_raw_field',
+        'acf_get_field_group',
+        'acf_get_raw_field_group',
+    ) as $function_name) {
         if (!function_exists($function_name)) {
             throw new RuntimeException(land76wp_service_hubs_error('acf_unavailable', $function_name));
         }

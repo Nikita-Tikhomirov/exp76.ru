@@ -912,6 +912,8 @@ class ImporterSafetyTests(unittest.TestCase):
         self.assertNotIn("land76wp_service_hubs_acf_group_matches", legacy_body)
         verify_body = php_function_body(source, "land76wp_service_hubs_verify_acf_schema")
         self.assertIn("land76wp_service_hubs_inspect_blog_relation", verify_body)
+        self.assertIn("land76wp_service_hubs_blog_relation_group", verify_body)
+        self.assertIn("acf_get_raw_field_group", verify_body)
         self.assertIn("$result['migrations'][]", verify_body)
         inspect_body = php_function_body(
             source, "land76wp_service_hubs_inspect_blog_relation"
@@ -929,8 +931,22 @@ class ImporterSafetyTests(unittest.TestCase):
             "ORDER BY ID ASC",
             "FOR UPDATE",
             "acf_get_raw_field",
+            "clean_post_cache",
         ):
             self.assertIn(marker, candidates_body)
+        group_body = php_function_body(
+            source, "land76wp_service_hubs_blog_relation_group"
+        )
+        for marker in (
+            "post_type = %s",
+            "post_status = %s",
+            "post_name = %s",
+            "ORDER BY ID ASC",
+            "FOR UPDATE",
+            "clean_post_cache",
+            "acf_get_raw_field_group",
+        ):
+            self.assertIn(marker, group_body)
 
     def test_legacy_acf_migration_is_targeted_and_runs_inside_stage_transaction(self):
         source = self.source()
@@ -941,7 +957,9 @@ class ImporterSafetyTests(unittest.TestCase):
         self.assertIn("acf_update_field", migrate_body)
         self.assertIn("land76wp_service_hubs_inspect_blog_relation", migrate_body)
         self.assertIn("$candidate_ids", migrate_body)
+        self.assertIn("$candidate_parents", migrate_body)
         self.assertIn("$verified_ids", migrate_body)
+        self.assertIn("$verified_parents", migrate_body)
         self.assertIn("$target_field['ID']", migrate_body)
         self.assertIn("$target_field['parent']", migrate_body)
         self.assertNotIn("acf_update_field_group", migrate_body)
