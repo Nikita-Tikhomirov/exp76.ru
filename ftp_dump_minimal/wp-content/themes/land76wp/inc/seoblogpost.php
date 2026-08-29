@@ -211,6 +211,8 @@ $land76_managed_service_hub_post = hash_equals(
     'land76-service-hubs',
     (string) get_post_meta(get_the_ID(), '_land76_import_owner', true)
 );
+$blogseo_is_managed_runtime = function_exists('land76wp_is_managed_service_hub_post')
+    && land76wp_is_managed_service_hub_post(get_the_ID());
 
 if ($land76_managed_service_hub_post) {
     $blogseo_main_image_url = (string) get_post_meta(get_the_ID(), '_land76_main_image_url', true);
@@ -386,6 +388,7 @@ if (!is_array($blogseo_faq_items)) {
           </div>
         <?php endforeach; ?>
       </section>
+      <?php if (!$blogseo_is_managed_runtime) : ?>
       <script type="application/ld+json">
       <?php
       $faq_schema = array(
@@ -409,6 +412,7 @@ if (!is_array($blogseo_faq_items)) {
       echo wp_json_encode($faq_schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
       ?>
       </script>
+      <?php endif; ?>
     <?php endif; ?>
   </article>
 </section>

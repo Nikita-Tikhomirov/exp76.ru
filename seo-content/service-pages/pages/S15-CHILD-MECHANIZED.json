@@ -176,12 +176,26 @@
     "secondary_url": "#consultation"
   },
   "boundary": {
-    "summary": "Включено: только доступная компании техника и допустимый масштаб. Исключённые основные интенты: промышленный и высотный снос, исторические объекты, общий вывоз бытового мусора, неподтверждённые разрешения, режим 24/7 и любой масштаб.",
+    "summary": "Услуга включает механизированный демонтаж в пределах возможностей площадки и согласованного объёма.",
     "excluded_intents": [
       "промышленный и высотный снос",
       "исторические объекты",
       "общий вывоз бытового мусора",
-      "неподтверждённые разрешения, режим 24/7 и любой масштаб"
+      "оформление разрешений, круглосуточные работы и промышленный масштаб"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
+      "alt": "Механизированный демонтаж старого частного дома"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
+      "alt": "Механизированный демонтаж старого частного дома"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
+      "alt": "Механизированный демонтаж старого частного дома"
+    }
   }
 }

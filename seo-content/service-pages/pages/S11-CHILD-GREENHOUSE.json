@@ -176,12 +176,26 @@
     "secondary_url": "#consultation"
   },
   "boundary": {
-    "summary": "Включено: монтаж туманообразования для микроклимата растений. Исключённые основные интенты: автополив, внутреннее промышленное увлажнение, гарантированный агрономический результат, гарантированное снижение температуры на 15 градусов.",
+    "summary": "Услуга включает монтаж системы туманообразования для поддержания микроклимата в теплице.",
     "excluded_intents": [
       "автополив",
       "внутреннее промышленное увлажнение",
       "гарантированный агрономический результат",
       "гарантированное снижение температуры на 15 градусов"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-greenhouse-misting.webp",
+      "alt": "Система туманообразования внутри теплицы"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-greenhouse-misting.webp",
+      "alt": "Система туманообразования внутри теплицы"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-greenhouse-misting.webp",
+      "alt": "Система туманообразования внутри теплицы"
+    }
   }
 }

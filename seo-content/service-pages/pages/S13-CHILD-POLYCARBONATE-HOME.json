@@ -176,12 +176,26 @@
     "secondary_url": "#consultation"
   },
   "boundary": {
-    "summary": "Включено: изготовление лёгкого навеса из поликарбоната к дому. Исключённые основные интенты: гараж и парковочная площадка, капитальная пристройка, печной комплекс, неподтверждённые сроки, бренды и гарантии.",
+    "summary": "Услуга включает изготовление лёгкого навеса из поликарбоната, примыкающего к дому.",
     "excluded_intents": [
       "гараж и парковочная площадка",
       "капитальная пристройка",
       "печной комплекс",
-      "неподтверждённые сроки, бренды и гарантии"
+      "фиксированные сроки, марки материалов и гарантийные условия без договора"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
+      "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
+      "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
+      "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+    }
   }
 }

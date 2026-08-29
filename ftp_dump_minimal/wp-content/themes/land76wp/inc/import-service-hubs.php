@@ -15,9 +15,156 @@ function land76wp_service_hubs_expected_release_id()
     return 'service-hubs-2026-08-28';
 }
 
+/** Return the frozen non-hub inventory admitted by this release importer. */
+function land76wp_service_hubs_expected_page_keys()
+{
+    static $page_keys = null;
+    if (is_array($page_keys)) {
+        return $page_keys;
+    }
+
+    $json = <<<'LAND76_SERVICE_HUB_EXPECTED_PAGE_KEYS_JSON'
+[
+  "S1-CHILD-3D",
+  "S1-CHILD-DENDROPLAN",
+  "S1-CHILD-MASTERPLAN",
+  "S1-CHILD-RELIEF",
+  "S1-CHILD-SKETCH",
+  "S10-ARTICLE-POND-CARE",
+  "S10-ARTICLE-POND-DIY",
+  "S10-CHILD-DECORATIVE-POND",
+  "S10-CHILD-FOUNTAIN",
+  "S10-CHILD-STREAM",
+  "S10-CHILD-SWIMMING-POND",
+  "S10-CHILD-WATERFALL-CASCADE",
+  "S11-ARTICLE-PRESSURE",
+  "S11-CHILD-CAFE-OUTDOOR",
+  "S11-CHILD-GREENHOUSE",
+  "S11-CHILD-TERRACE-VERANDA",
+  "S12-ARTICLE-PILE-PROS-CONS",
+  "S12-CHILD-BATHHOUSE",
+  "S12-CHILD-DRIVING",
+  "S12-CHILD-PRIVATE-HOUSE",
+  "S13-ARTICLE-CARPORT-DIY",
+  "S13-ARTICLE-POLYCARBONATE-DIY",
+  "S13-CHILD-BARBECUE",
+  "S13-CHILD-CARPORT",
+  "S13-CHILD-POLYCARBONATE-HOME",
+  "S13-CHILD-TERRACE",
+  "S14-ARTICLE-BRICK-GRILL-DIY",
+  "S14-ARTICLE-HEATING-STOVE-DIY",
+  "S14-CHILD-BARBECUE",
+  "S14-CHILD-BRICK-GRILL",
+  "S14-CHILD-CAULDRON-SMOKEHOUSE",
+  "S14-CHILD-FIREPLACE",
+  "S14-CHILD-HEATING-STOVE",
+  "S15-ARTICLE-DEMOLITION-PERMIT",
+  "S15-CHILD-COUNTRY-HOUSE",
+  "S15-CHILD-DANGEROUS-BUILDING",
+  "S15-CHILD-DEBRIS",
+  "S15-CHILD-MANUAL",
+  "S15-CHILD-MECHANIZED",
+  "S15-CHILD-PRIVATE-HOUSE",
+  "S2-CHILD-RESTORE",
+  "S2-CHILD-ROLL",
+  "S2-CHILD-SEED",
+  "S2-CHILD-SOIL",
+  "S3-CHILD-CONIFERS",
+  "S3-CHILD-FRUIT",
+  "S3-CHILD-HEDGE",
+  "S3-CHILD-LARGE",
+  "S3-CHILD-SHRUBS",
+  "S4-CHILD-FLOWERBEDS",
+  "S4-CHILD-LAWN-CARE",
+  "S4-CHILD-PEST",
+  "S4-CHILD-SHRUB-PRUNING",
+  "S4-CHILD-TREE-PRUNING",
+  "S5-CHILD-CULTIVATION",
+  "S5-CHILD-FILL",
+  "S5-CHILD-LEVEL",
+  "S5-CHILD-MACHINERY",
+  "S5-CHILD-VERTICAL",
+  "S6-CHILD-CONCRETE",
+  "S6-CHILD-STONE",
+  "S6-CHILD-WOOD",
+  "S7-CHILD-ARCHITECTURAL",
+  "S7-CHILD-DESIGN",
+  "S7-CHILD-HOLIDAY",
+  "S7-CHILD-INSTALL",
+  "S7-CHILD-LANDSCAPE",
+  "S8-CHILD-CONCRETE",
+  "S8-CHILD-GRAVEL",
+  "S8-CHILD-PARKING",
+  "S8-CHILD-PIPE",
+  "S9-ARTICLE-OVERGROWN-SITE",
+  "S9-ARTICLE-STUMP-DIY",
+  "S9-CHILD-CLEARING",
+  "S9-CHILD-STUMPS",
+  "S9-CHILD-TREE-REMOVAL"
+]
+LAND76_SERVICE_HUB_EXPECTED_PAGE_KEYS_JSON;
+    $decoded = json_decode($json, true);
+    if (!is_array($decoded)
+        || count($decoded) !== 76
+        || array_keys($decoded) !== range(0, 75)
+        || count(array_unique($decoded, SORT_STRING)) !== 76) {
+        throw new RuntimeException('Invalid frozen service-hub page-key inventory.');
+    }
+    $sorted = $decoded;
+    sort($sorted, SORT_STRING);
+    if ($sorted !== $decoded) {
+        throw new RuntimeException('Frozen service-hub page-key inventory must be sorted.');
+    }
+
+    $page_keys = $decoded;
+    return $page_keys;
+}
+
 function land76wp_service_hubs_import_owner()
 {
     return 'land76-service-hubs';
+}
+
+function land76wp_service_hubs_active_release_option_name()
+{
+    return 'land76_service_hubs_active_release_id';
+}
+
+/** Capture the marker state needed to deactivate or restore a release manually. */
+function land76wp_service_hubs_active_release_snapshot()
+{
+    $option_name = land76wp_service_hubs_active_release_option_name();
+    $option_value = get_option($option_name, null);
+
+    return array(
+        'option_name' => $option_name,
+        'option_exists' => $option_value !== null,
+        'option_value' => $option_value === null ? '' : (string) $option_value,
+    );
+}
+
+/** Persist activation only for this frozen release and verify the stored value. */
+function land76wp_service_hubs_activate_verified_release($release_id)
+{
+    $release_id = is_string($release_id) ? $release_id : '';
+    if ($release_id === '' || !hash_equals(land76wp_service_hubs_expected_release_id(), $release_id)) {
+        return land76wp_service_hubs_error('activation_release_mismatch', $release_id);
+    }
+
+    $option_name = land76wp_service_hubs_active_release_option_name();
+    if (function_exists('land76_service_v2_active_release_option_name')
+        && !hash_equals($option_name, (string) land76_service_v2_active_release_option_name())) {
+        return land76wp_service_hubs_error('activation_option_mismatch');
+    }
+
+    // update_option() legitimately returns false when the exact value is already stored.
+    update_option($option_name, $release_id, false);
+    $stored_release_id = get_option($option_name, '');
+    if (!is_string($stored_release_id) || !hash_equals($release_id, $stored_release_id)) {
+        return land76wp_service_hubs_error('release_activation_failed', $release_id);
+    }
+
+    return '';
 }
 
 function land76wp_service_hubs_reuse_contracts()
@@ -306,6 +453,77 @@ function land76wp_service_hubs_validate_related_service_references(array $refere
     return $errors;
 }
 
+function land76wp_service_hubs_validate_presentation_images($value, $page_key)
+{
+    $errors = array();
+    $roles = array('hero', 'context', 'card');
+    $url_prefix = 'https://exp76.ru/wp-content/themes/land76wp/generated/context/';
+    if (!is_array($value) || land76wp_service_hubs_is_list($value)) {
+        return array(land76wp_service_hubs_error('invalid_presentation_images', $page_key));
+    }
+    foreach (array_keys($value) as $role) {
+        if (!is_string($role) || !in_array($role, $roles, true)) {
+            $errors[] = land76wp_service_hubs_error('invalid_presentation_image_role', $page_key);
+        }
+    }
+    foreach ($roles as $role) {
+        if (!array_key_exists($role, $value)
+            || !is_array($value[$role])
+            || land76wp_service_hubs_is_list($value[$role])) {
+            $errors[] = land76wp_service_hubs_error('invalid_presentation_image', $page_key . '.' . $role);
+            continue;
+        }
+        $image = $value[$role];
+        $keys = array_keys($image);
+        sort($keys, SORT_STRING);
+        if ($keys !== array('alt', 'url')) {
+            $errors[] = land76wp_service_hubs_error('invalid_presentation_image', $page_key . '.' . $role);
+            continue;
+        }
+        $image_url = is_string($image['url']) ? trim($image['url']) : '';
+        $image_alt = is_string($image['alt']) ? trim($image['alt']) : '';
+        $alt_length = preg_match_all('/./us', $image_alt, $alt_characters);
+        if ($image_url === ''
+            || $image_alt === ''
+            || $image_url !== $image['url']
+            || $image_alt !== $image['alt']
+            || $alt_length === false
+            || $alt_length < 12) {
+            $errors[] = land76wp_service_hubs_error('invalid_presentation_image', $page_key . '.' . $role);
+            continue;
+        }
+        $pattern = '#^' . preg_quote($url_prefix, '#') . '(context-photo-[a-z0-9]+(?:-[a-z0-9]+)*\.webp)$#D';
+        if (!preg_match($pattern, $image_url, $matches)) {
+            $errors[] = land76wp_service_hubs_error('invalid_presentation_image_url', $page_key . '.' . $role);
+            continue;
+        }
+        $image_path = get_template_directory() . '/generated/context/' . $matches[1];
+        if (!is_file($image_path)) {
+            $errors[] = land76wp_service_hubs_error('unresolved_presentation_image', $page_key . '.' . $role);
+        }
+    }
+
+    return $errors;
+}
+
+function land76wp_service_hubs_presentation_meta_keys()
+{
+    return array(
+        'hero' => array(
+            'url' => '_land76_hero_image_url',
+            'alt' => '_land76_hero_image_alt',
+        ),
+        'context' => array(
+            'url' => '_land76_context_image_url',
+            'alt' => '_land76_context_image_alt',
+        ),
+        'card' => array(
+            'url' => '_land76_card_image_url',
+            'alt' => '_land76_card_image_alt',
+        ),
+    );
+}
+
 function land76wp_service_hubs_validate_item(array $item, array &$seen_page_keys, array &$seen_canonicals)
 {
     $errors = array();
@@ -411,6 +629,12 @@ function land76wp_service_hubs_validate_item(array $item, array &$seen_page_keys
             }
         }
     }
+    if (array_key_exists('presentation_images', $item)) {
+        $errors = array_merge(
+            $errors,
+            land76wp_service_hubs_validate_presentation_images($item['presentation_images'], $page_key)
+        );
+    }
 
     foreach (array('case_ids', 'related_service_page_keys', 'related_service_slugs', 'related_article_page_keys') as $list_key) {
         if (array_key_exists($list_key, $item) && (!is_array($item[$list_key]) || !land76wp_service_hubs_is_list($item[$list_key]))) {
@@ -494,6 +718,12 @@ function land76wp_service_hubs_validate_payload(array $payload)
     if (isset($payload['release_status']) && $payload['release_status'] === 'ready' && $payload['items'] === array()) {
         $errors[] = land76wp_service_hubs_error('empty_payload');
     }
+    if (isset($payload['release_status']) && $payload['release_status'] === 'ready') {
+        $errors = array_merge(
+            $errors,
+            land76wp_service_hubs_validate_expected_inventory($payload['items'], 'payload')
+        );
+    }
     if (count(land76wp_service_hub_registry()) !== 15) {
         $errors[] = land76wp_service_hubs_error('invalid_registry');
     }
@@ -512,6 +742,41 @@ function land76wp_service_hubs_validate_payload(array $payload)
     }
 
     return array_values(array_unique($errors));
+}
+
+/** Reject a complete-looking payload whose page keys differ from the frozen release. */
+function land76wp_service_hubs_validate_expected_inventory(array $items, $source_label)
+{
+    $expected_page_keys = land76wp_service_hubs_expected_page_keys();
+    if (count($expected_page_keys) !== 76) {
+        return array(land76wp_service_hubs_error('expected_inventory_mismatch', 'frozen inventory'));
+    }
+
+    $actual_page_keys = array();
+    $child_count = 0;
+    $article_count = 0;
+    foreach ($items as $item) {
+        if (!is_array($item) || !isset($item['page_key']) || !is_string($item['page_key'])) {
+            return array(land76wp_service_hubs_error('expected_inventory_mismatch', (string) $source_label));
+        }
+        $page_key = $item['page_key'];
+        $actual_page_keys[] = $page_key;
+        if (strpos($page_key, '-CHILD-') !== false) {
+            $child_count++;
+        } elseif (strpos($page_key, '-ARTICLE-') !== false) {
+            $article_count++;
+        }
+    }
+    sort($actual_page_keys, SORT_STRING);
+
+    if (count($actual_page_keys) !== 76
+        || $child_count !== 65
+        || $article_count !== 11
+        || $actual_page_keys !== $expected_page_keys) {
+        return array(land76wp_service_hubs_error('expected_inventory_mismatch', (string) $source_label));
+    }
+
+    return array();
 }
 
 function land76wp_service_hubs_manifest_inventory(array $items)
@@ -584,6 +849,18 @@ function land76wp_service_hubs_validate_manifest_binding(array $payload, array $
         || $payload_has_invalid_item
         || wp_json_encode($manifest_inventory) !== wp_json_encode($payload_inventory)) {
         $errors[] = land76wp_service_hubs_error('manifest_inventory_mismatch');
+    }
+    if (isset($payload['release_status']) && $payload['release_status'] === 'ready') {
+        $errors = array_merge(
+            $errors,
+            land76wp_service_hubs_validate_expected_inventory($payload['items'], 'payload')
+        );
+    }
+    if (isset($release_manifest['release_status']) && $release_manifest['release_status'] === 'ready') {
+        $errors = array_merge(
+            $errors,
+            land76wp_service_hubs_validate_expected_inventory($release_manifest['items'], 'release_manifest')
+        );
     }
 
     return array_values(array_unique($errors));
@@ -1070,6 +1347,12 @@ function land76wp_service_hubs_plan_reuse_item(array $item, array $contract)
             '_land76_import_checksum',
             '_land76_main_image_url',
             '_land76_main_image_alt',
+            '_land76_hero_image_url',
+            '_land76_hero_image_alt',
+            '_land76_context_image_url',
+            '_land76_context_image_alt',
+            '_land76_card_image_url',
+            '_land76_card_image_alt',
             '_land76_related_article_ids',
             '_land76_region',
             '_land76_local_evidence',
@@ -1834,6 +2117,16 @@ function land76wp_service_hubs_apply_post_metadata(array $item, $post_id, $relea
     update_post_meta($post_id, '_land76_import_checksum', $item['checksum']);
     update_post_meta($post_id, '_land76_main_image_url', $item['main_image']['url']);
     update_post_meta($post_id, '_land76_main_image_alt', $item['main_image']['alt']);
+    $presentation_meta = land76wp_service_hubs_presentation_meta_keys();
+    $presentation_images = isset($item['presentation_images']) && is_array($item['presentation_images'])
+        ? $item['presentation_images']
+        : array();
+    foreach ($presentation_meta as $role => $meta_keys) {
+        if (isset($presentation_images[$role]) && is_array($presentation_images[$role])) {
+            update_post_meta($post_id, $meta_keys['url'], $presentation_images[$role]['url']);
+            update_post_meta($post_id, $meta_keys['alt'], $presentation_images[$role]['alt']);
+        }
+    }
 
     if ($item['role'] === 'geo') {
         update_post_meta($post_id, '_wp_page_template', 'page-service-hub-region.php');
@@ -2404,6 +2697,16 @@ function land76wp_service_hubs_verify_staged_item(array $operation, $release_id,
         '_land76_main_image_url' => $item['main_image']['url'],
         '_land76_main_image_alt' => $item['main_image']['alt'],
     );
+    $presentation_meta = land76wp_service_hubs_presentation_meta_keys();
+    $presentation_images = isset($item['presentation_images']) && is_array($item['presentation_images'])
+        ? $item['presentation_images']
+        : array();
+    foreach ($presentation_meta as $role => $meta_keys) {
+        if (isset($presentation_images[$role]) && is_array($presentation_images[$role])) {
+            $expected_meta[$meta_keys['url']] = $presentation_images[$role]['url'];
+            $expected_meta[$meta_keys['alt']] = $presentation_images[$role]['alt'];
+        }
+    }
     foreach ($expected_meta as $meta_key => $expected_value) {
         $actual_value = (string) get_post_meta($post_id, $meta_key, true);
         if (!hash_equals((string) $expected_value, $actual_value)) {
@@ -2594,11 +2897,31 @@ function land76wp_service_hubs_publish_plan(array $plan)
         }
         $post_ids[$operation['item']['page_key']] = (int) $operation['post_id'];
         if ($operation['action'] === 'reuse_update') {
-            $reuse_operations[] = $operation;
-            $stats['errors'] = array_merge(
-                $stats['errors'],
-                land76wp_service_hubs_verify_reuse_target($operation)
+            $claim_state = isset($operation['reuse_claim_state'])
+                ? (string) $operation['reuse_claim_state']
+                : '';
+            $required_claim_state = hash_equals('managed_exact_match', $claim_state)
+                ? 'managed_exact_match'
+                : '';
+            $reuse_errors = land76wp_service_hubs_verify_reuse_target(
+                $operation,
+                $required_claim_state
             );
+            $stats['errors'] = array_merge($stats['errors'], $reuse_errors);
+            $is_exact_managed_reuse = false;
+            if ($reuse_errors === array() && $required_claim_state === 'managed_exact_match') {
+                $is_exact_managed_reuse = land76wp_service_hubs_verify_staged_item(
+                    $operation,
+                    $plan['release_id'],
+                    $plan['manifest_sha256'],
+                    'publish'
+                ) === array();
+            }
+            if ($is_exact_managed_reuse) {
+                $stats['unchanged']++;
+            } else {
+                $reuse_operations[] = $operation;
+            }
             continue;
         }
         $item_errors = land76wp_service_hubs_verify_staged_item(
@@ -2619,9 +2942,19 @@ function land76wp_service_hubs_publish_plan(array $plan)
         return $stats;
     }
     if ($publish_ids === array() && $reuse_operations === array()) {
+        if (!land76wp_service_hubs_owns_release_lock($release_lock)) {
+            $stats['errors'][] = land76wp_service_hubs_error('publish_lock_lost');
+            return $stats;
+        }
+        $stats['rollback_snapshot'][] = land76wp_service_hubs_active_release_snapshot();
+        $activation_error = land76wp_service_hubs_activate_verified_release($plan['release_id']);
+        if ($activation_error !== '') {
+            $stats['errors'][] = $activation_error;
+        }
         return $stats;
     }
     $all_grouping_ids = array_values(array_unique(array_map('intval', $grouping_ids)));
+    $transaction_committed = false;
 
     if ($wpdb->query('START TRANSACTION') === false) {
         $stats['errors'][] = land76wp_service_hubs_error('transaction_start_failed', (string) $wpdb->last_error);
@@ -2697,12 +3030,24 @@ function land76wp_service_hubs_publish_plan(array $plan)
         if ($wpdb->query('COMMIT') === false) {
             throw new RuntimeException(land76wp_service_hubs_error('transaction_commit_failed', (string) $wpdb->last_error));
         }
+        $transaction_committed = true;
     } catch (Throwable $error) {
         if ($wpdb->query('ROLLBACK') === false) {
             $stats['errors'][] = land76wp_service_hubs_error('transaction_rollback_failed', (string) $wpdb->last_error);
         }
         $stats['errors'][] = land76wp_service_hubs_error('publish_rollback', $error->getMessage());
         $stats['updated'] = 0;
+    }
+    if ($transaction_committed) {
+        if (!land76wp_service_hubs_owns_release_lock($release_lock)) {
+            $stats['errors'][] = land76wp_service_hubs_error('publish_lock_lost');
+        } else {
+            $stats['rollback_snapshot'][] = land76wp_service_hubs_active_release_snapshot();
+            $activation_error = land76wp_service_hubs_activate_verified_release($plan['release_id']);
+            if ($activation_error !== '') {
+                $stats['errors'][] = $activation_error;
+            }
+        }
     }
 
     } finally {

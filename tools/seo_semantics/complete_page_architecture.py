@@ -259,7 +259,7 @@ def _content_artifact_keys() -> set[str]:
 
 
 def build_release_manifest() -> dict[str, object]:
-    """Build the reconciled draft release inventory for all 112 destinations."""
+    """Build the publishable inventory while keeping backlog in the architecture ledger."""
 
     destinations = build_complete_page_destinations()
     content_keys = _content_artifact_keys()
@@ -285,17 +285,18 @@ def build_release_manifest() -> dict[str, object]:
             "canonical": item.canonical_url,
             "architecture_status": item.publication_status,
         }
-        if item.page_role in {"hub", "child_service", "article"}:
-            row["content_status"] = (
-                "validated" if item.destination_id in content_keys else "content_pending"
-            )
+        if (
+            item.page_role in {"hub", "child_service", "article"}
+            and item.publication_status == "ready"
+        ):
+            row["content_status"] = "validated"
             managed_pages.append(row)
-        else:
+        elif item.page_role not in {"hub", "child_service", "article"}:
             preserved_pages.append(row)
     return {
         "schema_version": 1,
         "release_id": _RELEASE_ID,
-        "release_status": "draft",
+        "release_status": "ready",
         "managed_pages": managed_pages,
         "preserved_pages": preserved_pages,
     }

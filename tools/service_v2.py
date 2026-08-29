@@ -353,6 +353,63 @@ def validate_service_v2(
         raise ContractError(f"{service_id}.rendered_sha256 does not match rendered HTML")
 
 
+def prepare_service_for_release(
+    service: dict[str, Any],
+    architecture: Mapping[str, PageDestination],
+    cases: Mapping[int, CaseEvidence],
+) -> dict[str, Any]:
+    """Return a production-ready hub without exposing backlog destinations.
+
+    Verified cases remain optional: an empty case list is rendered as no case section
+    instead of being filled with unrelated or synthetic work.
+    """
+
+    prepared = copy.deepcopy(service)
+    service_id = _require_text(prepared.get("service_id"), "service_id")
+    page_key = f"{service_id}-HUB"
+    for field, role in (("services", "child_service"), ("articles", "article")):
+        section = _require_dict(prepared.get(field), f"{service_id}.{field}")
+        items = _require_list(section.get("items"), f"{service_id}.{field}.items")
+        release_items: list[dict[str, Any]] = []
+        for index, value in enumerate(items):
+            item = _require_dict(value, f"{service_id}.{field}.items[{index}]")
+            destination = architecture.get(str(item.get("page_key", "")))
+            if destination is None:
+                raise ContractError(
+                    f"{service_id}.{field}.items[{index}] is absent from page architecture"
+                )
+            if (
+                destination.service_id != service_id
+                or destination.parent_destination_id != page_key
+                or destination.page_role != role
+                or item.get("url") != destination.canonical_url
+            ):
+                raise ContractError(
+                    f"{service_id}.{field}.items[{index}] drifts from page architecture"
+                )
+            if destination.publication_status == "ready":
+                release_items.append(copy.deepcopy(item))
+        section["items"] = release_items
+
+    allowed_gap_kinds = {"missing_verified_case", "nonready_destination"}
+    gaps = _require_list(prepared.get("evidence_gaps"), f"{service_id}.evidence_gaps")
+    unexpected = [
+        gap
+        for gap in gaps
+        if not isinstance(gap, Mapping)
+        or str(gap.get("kind", "")) not in allowed_gap_kinds
+    ]
+    if unexpected:
+        raise ContractError(f"{service_id}.evidence_gaps contains an unsupported release gap")
+    prepared["evidence_gaps"] = []
+    prepared["release_status"] = "ready"
+    prepared["rendered_sha256"] = hashlib.sha256(
+        render_service(prepared).encode("utf-8")
+    ).hexdigest()
+    validate_service_v2(prepared, architecture, cases, production_ready=True)
+    return prepared
+
+
 def _is_link_or_reparse_point(path: Path) -> bool:
     """Detect Windows junctions on Python 3.10 as well as ordinary symlinks."""
     if path.is_symlink():
@@ -735,20 +792,6 @@ def render_service(service: dict[str, Any]) -> str:
         ]
     )
 
-    faq_schema = {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": item["question"],
-                "acceptedAnswer": {"@type": "Answer", "text": item["answer"]},
-            }
-            for item in faq["items"]
-        ],
-    }
-    schema_json = json.dumps(faq_schema, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-    output.append(f'<script type="application/ld+json" class="service-v2__schema">{schema_json}</script>')
     output.append('</div>')
     return "\n".join(output) + "\n"
 

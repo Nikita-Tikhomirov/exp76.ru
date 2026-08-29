@@ -176,12 +176,26 @@
     "secondary_url": "#consultation"
   },
   "boundary": {
-    "summary": "Включено: фундамент на железобетонных сваях для бани. Исключённые основные интенты: винтовые сваи, буронабивные сваи, неподтверждённые ростверк и геология, раздельная публикация object-variants без SERP overlap-check.",
+    "summary": "Услуга включает устройство фундамента на железобетонных сваях для бани по согласованному проекту.",
     "excluded_intents": [
       "винтовые сваи",
       "буронабивные сваи",
-      "неподтверждённые ростверк и геология",
-      "раздельная публикация object-variants без SERP overlap-check"
+      "проектирование ростверка без отдельного задания",
+      "инженерно-геологические изыскания"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
+      "alt": "Фундаментная сетка из забивных железобетонных свай"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
+      "alt": "Фундаментная сетка из забивных железобетонных свай"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
+      "alt": "Фундаментная сетка из забивных железобетонных свай"
+    }
   }
 }

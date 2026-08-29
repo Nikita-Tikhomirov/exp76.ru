@@ -63,6 +63,23 @@ SERVICE_SOURCE_SLUGS = {
     "S15": "snos-i-demontazh-zdanijj-domov",
 }
 
+_REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+_CONTEXT_IMAGE_URL_PREFIX = (
+    "https://exp76.ru/wp-content/themes/land76wp/generated/context/"
+)
+_CONTEXT_IMAGE_DIR = (
+    _REPOSITORY_ROOT
+    / "ftp_dump_minimal"
+    / "wp-content"
+    / "themes"
+    / "land76wp"
+    / "generated"
+    / "context"
+)
+_CONTEXT_IMAGE_FILENAME = re.compile(
+    r"context-photo-[a-z0-9]+(?:-[a-z0-9]+)*\.webp"
+)
+
 _NUMBER_PATTERN = r"\d+(?:[ \u00a0]\d{3})*(?:[.,]\d+)?"
 _MONEY_UNIT_PATTERN = r"(?:₽|руб(?:\.|лей|ля)?)"
 _TIME_UNIT_PATTERN = (
@@ -602,6 +619,25 @@ def _validate_image(
         errors.append(f"{path}.alt must not be blank")
     case_id = expected_case_id if expected_case_id is not None else image.get("case_id")
     image_url = image.get("url")
+    if (
+        image.get("asset_kind") == "context_photo"
+        and isinstance(image_url, str)
+        and image_url.startswith(_CONTEXT_IMAGE_URL_PREFIX)
+    ):
+        if expected_case_id is not None or path.startswith("proof."):
+            errors.append(f"{path} cannot use a context photo")
+            return errors
+        filename = image_url.removeprefix(_CONTEXT_IMAGE_URL_PREFIX)
+        if _CONTEXT_IMAGE_FILENAME.fullmatch(filename) is None:
+            errors.append(f"{path}.url is not a generated context photo")
+        elif not (_CONTEXT_IMAGE_DIR / filename).is_file():
+            errors.append(f"{path}.url generated context file is missing")
+        caption = image.get("caption")
+        if not isinstance(caption, str) or not caption.startswith(
+            "Контекстная иллюстрация:"
+        ):
+            errors.append(f"{path}.caption must disclose a context illustration")
+        return errors
     if expected_case_id is None and case_id is None:
         verified_by_service = getattr(cases, "verified_image_urls_by_service", {})
         verified_images = verified_by_service.get(service_id, frozenset())
@@ -945,7 +981,9 @@ def _paragraph_candidates(data: Mapping[str, Any]) -> Iterable[tuple[str, str]]:
     for path, text in _text_leaves(data):
         if len(_normalized_fingerprint(text)) < 45:
             continue
-        if path.startswith("fact_evidence[") or path.endswith((".url", ".href", ".alt")):
+        if path.startswith("fact_evidence[") or path.endswith(
+            (".url", ".href", ".alt", ".caption")
+        ):
             continue
         if path in {"canonical", "slug", "page_key", "service_id", "page_type"}:
             continue
@@ -1041,10 +1079,15 @@ def validate_release_manifest(
     if release_status not in {"draft", "ready"}:
         errors.append("release_status must be draft or ready")
 
-    expected_managed = {
+    all_managed = {
         key: destination
         for key, destination in architecture.items()
         if destination.page_role in {"hub", "child_service", "article"}
+    }
+    expected_managed = {
+        key: destination
+        for key, destination in all_managed.items()
+        if release_status == "draft" or destination.publication_status == "ready"
     }
     expected_preserved = {
         key: destination
@@ -1080,7 +1123,18 @@ def validate_release_manifest(
             all_manifest_urls.add(canonical)
             destination = expected.get(page_key)
             if destination is None:
-                errors.append("manifest page is absent from architecture")
+                architecture_destination = architecture.get(page_key)
+                if (
+                    managed
+                    and architecture_destination is not None
+                    and architecture_destination.page_role
+                    in {"hub", "child_service", "article"}
+                    and architecture_destination.publication_status != "ready"
+                ):
+                    errors.append("release manifest must omit nonready architecture pages")
+                    has_nonready_architecture = True
+                else:
+                    errors.append("manifest page is absent from architecture")
                 continue
             expected_parent = destination.parent_destination_id
             if (
@@ -1103,8 +1157,6 @@ def validate_release_manifest(
             errors.append("architecture page is absent from manifest")
     if release_status == "ready" and has_pending:
         errors.append("ready release contains content_pending pages")
-    if release_status == "ready" and has_nonready_architecture:
-        errors.append("ready release contains blocked or backlog architecture pages")
     return sorted(set(errors))
 
 
@@ -1145,6 +1197,7 @@ def _validate_hub_navigation(
             if isinstance(item, Mapping) and ("url" in item or "page_key" in item):
                 errors.append("scope item must remain descriptive and unlinked")
 
+    require_ready_destinations = data.get("release_status") == "ready"
     expected_by_field = {
         "services": {
             destination.destination_id: destination
@@ -1152,6 +1205,10 @@ def _validate_hub_navigation(
             if destination.page_role == "child_service"
             and destination.parent_destination_id == page_key
             and destination.service_id == service_id
+            and (
+                not require_ready_destinations
+                or destination.publication_status == "ready"
+            )
         },
         "articles": {
             destination.destination_id: destination
@@ -1159,6 +1216,10 @@ def _validate_hub_navigation(
             if destination.page_role == "article"
             and destination.parent_destination_id == page_key
             and destination.service_id == service_id
+            and (
+                not require_ready_destinations
+                or destination.publication_status == "ready"
+            )
         },
     }
     labels = {"services": "child", "articles": "article"}
@@ -1228,8 +1289,6 @@ def _validate_hub_evidence_state(
         errors.append("hub proof must not synthesize hub_case_fallback")
 
     expected_gaps: set[tuple[str, str, str]] = set()
-    if not isinstance(cases, list) or not cases:
-        expected_gaps.add(("missing_verified_case", page_key, "missing"))
     for field in ("services", "articles"):
         section = data.get(field)
         items = section.get("items") if isinstance(section, Mapping) else None
@@ -1269,8 +1328,6 @@ def _validate_hub_evidence_state(
         errors.append("evidence_gaps is missing unresolved content evidence")
 
     if production_ready:
-        if not isinstance(cases, list) or not cases:
-            errors.append("production-ready hub requires a verified case")
         if actual_gaps:
             errors.append("production-ready hub contains unresolved evidence_gaps")
         if any(kind == "nonready_destination" for kind, _, _ in expected_gaps):

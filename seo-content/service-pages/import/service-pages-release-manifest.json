@@ -2,267 +2,311 @@
   "schema_version": 1,
   "release_id": "service-hubs-2026-08-28",
   "release_status": "ready",
-  "source_manifest_sha256": "985af9026134003c279acb1eca0c6689199f744cec6acb12e8c59126474217da",
+  "source_manifest_sha256": "1ff4f26af434ac76115bb6bfd09567d7f637b8426743f15e4d49dc397fb0d27a",
   "items": [
     {
       "page_key": "S1-CHILD-3D",
-      "checksum": "bc409ed07255641ee9852610c398116db94115eed63f533431f512411621ff5e"
+      "checksum": "63ebc8e8f913dea00dfed49506310b54cf6df6716986e415bcd2e864f0188fa6"
     },
     {
       "page_key": "S1-CHILD-DENDROPLAN",
-      "checksum": "14f41fa8f439ac00f87515c2297eead1bd96c0d8d981b2c8de074f6b637e569d"
+      "checksum": "ed72cc3398b3e5b37d8ed6cf395993569c80acfc50e725cc4c8c759f910a33c5"
     },
     {
       "page_key": "S1-CHILD-MASTERPLAN",
-      "checksum": "6b9c02e2a933b9ef65c848d72886829aff85d3253f1105dfed1cd7c53440bad7"
+      "checksum": "67b4ebf2bc9b79f7e9ea4529dc69e83811f219bfe715d7de5395e91b95e8f40e"
     },
     {
       "page_key": "S1-CHILD-RELIEF",
-      "checksum": "7e15dee8d09efd8fe10b8dc4ee0341f00469ec57e4d2d0cb2659e7663f872c18"
+      "checksum": "47c67508bd74cebb545578ac0dbb59e488a8f67d6ad683c0c78178ba7b93de4e"
     },
     {
       "page_key": "S1-CHILD-SKETCH",
-      "checksum": "a627ce6f9bf4ac2dada365b0c2cf67b23826612f1d9945d37d3929310daac6a0"
+      "checksum": "6bd4db494730a7e192a5d3726100f9821aa8cf1769d11de08b856bbe338414cf"
+    },
+    {
+      "page_key": "S10-ARTICLE-POND-CARE",
+      "checksum": "e860d08f2ab99f23a075e1f7339ac6fee9274b2700075fc4af2b7b5edf307f8b"
+    },
+    {
+      "page_key": "S10-ARTICLE-POND-DIY",
+      "checksum": "a3eb2b97f138b10622f7c2164cac8e5b54b400bcc7cb4668868e26bfae970f60"
     },
     {
       "page_key": "S10-CHILD-DECORATIVE-POND",
-      "checksum": "d2ff3d150cf83e1f1d0c02a803c7f54d9c984d8faf6c87a6f0843742cd7bb725"
+      "checksum": "7313583f068aa643f2e855a89ffbfe96800772218c8aa8ef2fe2757e3af52d2c"
     },
     {
       "page_key": "S10-CHILD-FOUNTAIN",
-      "checksum": "9a793f3587897c292949b38577f337dd41b2b74fe16e07f1455c4566b16d55df"
+      "checksum": "73600deda543efefaf35255df4d9c59c8f402c1f85a09a29ad29e2135908a285"
     },
     {
       "page_key": "S10-CHILD-STREAM",
-      "checksum": "5ae009e28e234620887ee7d5867ebb7a12168b0d2b840cda4b56c1a5df2ff252"
+      "checksum": "00d8830443843d30fa23f9a35edefa17de5ca9c3cd32c91b0e7aa48a642b8acb"
     },
     {
       "page_key": "S10-CHILD-SWIMMING-POND",
-      "checksum": "2a21df8d8892ca1a578f6af18a8bb6765eb3dfa3a860927bc59650ffaa00671a"
+      "checksum": "e9c9bce000b0a661e64f58a2998561bfac86bf8458b1bee82df4386ddc201a0a"
     },
     {
       "page_key": "S10-CHILD-WATERFALL-CASCADE",
-      "checksum": "959da5c86557c1e535006cad1d2ac420253db45f8b7aa1e736b732191307fa54"
+      "checksum": "05d37904a687fffe2e1e033e472972b3605854d6ec49eded967e2ab223ee33d7"
+    },
+    {
+      "page_key": "S11-ARTICLE-PRESSURE",
+      "checksum": "bdac8b33f4ed340243ab3776826936d89ab4155503ae0dc3788708c76d56fdcf"
     },
     {
       "page_key": "S11-CHILD-CAFE-OUTDOOR",
-      "checksum": "2c811a99789525e6e030cc8d14f5452654a6b9c5311a9e7113043a43e34fddda"
+      "checksum": "5a6b55143f809391fb55f22e7f462e94c19729d16624a0a0391ea7950a607037"
     },
     {
       "page_key": "S11-CHILD-GREENHOUSE",
-      "checksum": "299f5641f7c8a1dfbec8c1f87d2b5a862d131af4d3e4d74c2e3f73bfc5e86b6f"
+      "checksum": "8c3f1012ce87f9d5c0508dfdb502e642ffd2624fb637cb94882fd4132243a208"
     },
     {
       "page_key": "S11-CHILD-TERRACE-VERANDA",
-      "checksum": "243b4653ea2ea5f75536f79fae6becaac3634e8eb5022f13e3f7dc70f664f8af"
+      "checksum": "3d2b51fe3ad0ee1d022af28966235ed1dfb7291c4a6c257dfb380aab1b024a98"
+    },
+    {
+      "page_key": "S12-ARTICLE-PILE-PROS-CONS",
+      "checksum": "c4a5c5c3828047d41eeff92bd5f5524cdb7e20d522d444636322282bf6648b1d"
     },
     {
       "page_key": "S12-CHILD-BATHHOUSE",
-      "checksum": "1e174e8226b28a53acabd3e4731ba916b4bf4785513bbeafcffca063b5b1afbe"
+      "checksum": "c835f26271eb24b5ebc5fadd05bb728287e1e2daa4836f9fb07828d5f497b6ea"
     },
     {
       "page_key": "S12-CHILD-DRIVING",
-      "checksum": "dd59caa834b63c6e0d2a6694bbf7e539e9ac43c0a8421fdaaadbfdaee725b0f8"
+      "checksum": "4c65f80e5c466a7276e4e77dea110c95621685de659af5639338e3232acb0e8a"
     },
     {
       "page_key": "S12-CHILD-PRIVATE-HOUSE",
-      "checksum": "e8fa038ae8873f6670dabe33f75e09e46f43e40d6d58770e480e11b4c80c30bb"
+      "checksum": "c294cd601e5f975916b264732fe80e52c734e468c94f29e9a475d6e6c77023c8"
+    },
+    {
+      "page_key": "S13-ARTICLE-CARPORT-DIY",
+      "checksum": "f2ac76ec4796b37e645a369df1d0575e4bad93c5e93d37123f7664cfbb94b9f5"
+    },
+    {
+      "page_key": "S13-ARTICLE-POLYCARBONATE-DIY",
+      "checksum": "10fa6b88a39073cf62de9f920c80112a84dbb8d369c93917e616e2ccad5cde48"
     },
     {
       "page_key": "S13-CHILD-BARBECUE",
-      "checksum": "5aefa726dfb762bac5c289d506ebe004abc28ae5745c598ffc5b645a575d01ac"
+      "checksum": "f69ed60bb2158d51f1d1c9cbc90135bc196776b3cd782b1c20574a1f626e39f6"
     },
     {
       "page_key": "S13-CHILD-CARPORT",
-      "checksum": "1d0c4ff65d88291a3a9553eed801b8b8f21745a742342797310d5d79dff41702"
+      "checksum": "26aa827b7733f1586d7f8b4e8607f4515f630170d87086d4ce81ffd8d9393c34"
     },
     {
       "page_key": "S13-CHILD-POLYCARBONATE-HOME",
-      "checksum": "149ff653a4dd178106f2d74ad25b10f79aece3cc019060cdc13caeb069fe934e"
+      "checksum": "098b9d9249674ccec450290d448461208c5b235e1c5e754bc4c76dfecf0a22be"
     },
     {
       "page_key": "S13-CHILD-TERRACE",
-      "checksum": "07741aa8ea5b856aaa85b639d79af105b8dd627927a413d1c329b125616ce418"
+      "checksum": "58e7bf5e157a5c13f079fddf7d78096d5e4ad1d646613e1f2078bf1a29b91f8a"
+    },
+    {
+      "page_key": "S14-ARTICLE-BRICK-GRILL-DIY",
+      "checksum": "bd4b399d09028a46212ce68acfc36ee24d62351b83d9a52747bb7352ba47cf17"
+    },
+    {
+      "page_key": "S14-ARTICLE-HEATING-STOVE-DIY",
+      "checksum": "d463bdd5f78a201a90ebe192464a8d48f97b20988b4f1bc64846c79d37715331"
     },
     {
       "page_key": "S14-CHILD-BARBECUE",
-      "checksum": "c4f6ce7dc3b21b136813539aa3a14cc2c7c37fb67e03dea27978556a71eaa844"
+      "checksum": "3e77390f81fcadc833b9612c341687dbc7eb7dca7cf8d19536de1ab15820e9da"
     },
     {
       "page_key": "S14-CHILD-BRICK-GRILL",
-      "checksum": "642f252b761380cc9dbfc33c05faa38f15327d56971a29264c64dbf88d40ab1f"
+      "checksum": "946b8e20e1e79bb0dc1d235305e5497a614fdb36e58c5b30b0a66d3e3adc2847"
     },
     {
       "page_key": "S14-CHILD-CAULDRON-SMOKEHOUSE",
-      "checksum": "2d58b9e21d782726ad58d306480849d8e8629ab6939c07e91f178d17fce7b045"
+      "checksum": "4bcf40f576c17bd950a811205855b85f88eb984d62ab3f88f729d024dfa23646"
     },
     {
       "page_key": "S14-CHILD-FIREPLACE",
-      "checksum": "ef29f1f89739a7152b0f8929ee22a9f9d28587a3cc068a87389455e7f20d1d4e"
+      "checksum": "37ff9efea9a63fda5a323c168533f2f263d4c7fff401fdbf388c154facc07b79"
     },
     {
       "page_key": "S14-CHILD-HEATING-STOVE",
-      "checksum": "71aeef7e8ecec4a39397e907b48ffed0194e98952c0a1a22f88810169bb65f90"
+      "checksum": "ecee0c57563c88c6db6348102c11a750afa8fff3e5df7f1f1e0e864230a75f2a"
+    },
+    {
+      "page_key": "S15-ARTICLE-DEMOLITION-PERMIT",
+      "checksum": "f206060a8b3f6fa5c296f7cb5cfef128b1591764da5f1d1c89a0a1c79bc160ef"
     },
     {
       "page_key": "S15-CHILD-COUNTRY-HOUSE",
-      "checksum": "95b97017d5879d85852587a70a1a99983839e4fa69b31db575c450ccc44f6b84"
+      "checksum": "419e45b84eb6aea51959413fd84fd250ac5cbb8d4f0913bb5ff451465481d247"
     },
     {
       "page_key": "S15-CHILD-DANGEROUS-BUILDING",
-      "checksum": "bcd584886681616606985520fdeda245fee6e7d715bf2b4bfd53a618aad79207"
+      "checksum": "074748f566a1f630db60d2e501e41422af63d014b10ec4b93058751822399b4b"
     },
     {
       "page_key": "S15-CHILD-DEBRIS",
-      "checksum": "9cd954f392e7fa3787fa2653ad2eba6c7dd46f2a10638544b38bc598272f714f"
+      "checksum": "7508f54c124efa9cbd67db277b1eee4db133efa67b7e4968586c658fb013d4ea"
     },
     {
       "page_key": "S15-CHILD-MANUAL",
-      "checksum": "d910ea049c777b0b475b78b375a56805440a9823ce025647fa8a8e7cf04117db"
+      "checksum": "f7b76925771f56088b3a8cf6ad4028255d6e93c928efac16de66a608a0450f3d"
     },
     {
       "page_key": "S15-CHILD-MECHANIZED",
-      "checksum": "23337c4800fe690a8bc9850bf754d334facd0d2aac2a9324455952ef6253b41e"
+      "checksum": "004b94f93d58d89c6c82a62978d44c3d10e5392c5b0ac8c1abb5930eb679083e"
     },
     {
       "page_key": "S15-CHILD-PRIVATE-HOUSE",
-      "checksum": "c8a26fb062fa567758fb4f4feeedee491fc07ef4dbc5010c69244987a09ea16d"
+      "checksum": "d5ed6a785ece37eda77b8fad8993d5004d4caff0cdc8fdbcb3dbc5aa8db30b00"
     },
     {
       "page_key": "S2-CHILD-RESTORE",
-      "checksum": "acb3ab750a3ff0b05bbdf39136dbb62bd1a751c1e5c1476f573dce6f9473648b"
+      "checksum": "c76f29546daad502e0b9abfc161ef981f2b3eadf0336b806e4b28e000f93a9ed"
     },
     {
       "page_key": "S2-CHILD-ROLL",
-      "checksum": "fdef3e1a6b30fa454c357e543811951b66958f09e0e0232712f08f6cb5970b75"
+      "checksum": "0cbb4804aa7a837caeca9b40ea550daf7439f214b0d6250ef5a432a06423193b"
     },
     {
       "page_key": "S2-CHILD-SEED",
-      "checksum": "7cd7754f56d5193dc13cef8f151dc77180685e3f9057f2d77d45f4589a1ee45a"
+      "checksum": "95302eb6f07cf40ec2b15222c3dcf9e9bcbf8ce83503b5a23145d4d66f8e4865"
     },
     {
       "page_key": "S2-CHILD-SOIL",
-      "checksum": "b183ecdeba59bcd115bf97b6b0270832fbde9fab146583c59a1f7ca885fbf8f8"
+      "checksum": "8ed591040db81c81c2551db3722f6e1ad5e36046b48ca1c9c65472353e52155d"
     },
     {
       "page_key": "S3-CHILD-CONIFERS",
-      "checksum": "b90b1997064e24907566c74538bc26d03baf783f43cc8198fd3d5183effb57a2"
+      "checksum": "e0b4df98fac77bf96b61c31e8506126fa1ab9c0e58391ba093657daed96a75c5"
     },
     {
       "page_key": "S3-CHILD-FRUIT",
-      "checksum": "d79b45b2f05e0a81f68529b29f0ba9e7b57ba4251d5af135e8a206c5257b4cc8"
+      "checksum": "35b1b9b5ec00dd4d2d109d96d97799b2070b613f5df9d9017ca387e598289a38"
     },
     {
       "page_key": "S3-CHILD-HEDGE",
-      "checksum": "476cc02e45b9cf0e0deefbb44851becd95c4e7c7f960c7e194c01fc4d295899a"
+      "checksum": "83d6b94b05b7b9c252303b3d5273da94423ee02effa8ac70c9f17ee291e8fc24"
     },
     {
       "page_key": "S3-CHILD-LARGE",
-      "checksum": "4f025a846c25f68091011ca66ab31f7f14b4e04222f5b9fcb390bf17a83e8577"
+      "checksum": "ef8d8a548d649198ed8a1875f041ad26f06ddb35eb03cf18cdd6ad744433248c"
     },
     {
       "page_key": "S3-CHILD-SHRUBS",
-      "checksum": "2470d0869899a62d86d82df6a94339b11a34bc0220d62d985b7470ad2bae3c4e"
+      "checksum": "ca175bbb1faa2b308870a361aa37887892c5bdc0c03f3014adcf44bb386c728b"
     },
     {
       "page_key": "S4-CHILD-FLOWERBEDS",
-      "checksum": "c0a182b536a87f240d5dfbbb3e6a18d5ca64a479adc600b515dba5a49905b783"
+      "checksum": "3df6b7f025a826871315ae440042b03a1f577ca73bf9f33c4d903b3057dc14f8"
     },
     {
       "page_key": "S4-CHILD-LAWN-CARE",
-      "checksum": "a9c309117218fa5c1fca88035aaec2a59cb4f22809a37b9bca6558df3eeb4e24"
+      "checksum": "c7caf36282b309d56ba1f3a9bcfef7d495f767bfaf08759b4f45c0ada34d834a"
     },
     {
       "page_key": "S4-CHILD-PEST",
-      "checksum": "d7929abb50eed4a97715093b61e60b6030cbecac4c8e2c1d63dc948142ca6ea7"
+      "checksum": "3e69192e4cd2096719e714dc19a1257bb1e75309474fba7919e1c505c6154532"
     },
     {
       "page_key": "S4-CHILD-SHRUB-PRUNING",
-      "checksum": "4980ec67e7c64e1905a044512166f48138a39ecce38c9d8d17816b9e4bbec501"
+      "checksum": "1fb0ea1f4c32f4e9bf103b6348dd1fe99c4485dc67ed6b524960c23110008fc2"
     },
     {
       "page_key": "S4-CHILD-TREE-PRUNING",
-      "checksum": "3f9797d32882c79ed1920da37c403855bdd1c03ed9d75d22b5b9ee410393c009"
+      "checksum": "5a2e09b08027b377495d57ef8c7b34c04a8eee91cbf47d904bf29230e8b52e71"
     },
     {
       "page_key": "S5-CHILD-CULTIVATION",
-      "checksum": "a8c77ba37b5d7f085bbeb0d9d208cc543a209f9508d125e485bd7a7a149794f4"
+      "checksum": "91819621fed08a6b476385f53946ec36f59db94ea9705faff5119605043b3dcc"
     },
     {
       "page_key": "S5-CHILD-FILL",
-      "checksum": "37c5d80e01e2b5ece89c823feec1e18250953f3b8cb77b54cd4bd5a9603561a7"
+      "checksum": "a9bf68decd1bd8f1f0bfaf569b9d74361b7a1c1d8bb3fff74089967ad08d5a14"
     },
     {
       "page_key": "S5-CHILD-LEVEL",
-      "checksum": "03fd5d6c5cd1a90f97f224c1d9af91ad2e34492332df5f8720021c29ce167ee2"
+      "checksum": "c2877b2527ea8b801a59693ed91551e12b67a3b846f5f3b5c0e4544abfbbbea9"
     },
     {
       "page_key": "S5-CHILD-MACHINERY",
-      "checksum": "3b49196b55a7032f92c5a792125944d6da8c62d347bef1c2e363105f9e42a082"
+      "checksum": "6418aa31cfe11f44df239f0e3c96d72bde32d2ab2d87505475aaa1b7a1e569dd"
     },
     {
       "page_key": "S5-CHILD-VERTICAL",
-      "checksum": "040887c57e2caea25f1c5028dca03317c57efad218b3d928849380e664e94746"
+      "checksum": "0b81c47eb665238d644a39b78982b1c6a0ed7bf3b8002047e8ec960696afbc98"
     },
     {
       "page_key": "S6-CHILD-CONCRETE",
-      "checksum": "3fb656e45a44888909ccb14e55c142cf2ae502191da1c45ebca627b7455c6b2d"
+      "checksum": "16b2eb5de267ab889de3692ddf5afca9e8d5136856ec0a3326aff747f7e68bb8"
     },
     {
       "page_key": "S6-CHILD-STONE",
-      "checksum": "f884828479a6cf2fbd7fd622639514f522bc0e8fc18bff55c44cc4190f98d0cd"
+      "checksum": "585117b172c81c231a40914d2bd87c25c1e97b0a6400457ea955a781c9ba861d"
     },
     {
       "page_key": "S6-CHILD-WOOD",
-      "checksum": "8606113054c17272a9f188c80aaf4f1edc47b1278a410ddda6c8eacdf4035b95"
+      "checksum": "c0b4d73d8de74c0186a70c13505061fc7fc49dc7676537c03a61742d58d6e550"
     },
     {
       "page_key": "S7-CHILD-ARCHITECTURAL",
-      "checksum": "3fcc19dc47f67ee634102dd90fcc782abb5e2293303a1a33620d059f02b704ea"
+      "checksum": "8b369e6fb6548182f80aba553a5c9e282b6db37874492fd35e9f1768abadb2e0"
     },
     {
       "page_key": "S7-CHILD-DESIGN",
-      "checksum": "7a0684ba9000bb280ade287a352448e09e4ed543a398df9ab6398178db794a17"
+      "checksum": "cad688cd99c58d06293f8e733b1d94d7f5324d8fde96cf1d1ab3e138504d2c89"
     },
     {
       "page_key": "S7-CHILD-HOLIDAY",
-      "checksum": "ee261b62fb12f67209ad25ebe03028562f221fedbad431136875c3879cc01a04"
+      "checksum": "e2548fe7296c3b7ec9d509720233b965c065c0b38093426f8f1be394b2e9d71b"
     },
     {
       "page_key": "S7-CHILD-INSTALL",
-      "checksum": "cabf4d8434524fe3a5c66d25d4cbfc6820c005a3989d5bd375cb48c88453e9d9"
+      "checksum": "d4df46f3194e2631e885c33423e36f3a86cce8a7157335e4824ef24c8f53d378"
     },
     {
       "page_key": "S7-CHILD-LANDSCAPE",
-      "checksum": "05556f14611be917b149a81c9019a7ef42f7b728b5e849590537dad5026c5291"
+      "checksum": "35dca6ebf5b46eba977708232553f8260b9c8f593f30134104184096baecf14c"
     },
     {
       "page_key": "S8-CHILD-CONCRETE",
-      "checksum": "b386414f2b5029259642a03756b995590e91d25d9d4fc085466cdc4b6f59e443"
+      "checksum": "6bf6739679ced75f615d0de18a7e643d4c3edac07a3899272211f29efe3b1aac"
     },
     {
       "page_key": "S8-CHILD-GRAVEL",
-      "checksum": "3d34257a0435c96f2f8a6f58933bd6d658c74c81c7e82a9a37e10b3181859c66"
+      "checksum": "c2143ff919abc744dd97230068c8b6576f00274641dee1e9256ab05085beea7b"
     },
     {
       "page_key": "S8-CHILD-PARKING",
-      "checksum": "35a429f556f53af96524787ef87e76f21e77ca22f3acd10ca11a18192315865d"
+      "checksum": "766bdb7a319fd2242f8cb558d18b9f5a80d24679bce357dfce6dff7e881b2c3d"
     },
     {
       "page_key": "S8-CHILD-PIPE",
-      "checksum": "f0d279ec5dac527de3a297b4da6d0caca8b15b4d136d914765eefcaf196a4066"
+      "checksum": "0bf066075b96355d56e2282f1a4dc8b1f3927895c4899b69696d606b086be43a"
+    },
+    {
+      "page_key": "S9-ARTICLE-OVERGROWN-SITE",
+      "checksum": "82075d6f1b6347661ab6a4772327ec17529410b1c39b55c6d034ad6c8cfae104"
+    },
+    {
+      "page_key": "S9-ARTICLE-STUMP-DIY",
+      "checksum": "ba3d0319ea14b4523fb5169b65eba57542b2163362c2064ccdbad916102ec2f3"
     },
     {
       "page_key": "S9-CHILD-CLEARING",
-      "checksum": "d3b311bc2a4ec3cf9a0dfe401aa9c60b90d71a26941ff3044360893aaa329003"
+      "checksum": "ff7d7062f95b319975a8a44a9bf1f0afdead38d978b2c2a2e4c5c77ebbff6a2b"
     },
     {
       "page_key": "S9-CHILD-STUMPS",
-      "checksum": "0f9d92cb323f72a1ef8b359218c7a0f6501552941d65ac801eff8225bec5a8f2"
+      "checksum": "3512f1cbcf4d8089b83d7960075642e3e76924e7dfb0025a4f9891bc71a4fa06"
     },
     {
       "page_key": "S9-CHILD-TREE-REMOVAL",
-      "checksum": "ea5592ebb15c15e49240982a0e511467628b6debce4be386db9a1e5e78e430ba"
+      "checksum": "af139b22bd418639f54ac24875645a225666d1582b2c50b2258f0750bfb9774e"
     }
   ]
 }

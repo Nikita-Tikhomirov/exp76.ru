@@ -19,6 +19,7 @@ from tools.service_v2 import (
     count_words,
     load_hub_services,
     load_services_auto,
+    prepare_service_for_release,
     render_service,
     sync_services,
     validate_service_v2,
@@ -48,7 +49,7 @@ RELEASE_MANIFEST_PATH = ROOT / "seo-content" / "service-hubs" / "release-manifes
 RELEASE_ID = "service-hubs-2026-08-28"
 HUB_COUNT = 15
 CHILD_SERVICE_COUNT = 65
-ARTICLE_COUNT = 23
+ARTICLE_COUNT = 11
 
 EXPECTED_SERVICES = {
     "S1": (673, "landshaftnoe-proektirovanie"),
@@ -108,40 +109,40 @@ EXPECTED_SCOPE_COUNTS = {
 }
 SCOPE_CARD_COUNT = sum(EXPECTED_SCOPE_COUNTS.values())
 
-EXPECTED_LEGACY_WORDS = {
-    "S1": 1259,
-    "S2": 1086,
-    "S3": 1093,
-    "S4": 1339,
-    "S5": 1317,
-    "S6": 1296,
-    "S7": 1254,
-    "S8": 1306,
-    "S9": 1368,
-    "S10": 1446,
-    "S11": 1313,
-    "S12": 1357,
-    "S13": 1338,
-    "S14": 1392,
-    "S15": 1417,
+EXPECTED_LEGACY_TEXT_WORDS = {
+    "S1": 1115,
+    "S2": 961,
+    "S3": 975,
+    "S4": 1247,
+    "S5": 1231,
+    "S6": 1207,
+    "S7": 1143,
+    "S8": 1182,
+    "S9": 1170,
+    "S10": 1219,
+    "S11": 1147,
+    "S12": 1154,
+    "S13": 1179,
+    "S14": 1188,
+    "S15": 1236,
 }
 
-EXPECTED_LEGACY_FINGERPRINTS = {
-    "S1": "87e7b122301f1971d9b72ba1dd47f66c7bbe84b7154f57857fa16f7acb0b7a0f",
-    "S2": "59fbf87336edc788beb0a3b2cb61134a63f840a05e78b71ceb60708bf4f53f4e",
-    "S3": "4fddc3df0abd9469ab6d7e1ecbaf7234459b62cc0ac39194275641f53fb6ff3f",
-    "S4": "3f78e81ede630e0fe24e4b0b19d268812a8bef1e8e021f6eb5548dbc55ddffcf",
-    "S5": "53478d3a3492f2d86b21bb076bb07e3364978e833c0169a719f0db1edc19ae4c",
-    "S6": "85126de28e06c94bfb2083d56fb3d9f5d857f62c99673faf708ef1f86db95df9",
-    "S7": "5f75cbcfbcb89981934bedc0fc0459c36a47167106533cd41faae4da37b8b6d2",
-    "S8": "f998456dd56c25e636d3160a772c4754073209e73d3c27ebf12c642015e2cad7",
-    "S9": "06f817f285e559bdb033debf38f34277ec5bb3d6350e9d5480885df4fa9425de",
-    "S10": "4143c5b91e40dffd6f2b0b28ae53f55473ff8c05240f50180b5aa4f3376304dd",
-    "S11": "60af92d515fbb0abab0168bc9a6a0c64c6487ed2deb6a24aceaddb57437d3f1b",
-    "S12": "e39b4273f6d348f995fa3582dd7a2ce285aff423bc714737d6680a3ad87a219d",
-    "S13": "fa3a9098ed8dd2576cb4159cc168514008a528b2d26f8bf8442ebff1da81ca19",
-    "S14": "4d2ede878e07023b02725256394e7b58695d30d801c68f24877f4e7da02051e3",
-    "S15": "0112566de03cb783ebaf6cdb981ef65b204cdd3062e1d2059d9b0681a40e8c6b",
+EXPECTED_LEGACY_TEXT_FINGERPRINTS = {
+    "S1": "4a497f03c8834cb7532b4cba9d9a12cb18b4da135c0b6747ef94c88b854b634f",
+    "S2": "56cd5e3b160190830b292d09b6a18f925b2e564016567526d3613918f269db71",
+    "S3": "cc85c4133aa70c1d07f15f63367aca046eb2671a6a8374696fb57feefa8efc9b",
+    "S4": "fae7e96c981e7e8826bb11bf9087e2840e515d37d66012949d051167a5084824",
+    "S5": "d11f0f12014a9e63a433150434af062d38cf41e83bda613f505fa916accee612",
+    "S6": "971c0615af4fba7dd82ff7c14c3bbd67b00bb1406332994877cb27e1b776751a",
+    "S7": "377235f0c427c1d0b72c5b3b5d9f1eaef111ca35402a7db362313002c0d4c053",
+    "S8": "78326a36cbc9a20c0cb9253a536d9e8a20479c5b0f81636b7ec561a0841d032c",
+    "S9": "76f2ca09e0b7539e2ccb7860595dc9c4564f94f93e82000c7fa802ecd835e413",
+    "S10": "555bf77ca4e24b9a293cd524855972c5222dbbf5284c40d0e3fbbc7a6c0a995e",
+    "S11": "4eaa003f77cf9af68d535956ea7f59c0b98369a2620ba7b7276665faf53c620c",
+    "S12": "17f1713ce7e0b4854a19f985ad6a5124341b0dde3c4c00a1f10203d89695520f",
+    "S13": "061e21fcb5cf0a7e83ba292a22ec042bfa1db28263bf7ae9451470c8686ddd45",
+    "S14": "eb87ae33f7f76ba9f22a6664e8edb3ea88afe2b66f10214fff721910e7ea4663",
+    "S15": "58f6114b89ab8e21dc12e8c9c9e4edccd7573dcdfa02f4607231c3b7e38d8651",
 }
 
 def _expected_navigation() -> dict[str, dict[str, dict[str, str]]]:
@@ -155,6 +156,8 @@ def _expected_navigation() -> dict[str, dict[str, dict[str, str]]]:
     for destination in architecture.values():
         field = field_by_role.get(destination.page_role)
         if field is None or destination.service_id not in navigation:
+            continue
+        if destination.publication_status != "ready":
             continue
         if destination.parent_destination_id != f"{destination.service_id}-HUB":
             continue
@@ -200,22 +203,23 @@ EXPECTED_FROZEN_LINKS = {
 }
 
 UPLOADS = "https://exp76.ru/wp-content/uploads/"
+GENERATED_CONTEXT = "https://exp76.ru/wp-content/themes/land76wp/generated/context/"
 EXPECTED_IMAGE_POOL_FINGERPRINTS = {
-    "S1": "2b801329c986a55b138c9a70aa9e5bb48632ff7fdd9cf27a69ddd0d9b1e9dfd9",
-    "S2": "c2b0573a1399ff1679ca41fdb4ebd763c36713f274e0dfbb82346c7f7c74123b",
-    "S3": "c2f106d121fa2f50a371e0d7c3d7f6db5efced614a2817d159dce3456323fba4",
-    "S4": "dc86943e19a98d96610198c0c515e4bb9ccb821ed409bf307fcdfe30369eb17f",
-    "S5": "7751a05e2eeb1aa3deef3c306e91c98812793144852cebf01b4f0f8c6066ca95",
-    "S6": "c63a49f1452a5a20f2da6275207a092b153758f3c7b6d95e238faef92c42bd91",
-    "S7": "808104c196b5ade5d7c44788918b7eabb9607101cc831361647ddcd63e85e1a6",
-    "S8": "c530e04414ea9dc88431535d63b85f44a35975c0777b3f56a186fce0c6012465",
+    "S1": "552f41962fb9d1630009734626a1df0390f80c3e2d527aed2c05fc8600963243",
+    "S2": "adc9591969971d842adbc4f81559ea1275e5df6acc27bc8b243c61f65606e17a",
+    "S3": "60fc825e3ddb905eadaf0b039b22323b3bcfc61ae55b3544fcea267b20278a1b",
+    "S4": "c6d9958aa93fe067ce32649ad60da2a682f9cd7dd827a918e2698f78b5f9746d",
+    "S5": "f652a2a7d01f878ac50cbd5dfc68c419af240ba18813e71719fd9a5e87944cbf",
+    "S6": "463ff48e29872aaee65c74d0b20e72d6ebf201af741f9e13a9515b05ce02272f",
+    "S7": "07d4f6d81f5469a48ffdbf61192f5a7691b6b73d6351554ffea6cfcda5db03a4",
+    "S8": "1fa208d0d47d309763017f8b7463f52a07e398e4675af595b4d821c6c88b4ebd",
     "S9": "6a722580fb4cae2cdb05ada8fb6632f4e2144760aa321565e9356357dee1b4e6",
-    "S10": "8660c134541e827699defdc8b0fb3db4f509606c1889e4f017c8caaee53ec9a9",
-    "S11": "a1007121d462c3ead7316c861477543c0030448540444d7f83501fba35deb582",
-    "S12": "bb53e0d8c424893bc94e7a2e05b5b44c7c165d7ad92aafcc76a06472d5d574ea",
-    "S13": "124b31a412dd38357b2159b4b4869d7a907743980db085e97730fed768d75139",
+    "S10": "ebacd8b3c4bb22986ce6eed2a11c25609c581c56274d57e386804aa3cbef45a3",
+    "S11": "89c5b5a844e8de910587ef57fbc0d8966bc1f41dd0ef88cf4022ab6c00074fd6",
+    "S12": "aa0817a1c4ac1540de9041153a7e257c3629229612a45484a3a2d41def679b35",
+    "S13": "d7eb8e330248a697a36644b150bdcf3dedb684be878c6ca1ff27a13e74a44a45",
     "S14": "b9f8a3f0ea16cd9fae5310e7165c75951064872868a863c14c6fa0b3b2671f9c",
-    "S15": "5b5924cd5ef6f4cd8e7856d949d725d257e4f82d3d8341f7fea135ef2960ed49",
+    "S15": "ddb5d786ba2dbfb889351dc445746258a42be9c19b16b8e69a9119e9aa9c5b76",
 }
 
 EXPECTED_FACT_PATHS = {
@@ -292,6 +296,27 @@ def _legacy_projection(service: dict[str, object]) -> dict[str, object]:
     return payload
 
 
+def _without_presentation_metadata(value: object) -> object:
+    """Keep legacy copy baselines independent from intentionally replaceable media."""
+    if isinstance(value, dict):
+        return {
+            key: _without_presentation_metadata(item)
+            for key, item in value.items()
+            if key not in {"image", "gallery"}
+        }
+    if isinstance(value, list):
+        return [_without_presentation_metadata(item) for item in value]
+    return value
+
+
+def _legacy_text_projection(service: dict[str, object]) -> dict[str, object]:
+    """Reconstruct frozen legacy copy without image URLs, alt text or captions."""
+    projection = _without_presentation_metadata(_legacy_projection(service))
+    if not isinstance(projection, dict):
+        raise AssertionError("legacy text projection must remain an object")
+    return projection
+
+
 def _payload_fingerprint(payload: dict[str, object]) -> str:
     serialized = json.dumps(
         payload,
@@ -312,7 +337,11 @@ def _embedded_image_urls(value: object) -> set[str]:
     if isinstance(value, dict):
         url = value.get("url")
         alt = value.get("alt")
-        if isinstance(url, str) and url.startswith(UPLOADS) and isinstance(alt, str):
+        if (
+            isinstance(url, str)
+            and url.startswith((UPLOADS, GENERATED_CONTEXT))
+            and isinstance(alt, str)
+        ):
             urls.add(url)
         for item in value.values():
             urls.update(_embedded_image_urls(item))
@@ -400,14 +429,6 @@ def schema_two_fixture(service: dict[str, object]) -> dict[str, object]:
         for destination in children + articles
         if destination.publication_status != "ready"
     ]
-    if not payload["proof"]["cases"]:
-        payload["evidence_gaps"].append(
-            {
-                "kind": "missing_verified_case",
-                "page_key": payload["page_key"],
-                "status": "missing",
-            }
-        )
     payload["fact_evidence"] = []
     payload["fact_evidence"] = [
         {
@@ -679,13 +700,23 @@ class ServiceV2Test(unittest.TestCase):
         handler_source = (ROOT / "ftp_dump_minimal" / "server.php").read_text(encoding="utf-8")
 
         self.assertIn("REQUEST_METHOD", handler_source)
-        self.assertIn("http_response_code(405)", handler_source)
-        self.assertIn("http_response_code(422)", handler_source)
-        self.assertIn("http_response_code(500)", handler_source)
-        self.assertIn("$_POST['consent'] ??", handler_source)
-        self.assertIn("land76_clean_post_value('source'", handler_source)
-        self.assertIn("$mail_sent = @mail(", handler_source)
+        for error_code, status in (
+            ("method_not_allowed", 405),
+            ("consent_required", 422),
+            ("invalid_phone", 422),
+        ):
+            self.assertRegex(
+                handler_source,
+                rf"land76_contact_error\('{error_code}',[^;]+,\s*{status}\);",
+            )
+        self.assertIn("wp_verify_nonce", handler_source)
+        self.assertIn("isset($_POST['consent'])", handler_source)
+        self.assertIn("land76_contact_post_text('source', 512)", handler_source)
+        self.assertIn("$mail_sent = wp_mail(", handler_source)
         self.assertIn("if (!$mail_sent)", handler_source)
+        mail_failure = handler_source.index("if (!$mail_sent)")
+        self.assertIn("'code' => 'mail_failed'", handler_source[mail_failure:])
+        self.assertIn("), 500", handler_source[mail_failure:])
 
 
 class SchemaTwoProductionDataTest(unittest.TestCase):
@@ -736,22 +767,23 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
             self.assertEqual(f"{service_id}-HUB", service["page_key"])
             self.assertEqual("hub", service["page_type"])
             self.assertEqual(RELEASE_ID, service["release_id"])
-            self.assertEqual("draft", service["release_status"])
+            self.assertEqual("ready", service["release_status"])
+            self.assertEqual([], service["evidence_gaps"])
             scope_items = service["scope"]["items"]
             self.assertEqual(EXPECTED_SCOPE_COUNTS[service_id], len(scope_items))
             self.assertTrue(
                 all("url" not in item and "page_key" not in item for item in scope_items)
             )
-            legacy = _legacy_projection(service)
-            words = count_words(legacy)
-            self.assertEqual(EXPECTED_LEGACY_WORDS[service_id], words)
+            legacy_text = _legacy_text_projection(service)
+            words = count_words(legacy_text)
+            self.assertEqual(EXPECTED_LEGACY_TEXT_WORDS[service_id], words)
             self.assertEqual(
-                EXPECTED_LEGACY_FINGERPRINTS[service_id],
-                _payload_fingerprint(legacy),
+                EXPECTED_LEGACY_TEXT_FINGERPRINTS[service_id],
+                _payload_fingerprint(legacy_text),
             )
             total_words += words
             total_scope_cards += len(scope_items)
-        self.assertEqual(sum(EXPECTED_LEGACY_WORDS.values()), total_words)
+        self.assertEqual(sum(EXPECTED_LEGACY_TEXT_WORDS.values()), total_words)
         self.assertEqual(SCOPE_CARD_COUNT, total_scope_cards)
 
     def test_every_hub_has_the_exact_child_and_article_destinations_once(self) -> None:
@@ -813,8 +845,6 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
                 for destination_id in EXPECTED_NAVIGATION[service_id][field]
                 if architecture[destination_id].publication_status != "ready"
             }
-            if not EXPECTED_CASES[service_id]:
-                expected_gaps.add(("missing_verified_case", f"{service_id}-HUB", "missing"))
             actual_gaps = {
                 (str(gap["kind"]), str(gap["page_key"]), str(gap["status"]))
                 for gap in service["evidence_gaps"]
@@ -1035,6 +1065,40 @@ class SchemaTwoSyncTest(unittest.TestCase):
             rendered,
         )
 
+    def test_schema_two_omits_inline_json_ld_because_theme_emits_shared_graph(self) -> None:
+        """Catches a hub body adding a second FAQ graph beside the wp_head graph."""
+        service = schema_two_fixture(self.service_seeds[0])
+
+        rendered = render_service(service)
+
+        self.assertIn('service-v2__faq', rendered)
+        self.assertNotIn('type="application/ld+json"', rendered)
+        self.assertNotIn('service-v2__schema', rendered)
+
+    def test_prepare_release_removes_backlog_navigation_without_inventing_cases(self) -> None:
+        service = next(
+            schema_two_fixture(payload)
+            for payload in self.service_seeds
+            if payload["service_id"] == "S4"
+        )
+
+        prepared = prepare_service_for_release(
+            service,
+            self.architecture,
+            self.cases,
+        )
+
+        self.assertEqual("ready", prepared["release_status"])
+        self.assertEqual([], prepared["articles"]["items"])
+        self.assertEqual([], prepared["evidence_gaps"])
+        self.assertEqual([], prepared["proof"]["cases"])
+        validate_service_v2(
+            prepared,
+            self.architecture,
+            self.cases,
+            production_ready=True,
+        )
+
     def test_direct_cli_auto_validates_schema_two_sources(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             source = Path(temp_dir) / "sources"
@@ -1075,7 +1139,7 @@ class SchemaTwoSyncTest(unittest.TestCase):
         with self.assertRaisesRegex(ContractError, "services must contain heading, lead and items"):
             validate_service_v2(service, self.architecture, self.cases)
 
-    def test_draft_gaps_are_explicit_and_production_ready_validation_fails_closed(self) -> None:
+    def test_nonready_navigation_gaps_are_explicit_and_ready_validation_fails_closed(self) -> None:
         service = next(
             schema_two_fixture(payload)
             for payload in self.service_seeds
@@ -1084,7 +1148,6 @@ class SchemaTwoSyncTest(unittest.TestCase):
 
         validate_service_v2(service, self.architecture, self.cases)
         kinds = {gap["kind"] for gap in service["evidence_gaps"]}
-        self.assertIn("missing_verified_case", kinds)
         self.assertIn("nonready_destination", kinds)
 
         with self.assertRaisesRegex(ContractError, "production-ready"):
@@ -1103,6 +1166,25 @@ class SchemaTwoSyncTest(unittest.TestCase):
         service["evidence_gaps"] = []
         with self.assertRaisesRegex(ContractError, "evidence_gaps"):
             validate_service_v2(service, self.architecture, self.cases)
+
+    def test_ready_hub_may_truthfully_omit_cases_when_no_verified_case_exists(self) -> None:
+        service = next(
+            schema_two_fixture(payload)
+            for payload in self.service_seeds
+            if payload["service_id"] == "S11"
+        )
+        service["release_status"] = "ready"
+        service["rendered_sha256"] = hashlib.sha256(
+            render_service(service).encode("utf-8")
+        ).hexdigest()
+
+        validate_service_v2(
+            service,
+            self.architecture,
+            self.cases,
+            production_ready=True,
+        )
+        self.assertEqual([], service["proof"]["cases"])
 
     def test_schema_two_rejects_another_services_audited_illustration(self) -> None:
         s1 = next(

@@ -24,6 +24,7 @@ SEO_BLOG = INC / "seoblogpost.php"
 SEO_INDEXING = INC / "seo-category-indexing.php"
 REGION_TEMPLATE = THEME / "page-service-hub-region.php"
 SERVICEPOST = THEME / "servicepost.php"
+SERVICEPOST_CSS = THEME / "css" / "servicepost.css"
 DRENAZH_BLOG_IMPORTER = INC / "import-drenazh-blog.php"
 
 RELEASE_ID = "service-hubs-2026-08-28"
@@ -66,12 +67,13 @@ LEGACY_IMPORT_HASHES = {
 }
 
 LEGACY_CATEGORY_HASHES = {
-    "category-87.php": "76af2cbb8761a75e13ff76849804002e9ba98405d8788d2ebb4c59746039b46a",
-    "category-88.php": "ff5a984f3889d04701572c9cec347ce77abb76ab7e71a03c7c44c691af008c53",
-    "category-89.php": "3f1c633250fce9bb609c388099eda49522e20751be269f1bd9c1b6184fff0748",
-    "category-90.php": "81609271837f47b3707fb778476791d8e16192bf60e47e801ad55c9f9c54272d",
-    "category-91.php": "91cfba95188485aa733a8a21e94cdefe8bb29e2d1b0f8b649719ccded5931046",
-    "category-92.php": "b8f0ed0aa464c2a84df9246bef6f1516e362ce2168a3d408206eed48bc2ba0fb",
+    "casenew.php": "61dffab97d2bedd930101690eabc1b3b2ed27bfda7de68d0f3a6a1e864d8b310",
+    "category-87.php": "c38b039f959671395c58d1ba24886cee37ad6671f7d85ed2be18b7a9646a0a9f",
+    "category-88.php": "ff1f49bc47a133418e4a7f0a32a9b35ff6a3f85d47c0342deb5fc3e99838c6a0",
+    "category-89.php": "cf546ea31c7efd34dd7854c878990c0f169447447641d5bc6d7a2a73736d4dfa",
+    "category-90.php": "4c84282b3181986d06ab5fe798dd35b64f63141860f320ee3a1965c95d85043a",
+    "category-91.php": "62db1f8b874b41a84ab252767a313abd1f15df1c5adaabbf754a6565ebe85ee7",
+    "category-92.php": "f69236dc0a86786916c3ec109bf7279b5c318bbc69ce22fb759ff2d15ff756ab",
 }
 
 
@@ -164,13 +166,17 @@ class ServiceHubRegistryTests(unittest.TestCase):
             self.assertIn(f"function {name}", source)
 
     def test_registry_drives_service_and_breadcrumb_schema_for_hubs_and_children(self):
-        source = read(REGISTRY)
-        self.assertIn("function land76wp_service_hub_output_registry_schema", source)
-        self.assertIn("land76wp_service_hub_for_post", source)
-        self.assertIn("_land76_page_key", source)
-        self.assertIn("'@type' => 'Service'", source)
-        self.assertIn("'@type' => 'BreadcrumbList'", source)
-        self.assertIn("add_action('wp_head'", source)
+        registry = read(REGISTRY)
+        functions = read(FUNCTIONS)
+        self.assertNotIn("land76wp_service_hub_output_registry_schema", registry)
+        self.assertIn("function land76wp_service_hub_schema_context", registry)
+        self.assertIn("function land76wp_managed_page_contract", registry)
+        self.assertIn("land76_schema_managed_main_node", functions)
+        self.assertIn("land76_schema_managed_breadcrumb_node", functions)
+        self.assertIn("land76wp_service_hub_schema_context", functions)
+        self.assertIn("'@type' => 'Service'", functions)
+        self.assertIn("'@type' => 'BreadcrumbList'", functions)
+        self.assertEqual(1, functions.count("add_action('wp_head', 'land76_output_structured_data'"))
 
     def test_managed_records_use_exact_registry_seo_and_canonical_meta(self):
         source = read(REGISTRY)
@@ -201,12 +207,19 @@ class ImportPayloadAndAcfTests(unittest.TestCase):
         self.assertEqual(payload["schema_version"], 1)
         self.assertEqual(payload["release_id"], RELEASE_ID)
         self.assertEqual(payload["release_status"], "ready")
-        self.assertEqual(65, len(payload["items"]))
+        self.assertEqual(76, len(payload["items"]))
+        self.assertEqual(
+            {"child_service": 65, "article": 11},
+            {
+                role: sum(item["role"] == role for item in payload["items"])
+                for role in ("child_service", "article")
+            },
+        )
         self.assertEqual(payload["manifest_sha256"], sha256(IMPORT_RELEASE_MANIFEST))
         self.assertEqual(release_manifest["schema_version"], 1)
         self.assertEqual(release_manifest["release_id"], RELEASE_ID)
         self.assertEqual(release_manifest["release_status"], "ready")
-        self.assertEqual(65, len(release_manifest["items"]))
+        self.assertEqual(76, len(release_manifest["items"]))
         self.assertEqual(release_manifest["source_manifest_sha256"], sha256(RELEASE_MANIFEST))
         expected_inventory = sorted(
             (
@@ -501,16 +514,12 @@ class ImporterSafetyTests(unittest.TestCase):
         source = read(SERVICEPOST)
         for marker in (
             "land76_service_v2_current",
-            "$land76_managed_child_page",
             "get_queried_object_id",
-            "_land76_import_owner",
-            "_land76_page_key",
-            "land76wp_service_hubs_import_owner",
-            "S(?:[1-9]|1[0-5])-CHILD-",
-            "get_post_type",
-            "'page'",
-            "get_page_template_slug",
-            "servicepost.php",
+            "land76wp_claims_managed_service_hub_post",
+            "land76wp_managed_page_contract",
+            "['role'] !== 'child'",
+            "status_header(404)",
+            "nocache_headers()",
             "get_header('seo')",
             "/inc/newservicepost.php",
             "get_footer()",
@@ -518,14 +527,23 @@ class ImporterSafetyTests(unittest.TestCase):
             "get_header('service')",
         ):
             self.assertIn(marker, source)
+        owner_check = source.index("land76wp_claims_managed_service_hub_post")
+        contract_check = source.index("land76wp_managed_page_contract", owner_check)
+        not_found = source.index("status_header(404)", contract_check)
+        managed_render = source.index("/inc/newservicepost.php", not_found)
+        service_v2 = source.index("land76_service_v2_current", managed_render)
+        legacy_render = source.index("get_header('service')", service_v2)
         self.assertLess(
-            source.index("land76_service_v2_current"),
-            source.index("$land76_managed_child_page"),
+            owner_check,
+            contract_check,
         )
         self.assertLess(
-            source.index("$land76_managed_child_page"),
-            source.index("get_header('service')"),
+            contract_check,
+            not_found,
         )
+        self.assertLess(not_found, managed_render)
+        self.assertLess(managed_render, service_v2)
+        self.assertLess(service_v2, legacy_render)
 
     def test_importer_accepts_exact_service_range_s1_s15(self):
         source = self.source()
@@ -923,6 +941,44 @@ class ImporterSafetyTests(unittest.TestCase):
         self.assertIn("get_post_mime_type", body)
         self.assertIn("image/", body)
 
+    def test_presentation_images_validate_store_and_verify_each_media_role(self):
+        source = self.source()
+        validator = php_function_body(
+            source, "land76wp_service_hubs_validate_presentation_images"
+        )
+        for marker in (
+            "hero",
+            "context",
+            "card",
+            "https://exp76.ru/wp-content/themes/land76wp/generated/context/",
+            "context-photo-",
+            ".webp",
+            "get_template_directory",
+            "is_file",
+        ):
+            self.assertIn(marker, validator)
+        self.assertNotIn("attachment_url_to_postid", validator)
+        item_validator = php_function_body(source, "land76wp_service_hubs_validate_item")
+        self.assertIn("land76wp_service_hubs_validate_presentation_images", item_validator)
+
+        apply_body = php_function_body(
+            source, "land76wp_service_hubs_apply_post_metadata"
+        )
+        verify_body = php_function_body(
+            source, "land76wp_service_hubs_verify_staged_item"
+        )
+        meta_keys_body = php_function_body(
+            source, "land76wp_service_hubs_presentation_meta_keys"
+        )
+        for role in ("hero", "context", "card"):
+            for field in ("url", "alt"):
+                meta_key = f"_land76_{role}_image_{field}"
+                self.assertIn(meta_key, meta_keys_body)
+        self.assertIn("land76wp_service_hubs_presentation_meta_keys", apply_body)
+        self.assertIn("land76wp_service_hubs_presentation_meta_keys", verify_body)
+        self.assertIn("_land76_main_image_url", apply_body)
+        self.assertIn("set_post_thumbnail", apply_body)
+
     def test_new_runner_never_calls_legacy_importers(self):
         source = self.source()
         for token in (
@@ -1023,6 +1079,34 @@ class ThemeRoutingTests(unittest.TestCase):
         self.assertIn("-CHILD-", article)
         self.assertIn("hub_post_id", article)
 
+    def test_related_cards_render_target_card_image_alt_with_proof_fallback(self):
+        service = read(NEW_SERVICE)
+        helper = php_function_body(service, "land76_newservice_related_card_image")
+        self.assertIn("foreach (array('card', 'main') as $role)", helper)
+        self.assertIn("land76_service_v2_load", helper)
+        self.assertIn("['hero']['image']['url']", helper)
+        self.assertIn("['hero']['image']['alt']", helper)
+        self.assertIn(
+            "land76_newservice_related_card_image($ns87_related_service_id)",
+            service,
+        )
+        for marker in (
+            "_land76_card_image_url",
+            "_land76_card_image_alt",
+            "_land76_main_image_url",
+            "_land76_main_image_alt",
+        ):
+            self.assertGreaterEqual(service.count(marker), 1, marker)
+        for marker in (
+            'loading="lazy"',
+            'decoding="async"',
+            'class="service__img"',
+        ):
+            self.assertGreaterEqual(service.count(marker), 2, marker)
+        css = read(SERVICEPOST_CSS)
+        self.assertIn(".service-related-card-image", css)
+        self.assertIn("object-fit: cover", css)
+
     def test_managed_templates_do_not_use_drainage_fallback(self):
         service = read(NEW_SERVICE)
         article = read(SEO_BLOG)
@@ -1110,7 +1194,7 @@ class BackwardCompatibilityTests(unittest.TestCase):
         for name, expected in LEGACY_IMPORT_HASHES.items():
             self.assertEqual(sha256(INC / name), expected, name)
 
-    def test_legacy_category_templates_are_byte_identical(self):
+    def test_hardened_legacy_cta_templates_are_byte_identical(self):
         for name, expected in LEGACY_CATEGORY_HASHES.items():
             self.assertEqual(sha256(THEME / name), expected, name)
 

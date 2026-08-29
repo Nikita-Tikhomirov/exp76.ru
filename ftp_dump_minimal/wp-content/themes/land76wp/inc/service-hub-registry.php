@@ -178,6 +178,99 @@ function land76wp_service_hub_by_grouping_slug($slug)
     return null;
 }
 
+function land76wp_has_managed_service_hub_owner($post_id)
+{
+    $owner = (string) get_post_meta((int) $post_id, '_land76_import_owner', true);
+
+    return hash_equals('land76-service-hubs', $owner);
+}
+
+/** Detect both intact ownership and orphaned managed runtime records. */
+function land76wp_claims_managed_service_hub_post($post_id)
+{
+    $post_id = (int) $post_id;
+    if (land76wp_has_managed_service_hub_owner($post_id)) {
+        return true;
+    }
+
+    $page_key = (string) get_post_meta($post_id, '_land76_page_key', true);
+
+    return preg_match('/^S(?:[1-9]|1[0-5])-(?:CHILD|ARTICLE|GEO)-[A-Z0-9-]+$/D', $page_key) === 1;
+}
+
+/**
+ * Validate every runtime boundary before a claimed managed post is rendered.
+ *
+ * A non-null result is the only supported admission ticket for managed child,
+ * article and regional pages. Merely owning one matching meta field is not
+ * sufficient.
+ */
+function land76wp_managed_page_contract($post_id)
+{
+    $post_id = (int) $post_id;
+    $owner = (string) get_post_meta($post_id, '_land76_import_owner', true);
+    if ($post_id < 1 || !hash_equals('land76-service-hubs', $owner)) {
+        return null;
+    }
+
+    $post = get_post($post_id);
+    if (!$post instanceof WP_Post || $post->post_status !== 'publish') {
+        return null;
+    }
+
+    $page_key = (string) get_post_meta($post_id, '_land76_page_key', true);
+    $service_id = strtoupper((string) get_post_meta($post_id, '_land76_service_id', true));
+    $topic_key = strtoupper((string) get_post_meta($post_id, '_land76_topic_key', true));
+    $stored_canonical = trailingslashit((string) get_post_meta($post_id, '_land76_canonical', true));
+    $actual_canonical = trailingslashit((string) get_permalink($post_id));
+    $hub = land76wp_service_hub_by_service_id($service_id);
+
+    if ($page_key === ''
+        || $service_id === ''
+        || !hash_equals($service_id, $topic_key)
+        || strpos($page_key, $service_id . '-') !== 0
+        || $stored_canonical === '/'
+        || $actual_canonical === '/'
+        || !hash_equals($stored_canonical, $actual_canonical)
+        || $hub === null) {
+        return null;
+    }
+
+    $role = '';
+    if (preg_match('/^S(?:[1-9]|1[0-5])-CHILD-[A-Z0-9-]+$/D', $page_key)) {
+        $role = 'child';
+        $valid_post_shape = ($post->post_type === 'post' && has_category(74, $post_id) && !has_category(72, $post_id))
+            || ($post->post_type === 'page' && hash_equals('servicepost.php', (string) get_page_template_slug($post_id)));
+    } elseif (preg_match('/^S(?:[1-9]|1[0-5])-ARTICLE-[A-Z0-9-]+$/D', $page_key)) {
+        $role = 'article';
+        $valid_post_shape = $post->post_type === 'post' && has_category(72, $post_id) && !has_category(74, $post_id);
+    } elseif (preg_match('/^S(?:[1-9]|1[0-5])-GEO-[A-Z0-9-]+$/D', $page_key)) {
+        $role = 'geo';
+        $valid_post_shape = $post->post_type === 'page'
+            && hash_equals('page-service-hub-region.php', (string) get_page_template_slug($post_id));
+    } else {
+        return null;
+    }
+
+    if (!$valid_post_shape) {
+        return null;
+    }
+
+    return array(
+        'post_id' => $post_id,
+        'post' => $post,
+        'post_type' => $post->post_type,
+        'post_status' => $post->post_status,
+        'page_key' => $page_key,
+        'service_id' => $service_id,
+        'topic_key' => $topic_key,
+        'canonical' => $stored_canonical,
+        'current_url' => $actual_canonical,
+        'role' => $role,
+        'hub' => $hub,
+    );
+}
+
 function land76wp_service_hub_for_post($post_id)
 {
     $post_id = (int) $post_id;
@@ -187,23 +280,98 @@ function land76wp_service_hub_for_post($post_id)
         }
     }
 
-    $service_id = get_post_meta($post_id, '_land76_service_id', true);
-    $topic_key = get_post_meta($post_id, '_land76_topic_key', true);
-    if ($service_id === '' || !hash_equals((string) $service_id, (string) $topic_key)) {
-        return null;
-    }
+    $contract = land76wp_managed_page_contract($post_id);
 
-    return land76wp_service_hub_by_service_id($service_id);
+    return is_array($contract) ? $contract['hub'] : null;
 }
 
 function land76wp_is_managed_service_hub_post($post_id)
 {
-    $owner = get_post_meta((int) $post_id, '_land76_import_owner', true);
-    if (!hash_equals('land76-service-hubs', (string) $owner)) {
-        return false;
+    return land76wp_managed_page_contract($post_id) !== null;
+}
+
+function land76wp_service_hub_schema_context($post_id)
+{
+    $post_id = (int) $post_id;
+    $hub = null;
+    $role = '';
+    $current_url = '';
+
+    foreach (land76wp_service_hub_registry() as $registered_hub) {
+        if ((int) $registered_hub['hub_post_id'] === $post_id) {
+            $hub = $registered_hub;
+            $role = 'hub';
+            $current_url = trailingslashit((string) $registered_hub['canonical']);
+            break;
+        }
     }
 
-    return land76wp_service_hub_for_post($post_id) !== null;
+    if ($role === 'hub') {
+        $post = get_post($post_id);
+        $actual_url = trailingslashit((string) get_permalink($post_id));
+        if (!$post instanceof WP_Post
+            || $post->post_type !== 'page'
+            || $post->post_status !== 'publish'
+            || $actual_url === '/'
+            || !hash_equals($current_url, $actual_url)) {
+            return null;
+        }
+    } else {
+        $contract = land76wp_managed_page_contract($post_id);
+        if (!is_array($contract)) {
+            return null;
+        }
+        $post = $contract['post'];
+        $hub = $contract['hub'];
+        $role = $contract['role'];
+        $current_url = $contract['current_url'];
+    }
+
+    $title = (string) get_the_title($post_id);
+    $description = '';
+    $image_url = '';
+    $image_alt = '';
+    if ($role === 'hub') {
+        $service_v2 = function_exists('land76_service_v2_current')
+            ? land76_service_v2_current()
+            : null;
+        if (!is_array($service_v2)
+            || empty($service_v2['hero']['title'])
+            || empty($service_v2['seo']['description'])) {
+            return null;
+        }
+
+        $title = (string) $service_v2['hero']['title'];
+        $description = (string) $service_v2['seo']['description'];
+        $image_url = isset($service_v2['hero']['image']['url'])
+            ? (string) $service_v2['hero']['image']['url']
+            : '';
+        $image_alt = isset($service_v2['hero']['image']['alt'])
+            ? (string) $service_v2['hero']['image']['alt']
+            : '';
+    } else {
+        $description = (string) get_post_meta($post_id, '_aioseo_description', true);
+        if ($description === '') {
+            $description = wp_strip_all_tags((string) get_the_excerpt($post_id));
+        }
+        $image_url = (string) get_post_meta($post_id, '_land76_main_image_url', true);
+        $image_alt = (string) get_post_meta($post_id, '_land76_main_image_alt', true);
+    }
+    if ($image_url === '' && has_post_thumbnail($post_id)) {
+        $image_url = (string) get_the_post_thumbnail_url($post_id, 'full');
+    }
+
+    return array(
+        'post_id' => $post_id,
+        'post' => $post,
+        'hub' => $hub,
+        'role' => $role,
+        'current_url' => $current_url,
+        'title' => wp_strip_all_tags($title),
+        'description' => wp_strip_all_tags($description),
+        'image_url' => esc_url_raw($image_url),
+        'image_alt' => sanitize_text_field($image_alt),
+    );
 }
 
 function land76wp_service_hub_managed_meta_value($meta_key, $fallback)
@@ -212,12 +380,8 @@ function land76wp_service_hub_managed_meta_value($meta_key, $fallback)
         return $fallback;
     }
     $post_id = (int) get_queried_object_id();
-    if (!land76wp_is_managed_service_hub_post($post_id)) {
-        return $fallback;
-    }
-    $stored_canonical = (string) get_post_meta($post_id, '_land76_canonical', true);
-    $actual_canonical = trailingslashit((string) get_permalink($post_id));
-    if ($stored_canonical === '' || !hash_equals($stored_canonical, $actual_canonical)) {
+    $contract = land76wp_managed_page_contract($post_id);
+    if (!is_array($contract)) {
         return $fallback;
     }
     $value = (string) get_post_meta($post_id, $meta_key, true);
@@ -240,104 +404,40 @@ function land76wp_service_hub_filter_managed_canonical($canonical)
     return land76wp_service_hub_managed_meta_value('_land76_canonical', $canonical);
 }
 
+/** Keep AIOSEO from printing a second graph beside the managed theme graph. */
+function land76wp_service_hub_disable_aioseo_schema($disabled)
+{
+    if ($disabled || !is_singular()) {
+        return (bool) $disabled;
+    }
+
+    $context = land76wp_service_hub_schema_context(get_queried_object_id());
+
+    return is_array($context);
+}
+
+/** Empty older AIOSEO graph output when its boolean disable filter is unavailable. */
+function land76wp_service_hub_filter_aioseo_schema_output($schema)
+{
+    if (!is_singular()) {
+        return $schema;
+    }
+
+    $context = land76wp_service_hub_schema_context(get_queried_object_id());
+    if (is_array($context)) {
+        return array();
+    }
+
+    return $schema;
+}
+
 add_filter('aioseo_title', 'land76wp_service_hub_filter_managed_title', 999);
 add_filter('aioseo_description', 'land76wp_service_hub_filter_managed_description', 999);
 add_filter('aioseo_canonical_url', 'land76wp_service_hub_filter_managed_canonical', 999);
+add_filter('aioseo_schema_disable', 'land76wp_service_hub_disable_aioseo_schema', 999);
+add_filter('aioseo_schema_output', 'land76wp_service_hub_filter_aioseo_schema_output', 999);
 add_filter('wpseo_title', 'land76wp_service_hub_filter_managed_title', 999);
 add_filter('wpseo_metadesc', 'land76wp_service_hub_filter_managed_description', 999);
 add_filter('wpseo_canonical', 'land76wp_service_hub_filter_managed_canonical', 999);
 add_filter('pre_get_document_title', 'land76wp_service_hub_filter_managed_title', 999);
 add_filter('get_canonical_url', 'land76wp_service_hub_filter_managed_canonical', 999);
-
-function land76wp_service_hub_output_registry_schema()
-{
-    if (!is_singular()) {
-        return;
-    }
-
-    $post_id = get_queried_object_id();
-    $hub = land76wp_service_hub_for_post($post_id);
-    if ($hub === null) {
-        return;
-    }
-
-    $is_hub_page = (int) $hub['hub_post_id'] === (int) $post_id;
-    $is_managed = land76wp_is_managed_service_hub_post($post_id);
-    if (!$is_hub_page && !$is_managed) {
-        return;
-    }
-
-    $page_key = (string) get_post_meta($post_id, '_land76_page_key', true);
-    $is_article = strpos($page_key, '-ARTICLE-') !== false;
-    $current_url = $is_hub_page ? $hub['canonical'] : (string) get_post_meta($post_id, '_land76_canonical', true);
-    $actual_url = trailingslashit((string) get_permalink($post_id));
-    if ($current_url === '' || !hash_equals($current_url, $actual_url)) {
-        return;
-    }
-
-    $title = wp_strip_all_tags(get_the_title($post_id));
-    $description = (string) get_post_meta($post_id, '_aioseo_description', true);
-    if ($description === '') {
-        $description = wp_strip_all_tags(get_the_excerpt($post_id));
-    }
-    $nodes = array();
-
-    if (!$is_article) {
-        $service = array(
-            '@type' => 'Service',
-            '@id' => trailingslashit($current_url) . '#service',
-            'name' => $title,
-            'serviceType' => get_the_title((int) $hub['hub_post_id']),
-            'description' => $description,
-            'provider' => array('@id' => home_url('/#organization')),
-            'url' => $current_url,
-            'category' => get_the_title((int) $hub['hub_post_id']),
-            'inLanguage' => 'ru-RU',
-        );
-        $image_url = $is_hub_page ? '' : (string) get_post_meta($post_id, '_land76_main_image_url', true);
-        if ($image_url !== '') {
-            $service['image'] = array(
-                '@type' => 'ImageObject',
-                'url' => $image_url,
-                'caption' => (string) get_post_meta($post_id, '_land76_main_image_alt', true),
-            );
-        }
-        $nodes[] = array_filter($service);
-    }
-
-    $breadcrumb_items = array(
-        array(
-            '@type' => 'ListItem',
-            'position' => 1,
-            'name' => get_bloginfo('name'),
-            'item' => home_url('/'),
-        ),
-    );
-    if (!$is_hub_page) {
-        $breadcrumb_items[] = array(
-            '@type' => 'ListItem',
-            'position' => count($breadcrumb_items) + 1,
-            'name' => get_the_title((int) $hub['hub_post_id']),
-            'item' => $hub['canonical'],
-        );
-    }
-    $breadcrumb_items[] = array(
-        '@type' => 'ListItem',
-        'position' => count($breadcrumb_items) + 1,
-        'name' => $title,
-        'item' => $current_url,
-    );
-    $nodes[] = array(
-        '@type' => 'BreadcrumbList',
-        '@id' => trailingslashit($current_url) . '#service-hub-breadcrumb',
-        'itemListElement' => $breadcrumb_items,
-    );
-
-    echo "\n<script type=\"application/ld+json\" class=\"land76-service-hub-schema\">";
-    echo wp_json_encode(
-        array('@context' => 'https://schema.org', '@graph' => $nodes),
-        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-    );
-    echo "</script>\n";
-}
-add_action('wp_head', 'land76wp_service_hub_output_registry_schema', 31);

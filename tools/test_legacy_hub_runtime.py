@@ -67,9 +67,15 @@ class LegacyHubRuntimeTests(unittest.TestCase):
 
     def test_managed_child_router_accepts_s1_s15_but_not_s16(self) -> None:
         source = (THEME / "servicepost.php").read_text(encoding="utf-8")
+        registry = (THEME / "inc" / "service-hub-registry.php").read_text(
+            encoding="utf-8"
+        )
 
-        self.assertIn("S(?:[1-9]|1[0-5])-CHILD-", source)
-        self.assertNotIn("S[1-8]-CHILD-", source)
+        self.assertIn("land76wp_claims_managed_service_hub_post", source)
+        self.assertIn("land76wp_managed_page_contract", source)
+        self.assertIn("$land76_managed_contract['role'] !== 'child'", source)
+        self.assertIn("S(?:[1-9]|1[0-5])-CHILD-", registry)
+        self.assertNotIn("S[1-8]-CHILD-", registry)
 
 
 if __name__ == "__main__":

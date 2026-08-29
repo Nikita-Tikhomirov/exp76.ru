@@ -4,6 +4,34 @@ Template Name: Услуга
 */
 ?>
 
+<?php
+$land76_queried_page_id = (int) get_queried_object_id();
+$land76_claims_managed_runtime = $land76_queried_page_id > 0
+  && function_exists('land76wp_claims_managed_service_hub_post')
+  && land76wp_claims_managed_service_hub_post($land76_queried_page_id);
+if ($land76_claims_managed_runtime) {
+  $land76_managed_contract = function_exists('land76wp_managed_page_contract')
+    ? land76wp_managed_page_contract($land76_queried_page_id)
+    : null;
+  if (!is_array($land76_managed_contract) || $land76_managed_contract['role'] !== 'child') {
+    global $wp_query;
+    $wp_query->set_404();
+    status_header(404);
+    nocache_headers();
+    $land76_not_found_template = get_404_template();
+    if ($land76_not_found_template) {
+      include $land76_not_found_template;
+    }
+    return;
+  }
+
+  get_header('seo');
+  require get_template_directory() . '/inc/newservicepost.php';
+  get_footer();
+  return;
+}
+?>
+
 <?php if (function_exists('land76_service_v2_current') && land76_service_v2_current()): ?>
   <?php get_header('seo'); ?>
   <?php require get_template_directory() . '/inc/service-v2-template.php'; ?>
@@ -12,26 +40,6 @@ Template Name: Услуга
   <?php get_footer(); ?>
   <?php return; ?>
 <?php endif; ?>
-
-<?php
-$land76_managed_child_page = false;
-$land76_queried_page_id = (int) get_queried_object_id();
-if ($land76_queried_page_id > 0
-    && function_exists('land76wp_service_hubs_import_owner')
-    && get_post_type($land76_queried_page_id) === 'page'
-    && get_page_template_slug($land76_queried_page_id) === 'servicepost.php') {
-  $land76_import_owner = (string) get_post_meta($land76_queried_page_id, '_land76_import_owner', true);
-  $land76_page_key = (string) get_post_meta($land76_queried_page_id, '_land76_page_key', true);
-  $land76_managed_child_page = hash_equals(land76wp_service_hubs_import_owner(), $land76_import_owner)
-    && preg_match('/^S(?:[1-9]|1[0-5])-CHILD-[A-Z0-9-]+$/D', $land76_page_key) === 1;
-}
-if ($land76_managed_child_page) {
-  get_header('seo');
-  require get_template_directory() . '/inc/newservicepost.php';
-  get_footer();
-  return;
-}
-?>
 
 <?php get_header('service'); ?>
 
@@ -106,6 +114,7 @@ if ($land76_managed_child_page) {
       <section class="action wrapper">
         <div class="formWrapper" id="form" data-aos="fade-up" data-aos-duration="1600">
           <form class="form">
+            <?php land76_render_form_security_fields('legacy-service-cta-v3'); ?>
             <p class="form__title">Остались вопросы?</p><label class="form__label">
               <p>Имя или название организации *</p><input class="form__input" type="text" name="name" placeholder=""
                 required="required" />
@@ -114,7 +123,7 @@ if ($land76_managed_child_page) {
                 required="required" />
             </label>
             <div class="formConsent"><label class="formConsent__container"><input class="formConsent__input"
-                  type="checkbox" required="required" /><span class="formConsent__checkbox"><svg
+                  type="checkbox" name="consent" value="1" required="required" /><span class="formConsent__checkbox"><svg
                     class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px">
                     <path
                       d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265  c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386  c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928  C170.827,363.533,162.165,366.839,153.504,366.839z"

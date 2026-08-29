@@ -43,13 +43,11 @@ SUPPLEMENTAL_PROOF_SERVICES = frozenset({"S9", "S10"})
 BASELINE_SELECTED_IMAGE_URLS = frozenset(
     {
         "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
-        "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki2.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki3.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki4.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki5.webp",
-        "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
@@ -59,9 +57,6 @@ BASELINE_SELECTED_IMAGE_URLS = frozenset(
         "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
         "https://exp76.ru/wp-content/uploads/2018/12/uhod1.webp",
-        "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
-        "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
-        "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
         "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
         "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
         "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
@@ -128,13 +123,11 @@ EXPECTED_FEATURED_MEDIA = {
 EXPECTED_SELECTED_IMAGE_URLS = frozenset(
     {
         "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
-        "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki2.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki3.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki4.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki5.webp",
-        "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
@@ -144,9 +137,6 @@ EXPECTED_SELECTED_IMAGE_URLS = frozenset(
         "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
         "https://exp76.ru/wp-content/uploads/2018/12/uhod1.webp",
-        "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
-        "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
-        "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
         "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
         "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
         "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
@@ -1102,8 +1092,12 @@ def validate_catalog_document(document: Mapping[str, Any]) -> list[str]:
     if not isinstance(selected, list):
         errors.append("selected_image_audits must be a list")
         selected = []
-    if len(selected) != 25:
-        errors.append(f"selected_image_audits must contain 25 URLs, found {len(selected)}")
+    expected_selected_count = len(EXPECTED_SELECTED_IMAGE_URLS)
+    if len(selected) != expected_selected_count:
+        errors.append(
+            "selected_image_audits must contain "
+            f"{expected_selected_count} URLs, found {len(selected)}"
+        )
     selected_urls: set[str] = set()
     selected_by_url: dict[str, Mapping[str, Any]] = {}
     for row in selected:

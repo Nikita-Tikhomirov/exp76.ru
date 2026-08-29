@@ -176,12 +176,26 @@
     "secondary_url": "#consultation"
   },
   "boundary": {
-    "summary": "Включено: только как часть или результат демонтажа, не общий вывоз любого мусора. Исключённые основные интенты: промышленный и высотный снос, исторические объекты, общий вывоз бытового мусора, неподтверждённые разрешения, режим 24/7 и любой масштаб.",
+    "summary": "Услуга включает погрузку и вывоз строительных остатков, образовавшихся в рамках согласованного демонтажа.",
     "excluded_intents": [
       "промышленный и высотный снос",
       "исторические объекты",
       "общий вывоз бытового мусора",
-      "неподтверждённые разрешения, режим 24/7 и любой масштаб"
+      "оформление разрешений, круглосуточные работы и промышленный масштаб"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp",
+      "alt": "Сортировка и погрузка строительного мусора после сноса"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp",
+      "alt": "Сортировка и погрузка строительного мусора после сноса"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp",
+      "alt": "Сортировка и погрузка строительного мусора после сноса"
+    }
   }
 }

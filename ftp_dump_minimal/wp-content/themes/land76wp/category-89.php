@@ -933,9 +933,11 @@ if (empty($cat87_faq_items) || !is_array($cat87_faq_items)) {
       <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
         <h2 class="cta-title"><?php echo esc_html($cat89_region ? 'Рассчитать укладку тротуарной плитки в ' . $cat89_region['locative'] : 'Получите расчет укладки тротуарной плитки за 1 день'); ?></h2>
         <p style="margin-bottom: 30px;">Оставьте заявку и наш специалист свяжется с вами для бесплатной консультации</p>
-        <form class="cta-form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-          <input type="text" placeholder="Ваше имя" required style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
-          <input type="tel" placeholder="Ваш телефон" required style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
+        <form class="cta-form form" id="calc" method="post" action="/server.php" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+          <?php land76_render_form_security_fields('legacy-category-89-cta-v3'); ?>
+          <input type="text" name="name" placeholder="Ваше имя" required style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
+          <input type="tel" name="phone" placeholder="Ваш телефон" required style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
+          <label class="formConsent__text" style="flex-basis: 100%; text-align: center;"><input class="formConsent__input" type="checkbox" name="consent" value="1" required> Я согласен с <a href="<?php echo esc_url(home_url('/privacy/')); ?>">политикой конфиденциальности</a> и <a href="<?php echo esc_url(home_url('/consent/')); ?>">обработкой персональных данных</a></label>
           <button type="submit" class="cta-btn-custom">Получить расчет</button>
         </form>
       </div>

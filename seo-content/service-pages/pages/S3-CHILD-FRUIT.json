@@ -40,7 +40,7 @@
   },
   "audience": {
     "heading": "Когда подходит эта посадочная услуга",
-    "text": "Разбираем задачу именно как «посадка плодовых деревьев» и не переносим на неё обещания соседних услуг направления.",
+    "text": "Плодовый сад планируют для получения урожая и удобного ухода, подбирая совместимые сорта, освещённые места и расстояния с учётом размеров взрослых деревьев.",
     "items": [
       {
         "title": "Закладка плодового сада",
@@ -120,7 +120,7 @@
     ]
   },
   "faq": {
-    "heading": "Вопросы про посадка плодовых деревьев",
+    "heading": "Частые вопросы о посадке плодовых деревьев",
     "items": [
       {
         "question": "Какие плодовые культуры можно посадить?",
@@ -188,5 +188,19 @@
       "регулярный уход за садом",
       "обещание урожайности"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp",
+      "alt": "Посадка молодого плодового дерева на участке"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp",
+      "alt": "Посадка молодого плодового дерева на участке"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp",
+      "alt": "Посадка молодого плодового дерева на участке"
+    }
   }
 }

@@ -176,12 +176,26 @@
     "secondary_url": "#consultation"
   },
   "boundary": {
-    "summary": "Включено: забивка и монтаж железобетонных свай. Исключённые основные интенты: винтовые сваи, буронабивные сваи, неподтверждённые ростверк и геология, раздельная публикация object-variants без SERP overlap-check.",
+    "summary": "Услуга включает забивку и монтаж железобетонных свай по согласованной схеме.",
     "excluded_intents": [
       "винтовые сваи",
       "буронабивные сваи",
-      "неподтверждённые ростверк и геология",
-      "раздельная публикация object-variants без SERP overlap-check"
+      "проектирование ростверка без отдельного задания",
+      "инженерно-геологические изыскания"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp",
+      "alt": "Забивка железобетонной сваи на строительной площадке"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp",
+      "alt": "Забивка железобетонной сваи на строительной площадке"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp",
+      "alt": "Забивка железобетонной сваи на строительной площадке"
+    }
   }
 }

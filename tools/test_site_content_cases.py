@@ -98,13 +98,11 @@ EXPECTED_FEATURED_MEDIA = {
 EXPECTED_SELECTED_IMAGES = frozenset(
     {
         "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
-        "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki2.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki3.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki4.webp",
         "https://exp76.ru/wp-content/uploads/2015/07/podporki5.webp",
-        "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
@@ -114,9 +112,6 @@ EXPECTED_SELECTED_IMAGES = frozenset(
         "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp",
         "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii6.webp",
         "https://exp76.ru/wp-content/uploads/2018/12/uhod1.webp",
-        "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
-        "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
-        "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
         "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
         "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
         "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
@@ -527,7 +522,7 @@ class CaseCatalogTest(unittest.TestCase):
     def test_selected_images_are_internal_verified_and_case_owned_conservatively(self) -> None:
         """Adding an external/unverified asset or assigning illustrations to a case must fail."""
         audits = self.document["selected_image_audits"]
-        self.assertEqual(25, len(audits))
+        self.assertEqual(len(EXPECTED_SELECTED_IMAGES), len(audits))
         self.assertEqual(EXPECTED_SELECTED_IMAGES, {item["url"] for item in audits})
         self.assertTrue(
             all(item["url"].startswith("https://exp76.ru/wp-content/uploads/") for item in audits)
@@ -676,7 +671,10 @@ class CaseCatalogTest(unittest.TestCase):
         self.assertEqual([], validate_catalog_document(document))
         self.assertEqual(35, document["summary"]["catalog_cases"])
         self.assertEqual(107, document["summary"]["canonical_merges"])
-        self.assertEqual(25, document["summary"]["selected_image_urls"])
+        self.assertEqual(
+            len(EXPECTED_SELECTED_IMAGES),
+            document["summary"]["selected_image_urls"],
+        )
         self.assertEqual(5, document["summary"]["seo_ready_cases"])
         self.assertEqual(30, document["summary"]["blocked_cases"])
         self.assertEqual(EXPECTED_PAGE_IDS, {item["url"]: item["page_id"] for item in document["cases"]})
@@ -759,7 +757,10 @@ class CaseCatalogTest(unittest.TestCase):
         audit["http_status"] = 206
         audit["method"] = "GET_RANGE"
         audit["error"] = "HEAD failed: HTTP Error 405"
-        document["summary"]["selected_image_statuses"] = {"200": 24, "206": 1}
+        document["summary"]["selected_image_statuses"] = {
+            "200": len(EXPECTED_SELECTED_IMAGES) - 1,
+            "206": 1,
+        }
         self.assertEqual([], validate_catalog_document(document))
 
     def test_checked_validator_accepts_a_valid_ranged_get_page_audit(self) -> None:

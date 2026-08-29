@@ -973,9 +973,14 @@ if ($cs87_location) {
         <div class="cta-block" data-aos="fade-up">
           <h2>Хотите такой же результат?</h2>
           <p>Оставьте заявку — приедем, осмотрим объект и подготовим смету за 1 день.</p>
-          <form class="cta-form" id="cta-case">
+          <form class="cta-form form" id="cta-case" method="post" action="/server.php">
+            <?php land76_render_form_security_fields('legacy-case-cta-v3'); ?>
             <input type="text" name="name" placeholder="Ваше имя" required />
             <input type="tel" name="phone" placeholder="Ваш телефон" required />
+            <label class="formConsent__text" style="flex-basis: 100%; text-align: center;">
+              <input class="formConsent__input" type="checkbox" name="consent" value="1" required />
+              Я согласен с <a href="<?php echo esc_url(home_url('/privacy/')); ?>">политикой конфиденциальности</a> и <a href="<?php echo esc_url(home_url('/consent/')); ?>">обработкой персональных данных</a>
+            </label>
             <button type="submit" class="btn--primary-custom">Получить расчёт</button>
           </form>
         </div>

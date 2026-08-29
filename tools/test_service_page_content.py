@@ -6,6 +6,7 @@ import copy
 import csv
 import hashlib
 import json
+import re
 import tempfile
 import unittest
 from contextlib import redirect_stdout
@@ -35,6 +36,12 @@ from tools.service_page_content import (
 
 ROOT = Path(__file__).resolve().parents[1]
 ARCHITECTURE_PATH = DEFAULT_ARCHITECTURE_PATH
+PRESENTATION_IMAGE_MANIFEST = (
+    ROOT / "seo-content" / "service-pages" / "presentation-images-manifest.json"
+)
+RELEASE_PAYLOAD = (
+    ROOT / "seo-content" / "service-pages" / "import" / "service-pages-import.json"
+)
 
 
 def architecture_row(*, reuse: bool = False) -> dict[str, object]:
@@ -69,7 +76,7 @@ def architecture_row(*, reuse: bool = False) -> dict[str, object]:
             "semantic_evidence": "Q000272",
             "boundary": (
                 "Сезонный монтаж праздничной подсветки; постоянное фасадное "
-                "освещение принадлежит S7-ARCHITECTURAL."
+                "освещение рассчитывается отдельно."
             ),
             "publication_status": "ready",
         }
@@ -90,7 +97,10 @@ def architecture_row(*, reuse: bool = False) -> dict[str, object]:
         "excluded_primary_intents": "полный рабочий проект|кадастровый план",
         "business_evidence": "business_source:wp-rest/pages/1",
         "semantic_evidence": "Q000002",
-        "boundary": "Эскиз, зонирование и концепция; полный комплект проекта остаётся хабу.",
+        "boundary": (
+            "Услуга включает эскиз, зонирование и общую концепцию; полный комплект "
+            "рабочих материалов рассчитывается отдельно."
+        ),
         "publication_status": "ready",
     }
 
@@ -259,6 +269,74 @@ def valid_page(*, reuse: bool = False) -> dict[str, object]:
 
 
 class ServicePageValidationTests(unittest.TestCase):
+    def test_presentation_images_accept_three_separate_non_proof_roles(self) -> None:
+        row = architecture_row()
+        page = valid_page()
+        page["presentation_images"] = {
+            "hero": {
+                "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-sketch-hero.webp",
+                "alt": "Ландшафтный архитектор обсуждает эскиз участка",
+            },
+            "context": {
+                "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-sketch-context.webp",
+                "alt": "Рабочий стол с эскизом благоустройства участка",
+            },
+            "card": {
+                "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-sketch-card.webp",
+                "alt": "Эскизный проект загородного участка",
+            },
+        }
+
+        self.assertEqual(
+            [],
+            validate_page(page, row, evidence_entry(str(row["destination_id"]))),
+        )
+
+    def test_presentation_images_fail_closed_for_incomplete_or_unsafe_roles(self) -> None:
+        row = architecture_row()
+        evidence = evidence_entry(str(row["destination_id"]))
+        base = valid_page()
+        base["presentation_images"] = {
+            "hero": {
+                "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-sketch-hero.webp",
+                "alt": "Ландшафтный архитектор обсуждает эскиз участка",
+            },
+            "context": {
+                "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-sketch-context.webp",
+                "alt": "Рабочий стол с эскизом благоустройства участка",
+            },
+            "card": {
+                "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-sketch-card.webp",
+                "alt": "Эскизный проект загородного участка",
+            },
+        }
+        mutations = {
+            "missing role": (
+                lambda page: page["presentation_images"].pop("card"),
+                "presentation_images.card is required",
+            ),
+            "external URL": (
+                lambda page: page["presentation_images"]["hero"].update(
+                    url="https://example.com/borrowed.webp"
+                ),
+                "presentation_images.hero.url must be a generated context URL",
+            ),
+            "empty alt": (
+                lambda page: page["presentation_images"]["context"].update(alt=""),
+                "presentation_images.context.alt must contain at least 12 characters",
+            ),
+            "unexpected field": (
+                lambda page: page["presentation_images"]["card"].update(caption="extra"),
+                "presentation_images.card.caption is not allowed",
+            ),
+        }
+
+        for label, (mutate, expected) in mutations.items():
+            with self.subTest(label=label):
+                page = copy.deepcopy(base)
+                mutate(page)
+                self.assertIn(expected, validate_page(page, row, evidence))
+
     def test_valid_page_is_bound_to_architecture_and_evidence(self) -> None:
         row = architecture_row()
         page = valid_page()
@@ -365,6 +443,48 @@ class ServicePageValidationTests(unittest.TestCase):
                     any(expected_error in error for error in errors),
                     errors,
                 )
+
+    def test_internal_seo_language_is_rejected_from_customer_facing_copy(self) -> None:
+        row = architecture_row()
+        evidence = evidence_entry(str(row["destination_id"]))
+        mutations = (
+            (
+                "audience.text contains internal SEO language",
+                lambda page: page["audience"].update(
+                    text=(
+                        "Разбираем задачу отдельно и не переносим на неё обещания "
+                        "соседних услуг направления."
+                    )
+                ),
+            ),
+            (
+                "faq.heading contains internal SEO language",
+                lambda page: page["faq"].update(
+                    heading="Вопросы про посадка растений на участке"
+                ),
+            ),
+            (
+                "boundary.summary contains internal SEO language",
+                lambda page: page["boundary"].update(
+                    summary="Земляные работы принадлежат S5, а этот интент остаётся здесь."
+                ),
+            ),
+            (
+                "faq.items[0].answer contains internal SEO language",
+                lambda page: page["faq"]["items"][0].update(
+                    answer=(
+                        "Нет, эта задача относится к другому кластеру и отдельному "
+                        "поисковому интенту."
+                    )
+                ),
+            ),
+        )
+        for expected_error, mutate in mutations:
+            broken = valid_page()
+            mutate(broken)
+            with self.subTest(rule=expected_error):
+                errors = validate_page(broken, row, evidence)
+                self.assertIn(expected_error, errors)
 
     def test_non_case_media_must_be_described_honestly(self) -> None:
         row = architecture_row()
@@ -548,6 +668,146 @@ class DefaultServiceArchitectureTests(unittest.TestCase):
 
 
 class ServicePageRenderingTests(unittest.TestCase):
+    def test_import_item_keeps_proof_main_image_and_uses_context_asset_for_acf(self) -> None:
+        row = architecture_row()
+        page = valid_page()
+        page["presentation_images"] = {
+            "hero": {
+                "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-sketch-hero.webp",
+                "alt": "Ландшафтный архитектор обсуждает эскиз участка",
+            },
+            "context": {
+                "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-sketch-context.webp",
+                "alt": "Рабочий стол с эскизом благоустройства участка",
+            },
+            "card": {
+                "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-sketch-card.webp",
+                "alt": "Эскизный проект загородного участка",
+            },
+        }
+        evidence = evidence_entry(str(row["destination_id"]))
+
+        item = build_import_item(page, row, evidence)
+
+        self.assertEqual(
+            {
+                "url": "https://exp76.ru/wp-content/uploads/2026/08/901.webp",
+                "alt": page["proof"]["main_image_alt"],
+            },
+            item["main_image"],
+        )
+        self.assertEqual(page["presentation_images"], item["presentation_images"])
+        self.assertEqual(
+            page["presentation_images"]["context"]["url"],
+            item["acf"]["ns87_problem_items"][0]["image"],
+        )
+
+    def test_context_photo_manifest_has_21_ready_verified_theme_assets(self) -> None:
+        manifest = json.loads(PRESENTATION_IMAGE_MANIFEST.read_text(encoding="utf-8"))
+        assets = manifest["assets"]
+
+        self.assertEqual(1, manifest["schema_version"])
+        self.assertEqual("ready", manifest["release_status"])
+        self.assertEqual(21, manifest["asset_count"])
+        self.assertEqual(21, len(assets))
+        self.assertEqual(21, len({asset["asset_id"] for asset in assets}))
+        self.assertTrue(all(asset["asset_kind"] == "context_photo" for asset in assets))
+        self.assertTrue(all("attachment_id" not in asset["output"] for asset in assets))
+        generated_prefix = (
+            "https://exp76.ru/wp-content/themes/land76wp/generated/context/"
+        )
+        for asset in assets:
+            output = asset["output"]
+            filename = output["filename"]
+            self.assertRegex(filename, r"^context-photo-[a-z0-9]+(?:-[a-z0-9]+)*\.webp$")
+            self.assertEqual("ready", output["status"])
+            self.assertEqual(generated_prefix + filename, output["url"])
+            local_path = ROOT / output["local_path"]
+            self.assertTrue(local_path.is_file(), local_path)
+            self.assertEqual(output["bytes"], local_path.stat().st_size)
+            self.assertRegex(output["sha256"], r"^[0-9a-f]{64}$")
+            self.assertEqual(1600, output["width"])
+            self.assertEqual(1000, output["height"])
+        targets = [target for asset in assets for target in asset["targets"]]
+        self.assertEqual(163, len(targets))
+        self.assertTrue(all(not target["field"].startswith("proof.") for target in targets))
+        evidence = json.loads(DEFAULT_EVIDENCE_PATH.read_text(encoding="utf-8"))
+        verified_case_urls = {
+            media["url"]
+            for service in evidence["services"]
+            for media in service["media"]
+            if media.get("asset_kind") == "case_photo"
+        }
+        for hub_path in (ROOT / "seo-content" / "service-hubs" / "hubs").glob("S*.json"):
+            hub = json.loads(hub_path.read_text(encoding="utf-8"))
+            verified_case_urls.update(
+                case["image"]["url"] for case in hub["proof"]["cases"]
+            )
+        expected_child_roles: dict[str, dict[str, dict[str, str]]] = {}
+        for asset in assets:
+            expected_image = {
+                "url": asset["output"]["url"],
+                "alt": asset["alt"],
+            }
+            for target in asset["targets"]:
+                if target["page_key"].endswith("-HUB"):
+                    continue
+                role_match = re.fullmatch(
+                    r"presentation_images\.(hero|context|card)",
+                    target["field"],
+                )
+                self.assertIsNotNone(role_match, target)
+                assert role_match is not None
+                expected_child_roles.setdefault(target["page_key"], {})[
+                    role_match.group(1)
+                ] = expected_image
+        self.assertEqual(32, len(expected_child_roles))
+        for page_key, expected_roles in expected_child_roles.items():
+            page = json.loads(
+                (DEFAULT_PAGES_DIR / f"{page_key}.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(expected_roles, page["presentation_images"], page_key)
+
+        for target in targets:
+            if not target["page_key"].endswith("-HUB"):
+                continue
+            service_id = target["page_key"].removesuffix("-HUB")
+            hub = json.loads(
+                (
+                    ROOT / "seo-content" / "service-hubs" / "hubs" / f"{service_id}.json"
+                ).read_text(encoding="utf-8")
+            )
+            if target["field"] == "hero.image":
+                current_image = hub["hero"]["image"]
+            else:
+                match = re.fullmatch(
+                    r"(scope|services|articles)\.items\[(\d+)\]\.image",
+                    target["field"],
+                )
+                self.assertIsNotNone(match, target)
+                assert match is not None
+                current_image = hub[match.group(1)]["items"][int(match.group(2))]["image"]
+            asset = next(
+                item for item in assets if target in item["targets"]
+            )
+            self.assertEqual(asset["output"]["url"], current_image["url"], target)
+            self.assertEqual(asset["alt"], current_image["alt"], target)
+            self.assertEqual("context_photo", current_image.get("asset_kind"), target)
+            self.assertTrue(
+                current_image.get("caption", "").startswith("Контекстная иллюстрация:"),
+                target,
+            )
+            self.assertNotIn(current_image["url"], verified_case_urls, target)
+        for role in ("hero", "context", "card"):
+            self.assertIn(
+                {"page_key": "S6-CHILD-STONE", "field": f"presentation_images.{role}"},
+                next(
+                    asset["targets"]
+                    for asset in assets
+                    if asset["asset_id"] == "stone-retaining-wall"
+                ),
+            )
+
     def test_import_item_uses_standard_schema_and_php_compatible_checksum(self) -> None:
         row = architecture_row()
         page = valid_page()
@@ -578,6 +838,104 @@ class ServicePageRenderingTests(unittest.TestCase):
             sort_keys=True,
         ).encode("utf-8")
         self.assertEqual(hashlib.sha256(encoded).hexdigest(), item["checksum"])
+
+    def test_managed_payload_keeps_audit_caption_private_and_uses_factor_rows(self) -> None:
+        row = architecture_row()
+        page = valid_page()
+        page["proof"]["caption"] = (
+            "WP 8620 подтверждает источник; объект не приписан "
+            "неподтверждённому этапу и публично не заявляется."
+        )
+        evidence = evidence_entry(str(row["destination_id"]))
+
+        item = build_import_item(page, row, evidence)
+
+        self.assertIn("WP 8620", page["proof"]["caption"])
+        self.assertNotIn("service-media-caption", item["post_content"])
+        for forbidden in (
+            "WP 8620",
+            "не приписан",
+            "не заявляется",
+            "не подтверждается",
+            "Исключённые основные интенты",
+        ):
+            self.assertNotIn(forbidden, item["post_content"])
+        self.assertIn("Не входит в услугу", item["post_content"])
+        self.assertEqual(
+            {
+                "service": page["pricing"]["factors"][0]["title"],
+                "price": "",
+                "term": page["pricing"]["factors"][0]["text"],
+            },
+            item["acf"]["ns87_price_rows"][0],
+        )
+        self.assertNotIn(
+            "по расчёту",
+            json.dumps(item["acf"]["ns87_price_rows"], ensure_ascii=False).casefold(),
+        )
+
+    def test_checked_in_managed_release_contains_only_customer_facing_copy(self) -> None:
+        pages = {
+            payload["destination_id"]: payload
+            for payload in (
+                json.loads(path.read_text(encoding="utf-8"))
+                for path in DEFAULT_PAGES_DIR.glob("*.json")
+            )
+        }
+        payload = json.loads(RELEASE_PAYLOAD.read_text(encoding="utf-8"))
+        children = {
+            item["page_key"]: item
+            for item in payload["items"]
+            if item["role"] == "child_service"
+        }
+        self.assertEqual(65, len(pages))
+        self.assertEqual(set(pages), set(children))
+
+        internal_pattern = re.compile(
+            r"(?:\bS\d+(?:-[A-Z0-9-]+)?\b|\b(?:SEO|SERP|overlap|интент|кластер)\b|"
+            r"не переносим|обещания соседних|принадлежит|защищ[её]нн\w* владельц\w*|"
+            r"неподтвержд[её]нн\w*|раздельн\w+ публикац\w+|\bхаб\w*\b|"
+            r"URL-владел\w*|утвержд[её]нн\w* архитектур\w*|"
+            r"(?:действующ\w*|стар\w*) страниц\w*|в этом контенте|"
+            r"\bCMS\b|\bWP\s+\d+\b|опубликованн\w+ (?:текст\w*|материал\w*)|"
+            r"не подтвержда\w*|не заявля\w*)",
+            re.IGNORECASE,
+        )
+        forensic_pattern = re.compile(
+            r"(?:service-media-caption|WP\s+\d+|не приписан|не заявляется|"
+            r"не подтверждается|опубликованные материалы подтверждают|"
+            r"фото со страницы услуги)",
+            re.IGNORECASE,
+        )
+        for page_key, page in pages.items():
+            with self.subTest(page_key=page_key):
+                self.assertNotIn("не переносим", page["audience"]["text"].casefold())
+                self.assertNotIn("обещания соседних", page["audience"]["text"].casefold())
+                self.assertNotIn("вопросы про", page["faq"]["heading"].casefold())
+                public_boundary = json.dumps(page["boundary"], ensure_ascii=False)
+                public_faq = json.dumps(page["faq"], ensure_ascii=False)
+                self.assertIsNone(internal_pattern.search(public_boundary), public_boundary)
+                self.assertIsNone(internal_pattern.search(public_faq), public_faq)
+
+                item = children[page_key]
+                acf = item["acf"]
+                self.assertEqual(page["audience"]["text"], acf["ns87_problem_text"])
+                self.assertEqual(page["faq"]["heading"], acf["ns87_faq_title"])
+                self.assertIsNone(forensic_pattern.search(item["post_content"]))
+                self.assertIsNone(internal_pattern.search(item["post_content"]))
+                public_acf = json.dumps(acf, ensure_ascii=False)
+                self.assertIsNone(internal_pattern.search(public_acf), public_acf)
+                price_rows = acf["ns87_price_rows"]
+                self.assertGreaterEqual(len(price_rows), 3)
+                self.assertEqual(len(price_rows), len({row["service"] for row in price_rows}))
+                for row in price_rows:
+                    self.assertEqual("", row["price"])
+                    self.assertGreaterEqual(len(row["service"].strip()), 3)
+                    self.assertGreaterEqual(len(row["term"].strip()), 20)
+                self.assertNotIn(
+                    "по расчёту",
+                    json.dumps(acf, ensure_ascii=False).casefold(),
+                )
 
     def test_import_payload_wrapper_matches_release_schema(self) -> None:
         row = architecture_row()
@@ -681,17 +1039,17 @@ class ServicePageRenderingTests(unittest.TestCase):
                 slug=row["slug"],
                 canonical=row["target_url"],
                 post_title=row["title"],
-                h1=f"{row['title']} — страница {destination_id}",
+                h1=f"{row['title']} — вариант {index}",
                 lead=(
-                    f"{row['title']}: уникальное описание задачи {destination_id} для "
+                    f"{row['title']}: уникальное описание задачи, вариант {index}, для "
                     "владельцев участков в Ярославле и Ярославской области."
                 ),
             )
             page["seo"] = {
-                "title": f"{row['title']} в Ярославле — {destination_id}",
+                "title": f"{row['title']} в Ярославле — вариант {index}",
                 "description": (
                     f"{row['title']} для участка: состав услуги, порядок работ и факторы "
-                    f"сметы. Уникальная страница {destination_id}."
+                    f"сметы. Уникальный вариант {index}."
                 ),
             }
             page["deployment"] = {
@@ -714,12 +1072,11 @@ class ServicePageRenderingTests(unittest.TestCase):
                 ),
             }
             page["boundary"] = {
-                "summary": row["boundary"],
-                "excluded_intents": (
-                    row["excluded_primary_intents"].split("|")
-                    if row["excluded_primary_intents"]
-                    else ["работы вне зафиксированной границы услуги"]
+                "summary": (
+                    "Услуга имеет самостоятельный состав работ и понятный результат "
+                    "для заказчика."
                 ),
+                "excluded_intents": ["работы вне согласованного состава услуги"],
             }
             siblings = [
                 candidate

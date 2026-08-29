@@ -2410,3 +2410,17 @@ body {
     border-bottom: 0;
   }
 }
+.land76-form-status {
+  flex-basis: 100%;
+  margin: 14px 0 0;
+  text-align: center;
+  font-weight: 600;
+}
+
+.land76-form-status--success {
+  color: #0a7a18;
+}
+
+.land76-form-status--error {
+  color: #b22917;
+}

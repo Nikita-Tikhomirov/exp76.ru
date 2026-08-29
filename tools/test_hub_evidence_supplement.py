@@ -12,6 +12,9 @@ from tools.site_content.contracts import load_case_catalog
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "seo-content" / "service-hubs" / "case-catalog.json"
 HUBS = ROOT / "seo-content" / "service-hubs" / "hubs"
+PRESENTATION_MANIFEST = (
+    ROOT / "seo-content" / "service-pages" / "presentation-images-manifest.json"
+)
 
 
 def _images(value: object) -> list[dict[str, object]]:
@@ -56,6 +59,19 @@ class HubEvidenceSupplementTests(unittest.TestCase):
 
     def test_every_noncase_s1_s15_hub_image_is_verified_for_its_service(self) -> None:
         catalog = load_case_catalog(CATALOG)
+        presentation = json.loads(PRESENTATION_MANIFEST.read_text(encoding="utf-8"))
+        generated_by_service: dict[str, set[str]] = {}
+        for asset in presentation["assets"]:
+            output = asset.get("output", {})
+            url = str(output.get("url", ""))
+            if output.get("status") != "ready" or not url:
+                continue
+            for target in asset.get("targets", []):
+                page_key = str(target.get("page_key", ""))
+                if page_key.endswith("-HUB"):
+                    service_id = page_key.removesuffix("-HUB")
+                    generated_by_service.setdefault(service_id, set()).add(url)
+
         for number in range(1, 16):
             service_id = f"S{number}"
             payload = json.loads(
@@ -67,10 +83,11 @@ class HubEvidenceSupplementTests(unittest.TestCase):
                 if not isinstance(image.get("case_id"), int)
             }
             self.assertTrue(noncase_urls, service_id)
+            verified_urls = set(
+                catalog.verified_image_urls_by_service.get(service_id, frozenset())
+            ) | generated_by_service.get(service_id, set())
             self.assertTrue(
-                noncase_urls.issubset(
-                    catalog.verified_image_urls_by_service.get(service_id, frozenset())
-                ),
+                noncase_urls.issubset(verified_urls),
                 service_id,
             )
 

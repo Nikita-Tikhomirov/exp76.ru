@@ -491,6 +491,25 @@ class ContentContractTest(unittest.TestCase):
         self.assertIn("hub schema_version must be 2", errors)
         self.assertIn("hub must preserve v1 section pricing", errors)
 
+    def test_hub_accepts_shipped_context_photo_outside_proof_only(self) -> None:
+        hub = hub_page_fixture()
+        context_image = {
+            "url": (
+                "https://exp76.ru/wp-content/themes/land76wp/generated/context/"
+                "context-photo-landscape-design-worktable.webp"
+            ),
+            "alt": "Разработка ландшафтного проекта загородного участка",
+            "asset_kind": "context_photo",
+            "caption": "Контекстная иллюстрация: разработка ландшафтного проекта",
+        }
+        hub["hero"]["image"] = context_image
+
+        self.assertEqual([], validate_content_page_dict(hub, ARCHITECTURE, CASES))
+
+        hub["proof"]["cases"][0]["image"] = context_image
+        errors = validate_content_page_dict(hub, ARCHITECTURE, CASES)
+        self.assertIn("proof.cases[0].image cannot use a context photo", errors)
+
     def test_draft_hub_requires_explicit_gaps_and_never_accepts_fallback_proof(self) -> None:
         architecture = dict(ARCHITECTURE)
         architecture["S1-ARTICLE"] = replace(
@@ -499,11 +518,6 @@ class ContentContractTest(unittest.TestCase):
         hub = hub_page_fixture()
         hub["proof"]["cases"] = []
         hub["evidence_gaps"] = [
-            {
-                "kind": "missing_verified_case",
-                "page_key": "S1-HUB",
-                "status": "missing",
-            },
             {
                 "kind": "nonready_destination",
                 "page_key": "S1-ARTICLE",
@@ -519,7 +533,7 @@ class ContentContractTest(unittest.TestCase):
         self.assertIn("hub proof must not synthesize hub_case_fallback", errors)
         self.assertIn("evidence_gaps is missing unresolved content evidence", errors)
 
-    def test_production_ready_hub_rejects_empty_cases_and_nonready_destinations(self) -> None:
+    def test_production_ready_hub_allows_empty_cases_but_rejects_nonready_destinations(self) -> None:
         architecture = dict(ARCHITECTURE)
         architecture["S1-CHILD"] = replace(
             architecture["S1-CHILD"], publication_status="blocked_facts"
@@ -527,11 +541,6 @@ class ContentContractTest(unittest.TestCase):
         hub = hub_page_fixture()
         hub["proof"]["cases"] = []
         hub["evidence_gaps"] = [
-            {
-                "kind": "missing_verified_case",
-                "page_key": "S1-HUB",
-                "status": "missing",
-            },
             {
                 "kind": "nonready_destination",
                 "page_key": "S1-CHILD",
@@ -546,7 +555,7 @@ class ContentContractTest(unittest.TestCase):
             production_ready=True,
         )
 
-        self.assertIn("production-ready hub requires a verified case", errors)
+        self.assertNotIn("production-ready hub requires a verified case", errors)
         self.assertIn("production-ready hub contains unresolved evidence_gaps", errors)
         self.assertIn("production-ready hub links a nonready destination", errors)
 
@@ -1083,15 +1092,18 @@ class ReleaseManifestTest(unittest.TestCase):
     def setUp(self) -> None:
         self.architecture = load_page_architecture(PAGE_ARCHITECTURE_PATH)
 
-    def test_committed_draft_manifest_matches_architecture_bidirectionally(self) -> None:
+    def test_committed_ready_manifest_contains_only_publishable_pages(self) -> None:
         manifest = load_release_manifest(RELEASE_MANIFEST_PATH)
 
-        self.assertEqual("draft", manifest["release_status"])
-        self.assertEqual(103, len(manifest["managed_pages"]))
+        self.assertEqual("ready", manifest["release_status"])
+        self.assertEqual(91, len(manifest["managed_pages"]))
         self.assertEqual(9, len(manifest["preserved_pages"]))
         self.assertEqual(
-            {"validated": 91, "content_pending": 12},
+            {"validated": 91},
             dict(Counter(row["content_status"] for row in manifest["managed_pages"])),
+        )
+        self.assertTrue(
+            all(row["architecture_status"] == "ready" for row in manifest["managed_pages"])
         )
         self.assertEqual([], validate_release_manifest(manifest, self.architecture))
 
@@ -1117,12 +1129,29 @@ class ReleaseManifestTest(unittest.TestCase):
 
     def test_ready_manifest_rejects_pending_content_and_nonready_architecture(self) -> None:
         manifest = load_release_manifest(RELEASE_MANIFEST_PATH)
-        manifest["release_status"] = "ready"
+        manifest["managed_pages"][0]["content_status"] = "content_pending"
+        backlog = next(
+            destination
+            for destination in self.architecture.values()
+            if destination.page_role == "article"
+            and destination.publication_status == "backlog"
+        )
+        manifest["managed_pages"].append(
+            {
+                "page_key": backlog.destination_id,
+                "service_id": backlog.service_id,
+                "page_role": backlog.page_role,
+                "parent_page_key": backlog.parent_destination_id,
+                "canonical": backlog.canonical_url,
+                "architecture_status": backlog.publication_status,
+                "content_status": "content_pending",
+            }
+        )
 
         errors = validate_release_manifest(manifest, self.architecture)
 
         self.assertIn("ready release contains content_pending pages", errors)
-        self.assertIn("ready release contains blocked or backlog architecture pages", errors)
+        self.assertIn("release manifest must omit nonready architecture pages", errors)
 
 
 if __name__ == "__main__":

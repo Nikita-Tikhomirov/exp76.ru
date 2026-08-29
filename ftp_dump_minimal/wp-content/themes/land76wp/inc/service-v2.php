@@ -34,6 +34,22 @@ function land76_service_v2_content_directory() {
   return get_template_directory() . '/content/service-v2';
 }
 
+function land76_service_v2_active_release_option_name() {
+  return 'land76_service_hubs_active_release_id';
+}
+
+/** Activate schema-v2 hubs only after the importer has verified the same release. */
+function land76_service_v2_release_is_active($release_id) {
+  if (!is_string($release_id) || $release_id === '') {
+    return false;
+  }
+
+  $active_release_id = get_option(land76_service_v2_active_release_option_name(), '');
+  return is_string($active_release_id)
+    && $active_release_id !== ''
+    && hash_equals($release_id, $active_release_id);
+}
+
 function land76_service_v2_load($page_id) {
   static $cache = array();
 
@@ -115,11 +131,14 @@ function land76_service_v2_load($page_id) {
       $payload['service_id'],
       $payload['page_key'],
       $payload['page_type'],
+      $payload['release_id'],
       $payload['release_status'],
       $payload['rendered_sha256']
     )
       && $payload['page_key'] === $expected_service_id . '-HUB'
       && $payload['page_type'] === 'hub'
+      && is_string($payload['release_id'])
+      && land76_service_v2_release_is_active($payload['release_id'])
       && $payload['release_status'] === 'ready'
       && is_string($payload['rendered_sha256'])
       && preg_match('/\A[0-9a-f]{64}\z/D', $payload['rendered_sha256']) === 1;

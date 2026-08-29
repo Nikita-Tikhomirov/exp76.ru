@@ -40,7 +40,7 @@
   },
   "audience": {
     "heading": "Когда подходит такое устройство въезда",
-    "text": "Разбираем задачу именно как «щебёночный въезд на участок» и не переносим на неё обещания соседних услуг направления.",
+    "text": "Щебёночный въезд подходит как практичное покрытие при правильно подготовленном основании, сохранённом водоотводе и согласованной нагрузке.",
     "items": [
       {
         "title": "Основной въезд к дому",
@@ -120,7 +120,7 @@
     ]
   },
   "faq": {
-    "heading": "Вопросы про щебёночный въезд на участок",
+    "heading": "Частые вопросы о щебёночном въезде на участок",
     "items": [
       {
         "question": "Какой щебень используется для въезда?",
@@ -183,5 +183,19 @@
       "парковочная площадка",
       "гарантия нагрузки без расчёта"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
+      "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
+      "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
+      "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+    }
   }
 }

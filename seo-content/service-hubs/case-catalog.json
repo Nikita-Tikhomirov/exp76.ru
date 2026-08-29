@@ -65,12 +65,12 @@
       "S8"
     ],
     "unmapped_cases": 30,
-    "selected_image_urls": 25,
+    "selected_image_urls": 20,
     "selected_image_statuses": {
-      "200": 25
+      "200": 20
     },
     "selected_image_content_types": {
-      "image/webp": 25
+      "image/webp": 20
     },
     "case_owned_image_urls": 5,
     "seo_ready_cases": 5,
@@ -86,22 +86,8 @@
       "final_url": "https://exp76.ru/wp-content/uploads/2015/07/lanshaftnoe-proektirovanie.webp",
       "error": "",
       "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#scope.items[3].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#scope.items[4].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#scope.items[4].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#scope.items[4].image.url"
-      ]
-    },
-    {
-      "url": "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
-      "http_status": 200,
-      "content_type": "image/webp",
-      "checked_date": "2026-08-28",
-      "method": "HEAD",
-      "final_url": "https://exp76.ru/wp-content/uploads/2015/07/planirovka-territorii.webp",
-      "error": "",
-      "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#scope.items[3].image.url"
       ]
     },
     {
@@ -113,7 +99,6 @@
       "final_url": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp",
       "error": "",
       "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/podpornye-stenki.json#scope.items[0].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/podpornye-stenki.json#services.items[2].image.url"
       ]
     },
@@ -166,19 +151,6 @@
       ]
     },
     {
-      "url": "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
-      "http_status": 200,
-      "content_type": "image/webp",
-      "checked_date": "2026-08-28",
-      "method": "HEAD",
-      "final_url": "https://exp76.ru/wp-content/uploads/2015/07/Подпорные-стенки.webp",
-      "error": "",
-      "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/podpornye-stenki.json#articles.items[0].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/podpornye-stenki.json#hero.image.url"
-      ]
-    },
-    {
       "url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
       "http_status": 200,
       "content_type": "image/webp",
@@ -187,8 +159,7 @@
       "final_url": "https://exp76.ru/wp-content/uploads/2017/01/gazoni-rulonniy-posevnoy.webp",
       "error": "",
       "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#scope.items[2].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#scope.items[1].image.url"
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#scope.items[2].image.url"
       ]
     },
     {
@@ -217,7 +188,6 @@
       "final_url": "https://exp76.ru/wp-content/uploads/2017/01/naruzhnoe-osveshhenie_752.webp",
       "error": "",
       "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#articles.items[0].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#hero.image.url"
       ]
     },
@@ -230,8 +200,7 @@
       "final_url": "https://exp76.ru/wp-content/uploads/2017/01/osvescheniezdaniya.webp",
       "error": "",
       "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#scope.items[1].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#services.items[0].image.url"
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ulichnoe-osveshhenie-uchastka.json#scope.items[1].image.url"
       ]
     },
     {
@@ -244,14 +213,7 @@
       "error": "",
       "source_refs": [
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#scope.items[2].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#scope.items[0].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#scope.items[2].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#scope.items[4].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#services.items[0].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#services.items[3].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#services.items[4].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#scope.items[2].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#services.items[3].image.url"
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#scope.items[4].image.url"
       ]
     },
     {
@@ -263,11 +225,7 @@
       "final_url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
       "error": "",
       "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#services.items[4].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#articles.items[0].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#articles.items[1].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#hero.image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#services.items[1].image.url"
+        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/planirovka-territorii.json#hero.image.url"
       ]
     },
     {
@@ -304,54 +262,7 @@
       "final_url": "https://exp76.ru/wp-content/uploads/2018/12/uhod1.webp",
       "error": "",
       "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#articles.items[0].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#articles.items[1].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#hero.image.url"
-      ]
-    },
-    {
-      "url": "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
-      "http_status": 200,
-      "content_type": "image/webp",
-      "checked_date": "2026-08-28",
-      "method": "HEAD",
-      "final_url": "https://exp76.ru/wp-content/uploads/2018/12/uhod2.webp",
-      "error": "",
-      "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/ukhod-za-sadom.json#scope.items[0].image.url"
-      ]
-    },
-    {
-      "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
-      "http_status": 200,
-      "content_type": "image/webp",
-      "checked_date": "2026-08-28",
-      "method": "HEAD",
-      "final_url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd.webp",
-      "error": "",
-      "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#scope.items[0].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#scope.items[2].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#scope.items[4].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#services.items[0].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#services.items[2].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#services.items[3].image.url"
-      ]
-    },
-    {
-      "url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
-      "http_status": 200,
-      "content_type": "image/webp",
-      "checked_date": "2026-08-28",
-      "method": "HEAD",
-      "final_url": "https://exp76.ru/wp-content/uploads/2018/12/vjezd2.webp",
-      "error": "",
-      "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#articles.items[0].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#hero.image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#scope.items[1].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#scope.items[3].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch.json#services.items[1].image.url"
       ]
     },
     {
@@ -391,14 +302,11 @@
       "final_url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
       "error": "",
       "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#articles.items[0].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#articles.items[1].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#hero.image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#proof.cases[0].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#scope.items[0].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#scope.items[3].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/gazon-posevnojj-i-gazon-rulonnyjj.json#services.items[1].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#articles.items[0].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#hero.image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#proof.cases[0].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/posadka-derevev-i-kustarnikov.json#scope.items[1].image.url",
@@ -429,8 +337,6 @@
       "final_url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
       "error": "",
       "source_refs": [
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#articles.items[0].image.url",
-        "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#articles.items[1].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#hero.image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#proof.cases[0].image.url",
         "ftp_dump_minimal/wp-content/themes/land76wp/content/service-v2/landshaftnoe-proektirovanie.json#scope.items[0].image.url",

@@ -167,6 +167,13 @@ function style_theme() {
   $mobile_card_slider_script_path = get_template_directory() . '/js/mobile-card-slider.js';
   $mobile_card_slider_script_version = file_exists($mobile_card_slider_script_path) ? filemtime($mobile_card_slider_script_path) : null;
   wp_enqueue_script('land76-mobile-card-slider', get_template_directory_uri() . '/js/mobile-card-slider.js', array(), $mobile_card_slider_script_version, true);
+  $form_submit_script_path = get_template_directory() . '/js/form-submit.js';
+  $form_submit_script_version = file_exists($form_submit_script_path) ? filemtime($form_submit_script_path) : null;
+  wp_enqueue_script('land76-form-submit', get_template_directory_uri() . '/js/form-submit.js', array(), $form_submit_script_version, false);
+  wp_localize_script('land76-form-submit', 'land76FormConfig', array(
+    'endpoint' => home_url('/server.php'),
+    'nonce' => wp_create_nonce('land76_contact_form'),
+  ));
   if (is_singular('post') && has_category(72, get_queried_object_id())) {
     wp_enqueue_style('land76-services', get_template_directory_uri() . '/css/services.css', array(), null);
     wp_enqueue_style('land76-seoblog', get_template_directory_uri() . '/css/seoblog.css', array('land76-services'), null);
@@ -263,9 +270,17 @@ function land76_get_card_image_alt($post_id = null, $fallback = '') {
   return $fallback;
 }
 
-function land76_render_header_popup() {
+function land76_render_form_security_fields($form_version = 'site-form-v3') {
   $request_path = (string) wp_parse_url(wp_unslash($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH);
   $form_source = home_url($request_path ?: '/');
+
+  wp_nonce_field('land76_contact_form', 'land76_nonce', false);
+  echo '<input type="text" name="website" value="" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden" />';
+  echo '<input type="hidden" name="form_version" value="' . esc_attr($form_version) . '" />';
+  echo '<input type="hidden" name="source" value="' . esc_url($form_source) . '" />';
+}
+
+function land76_render_header_popup() {
   ?>
   <div class="formWrapper" id="header-popup">
     <form class="form" method="post" action="/server.php">
@@ -278,8 +293,7 @@ function land76_render_header_popup() {
         <p>Контактный телефон *</p>
         <input class="form__input" type="text" name="phone" placeholder="" required="required" />
       </label>
-      <input type="hidden" name="form_version" value="site-popup-v2" />
-      <input type="hidden" name="source" value="<?php echo esc_url($form_source); ?>" />
+      <?php land76_render_form_security_fields('site-popup-v3'); ?>
       <div class="formConsent">
         <label class="formConsent__container">
           <input class="formConsent__input" type="checkbox" name="consent" value="1" required="required" />
@@ -825,6 +839,116 @@ function land76_schema_article_node($current_url) {
   ));
 }
 
+function land76_schema_managed_main_node($context) {
+  if (!is_array($context) || empty($context['current_url']) || empty($context['role'])) {
+    return null;
+  }
+
+  $current_url = (string) $context['current_url'];
+  $post_id = (int) $context['post_id'];
+  $image = !empty($context['image_url']) ? array_filter(array(
+    '@type' => 'ImageObject',
+    'url' => esc_url_raw($context['image_url']),
+    'caption' => land76_schema_strip($context['image_alt']),
+  )) : land76_schema_image_object($post_id);
+
+  if ($context['role'] === 'article') {
+    return array_filter(array(
+      '@type' => 'Article',
+      '@id' => trailingslashit($current_url) . '#article',
+      'headline' => land76_schema_strip($context['title']),
+      'description' => land76_schema_limit($context['description']),
+      'image' => $image,
+      'datePublished' => get_the_date(DATE_W3C, $post_id),
+      'dateModified' => get_the_modified_date(DATE_W3C, $post_id),
+      'author' => array('@id' => home_url('/#organization')),
+      'publisher' => array('@id' => home_url('/#organization')),
+      'mainEntityOfPage' => array('@id' => trailingslashit($current_url) . '#webpage'),
+      'inLanguage' => 'ru-RU',
+    ));
+  }
+
+  $hub_title = get_the_title((int) $context['hub']['hub_post_id']);
+
+  return array_filter(array(
+    '@type' => 'Service',
+    '@id' => trailingslashit($current_url) . '#service',
+    'name' => land76_schema_strip($context['title']),
+    'serviceType' => land76_schema_strip($hub_title),
+    'description' => land76_schema_limit($context['description']),
+    'provider' => array('@id' => home_url('/#organization')),
+    'areaServed' => land76_schema_area_served(),
+    'url' => $current_url,
+    'category' => land76_schema_strip($hub_title),
+    'image' => $image,
+    'inLanguage' => 'ru-RU',
+  ));
+}
+
+function land76_schema_managed_breadcrumb_node($context) {
+  if (!is_array($context) || empty($context['current_url']) || empty($context['hub'])) {
+    return null;
+  }
+
+  $items = array(
+    array(
+      '@type' => 'ListItem',
+      'position' => 1,
+      'name' => 'Главная',
+      'item' => home_url('/'),
+    ),
+  );
+  if ($context['role'] !== 'hub') {
+    $items[] = array(
+      '@type' => 'ListItem',
+      'position' => count($items) + 1,
+      'name' => get_the_title((int) $context['hub']['hub_post_id']),
+      'item' => (string) $context['hub']['canonical'],
+    );
+  }
+  $items[] = array(
+    '@type' => 'ListItem',
+    'position' => count($items) + 1,
+    'name' => land76_schema_strip($context['title']),
+    'item' => (string) $context['current_url'],
+  );
+
+  return array(
+    '@type' => 'BreadcrumbList',
+    '@id' => trailingslashit((string) $context['current_url']) . '#breadcrumb',
+    'itemListElement' => $items,
+  );
+}
+
+function land76_schema_managed_faq_node($context) {
+  if (!is_array($context) || empty($context['current_url']) || empty($context['role'])) {
+    return null;
+  }
+
+  $items = array();
+  if ($context['role'] === 'hub' && function_exists('land76_service_v2_current')) {
+    $service_v2 = land76_service_v2_current();
+    if (is_array($service_v2) && !empty($service_v2['faq']['items']) && is_array($service_v2['faq']['items'])) {
+      $items = $service_v2['faq']['items'];
+    }
+  } elseif ($context['role'] === 'child' && function_exists('get_field')) {
+    $items = get_field('ns87_faq_items', (int) $context['post_id']);
+  } elseif ($context['role'] === 'article' && function_exists('get_field')) {
+    $items = get_field('blogseo_faq_items', (int) $context['post_id']);
+  }
+
+  $entities = land76_schema_faq_entities($items);
+  if (empty($entities)) {
+    return null;
+  }
+
+  return array(
+    '@type' => 'FAQPage',
+    '@id' => trailingslashit((string) $context['current_url']) . '#faq',
+    'mainEntity' => $entities,
+  );
+}
+
 function land76_schema_case_node($current_url) {
   if (!land76_schema_is_case_template()) {
     return null;
@@ -1020,37 +1144,59 @@ function land76_output_structured_data() {
     return;
   }
 
-  $current_url = land76_schema_current_url();
+  $managed_context = is_singular() && function_exists('land76wp_service_hub_schema_context')
+    ? land76wp_service_hub_schema_context(get_queried_object_id())
+    : null;
+  $current_url = is_array($managed_context)
+    ? (string) $managed_context['current_url']
+    : land76_schema_current_url();
   $graph = array(
     land76_schema_organization_node(),
     land76_schema_website_node(),
   );
 
-  $main_entity_id = '';
-  $service_node = land76_schema_service_node($current_url);
-  $article_node = land76_schema_article_node($current_url);
-  $case_node = land76_schema_case_node($current_url);
-  $calculator_node = land76_schema_calculator_node($current_url);
-  $services_item_list_node = land76_schema_services_item_list_node($current_url);
-  $faq_node = is_front_page() ? land76_schema_front_faq_node($current_url) : land76_schema_acf_faq_node($current_url);
+  if (is_array($managed_context)) {
+    $managed_main_node = land76_schema_managed_main_node($managed_context);
+    $managed_breadcrumb_node = land76_schema_managed_breadcrumb_node($managed_context);
+    $managed_faq_node = land76_schema_managed_faq_node($managed_context);
+    $main_entity_id = $managed_main_node ? $managed_main_node['@id'] : '';
+    $graph[] = land76_schema_page_node($current_url, $main_entity_id);
+    if ($managed_main_node) {
+      $graph[] = $managed_main_node;
+    }
+    if ($managed_breadcrumb_node) {
+      $graph[] = $managed_breadcrumb_node;
+    }
+    if ($managed_faq_node) {
+      $graph[] = $managed_faq_node;
+    }
+  } else {
+    $main_entity_id = '';
+    $service_node = land76_schema_service_node($current_url);
+    $article_node = land76_schema_article_node($current_url);
+    $case_node = land76_schema_case_node($current_url);
+    $calculator_node = land76_schema_calculator_node($current_url);
+    $services_item_list_node = land76_schema_services_item_list_node($current_url);
+    $faq_node = is_front_page() ? land76_schema_front_faq_node($current_url) : land76_schema_acf_faq_node($current_url);
 
-  if ($article_node) {
-    $main_entity_id = $article_node['@id'];
-  } elseif ($service_node) {
-    $main_entity_id = $service_node['@id'];
-  } elseif ($case_node) {
-    $main_entity_id = $case_node['@id'];
-  } elseif ($calculator_node) {
-    $main_entity_id = $calculator_node['@id'];
-  } elseif ($services_item_list_node) {
-    $main_entity_id = $services_item_list_node['@id'];
-  }
+    if ($article_node) {
+      $main_entity_id = $article_node['@id'];
+    } elseif ($service_node) {
+      $main_entity_id = $service_node['@id'];
+    } elseif ($case_node) {
+      $main_entity_id = $case_node['@id'];
+    } elseif ($calculator_node) {
+      $main_entity_id = $calculator_node['@id'];
+    } elseif ($services_item_list_node) {
+      $main_entity_id = $services_item_list_node['@id'];
+    }
 
-  $graph[] = land76_schema_page_node($current_url, $main_entity_id);
+    $graph[] = land76_schema_page_node($current_url, $main_entity_id);
 
-  foreach (array($service_node, $article_node, $case_node, $calculator_node, $services_item_list_node, land76_schema_breadcrumb_node($current_url), $faq_node) as $node) {
-    if ($node) {
-      $graph[] = $node;
+    foreach (array($service_node, $article_node, $case_node, $calculator_node, $services_item_list_node, land76_schema_breadcrumb_node($current_url), $faq_node) as $node) {
+      if ($node) {
+        $graph[] = $node;
+      }
     }
   }
 
@@ -1059,7 +1205,8 @@ function land76_output_structured_data() {
     '@graph' => $graph,
   );
 
-  echo "\n<script type=\"application/ld+json\" class=\"land76-schema\">";
+  echo "\n";
+  echo '<script type="application/ld+json" class="land76-schema">';
   echo wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
   echo "</script>\n";
 }

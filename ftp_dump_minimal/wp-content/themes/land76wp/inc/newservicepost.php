@@ -598,17 +598,82 @@
   }
 </style>
 <?php
+if (!function_exists('land76_newservice_managed_presentation_image')) {
+    function land76_newservice_managed_presentation_image($post_id, $role)
+    {
+        $empty = array('url' => '', 'alt' => '');
+        $is_managed = hash_equals(
+            'land76-service-hubs',
+            (string) get_post_meta($post_id, '_land76_import_owner', true)
+        );
+        if (!$is_managed || !in_array($role, array('main', 'hero', 'context'), true)) {
+            return $empty;
+        }
+
+        $url = (string) get_post_meta($post_id, '_land76_' . $role . '_image_url', true);
+        $alt = (string) get_post_meta($post_id, '_land76_' . $role . '_image_alt', true);
+        if (($url === '' || $alt === '') && $role !== 'main') {
+            $url = (string) get_post_meta($post_id, '_land76_main_image_url', true);
+            $alt = (string) get_post_meta($post_id, '_land76_main_image_alt', true);
+        }
+        if ($url === '' || $alt === '') {
+            return $empty;
+        }
+
+        return array('url' => $url, 'alt' => $alt);
+    }
+}
+
+if (!function_exists('land76_newservice_related_card_image')) {
+    function land76_newservice_related_card_image($post_id)
+    {
+        $post_id = (int) $post_id;
+        $empty = array('url' => '', 'alt' => '');
+        foreach (array('card', 'main') as $role) {
+            $url = (string) get_post_meta($post_id, '_land76_' . $role . '_image_url', true);
+            $alt = (string) get_post_meta($post_id, '_land76_' . $role . '_image_alt', true);
+            if ($url !== '' && $alt !== '') {
+                return array('url' => $url, 'alt' => $alt);
+            }
+        }
+
+        $hub = function_exists('land76wp_service_hub_for_post')
+            ? land76wp_service_hub_for_post($post_id)
+            : null;
+        if (!is_array($hub)
+            || (int) $hub['hub_post_id'] !== $post_id
+            || !function_exists('land76_service_v2_load')) {
+            return $empty;
+        }
+
+        $service_v2 = land76_service_v2_load($post_id);
+        if (!is_array($service_v2)
+            || empty($service_v2['hero']['image']['url'])
+            || empty($service_v2['hero']['image']['alt'])) {
+            return $empty;
+        }
+
+        return array(
+            'url' => (string) $service_v2['hero']['image']['url'],
+            'alt' => (string) $service_v2['hero']['image']['alt'],
+        );
+    }
+}
+
 $ns87_post_context = get_the_ID();
 $land76_managed_service_hub_post = hash_equals(
     'land76-service-hubs',
     (string) get_post_meta($ns87_post_context, '_land76_import_owner', true)
 );
-$ns87_main_image_url = $land76_managed_service_hub_post
-    ? (string) get_post_meta($ns87_post_context, '_land76_main_image_url', true)
-    : '';
-$ns87_main_image_alt = $land76_managed_service_hub_post
-    ? (string) get_post_meta($ns87_post_context, '_land76_main_image_alt', true)
-    : '';
+$ns87_main_image = land76_newservice_managed_presentation_image($ns87_post_context, 'main');
+$ns87_hero_image = land76_newservice_managed_presentation_image($ns87_post_context, 'hero');
+$ns87_context_image = land76_newservice_managed_presentation_image($ns87_post_context, 'context');
+$ns87_main_image_url = $ns87_main_image['url'];
+$ns87_main_image_alt = $ns87_main_image['alt'];
+$ns87_hero_image_url = $ns87_hero_image['url'];
+$ns87_hero_image_alt = $ns87_hero_image['alt'];
+$ns87_context_image_url = $ns87_context_image['url'];
+$ns87_context_image_alt = $ns87_context_image['alt'];
 $ns87_hero_title = function_exists('get_field') ? get_field('ns87_hero_title', $ns87_post_context) : '';
 $ns87_hero_subtitle = function_exists('get_field') ? get_field('ns87_hero_subtitle', $ns87_post_context) : '';
 $ns87_hero_btn_primary_text = function_exists('get_field') ? get_field('ns87_hero_btn_primary_text', $ns87_post_context) : '';
@@ -649,6 +714,10 @@ if (!function_exists('land76_newservice_selected_real_projects')) {
     function land76_newservice_selected_real_projects($post_id)
     {
         $selected_projects = function_exists('get_field') ? get_field('selected_real_projects', $post_id) : array();
+        if (function_exists('land76wp_has_managed_service_hub_owner') && land76wp_has_managed_service_hub_owner($post_id)) {
+            return is_array($selected_projects) ? $selected_projects : array();
+        }
+
         if (!empty($selected_projects) && is_array($selected_projects)) {
             return $selected_projects;
         }
@@ -725,7 +794,8 @@ if (!function_exists('land76_newservice_context_image')) {
             (string) get_post_meta($post_id, '_land76_import_owner', true)
         );
         if ($land76_managed_service_hub_post) {
-            return (string) get_post_meta($post_id, '_land76_main_image_url', true);
+            $image = land76_newservice_managed_presentation_image($post_id, 'context');
+            return $image['url'];
         }
 
         $topic_key = land76_newservice_topic_key($post_id);
@@ -882,7 +952,7 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
 <!-- 1. Hero блок -->
 <section class="hero">
   <div class="hero__scene" id="scene">
-    <div class="hero__bg" data-depth="0.4"<?php if ($ns87_main_image_url !== '') : ?> style="background-image: url('<?php echo esc_url($ns87_main_image_url); ?>');"<?php endif; ?>></div>
+    <div class="hero__bg" data-depth="0.4"<?php if ($ns87_hero_image_url !== '') : ?> style="background-image: url('<?php echo esc_url($ns87_hero_image_url); ?>');"<?php endif; ?>></div>
   </div>
   <div class="hero__content wrapper">
     <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800"><?php echo esc_html($ns87_hero_title ? $ns87_hero_title : get_the_title()); ?>
@@ -910,12 +980,22 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
     <h3><?php echo esc_html($ns87_problem_title ? $ns87_problem_title : 'Какая задача решается'); ?></h3>
     <p><?php echo esc_html($ns87_problem_text ? $ns87_problem_text : 'Подбираем решение по месту, чтобы работы были понятными по составу, стоимости и результату.'); ?></p>
 
+    <?php
+    $ns87_problem_reserved_image_urls = $land76_managed_service_hub_post
+        ? array_values(array_filter(array($ns87_main_image_url, $ns87_context_image_url)))
+        : array();
+    $ns87_rendered_problem_image_urls = array();
+    ?>
     <?php foreach ($ns87_problem_items as $index => $ns87_problem_item) : ?>
     <?php
       $ns87_problem_img = '';
+      $ns87_problem_img_alt = !empty($ns87_problem_item['title']) ? $ns87_problem_item['title'] : 'Проблема';
       if (!empty($ns87_problem_item['image'])) {
           if (is_array($ns87_problem_item['image']) && !empty($ns87_problem_item['image']['url'])) {
               $ns87_problem_img = $ns87_problem_item['image']['url'];
+              if ($land76_managed_service_hub_post && !empty($ns87_problem_item['image']['alt'])) {
+                  $ns87_problem_img_alt = $ns87_problem_item['image']['alt'];
+              }
           } elseif (is_numeric($ns87_problem_item['image'])) {
               $ns87_problem_img = wp_get_attachment_image_url((int) $ns87_problem_item['image'], 'full');
           } elseif (is_string($ns87_problem_item['image'])) {
@@ -925,9 +1005,22 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
       if (empty($ns87_problem_img)) {
           $ns87_problem_img = land76_newservice_context_image(get_the_ID(), !empty($ns87_problem_item['title']) ? $ns87_problem_item['title'] : '');
       }
+      if ($land76_managed_service_hub_post && $ns87_problem_img === $ns87_context_image_url) {
+          $ns87_problem_img_alt = $ns87_context_image_alt;
+      }
+      if ($land76_managed_service_hub_post
+          && (in_array($ns87_problem_img, $ns87_problem_reserved_image_urls, true)
+              || in_array($ns87_problem_img, $ns87_rendered_problem_image_urls, true))) {
+          $ns87_problem_img = '';
+      }
+      if ($ns87_problem_img !== '') {
+          $ns87_rendered_problem_image_urls[] = $ns87_problem_img;
+      }
     ?>
     <div class="problem-item" data-aos="fade-up" data-aos-duration="<?php echo esc_attr(700 + ($index * 100)); ?>">
-      <img src="<?php echo esc_url($ns87_problem_img); ?>" alt="<?php echo esc_attr(!empty($ns87_problem_item['title']) ? $ns87_problem_item['title'] : 'Проблема'); ?>">
+      <?php if ($ns87_problem_img !== '') : ?>
+        <img src="<?php echo esc_url($ns87_problem_img); ?>" alt="<?php echo esc_attr($ns87_problem_img_alt); ?>" loading="lazy" decoding="async">
+      <?php endif; ?>
       <div>
         <h4><?php echo esc_html(!empty($ns87_problem_item['title']) ? $ns87_problem_item['title'] : ''); ?></h4>
         <p><?php echo esc_html(!empty($ns87_problem_item['text']) ? $ns87_problem_item['text'] : ''); ?></p>
@@ -967,6 +1060,14 @@ Poiret One
       </figure>
     <?php endif; ?>
     <?php the_content(); ?>
+    <?php if ($land76_managed_service_hub_post
+        && $ns87_context_image_url !== ''
+        && $ns87_context_image_alt !== ''
+        && $ns87_context_image_url !== $ns87_main_image_url) : ?>
+      <figure class="service-context-image">
+        <img src="<?php echo esc_url($ns87_context_image_url); ?>" alt="<?php echo esc_attr($ns87_context_image_alt); ?>" loading="lazy" decoding="async">
+      </figure>
+    <?php endif; ?>
   </div>
 </section>
 <?php $ns87_selected_projects = land76_newservice_selected_real_projects(get_the_ID()); ?>
@@ -988,9 +1089,9 @@ Poiret One
         }
         setup_postdata($post);
         $project_image = function_exists('land76_get_card_image_url')
-          ? land76_get_card_image_url($post_id, 'medium')
+          ? land76_get_card_image_url($post_id, 'medium', !$land76_managed_service_hub_post)
           : get_the_post_thumbnail_url($post_id, 'medium');
-        if (!$project_image) {
+        if (!$project_image && !$land76_managed_service_hub_post) {
           $project_image = land76_newservice_context_image($ns87_post_context, 'пример работ');
         }
         $project_title = function_exists('get_field') ? get_field('cs87_hero_title', $post_id) : '';
@@ -1006,10 +1107,12 @@ Poiret One
         }
         ?>
         <div class="service" data-aos="fade-up" data-aos-duration="400">
-          <div class="service__img-wrap">
-            <img class="service__img" src="<?php echo esc_url($project_image); ?>"
-              alt="<?php echo esc_attr($project_title); ?>">
-          </div>
+          <?php if ($project_image) : ?>
+            <div class="service__img-wrap">
+              <img class="service__img" src="<?php echo esc_url($project_image); ?>"
+                alt="<?php echo esc_attr($project_title); ?>" loading="lazy" decoding="async">
+            </div>
+          <?php endif; ?>
           <div class="service__text-wrap">
             <h3 class="service__title"><?php echo esc_html($project_title); ?></h3>
             <p><?php echo esc_html(wp_trim_words($project_excerpt, 22)); ?></p>
@@ -1053,8 +1156,14 @@ Poiret One
           || !hash_equals((string) $ns87_parent_hub['service_id'], (string) $ns87_related_service_hub['service_id'])) {
           continue;
       }
+      $ns87_related_service_card = land76_newservice_related_card_image($ns87_related_service_id);
       ?>
       <article class="service">
+        <?php if ($ns87_related_service_card['url'] !== '' && $ns87_related_service_card['alt'] !== '') : ?>
+          <div class="service__img-wrap service-related-card-image">
+            <img class="service__img" src="<?php echo esc_url($ns87_related_service_card['url']); ?>" alt="<?php echo esc_attr($ns87_related_service_card['alt']); ?>" loading="lazy" decoding="async">
+          </div>
+        <?php endif; ?>
         <div class="service__text-wrap">
           <h3 class="service__title"><?php echo esc_html(get_the_title($ns87_related_service_id)); ?></h3>
           <div class="service__link-wrap">
@@ -1092,8 +1201,19 @@ if (!is_array($ns87_related_article_ids)) {
           || strpos($ns87_related_article_page_key, '-ARTICLE-') === false) {
           continue;
       }
+      $ns87_related_article_card_url = (string) get_post_meta($ns87_related_article->ID, '_land76_card_image_url', true);
+      $ns87_related_article_card_alt = (string) get_post_meta($ns87_related_article->ID, '_land76_card_image_alt', true);
+      if ($ns87_related_article_card_url === '' || $ns87_related_article_card_alt === '') {
+          $ns87_related_article_card_url = (string) get_post_meta($ns87_related_article->ID, '_land76_main_image_url', true);
+          $ns87_related_article_card_alt = (string) get_post_meta($ns87_related_article->ID, '_land76_main_image_alt', true);
+      }
       ?>
       <article class="service">
+        <?php if ($ns87_related_article_card_url !== '' && $ns87_related_article_card_alt !== '') : ?>
+          <div class="service__img-wrap service-related-card-image">
+            <img class="service__img" src="<?php echo esc_url($ns87_related_article_card_url); ?>" alt="<?php echo esc_attr($ns87_related_article_card_alt); ?>" loading="lazy" decoding="async">
+          </div>
+        <?php endif; ?>
         <div class="service__text-wrap">
           <h3 class="service__title"><?php echo esc_html(get_the_title($ns87_related_article)); ?></h3>
           <div class="service__link-wrap">
@@ -1114,6 +1234,21 @@ Poiret One
 '
 , cursive; font-size: 35px; margin-bottom: 40px;"><?php echo esc_html($ns87_prices_title ? $ns87_prices_title : 'Стоимость услуги'); ?></h2>
 
+  <?php if ($land76_managed_service_hub_post) : ?>
+    <?php if ($ns87_estimate_total) : ?>
+      <p class="service-price-factors__lead"><?php echo esc_html($ns87_estimate_total); ?></p>
+    <?php endif; ?>
+    <div class="service-price-factors">
+      <?php foreach ($ns87_price_rows as $ns87_price_row) : ?>
+        <?php if (!empty($ns87_price_row['service']) && !empty($ns87_price_row['term'])) : ?>
+          <article class="service-price-factor">
+            <h3><?php echo esc_html($ns87_price_row['service']); ?></h3>
+            <p><?php echo esc_html($ns87_price_row['term']); ?></p>
+          </article>
+        <?php endif; ?>
+      <?php endforeach; ?>
+    </div>
+  <?php else : ?>
   <div style="overflow-x: auto; margin-bottom: 30px;">
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #fff;">
       <thead>
@@ -1148,6 +1283,7 @@ Poiret One
       <li><strong><?php echo esc_html($ns87_estimate_total ? $ns87_estimate_total : 'Итого: по расчету'); ?></strong></li>
     </ul>
   </div>
+  <?php endif; ?>
 </section>
 
 <!-- 8. Мини FAQ -->
@@ -1175,12 +1311,13 @@ Poiret One
   <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
     <h2 style="font-weight: 600; margin-bottom: 35px;">Получите расчёт по вашему участку</h2>
     <p style="margin-bottom: 30px;">Пришлите фото, план или краткое описание задачи. Предварительно оценим состав работ, а точную смету подготовим после уточнения условий объекта.</p>
-    <form class="cta-form form" id="calc" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+    <form class="cta-form form" id="calc" method="post" action="<?php echo esc_url(home_url('/server.php')); ?>" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+      <?php land76_render_form_security_fields('managed-service-cta-v3'); ?>
       <input type="text" name="name" placeholder="Ваше имя" required
         style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
       <input type="tel" name="phone" placeholder="Ваш телефон" required
         style="padding: 15px; border: 1px solid #ddd; border-radius: 5px; min-width: 200px;">
-      <div class="formConsent" style="flex-basis: 100%; text-align: center; margin-top: 10px;"><label class="formConsent__container"><input class="formConsent__input" type="checkbox" required="required" /><span class="formConsent__checkbox"><svg class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px"><path d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928C170.827,363.533,162.165,366.839,153.504,366.839z" fill="#B22917"></path></svg></span></label><span class="formConsent__text" style="font-size: 12px;">Я согласен с обработкой персональных данных</span></div>
+      <div class="formConsent" style="flex-basis: 100%; text-align: center; margin-top: 10px;"><label class="formConsent__container"><input class="formConsent__input" type="checkbox" name="consent" value="1" required="required" /><span class="formConsent__checkbox"><svg class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px"><path d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928C170.827,363.533,162.165,366.839,153.504,366.839z" fill="#B22917"></path></svg></span></label><span class="formConsent__text" style="font-size: 12px;">Я согласен с <a href="<?php echo esc_url(home_url('/privacy/')); ?>">политикой конфиденциальности</a> и <a href="<?php echo esc_url(home_url('/consent/')); ?>">обработкой персональных данных</a></span></div>
       <button type="submit" class="btn--primary-custom">Получить расчет</button>
     </form>
     <div class="ajaxMessage" style="display:none;">

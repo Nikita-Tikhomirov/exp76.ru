@@ -40,7 +40,7 @@
   },
   "audience": {
     "heading": "Когда подходит такое устройство въезда",
-    "text": "Разбираем задачу именно как «укладка водопропускной трубы в канаву» и не переносим на неё обещания соседних услуг направления.",
+    "text": "Укладка трубы нужна, чтобы сохранить проток воды в канаве под въездом; диаметр, материал и длину выбирают после осмотра и оценки условий.",
     "items": [
       {
         "title": "Новый въезд",
@@ -120,7 +120,7 @@
     ]
   },
   "faq": {
-    "heading": "Вопросы про укладка водопропускной трубы в канаву",
+    "heading": "Частые вопросы об укладке трубы в канаву",
     "items": [
       {
         "question": "Как выбрать диаметр трубы?",
@@ -183,5 +183,19 @@
       "финишное покрытие въезда",
       "изменение общего водотока"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
+      "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
+      "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
+      "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+    }
   }
 }

@@ -58,6 +58,8 @@ PAGE_FIELDS = {
     "cta",
     "boundary",
 }
+OPTIONAL_PAGE_FIELDS = {"presentation_images"}
+PRESENTATION_IMAGE_ROLES = ("hero", "context", "card")
 DEPLOYMENT_FIELDS = {
     "action",
     "current_wp_id",
@@ -105,6 +107,28 @@ NON_CASE_CLAIM_PATTERNS = (
     re.compile(r"\bподтвержд[её]нн\w+\s+кейс\w*\b", re.IGNORECASE),
     re.compile(r"\bпример\s+наш(?:их|ей)\s+работ\w*\b", re.IGNORECASE),
     re.compile(r"\bдо\s+и\s+после\b|\bадрес\s+объект\w*\b", re.IGNORECASE),
+)
+INTERNAL_PUBLIC_COPY_PATTERNS = (
+    re.compile(r"\bS\d+(?:-[A-Z0-9-]+)?\b", re.IGNORECASE),
+    re.compile(r"\b(?:SEO|SERP|overlap|интент\w*|кластер\w*)\b", re.IGNORECASE),
+    re.compile(r"\bхаб\w*\b|\bURL-владел\w*\b", re.IGNORECASE),
+    re.compile(r"\bCMS\b|\bWP\s+\d+\b", re.IGNORECASE),
+    re.compile(r"\bутвержд[её]нн\w*\s+архитектур\w*\b", re.IGNORECASE),
+    re.compile(r"\b(?:действующ\w*|стар\w*)\s+страниц\w*\b", re.IGNORECASE),
+    re.compile(r"\bв\s+этом\s+контенте\b", re.IGNORECASE),
+    re.compile(r"\bопубликованн\w+\s+(?:текст\w*|материал\w*)\b", re.IGNORECASE),
+    re.compile(r"\b(?:не\s+подтвержда\w*|не\s+заявля\w*)\b", re.IGNORECASE),
+    re.compile(r"\b(?:не\s+переносим|обещания\s+соседних)\b", re.IGNORECASE),
+    re.compile(r"\bпринадлеж\w*\b", re.IGNORECASE),
+    re.compile(r"\bзащищ[её]нн\w*\s+владельц\w*\b", re.IGNORECASE),
+    re.compile(r"\bнеподтвержд[её]нн\w*\b", re.IGNORECASE),
+    re.compile(r"\bраздельн\w*\s+публикац\w*\b", re.IGNORECASE),
+    re.compile(
+        r"\bотнос\w*\s+к\s+(?:статье|кластеру|интенту|соседн\w+\s+"
+        r"направлен\w+|друг\w+\s+(?:направлен\w+|работ\w+|услуг\w+))\b",
+        re.IGNORECASE,
+    ),
+    re.compile(r"^\s*вопросы\s+про\b", re.IGNORECASE),
 )
 
 
@@ -299,6 +323,13 @@ def _validate_copy_quality(page: Mapping[str, object], errors: list[str]) -> Non
             if pattern.search(text):
                 errors.append(f"{path} contains placeholder copy")
                 break
+        if not path.startswith("$.proof."):
+            for pattern in INTERNAL_PUBLIC_COPY_PATTERNS:
+                if pattern.search(text):
+                    errors.append(
+                        f"{path.removeprefix('$.')} contains internal SEO language"
+                    )
+                    break
         # Boundary text is a frozen exclusion contract. It may name a forbidden
         # promise (for example, a guaranteed result) precisely to rule it out.
         if path.startswith("$.boundary."):
@@ -323,6 +354,48 @@ def _is_internal_url(value: object) -> bool:
     if re.fullmatch(r"#[A-Za-z][A-Za-z0-9_-]*", value):
         return True
     return bool(re.fullmatch(r"https://exp76\.ru/(?:[^?#]*/)?", value))
+
+
+def _is_generated_context_url(value: object) -> bool:
+    return isinstance(value, str) and bool(
+        re.fullmatch(
+            r"https://exp76\.ru/wp-content/themes/land76wp/generated/context/"
+            r"context-photo-[a-z0-9]+(?:-[a-z0-9]+)*\.webp",
+            value,
+        )
+    )
+
+
+def _validate_presentation_images(value: object, errors: list[str]) -> None:
+    images = _object(value, "presentation_images", errors)
+    if not images:
+        return
+    _validate_exact_keys(
+        images,
+        set(PRESENTATION_IMAGE_ROLES),
+        "presentation_images",
+        errors,
+    )
+    for role in PRESENTATION_IMAGE_ROLES:
+        image = _object(images.get(role), f"presentation_images.{role}", errors)
+        if not image:
+            continue
+        _validate_exact_keys(
+            image,
+            {"url", "alt"},
+            f"presentation_images.{role}",
+            errors,
+        )
+        if not _is_generated_context_url(image.get("url")):
+            errors.append(
+                f"presentation_images.{role}.url must be a generated context URL"
+            )
+        _text(
+            image.get("alt"),
+            f"presentation_images.{role}.alt",
+            errors,
+            minimum=12,
+        )
 
 
 def _validate_link(value: object, path: str, errors: list[str]) -> Mapping[str, object]:
@@ -502,7 +575,7 @@ def validate_page(
 
     errors: list[str] = []
     missing = PAGE_FIELDS - set(page)
-    unknown = set(page) - PAGE_FIELDS
+    unknown = set(page) - PAGE_FIELDS - OPTIONAL_PAGE_FIELDS
     for field in sorted(missing):
         errors.append(f"{field} is required")
     for field in sorted(unknown):
@@ -524,6 +597,9 @@ def validate_page(
         if page.get(page_field) != expected:
             errors.append(f"{page_field} must equal frozen architecture value {expected!r}")
     _validate_deployment(page.get("deployment"), row, errors)
+
+    if "presentation_images" in page:
+        _validate_presentation_images(page.get("presentation_images"), errors)
 
     seo = _object(page.get("seo"), "seo", errors)
     if seo:
@@ -584,24 +660,19 @@ def validate_page(
         _validate_exact_keys(
             boundary, {"summary", "excluded_intents"}, "boundary", errors
         )
-        expected_boundary = str(row.get("boundary", ""))
-        if boundary.get("summary") != expected_boundary:
-            errors.append("boundary.summary must equal frozen architecture boundary")
+        _text(boundary.get("summary"), "boundary.summary", errors, minimum=20)
         excluded = _list(
             boundary.get("excluded_intents"), "boundary.excluded_intents", errors
         )
         if not excluded:
             errors.append("boundary.excluded_intents must not be empty")
-        explicit_excluded = {
-            item.strip()
-            for item in str(row.get("excluded_primary_intents", "")).split("|")
-            if item.strip()
-        }
-        supplied_excluded = {
-            item.strip() for item in excluded if isinstance(item, str) and item.strip()
-        }
-        if not explicit_excluded.issubset(supplied_excluded):
-            errors.append("boundary.excluded_intents loses frozen excluded intents")
+        for index, excluded_item in enumerate(excluded):
+            _text(
+                excluded_item,
+                f"boundary.excluded_intents[{index}]",
+                errors,
+                minimum=3,
+            )
 
     links = _object(page.get("links"), "links", errors)
     if links:
@@ -761,9 +832,9 @@ def _render_boundary(page: Mapping[str, object]) -> str:
     assert isinstance(boundary, dict)
     excluded = boundary["excluded_intents"]
     assert isinstance(excluded, list)
-    body = f"<p>{_escape(boundary['summary'])}</p><h3>Что не относится к услуге</h3>"
+    body = f"<p>{_escape(boundary['summary'])}</p><h3>Не входит в услугу</h3>"
     body += "<ul>" + "".join(f"<li>{_escape(item)}</li>" for item in excluded) + "</ul>"
-    return _section("Границы услуги", body, "boundary")
+    return _section("Условия и границы работ", body, "boundary")
 
 
 def _render_cta(page: Mapping[str, object]) -> str:
@@ -822,11 +893,8 @@ def render_standalone_html(
 def _render_managed_post_content(page: Mapping[str, object]) -> str:
     """Render blocks not already rendered by ``newservicepost.php`` from ACF."""
 
-    proof = page["proof"]
-    assert isinstance(proof, dict)
     return "".join(
         (
-            f'<p class="service-media-caption">{_escape(proof["caption"])}</p>',
             _render_scope(page),
             _render_geo(page),
             _render_boundary(page),
@@ -878,7 +946,7 @@ def _acf_payload(page: Mapping[str, object], image_url: str) -> dict[str, object
         "ns87_price_rows": [
             {
                 "service": item["title"],
-                "price": "по расчёту",
+                "price": "",
                 "term": item["text"],
             }
             for item in pricing["factors"]
@@ -952,8 +1020,21 @@ def build_import_item(
         },
         "case_ids": list(proof["case_ids"]),
         "related_service_page_keys": relation_keys,
-        "acf": _acf_payload(page, str(selected["url"])),
+        "acf": _acf_payload(
+            page,
+            str(
+                page["presentation_images"]["context"]["url"]
+                if isinstance(page.get("presentation_images"), dict)
+                else selected["url"]
+            ),
+        ),
     }
+    presentation_images = page.get("presentation_images")
+    if isinstance(presentation_images, dict):
+        item["presentation_images"] = {
+            role: dict(presentation_images[role])
+            for role in PRESENTATION_IMAGE_ROLES
+        }
     item["checksum"] = item_checksum(item)
     return item
 

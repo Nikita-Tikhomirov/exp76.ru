@@ -252,7 +252,8 @@ $works = get_posts(array(
     <p>Опишите, что нужно сделать: убрать воду, сделать дорожки, отмостку, ливневку, автополив, газон или комплекс работ. Мы свяжемся, уточним задачу и подскажем следующий шаг.</p>
   </div>
   <div class="formWrapper home-request__form" id="form">
-    <form class="form">
+    <form class="form" method="post" action="<?php echo esc_url(home_url('/server.php')); ?>">
+      <?php land76_render_form_security_fields('home-request-v3'); ?>
       <p class="form__title">Оставить заявку</p>
       <label class="form__label">
         <p>Имя или название организации *</p>
@@ -264,14 +265,14 @@ $works = get_posts(array(
       </label>
       <div class="formConsent">
         <label class="formConsent__container">
-          <input class="formConsent__input" type="checkbox" required="required" />
+          <input class="formConsent__input" type="checkbox" name="consent" value="1" required="required" />
           <span class="formConsent__checkbox">
             <svg class="formConsent__icon" viewBox="0 0 426.67 426.67" width="24px" height="24px">
               <path d="M153.504,366.839c-8.657,0-17.323-3.302-23.927-9.911L9.914,237.265  c-13.218-13.218-13.218-34.645,0-47.863c13.218-13.218,34.645-13.218,47.863,0l95.727,95.727l215.39-215.386  c13.218-13.214,34.65-13.218,47.859,0c13.222,13.218,13.222,34.65,0,47.863L177.436,356.928  C170.827,363.533,162.165,366.839,153.504,366.839z" fill="#B22917"></path>
             </svg>
           </span>
         </label>
-        <p class="formConsent__text">Я согласен с политикой конфиденциальности и обработкой персональных данных.</p>
+        <p class="formConsent__text">Я согласен с <a href="<?php echo esc_url(home_url('/privacy/')); ?>">политикой конфиденциальности</a> и <a href="<?php echo esc_url(home_url('/consent/')); ?>">обработкой персональных данных</a>.</p>
       </div>
       <button class="form__btn btn" type="submit">Отправить</button>
     </form>

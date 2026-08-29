@@ -130,7 +130,7 @@ class CompletePageArchitectureTests(unittest.TestCase):
         self.assertEqual(first, second_bytes)
         self.assertFalse(first.startswith(b"\xef\xbb\xbf"))
 
-    def test_release_manifest_reconciles_all_content_artifacts(self) -> None:
+    def test_release_manifest_contains_only_publishable_content_artifacts(self) -> None:
         from tools.seo_semantics.complete_page_architecture import (
             write_complete_page_architecture,
             write_release_manifest,
@@ -147,14 +147,17 @@ class CompletePageArchitectureTests(unittest.TestCase):
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
             architecture = load_page_architecture(architecture_path)
 
-        self.assertEqual(112, first_count)
+        self.assertEqual(100, first_count)
         self.assertEqual(first_count, second_count)
         self.assertEqual(first, second)
-        self.assertEqual("draft", manifest["release_status"])
-        self.assertEqual(103, len(manifest["managed_pages"]))
+        self.assertEqual("ready", manifest["release_status"])
+        self.assertEqual(91, len(manifest["managed_pages"]))
         self.assertEqual(9, len(manifest["preserved_pages"]))
         statuses = Counter(row["content_status"] for row in manifest["managed_pages"])
-        self.assertEqual({"validated": 91, "content_pending": 12}, dict(statuses))
+        self.assertEqual({"validated": 91}, dict(statuses))
+        self.assertTrue(
+            all(row["architecture_status"] == "ready" for row in manifest["managed_pages"])
+        )
         self.assertEqual([], validate_release_manifest(manifest, architecture))
 
 
