@@ -1242,21 +1242,26 @@ function land76_output_structured_data() {
 }
 add_action('wp_head', 'land76_output_structured_data', 30);
 
-if (!function_exists('land76wp_skip_unstable_smush_card_lazyload')) {
-  /** Keep one known static related-card image on reliable native lazy loading. */
-  function land76wp_skip_unstable_smush_card_lazyload($skip, $src, $image) {
+if (!function_exists('land76wp_skip_managed_service_smush_lazyload')) {
+  /** Keep managed child content images on reliable native browser lazy loading. */
+  function land76wp_skip_managed_service_smush_lazyload($skip, $src, $image) {
     if ($skip) {
       return true;
     }
 
-    $markup = (string) $src . ' ' . (is_string($image) ? $image : '');
-    return strpos(
-      $markup,
-      'context-photo-s13-carport-layout-check-card.webp'
-    ) !== false;
+    if (!is_string($image)
+        || strpos($image, 'data-land76-managed-native-lazy="1"') === false
+        || !function_exists('land76wp_managed_page_contract')) {
+      return false;
+    }
+
+    $contract = land76wp_managed_page_contract((int) get_queried_object_id());
+    return is_array($contract)
+      && isset($contract['role'])
+      && $contract['role'] === 'child';
   }
 }
-add_filter('smush_skip_image_from_lazy_load', 'land76wp_skip_unstable_smush_card_lazyload', 99, 3);
+add_filter('smush_skip_image_from_lazy_load', 'land76wp_skip_managed_service_smush_lazyload', 99, 3);
 
 
 

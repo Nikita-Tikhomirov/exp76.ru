@@ -1331,13 +1331,13 @@ Poiret One
   <div class="seo-text" style="line-height: 1.6; margin-bottom: 40px;">
     <?php if ($land76_managed_service_hub_post && $ns87_render_main_image) : ?>
       <figure class="service-main-image">
-        <img src="<?php echo esc_url($ns87_main_image_url); ?>" alt="<?php echo esc_attr($ns87_main_image_alt); ?>">
+        <img data-land76-managed-native-lazy="1" src="<?php echo esc_url($ns87_main_image_url); ?>" alt="<?php echo esc_attr($ns87_main_image_alt); ?>" loading="lazy" decoding="async">
       </figure>
     <?php endif; ?>
     <?php the_content(); ?>
     <?php if ($land76_managed_service_hub_post && $ns87_render_context_image) : ?>
       <figure class="service-context-image">
-        <img src="<?php echo esc_url($ns87_context_image_url); ?>" alt="<?php echo esc_attr($ns87_context_image_alt); ?>" loading="lazy" decoding="async">
+        <img data-land76-managed-native-lazy="1" src="<?php echo esc_url($ns87_context_image_url); ?>" alt="<?php echo esc_attr($ns87_context_image_alt); ?>" loading="lazy" decoding="async">
       </figure>
     <?php endif; ?>
   </div>
@@ -1386,7 +1386,7 @@ Poiret One
         <div class="service" data-aos="fade-up" data-aos-duration="400">
           <?php if ($project_image) : ?>
             <div class="service__img-wrap">
-              <img class="service__img" src="<?php echo esc_url($project_image); ?>"
+              <img class="service__img"<?php if ($land76_managed_service_hub_post) : ?> data-land76-managed-native-lazy="1"<?php endif; ?> src="<?php echo esc_url($project_image); ?>"
                 alt="<?php echo esc_attr($project_title); ?>" loading="lazy" decoding="async">
             </div>
           <?php endif; ?>
@@ -1438,7 +1438,7 @@ Poiret One
       <article class="service">
         <?php if ($ns87_related_service_card['url'] !== '' && $ns87_related_service_card['alt'] !== '') : ?>
           <div class="service__img-wrap service-related-card-image">
-            <img class="service__img" src="<?php echo esc_url($ns87_related_service_card['url']); ?>" alt="<?php echo esc_attr($ns87_related_service_card['alt']); ?>" loading="lazy" decoding="async">
+            <img class="service__img" data-land76-managed-native-lazy="1" src="<?php echo esc_url($ns87_related_service_card['url']); ?>" alt="<?php echo esc_attr($ns87_related_service_card['alt']); ?>" loading="lazy" decoding="async">
           </div>
         <?php endif; ?>
         <div class="service__text-wrap">
@@ -1485,7 +1485,7 @@ if (!is_array($ns87_related_article_ids)) {
       <article class="service">
         <?php if ($ns87_related_article_card_url !== '' && $ns87_related_article_card_alt !== '') : ?>
           <div class="service__img-wrap service-related-card-image">
-            <img class="service__img" src="<?php echo esc_url($ns87_related_article_card_url); ?>" alt="<?php echo esc_attr($ns87_related_article_card_alt); ?>" loading="lazy" decoding="async">
+            <img class="service__img" data-land76-managed-native-lazy="1" src="<?php echo esc_url($ns87_related_article_card_url); ?>" alt="<?php echo esc_attr($ns87_related_article_card_alt); ?>" loading="lazy" decoding="async">
           </div>
         <?php endif; ?>
         <div class="service__text-wrap">

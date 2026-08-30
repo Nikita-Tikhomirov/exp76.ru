@@ -623,19 +623,37 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         self.assertTrue(derivative.is_file())
         self.assertLess(derivative.stat().st_size, 160_000)
 
-    def test_unstable_static_card_uses_native_instead_of_smush_js_lazyload(self) -> None:
-        """Avoids a known intermittent IntersectionObserver miss in long sessions."""
+    def test_managed_service_images_use_native_instead_of_smush_js_lazyload(self) -> None:
+        """Keeps managed content images out of flaky JS lazyload without touching legacy pages."""
         functions = FUNCTIONS.read_text(encoding="utf-8")
+        template = read_template()
         callback = php_function_body(
             functions,
-            "land76wp_skip_unstable_smush_card_lazyload",
+            "land76wp_skip_managed_service_smush_lazyload",
         )
 
-        self.assertIn("context-photo-s13-carport-layout-check-card.webp", callback)
+        self.assertIn("get_queried_object_id", callback)
+        self.assertIn("land76wp_managed_page_contract", callback)
+        self.assertIn("['role']", callback)
+        self.assertIn("'child'", callback)
+        self.assertIn('data-land76-managed-native-lazy="1"', callback)
+        self.assertNotIn("context-photo-s13-carport-layout-check-card.webp", callback)
         self.assertIn("return true", callback)
+        self.assertEqual(
+            5,
+            template.count('data-land76-managed-native-lazy="1"'),
+        )
+        main_figure = section(
+            template,
+            '<figure class="service-main-image">',
+            "</figure>",
+        )
+        self.assertIn('data-land76-managed-native-lazy="1"', main_figure)
+        self.assertIn('loading="lazy"', main_figure)
+        self.assertIn('decoding="async"', main_figure)
         self.assertIn(
             "add_filter('smush_skip_image_from_lazy_load', "
-            "'land76wp_skip_unstable_smush_card_lazyload', 99, 3)",
+            "'land76wp_skip_managed_service_smush_lazyload', 99, 3)",
             functions,
         )
 
