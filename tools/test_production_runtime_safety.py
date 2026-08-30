@@ -18,6 +18,8 @@ SEO_BLOG = THEME / "inc" / "seoblogpost.php"
 SERVICE_PAGE = THEME / "servicepost.php"
 SINGLE = THEME / "single.php"
 HOME_PAGE = THEME / "index.php"
+SERVICES_PAGE = THEME / "services.php"
+FOOTER = THEME / "footer.php"
 LEGACY_CTA_TEMPLATES = (
     THEME / "casenew.php",
     *(THEME / f"category-{category_id}.php" for category_id in range(87, 93)),
@@ -47,6 +49,59 @@ def php_function_body(source: str, function_name: str) -> str:
     if depth:
         raise AssertionError(f"unbalanced PHP function {function_name}")
     return source[match.end() : cursor - 1]
+
+
+SERVICE_HUB_PATHS = (
+    "/services/landshaftnoe-proektirovanie/",
+    "/services/gazon-posevnojj-i-gazon-rulonnyjj/",
+    "/services/posadka-derevev-i-kustarnikov/",
+    "/services/ukhod-za-sadom/",
+    "/services/planirovka-territorii/",
+    "/services/podpornye-stenki/",
+    "/services/ulichnoe-osveshhenie-uchastka/",
+    "/services/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch/",
+    "/services/vykorchevyvanie-pnejj-spil-derevev/",
+    "/services/sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev/",
+    "/services/sistemy-tumanoobrazovaniya/",
+    "/services/fundament-na-zhelezobetonnykh-svajakh/",
+    "/services/navesy-iz-metalla/",
+    "/services/kaminy-pechi-barbekju/",
+    "/services/snos-i-demontazh-zdanijj-domov/",
+)
+
+
+class ServiceHubEntryPointTests(unittest.TestCase):
+    def test_homepage_exposes_a_compact_link_to_every_service_hub(self) -> None:
+        """Catches published hubs remaining orphaned from the homepage body."""
+        source = read(HOME_PAGE)
+
+        self.assertIn('class="home-hub-directory"', source)
+        self.assertIn('aria-label="Все направления услуг"', source)
+        self.assertEqual(15, source.count("'service_id' => 'S"))
+        for path in SERVICE_HUB_PATHS:
+            self.assertIn(path, source)
+
+        directory = source.split('<nav class="home-hub-directory"', 1)[1].split(
+            "</nav>", 1
+        )[0]
+        self.assertNotIn("<img", directory)
+
+    def test_services_catalog_links_all_hubs_and_groups_the_missing_seven(self) -> None:
+        """Catches S9-S15 disappearing from the complete services catalog."""
+        source = read(SERVICES_PAGE)
+
+        self.assertIn("$land76_additional_service_hubs = array(", source)
+        self.assertIn('class="services-hub__additional"', source)
+        self.assertEqual(7, source.count("'service_id' => 'S"))
+        for path in SERVICE_HUB_PATHS:
+            self.assertIn(path, source)
+
+    def test_footer_exposes_the_complete_services_catalog_without_a_mega_list(self) -> None:
+        """Catches a compact footer offering no route to the complete catalog."""
+        source = read(FOOTER)
+
+        self.assertIn("get_permalink(921)", source)
+        self.assertIn(">Все услуги</a>", source)
 
 
 class ContactEndpointContractTests(unittest.TestCase):

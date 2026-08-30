@@ -212,8 +212,10 @@
         "title": "Охранное освещение",
         "text": "Подсветка входной группы, калитки, въезда и проходов помогает ориентироваться на территории в вечернее время. Расположение точек связывают с реальными путями движения и обзором участка.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
-          "alt": "Освещённая территория загородного участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s7-security-perimeter-lighting.webp",
+          "alt": "Охранное освещение въезда, калитки и периметра участка",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Охранное освещение въезда, калитки и периметра участка"
         }
       },
       {
@@ -228,24 +230,30 @@
         "title": "Декоративный свет в саду",
         "text": "Деревья, кустарники, цветники, водоём, дорожки и малые формы могут стать частью вечернего сценария. Важно заранее определить, какие элементы будут акцентными, а какие останутся фоном.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
-          "alt": "Декоративная подсветка ландшафта"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-decorative-garden-lighting.webp",
+          "alt": "Декоративная подсветка деревьев и посадок в саду",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Декоративная подсветка деревьев и посадок в саду"
         }
       },
       {
         "title": "Праздничное оформление",
         "text": "Световое оформление деревьев, кустарников и элементов ландшафта рассматривается как отдельный сезонный сценарий. Его размещение согласуют с постоянным освещением, чтобы не мешать проходам и обслуживанию сада.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
-          "alt": "Праздничная подсветка сада"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-festive-garden-lighting.webp",
+          "alt": "Праздничная подсветка хвойных растений и перголы",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Праздничная подсветка хвойных растений и перголы"
         }
       },
       {
         "title": "Освещение дорожек, ступеней и управление",
         "text": "Функциональная подсветка дорожек, ступеней, крыльца и площадок помогает ориентироваться на участке вечером. Решение по автоматике и способу управления согласуют в техническом задании; варианты и характеристики оборудования заранее не фиксируют.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
-          "alt": "Подсветка дорожек на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-path-step-lighting-control.webp",
+          "alt": "Освещение садовой дорожки, ступеней и наружный блок управления",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Освещение садовой дорожки, ступеней и наружный блок управления"
         }
       }
     ]
@@ -263,7 +271,7 @@
           "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lighting-design.webp",
           "alt": "Проектирование наружного освещения загородного участка",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: проектирование наружного освещения загородного участка"
+          "caption": "Контекстная иллюстрация: Проектирование наружного освещения загородного участка"
         }
       },
       {
@@ -325,5 +333,5 @@
   },
   "evidence_gaps": [],
   "fact_evidence": [],
-  "rendered_sha256": "faa26760c23792abf770b1ffad8ca624572ecf26df748847c810c135ca93045c"
+  "rendered_sha256": "91b946e7f76f36b1eff0ac8f215e1893d31faeea39b6205fc7f53418eac9bdc1"
 }

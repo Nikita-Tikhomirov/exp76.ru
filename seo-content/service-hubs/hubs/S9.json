@@ -254,10 +254,10 @@
         "title": "Спил и удаление деревьев",
         "text": "Дерево удаляют целиком или по частям в зависимости от его состояния, расположения и окружающих объектов; уходовую обрезку этот состав не заменяет.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
-          "alt": "Пример спила дерева на участке",
-          "asset_kind": "service_photo",
-          "source_page_id": 6870
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s9-tree-section-felling.webp",
+          "alt": "Удаление дерева по частям с использованием страховки",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Удаление дерева по частям с использованием страховки"
         }
       },
       {
@@ -274,10 +274,10 @@
         "title": "Расчистка от кустарников",
         "text": "Кустарниковую и древесную поросль убирают в пределах согласованной территории; дальнейшую погрузку, вывоз или подготовку грунта добавляют только после отдельного согласования.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil3.webp",
-          "alt": "Расчистка территории от кустарниковой растительности",
-          "asset_kind": "service_photo",
-          "source_page_id": 6870
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s9-shrub-clearing.webp",
+          "alt": "Выборочная расчистка кустарников и молодой поросли",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Выборочная расчистка кустарников и молодой поросли"
         }
       }
     ]
@@ -292,10 +292,10 @@
         "title": "Спил и удаление деревьев",
         "text": "Для задач, где требуется убрать отдельное дерево целиком или по частям с учётом его расположения и окружающих объектов, а не выполнить формирующую обрезку.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
-          "alt": "Спил и удаление дерева на участке",
-          "asset_kind": "service_photo",
-          "source_page_id": 6870
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s9-tree-removal.webp",
+          "alt": "Удаление дерева по частям на частном участке",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Удаление дерева по частям на частном участке"
         }
       },
       {
@@ -304,10 +304,10 @@
         "title": "Корчевание пней",
         "text": "Самостоятельная услуга по удалению оставшихся пней; выравнивание и последующую планировку всего участка рассчитывают отдельно.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp",
-          "alt": "Объект в Коприно, связанный с корчеванием пней",
-          "asset_kind": "case_photo",
-          "case_id": 8613
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s9-stump-extraction.webp",
+          "alt": "Механическое корчевание пня мини-экскаватором",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Механическое корчевание пня мини-экскаватором"
         }
       },
       {
@@ -316,10 +316,10 @@
         "title": "Расчистка от деревьев и кустарников",
         "text": "Комплексное освобождение согласованной площади от древесной и кустарниковой растительности без автоматического обещания вывоза или дальнейшей обработки грунта.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil3.webp",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s9-plot-clearing.webp",
           "alt": "Расчистка участка от деревьев и кустарников",
-          "asset_kind": "service_photo",
-          "source_page_id": 6870
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Расчистка участка от деревьев и кустарников"
         }
       }
     ]
@@ -334,8 +334,10 @@
         "title": "Как избавиться от пня на участке: способы и ограничения",
         "text": "Сравнение ручной раскопки, корчевания, измельчения и естественного разрушения с границами самостоятельной работы и подготовкой места.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp",
-          "alt": "Пень и древесная растительность на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s9-stump-removal-methods.webp",
+          "alt": "Пень, корчеватель и инструменты для выбора способа удаления",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Пень, корчеватель и инструменты для выбора способа удаления"
         }
       },
       {
@@ -344,13 +346,15 @@
         "title": "С чего начать расчистку заросшего участка",
         "text": "Инвентаризация растительности, сохранение нужных деревьев, деление территории на очереди и границы между расчисткой, вывозом и планировкой.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/spil1.webp",
-          "alt": "Расчистка заросшего участка перед благоустройством"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s9-overgrown-site-survey.webp",
+          "alt": "Осмотр заросшего участка перед расчисткой",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Осмотр заросшего участка перед расчисткой"
         }
       }
     ]
   },
   "evidence_gaps": [],
   "fact_evidence": [],
-  "rendered_sha256": "65915b912e7d935798b9e55c5ed40ec3b9ffc851fc7f239a8d67ac8bee93c8b4"
+  "rendered_sha256": "fb36c35e72cca60d092333bc60a3ea90ec3573e603b74943604243b8563a2b5f"
 }

@@ -192,5 +192,19 @@
       "ремонт внутренней электрики дома",
       "поставка оборудования без согласованной спецификации"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-outdoor-lighting-installation.webp",
+      "alt": "Монтаж уличных светильников вдоль садовой дорожки"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-outdoor-lighting-installation.webp",
+      "alt": "Монтаж уличных светильников вдоль садовой дорожки"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-outdoor-lighting-installation.webp",
+      "alt": "Монтаж уличных светильников вдоль садовой дорожки"
+    }
   }
 }

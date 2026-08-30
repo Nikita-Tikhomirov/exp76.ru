@@ -190,5 +190,19 @@
       "удаление строительного мусора",
       "посев газона"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-kultivatsiya-uchastka.webp",
+      "alt": "Культивация почвы мотокультиватором на частном участке"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-kultivatsiya-uchastka.webp",
+      "alt": "Культивация почвы мотокультиватором на частном участке"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-kultivatsiya-uchastka.webp",
+      "alt": "Культивация почвы мотокультиватором на частном участке"
+    }
   }
 }

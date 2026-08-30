@@ -191,5 +191,19 @@
       "ландшафтная подсветка растений",
       "внутреннее освещение"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-architectural-lighting.webp",
+      "alt": "Архитектурная подсветка фасада загородного дома"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-architectural-lighting.webp",
+      "alt": "Архитектурная подсветка фасада загородного дома"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-architectural-lighting.webp",
+      "alt": "Архитектурная подсветка фасада загородного дома"
+    }
   }
 }

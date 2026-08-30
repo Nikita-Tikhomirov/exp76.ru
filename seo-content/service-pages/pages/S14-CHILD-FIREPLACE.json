@@ -114,6 +114,20 @@
     "main_image_alt": "Камин на странице услуг по печам и каминам",
     "caption": "Фото со страницы печей и каминов иллюстрирует направление услуги; конструкция, материалы и характеристики конкретного камина не подтверждаются."
   },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-masonry-fireplace-interior.webp",
+      "alt": "Кладочный камин в интерьере загородного дома"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-masonry-fireplace-interior.webp",
+      "alt": "Кладочный камин в интерьере загородного дома"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-masonry-fireplace-interior.webp",
+      "alt": "Кладочный камин в интерьере загородного дома"
+    }
+  },
   "geo": {
     "heading": "Кладка каминов в Ярославской области",
     "text": "Рассматриваем объекты в Ярославле, Рыбинске и области; до расчёта проверяем помещение и возможность устройства безопасного дымового канала.",

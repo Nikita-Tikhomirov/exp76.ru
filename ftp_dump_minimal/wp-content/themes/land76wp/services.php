@@ -19,7 +19,7 @@ add_filter('aioseo_title', function ($title) {
 
 add_filter('aioseo_description', function ($description) {
   return is_page_template('services.php')
-    ? 'Каталог услуг по благоустройству участков: дренаж, осушение, ливневая канализация, отмостка, плитка, автополив и проектирование.'
+    ? 'Каталог услуг по благоустройству участков: инженерные и ландшафтные работы, озеленение, расчистка, водоёмы, навесы, фундаменты и демонтаж.'
     : $description;
 });
 
@@ -179,6 +179,16 @@ $land76_services_groups = array(
   ),
 );
 
+$land76_additional_service_hubs = array(
+  array('service_id' => 'S9', 'title' => 'Расчистка участка, спил и корчевание', 'url' => '/services/vykorchevyvanie-pnejj-spil-derevev/', 'text' => 'Убираем поросль, кустарник, деревья и пни; готовим территорию к дальнейшим земляным и ландшафтным работам.'),
+  array('service_id' => 'S10', 'title' => 'Пруды, водоёмы, ручьи и водопады', 'url' => '/services/sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev/', 'text' => 'Проектируем и создаём декоративные и плавательные водоёмы, ручьи, каскады, водопады и частные фонтаны.'),
+  array('service_id' => 'S11', 'title' => 'Системы туманообразования', 'url' => '/services/sistemy-tumanoobrazovaniya/', 'text' => 'Подбираем и монтируем системы охлаждения для террас, веранд, летних площадок кафе и теплиц.'),
+  array('service_id' => 'S12', 'title' => 'Фундамент на железобетонных сваях', 'url' => '/services/fundament-na-zhelezobetonnykh-svajakh/', 'text' => 'Выполняем разметку, забивку и подготовку свайного поля для малоэтажного дома, бани и других частных построек.'),
+  array('service_id' => 'S13', 'title' => 'Металлические навесы', 'url' => '/services/navesy-iz-metalla/', 'text' => 'Изготавливаем и монтируем навесы для автомобилей, террас, входных зон и площадок на частном участке.'),
+  array('service_id' => 'S14', 'title' => 'Камины, печи и барбекю', 'url' => '/services/kaminy-pechi-barbekju/', 'text' => 'Проектируем и кладём камины, отопительные печи, уличные барбекю и комплексы с казаном или коптильней.'),
+  array('service_id' => 'S15', 'title' => 'Снос домов и демонтаж зданий', 'url' => '/services/snos-i-demontazh-zdanijj-domov/', 'text' => 'Обследуем объект, выбираем способ разборки или сноса и организуем обращение со строительными остатками.'),
+);
+
 $land76_price_rows = array(
   array('Дренаж участка', 'от расчета по схеме и метражу', '/category/drenazh-uchastka/'),
   array('Осушение участка', 'после осмотра и выбора способа отвода воды', '/category/osushenie-uchastka/'),
@@ -195,7 +205,7 @@ $land76_price_rows = array(
       <section class="services services-hub wrapper">
         <div class="services-hub__intro">
           <h2 class="services__title">Каталог услуг по благоустройству участка</h2>
-          <p>Компания «Эксперты» выполняет инженерные, строительные и ландшафтные работы на частных участках в Рыбинске, Ярославле и Ярославской области: дренаж, осушение, ливневую канализацию, отмостку, укладку тротуарной плитки, автополив, газоны, проектирование и комплексное благоустройство.</p>
+          <p>Компания «Эксперты» выполняет инженерные, строительные и ландшафтные работы на частных участках в Рыбинске, Ярославле и Ярославской области: водоотведение, покрытия, озеленение, проектирование, расчистку, устройство водоёмов, навесов и свайных оснований, а также демонтаж малоэтажных объектов.</p>
           <div class="services-hub__cta">
             <a class="services-hub__btn" href="#services-calc">Рассчитать стоимость</a>
             <a class="services-hub__btn services-hub__btn--light" href="#services-cases">Посмотреть работы</a>
@@ -250,6 +260,19 @@ $land76_price_rows = array(
             </section>
           <?php endforeach; ?>
         </div>
+
+        <section class="services-hub__additional" aria-labelledby="additional-service-hubs-title">
+          <h2 class="services-hub__group-title" id="additional-service-hubs-title">Другие направления работ</h2>
+          <div class="services-hub__additional-grid">
+            <?php foreach ($land76_additional_service_hubs as $hub) : ?>
+              <article class="services-hub__additional-card" data-service-id="<?php echo esc_attr($hub['service_id']); ?>">
+                <h3><a href="<?php echo land76_services_url($hub['url']); ?>"><?php echo esc_html($hub['title']); ?></a></h3>
+                <p><?php echo esc_html($hub['text']); ?></p>
+                <a class="services-hub__more" href="<?php echo land76_services_url($hub['url']); ?>">Перейти в раздел</a>
+              </article>
+            <?php endforeach; ?>
+          </div>
+        </section>
 
         <section class="services-hub__prices">
           <h2 class="services-hub__subtitle">Популярные услуги и ориентиры по стоимости</h2>
@@ -319,6 +342,13 @@ $land76_price_rows = array(
         .services-hub__order strong { color: #333; font-size: 18px; }
         .services-hub__order em { color: #666; font-style: normal; line-height: 1.45; }
         .services-hub__cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .services-hub__additional { margin-top: 56px; }
+        .services-hub__additional-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+        .services-hub__additional-card { display: flex; min-width: 0; min-height: 100%; flex-direction: column; padding: 24px; border-left: 4px solid #ff5e00; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.12); }
+        .services-hub__additional-card h3 { margin: 0 0 12px; font-size: 23px; line-height: 1.25; }
+        .services-hub__additional-card h3 a { color: #333; text-decoration: none; }
+        .services-hub__additional-card p { margin: 0 0 18px; color: #666; font-size: 16px; line-height: 1.55; }
+        .services-hub__additional-card .services-hub__more { margin-top: auto; }
         .services-hub__card {
           display: flex; flex-direction: column; min-height: 100%;
           overflow: hidden; background: #fff; box-shadow: 0 5px 18px rgba(0,0,0,.15);
@@ -427,6 +457,7 @@ $land76_price_rows = array(
         }
         @media (max-width: 1100px) {
           .services-hub__cards { grid-template-columns: repeat(2, 1fr); }
+          .services-hub__additional-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           .services-hub__task-grid { grid-template-columns: repeat(2, 1fr); }
           .services-hub__order ol { grid-template-columns: 1fr; }
           .services-contact-form#form1 .calc-contact-form {
@@ -446,7 +477,8 @@ $land76_price_rows = array(
         @media (max-width: 700px) {
           .services-hub__cards,
           .services-hub__task-grid,
-          .services-hub__price-table { grid-template-columns: 1fr; }
+          .services-hub__price-table,
+          .services-hub__additional-grid { grid-template-columns: 1fr; }
           .services-hub__price-row { flex-direction: column; }
           .services-hub__price-row strong { text-align: left; }
           .services-hub__subtitle,

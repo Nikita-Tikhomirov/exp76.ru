@@ -24,8 +24,10 @@
     "title": "Ландшафтное проектирование участка",
     "lead": "Собираем участок в понятную систему: планировку, озеленение, дорожки и инженерные решения, чтобы работы на территории можно было согласованно реализовать.",
     "image": {
-      "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
-      "alt": "Благоустроенный участок после ландшафтного проектирования"
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s1-landscape-design-hero.webp",
+      "alt": "Участок после комплексного ландшафтного проектирования",
+      "asset_kind": "context_photo",
+      "caption": "Контекстная иллюстрация: Участок после комплексного ландшафтного проектирования"
     },
     "primary_cta": {
       "label": "Обсудить проект участка",
@@ -258,34 +260,40 @@
         "title": "Эскиз и зонирование",
         "text": "Продумываем сценарии использования территории: вход, отдых, хозяйственную часть, открытые и приватные зоны. На этом этапе проще обсудить маршруты и пропорции, чем менять готовые покрытия.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
-          "alt": "Благоустройство участка на объекте Слип ул. Бугорок"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-planting-layout-preparation.webp",
+          "alt": "Разметка функциональных зон по эскизу участка",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Разметка функциональных зон по эскизу участка"
         }
       },
       {
         "title": "3D-визуализация",
         "text": "Визуализация служит ориентиром для обсуждения композиции, высотных акцентов, покрытий и общего настроения участка. Она не заменяет планов, а помогает прочитать их вместе с владельцем.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2020/10/Ila-CrwKkL4.webp",
-          "alt": "Благоустройство участка на улице Гражданской в Рыбинске"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-3d-visualization.webp",
+          "alt": "Трёхмерная визуализация будущего ландшафта участка",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Трёхмерная визуализация будущего ландшафта участка"
         }
       },
       {
         "title": "Генеральный план",
         "text": "На плане собираются основные элементы территории: строения, площадки, дорожки, газон, посадочные зоны и функциональные связи между ними. Он помогает сохранить единую геометрию при реализации по этапам.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20181015_110705_HDR.webp",
-          "alt": "Благоустройство участка в районе Веретье Рыбинска"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp",
+          "alt": "Генеральный план благоустройства частного участка",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Генеральный план благоустройства частного участка"
         }
       },
       {
         "title": "Дендроплан и озеленение",
         "text": "Дендроплан задаёт места для деревьев и кустарников в общей композиции. Подбор растений рассматривают вместе с освещённостью, будущими размерами посадок, проходами и соседством с покрытиями.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp",
-          "alt": "Разработка ландшафтного проекта загородного участка",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-dendroplan-site.webp",
+          "alt": "Сверка дендроплана с условиями участка",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: разработка ландшафтного проекта загородного участка"
+          "caption": "Контекстная иллюстрация: Сверка дендроплана с условиями участка"
         }
       },
       {
@@ -295,7 +303,7 @@
           "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
           "alt": "Высотная съёмка и формирование уклонов участка",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: высотная съёмка и формирование уклонов участка"
+          "caption": "Контекстная иллюстрация: Высотная съёмка и формирование уклонов участка"
         }
       }
     ]
@@ -310,10 +318,10 @@
         "title": "Эскизный проект участка",
         "text": "Эскиз помогает согласовать концепцию, зонирование и основные связи участка до детализации полного комплекта ландшафтного проекта.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp",
-          "alt": "Разработка ландшафтного проекта загородного участка",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s1-sketch-project-consultation.webp",
+          "alt": "Обсуждение эскизного проекта участка с владельцем",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: разработка ландшафтного проекта загородного участка"
+          "caption": "Контекстная иллюстрация: Обсуждение эскизного проекта участка с владельцем"
         }
       },
       {
@@ -322,11 +330,10 @@
         "title": "Генеральный план участка",
         "text": "Ландшафтный генплан объединяет зонирование, дорожки, озеленение и инженерные решения; строительный генплан и ГПЗУ в услугу не входят.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp",
-          "alt": "Готовое благоустройство участка с генеральным планом",
-          "asset_kind": "case_photo",
-          "source_page_id": 10345,
-          "case_id": 10345
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s1-general-plan-site-review.webp",
+          "alt": "Сверка генерального плана с разметкой участка",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Сверка генерального плана с разметкой участка"
         }
       },
       {
@@ -335,10 +342,10 @@
         "title": "Дендроплан участка",
         "text": "Дендроплан задаёт проектное размещение и перечень растений, тогда как закупка и физическая посадка относятся к отдельному этапу озеленения.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp",
-          "alt": "Разработка ландшафтного проекта загородного участка",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s1-dendroplan-development.webp",
+          "alt": "Разработка дендроплана с подбором деревьев и кустарников",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: разработка ландшафтного проекта загородного участка"
+          "caption": "Контекстная иллюстрация: Разработка дендроплана с подбором деревьев и кустарников"
         }
       },
       {
@@ -360,10 +367,10 @@
         "title": "Проект вертикальной планировки участка",
         "text": "Проект определяет отметки и направления уклонов, но не включает физическое перемещение грунта, выравнивание или отсыпку территории.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
-          "alt": "Высотная съёмка и формирование уклонов участка",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s1-vertical-grading-layout.webp",
+          "alt": "Вынос проектных отметок и уклонов на участке",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: высотная съёмка и формирование уклонов участка"
+          "caption": "Контекстная иллюстрация: Вынос проектных отметок и уклонов на участке"
         }
       }
     ]
@@ -418,5 +425,5 @@
       "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/js/main.js#tab-project-total"
     }
   ],
-  "rendered_sha256": "a35b5e19efec5c19c6caa2b7ed31e887018942017abf980a10cd18ecd90f632c"
+  "rendered_sha256": "4ee2762d6023732ecc7c797db8a7da7393aba70c75369f442a714a624fa6b5f4"
 }

@@ -28,7 +28,7 @@
       "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
       "alt": "Механизированный демонтаж старого частного дома",
       "asset_kind": "context_photo",
-      "caption": "Контекстная иллюстрация: механизированный демонтаж старого частного дома"
+      "caption": "Контекстная иллюстрация: Механизированный демонтаж старого частного дома"
     },
     "primary_cta": {
       "label": "Обсудить демонтаж",
@@ -134,18 +134,7 @@
     "heading": "Иллюстрации демонтажных работ",
     "lead": "Фотографии показывают ручную разборку, механизированный демонтаж и работу со строительными остатками.",
     "cases": [],
-    "gallery": [
-      {
-        "url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
-        "alt": "Демонтаж здания как иллюстрация направления",
-        "caption": "Демонтаж конструкций небольшого загородного здания."
-      },
-      {
-        "url": "https://exp76.ru/wp-content/uploads/2019/02/snos2.webp",
-        "alt": "Рабочая площадка при разборке строения",
-        "caption": "Поэтапная разборка строительных конструкций на участке."
-      }
-    ]
+    "gallery": []
   },
   "geo": {
     "heading": "Демонтаж в Рыбинске, Ярославле и области",
@@ -225,20 +214,20 @@
         "title": "Частные и дачные дома",
         "text": "Перед сносом оценивают материал, размеры, состояние дома, фундамент, пристройки, соседние объекты и доступ. Частный жилой объект и небольшое дачное строение вынесены в разные услуги, поскольку их конструкция, окружение и ожидаемый результат часто различаются.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s15-house-site-assessment.webp",
+          "alt": "Обследование старого частного дома перед демонтажом",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: механизированный демонтаж старого частного дома"
+          "caption": "Контекстная иллюстрация: Обследование старого частного дома перед демонтажом"
         }
       },
       {
         "title": "Аварийные строения",
         "text": "Неустойчивые конструкции требуют отдельного обследования и ограничения доступа до выбора последовательности работ. Страница не обещает работу с любым аварийным объектом: допустимость, масштаб и метод подтверждаются только после оценки конкретной площадки.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-unsafe-building-manual-dismantling.webp",
+          "alt": "Безопасная ручная разборка аварийной деревянной постройки",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: механизированный демонтаж старого частного дома"
+          "caption": "Контекстная иллюстрация: Безопасная ручная разборка аварийной деревянной постройки"
         }
       },
       {
@@ -253,10 +242,10 @@
         "title": "Механизированный снос",
         "text": "Применимость техники зависит от конструкций, подъезда, рабочей зоны, грунта и окружения. На свободной площадке механизация может изменить порядок работ, но тип машины и метод не назначают до осмотра и проверки ограничений.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-excavator-building-demolition.webp",
+          "alt": "Контролируемый демонтаж кирпичного здания экскаватором",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: механизированный демонтаж старого частного дома"
+          "caption": "Контекстная иллюстрация: Контролируемый демонтаж кирпичного здания экскаватором"
         }
       },
       {
@@ -266,17 +255,17 @@
           "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp",
           "alt": "Сортировка и погрузка строительного мусора после сноса",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: сортировка и погрузка строительного мусора после сноса"
+          "caption": "Контекстная иллюстрация: Сортировка и погрузка строительного мусора после сноса"
         }
       },
       {
         "title": "Вывоз и состояние площадки",
         "text": "Вывоз строительного мусора является отдельной услугой внутри направления. До начала работ согласуют, какие материалы погружаются и вывозятся, а также какой результат должен остаться на участке после завершения демонтажа.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp",
-          "alt": "Сортировка и погрузка строительного мусора после сноса",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-cleared-demolition-site.webp",
+          "alt": "Очищенная и спланированная площадка после демонтажа",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: сортировка и погрузка строительного мусора после сноса"
+          "caption": "Контекстная иллюстрация: Очищенная и спланированная площадка после демонтажа"
         }
       }
     ]
@@ -291,10 +280,10 @@
         "title": "Снос частного дома",
         "text": "Разборка частного жилого дома после обследования конструкций, окружения и подъезда с отдельным согласованием погрузки, вывоза и результата на участке.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s15-private-house-demolition.webp",
+          "alt": "Контролируемый снос частного дома экскаватором",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: механизированный демонтаж старого частного дома"
+          "caption": "Контекстная иллюстрация: Контролируемый снос частного дома экскаватором"
         }
       },
       {
@@ -303,10 +292,10 @@
         "title": "Демонтаж дачного дома и строений",
         "text": "Демонтаж небольшого дачного дома и хозяйственных строений с подбором метода по материалам, состоянию, плотности участка и условиям вывоза.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-country-house-dismantling.webp",
+          "alt": "Поэтапная разборка деревянного дачного дома",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: механизированный демонтаж старого частного дома"
+          "caption": "Контекстная иллюстрация: Поэтапная разборка деревянного дачного дома"
         }
       },
       {
@@ -315,10 +304,10 @@
         "title": "Демонтаж аварийных зданий",
         "text": "Обследование и разборка аварийного объекта с выбором последовательности по состоянию конструкций и окружению.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-emergency-building-demolition.webp",
+          "alt": "Контролируемый демонтаж аварийного здания с безопасной дистанции",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: механизированный демонтаж старого частного дома"
+          "caption": "Контекстная иллюстрация: Контролируемый демонтаж аварийного здания с безопасной дистанции"
         }
       },
       {
@@ -337,10 +326,10 @@
         "title": "Механизированный снос зданий",
         "text": "Применение подходящей техники на площадке, где состояние объекта, рабочая зона, подъезд и соседние конструкции допускают механизированный метод.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-mechanized-building-demolition.webp",
+          "alt": "Механизированный демонтаж здания с сортировкой материалов",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: механизированный демонтаж старого частного дома"
+          "caption": "Контекстная иллюстрация: Механизированный демонтаж здания с сортировкой материалов"
         }
       },
       {
@@ -349,10 +338,10 @@
         "title": "Вывоз строительного мусора после сноса",
         "text": "Сортировка, погрузка и вывоз материалов после демонтажа в согласованном объёме с учётом состава отходов, доступа транспорта и результата на площадке.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp",
-          "alt": "Сортировка и погрузка строительного мусора после сноса",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s15-debris-haul-truck.webp",
+          "alt": "Погрузка отсортированного строительного мусора в самосвал",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: сортировка и погрузка строительного мусора после сноса"
+          "caption": "Контекстная иллюстрация: Погрузка отсортированного строительного мусора в самосвал"
         }
       }
     ]
@@ -367,13 +356,15 @@
         "title": "Нужно ли разрешение на снос частного дома",
         "text": "Какие обстоятельства и документы проверить до сноса и снятия объекта с кадастрового учёта; материал не заменяет индивидуальную правовую консультацию.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp",
-          "alt": "Подготовка частного здания к демонтажу"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s15-demolition-documents.webp",
+          "alt": "Проверка плана участка и данных дома перед сносом",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Проверка плана участка и данных дома перед сносом"
         }
       }
     ]
   },
   "evidence_gaps": [],
   "fact_evidence": [],
-  "rendered_sha256": "07adf8318afe06068801d9cca5d2385e8ea365f5e242ddbcec91719d9f29b09f"
+  "rendered_sha256": "c6c1e424e37efce9cabd41c6bed9291965f77b3bdc0c7aede62102fdd883bbe3"
 }

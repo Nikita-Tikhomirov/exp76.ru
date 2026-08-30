@@ -188,5 +188,19 @@
       "обещание полного уничтожения проблемы",
       "применение средств вне инструкции"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrabotka-sada-vrediteli.webp",
+      "alt": "Обработка плодового сада от болезней и вредителей"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrabotka-sada-vrediteli.webp",
+      "alt": "Обработка плодового сада от болезней и вредителей"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrabotka-sada-vrediteli.webp",
+      "alt": "Обработка плодового сада от болезней и вредителей"
+    }
   }
 }

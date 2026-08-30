@@ -187,5 +187,19 @@
       "регулярное обслуживание газона",
       "устройство системы полива"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posevnoi-gazon.webp",
+      "alt": "Посев газона на подготовленной почве частного участка"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posevnoi-gazon.webp",
+      "alt": "Посев газона на подготовленной почве частного участка"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posevnoi-gazon.webp",
+      "alt": "Посев газона на подготовленной почве частного участка"
+    }
   }
 }

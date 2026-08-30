@@ -46,6 +46,62 @@ def section(source: str, start: str, end: str) -> str:
 
 
 class ManagedPresentationRuntimeTests(unittest.TestCase):
+    def test_managed_hero_reserves_room_between_actions_and_breadcrumbs(self) -> None:
+        """Catches the compact legacy hero making new CTA controls overlap."""
+        source = read_template()
+
+        self.assertRegex(source, r"\.hero\s*\{[^}]*min-height:\s*620px;")
+        self.assertRegex(source, r"\.hero__buttons\s*\{[^}]*margin-top:\s*24px;")
+
+    def test_managed_hero_omits_scroll_cue_that_overlaps_long_breadcrumbs(self) -> None:
+        """Keeps the legacy scroll cue from covering managed child breadcrumbs."""
+        hero = section(read_template(), "<!-- 1.", "<!-- 2.")
+
+        self.assertNotIn('class="animation-wrap"', hero)
+        self.assertNotIn("Листайте", hero)
+
+    def test_inline_advantage_background_uses_absolute_theme_asset_url(self) -> None:
+        """Catches inline CSS resolving ``../img`` against the page URL."""
+        source = read_template()
+
+        self.assertIn(
+            "get_template_directory_uri() . '/img/adv.png'",
+            source,
+        )
+        self.assertNotIn("background: url(../img/adv.png)", source)
+
+    def test_managed_page_uses_one_normalized_seen_image_registry(self) -> None:
+        """Catches repeated files and WordPress resized variants on one page."""
+        source = read_template()
+        identity = php_function_body(source, "land76_newservice_image_identity")
+        reserve = php_function_body(source, "land76_newservice_reserve_image")
+
+        self.assertIn("wp_parse_url", identity)
+        self.assertIn("-\\d+x\\d+", identity)
+        self.assertIn("-scaled", identity)
+        self.assertIn("land76_newservice_image_identity", reserve)
+        self.assertIn("$ns87_rendered_image_identities", source)
+
+        bootstrap = section(source, "$ns87_post_context", "$ns87_hero_title")
+        for render_flag, image_url in (
+            ("$ns87_render_hero_image", "$ns87_hero_image_url"),
+            ("$ns87_render_main_image", "$ns87_main_image_url"),
+            ("$ns87_render_context_image", "$ns87_context_image_url"),
+        ):
+            self.assertIn(
+                f"{render_flag} = {render_flag} && land76_newservice_reserve_image($ns87_rendered_image_identities, {image_url})",
+                bootstrap,
+            )
+
+        for start, end in (
+            ("service-related-services", "service-related-articles"),
+            ("service-related-articles", "<!-- 6."),
+        ):
+            self.assertIn(
+                ", $ns87_rendered_image_identities)",
+                section(source, start, end),
+            )
+
     def test_managed_hero_prefers_role_meta_and_falls_back_to_real_main_pair(self) -> None:
         """Catches imported hero metadata being stored but ignored by the hero."""
         source = read_template()
@@ -82,11 +138,23 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         )
 
         problem = section(source, "<!-- 2.", "<!-- 3.")
-        self.assertIn("$ns87_problem_reserved_image_urls", problem)
         self.assertIn("$ns87_rendered_problem_image_urls", problem)
-        self.assertIn("in_array($ns87_problem_img, $ns87_problem_reserved_image_urls, true)", problem)
+        self.assertIn("problem-item__number", problem)
+        self.assertIn("str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT)", problem)
+        self.assertNotIn("land76_newservice_reserve_image", problem)
         self.assertIn("in_array($ns87_problem_img, $ns87_rendered_problem_image_urls, true)", problem)
-        self.assertRegex(problem, r"if \(\$ns87_problem_img !== ''\)\s*:\s*\?>\s*<img")
+        self.assertRegex(
+            problem,
+            r"(?s)if \(\$land76_managed_service_hub_post\).*problem-item__number",
+        )
+        self.assertRegex(
+            problem,
+            r"elseif \(\$ns87_problem_img !== ''\)\s*:\s*\?>\s*<img",
+        )
+        self.assertRegex(
+            source,
+            r"\.problem-item img\s*,\s*\.problem-item__number\s*\{[^}]*margin-right:\s*0;[^}]*margin-bottom:\s*15px;",
+        )
 
         seo_content = section(source, "<!-- 4.", "<!-- 5.")
         context_figure = section(
@@ -96,14 +164,27 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         )
         self.assertIn("$ns87_context_image_url", context_figure)
         self.assertIn("$ns87_context_image_alt", context_figure)
-        self.assertIn("$ns87_context_image_url !== $ns87_main_image_url", seo_content)
+        self.assertIn("$ns87_render_context_image", seo_content)
 
     def test_managed_cases_never_use_context_fallback_but_legacy_keeps_its_route(self) -> None:
         """Catches generated managed media masquerading as proof or a legacy regression."""
+        source = read_template()
         cases = section(
-            read_template(),
+            source,
             "<!-- 5.",
             "service-related-services",
+        )
+
+        selector = php_function_body(
+            source,
+            "land76_newservice_unique_project_image",
+        )
+        self.assertIn("get_field('slider', $post_id)", selector)
+        self.assertIn("get_attached_media('image', $post_id)", selector)
+        self.assertIn("land76_newservice_reserve_image($seen, $url)", selector)
+        self.assertIn(
+            "land76_newservice_unique_project_image($post_id, $ns87_rendered_image_identities, 'medium')",
+            cases,
         )
 
         self.assertIn(
@@ -112,16 +193,19 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         )
         self.assertIn("get_the_post_thumbnail_url", cases)
         self.assertNotIn("_land76_context_image", cases)
-        self.assertIn(
-            "if (!$project_image && !$land76_managed_service_hub_post)",
-            cases,
-        )
+        self.assertIn("if ($land76_managed_service_hub_post)", cases)
         fallback = section(
             cases,
-            "if (!$project_image && !$land76_managed_service_hub_post)",
+            "} else {",
             "$project_title",
         )
         self.assertEqual(1, fallback.count("land76_newservice_context_image"))
+        managed_branch = section(
+            cases,
+            "if ($land76_managed_service_hub_post)",
+            "} else {",
+        )
+        self.assertNotIn("land76_newservice_context_image", managed_branch)
         self.assertRegex(cases, r"if \(\$project_image\)\s*:\s*\?>")
 
     def test_real_main_image_keeps_its_own_url_and_alt(self) -> None:
@@ -151,19 +235,44 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         )
 
         self.assertIn("array('card', 'main')", selector)
+        self.assertIn("foreach (array('services', 'articles') as $section_name)", selector)
+        self.assertIn("$item['page_key']", selector)
+        self.assertLess(
+            selector.index("foreach (array('services', 'articles') as $section_name)"),
+            selector.index("foreach (array('card', 'main') as $role)"),
+        )
         self.assertIn("'_land76_' . $role . '_image_url'", selector)
         self.assertIn("'_land76_' . $role . '_image_alt'", selector)
         self.assertIn("land76wp_service_hub_for_post", selector)
         self.assertIn("land76_service_v2_load", selector)
         self.assertIn("$service_v2['hero']['image']['url']", selector)
         self.assertIn("$service_v2['hero']['image']['alt']", selector)
+        self.assertIn("foreach (array('scope', 'services', 'articles') as $hub_section_name)", selector)
+        self.assertIn("$hub_item['image']['url']", selector)
+        self.assertIn("$hub_item['image']['alt']", selector)
+        self.assertLess(
+            selector.index("foreach (array('scope', 'services', 'articles') as $hub_section_name)"),
+            selector.index("foreach (array('services', 'articles') as $section_name)"),
+        )
+        self.assertIn("$candidates", selector)
+        self.assertIn("foreach ($candidates as $candidate)", selector)
+        self.assertIn(
+            "land76_newservice_reserve_image($seen, $candidate['url'])",
+            selector,
+        )
 
         related = section(source, "service-related-services", "service-related-articles")
         self.assertIn(
-            "land76_newservice_related_card_image($ns87_related_service_id)",
+            "land76_newservice_related_card_image($ns87_related_service_id, $ns87_rendered_image_identities)",
             related,
         )
         self.assertRegex(related, r"if \(\$ns87_related_service_card\['url'\] !== ''")
+
+        related_articles = section(source, "service-related-articles", "<!-- 6.")
+        self.assertIn(
+            "land76_newservice_related_card_image($ns87_related_article->ID, $ns87_rendered_image_identities)",
+            related_articles,
+        )
 
     def test_managed_pricing_renders_factors_while_legacy_keeps_its_table(self) -> None:
         """Catches managed factor explanations being shown as fake price rows."""

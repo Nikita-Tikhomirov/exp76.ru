@@ -114,6 +114,20 @@
     "main_image_alt": "Кирпичная печная конструкция на странице услуг",
     "caption": "Фото со страницы печей и каминов показывает кладочный контекст; конкретный кирпичный мангал, его материалы и гарантия не подтверждаются."
   },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-compact-brick-grill.webp",
+      "alt": "Компактный стационарный кирпичный мангал на участке"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-compact-brick-grill.webp",
+      "alt": "Компактный стационарный кирпичный мангал на участке"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-compact-brick-grill.webp",
+      "alt": "Компактный стационарный кирпичный мангал на участке"
+    }
+  },
   "geo": {
     "heading": "Кирпичные мангалы в Ярославской области",
     "text": "Кладём стационарные мангалы в Ярославле, Рыбинске и области после проверки места, основания и условий под навесом, если он есть.",

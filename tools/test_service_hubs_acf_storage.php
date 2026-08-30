@@ -1146,6 +1146,34 @@ $test->run('fresh generic ACF write uses the field key and round-trips storage',
     );
 });
 
+$test->run('empty generic ACF image round-trips as canonical zero storage', function (Land76_Acf_Storage_Test $test): void {
+    global $land76_test_acf_values;
+    $item = land76_test_item('S1-CHILD-TEST', array(
+        'ns87_problem_items' => array(array(
+            'title' => 'Problem',
+            'text' => 'Details',
+            'image' => '',
+        )),
+    ));
+
+    land76wp_service_hubs_apply_acf($item, 1001, array('S1-CHILD-TEST' => 1001));
+    $test->same(
+        0,
+        $land76_test_acf_values[1001]['field_ns87_problem_items'][0]['field_ns87_problem_items_image'] ?? null,
+        'an empty image must be stored as ACF canonical zero'
+    );
+    $test->same(
+        'field_ns87_problem_items_image',
+        get_post_meta(1001, '_ns87_problem_items_0_image', true),
+        'an empty image must retain its exact nested companion key'
+    );
+    $test->same(
+        array(),
+        land76_test_verify($item, array('S1-CHILD-TEST' => 1001)),
+        'an empty image must pass the full raw-storage verification round trip'
+    );
+});
+
 $test->run('unresolved or unsafe ACF image URL fails closed', function (Land76_Acf_Storage_Test $test): void {
     foreach (array(
         'https://exp76.ru/uploads/missing.webp',
@@ -1227,6 +1255,47 @@ $test->run('expected image arrays resolve one exact attachment while malformed r
         'unresolved_acf_image',
         'actual raw image storage must be an integer or numeric string, never a coerced float'
     );
+});
+
+$test->run('empty ACF image values normalize to zero without raw overrides', function (Land76_Acf_Storage_Test $test): void {
+    global $land76_test_fields_by_key;
+    $image_field = $land76_test_fields_by_key['field_ns87_problem_items']['sub_fields'][2];
+
+    $expected_overrides = array();
+    $test->same(
+        0,
+        land76wp_service_hubs_prepare_acf_image_storage(
+            '',
+            $image_field,
+            'expected',
+            'ns87_problem_items_0_image',
+            $expected_overrides,
+            'fixture.empty_image'
+        ),
+        'the frozen empty image contract must normalize to canonical zero storage'
+    );
+    $test->same(array(), $expected_overrides, 'an expected empty image must not create a raw override');
+
+    foreach (array('', null, false, 0, '0') as $empty_value) {
+        $actual_overrides = array();
+        $test->same(
+            0,
+            land76wp_service_hubs_prepare_acf_image_storage(
+                $empty_value,
+                $image_field,
+                'actual',
+                'ns87_problem_items_0_image',
+                $actual_overrides,
+                'fixture.empty_image'
+            ),
+            'every ACF raw empty representation must normalize to canonical zero storage'
+        );
+        $test->same(
+            array(),
+            $actual_overrides,
+            'an actual empty image must not create a raw theme-image override'
+        );
+    }
 });
 
 $test->run('missing nested companion fails key-based apply for every repeater leaf', function (Land76_Acf_Storage_Test $test): void {

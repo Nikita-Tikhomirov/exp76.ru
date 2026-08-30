@@ -1,6 +1,7 @@
 <footer class="footer wrapper"><img class="footer__logo" src="<?php echo get_template_directory_uri() ?>/img/logo4.png" alt="" role="presentation" />
     <div class="footer__services-wrap"><span class="footer__title">Услуги</span>
       <ul class="footer__services columns2">
+        <li class="footer__item"><a class="footer__link" href="<?php echo esc_url(get_permalink(921)); ?>">Все услуги</a></li>
         <li class="footer__item"><a class="footer__link" href="https://exp76.ru/services/landshaftnoe-proektirovanie/">Ландшафтное проектирование</a></li>
         <li class="footer__item"><a class="footer__link" href="https://exp76.ru/category/drenazh-uchastka/">Дренаж участка </a></li>
         <li class="footer__item"><a class="footer__link" href="https://exp76.ru/category/ukladka-trotuarnoy-plitki/">Укладка тротуарной плитки</a></li>

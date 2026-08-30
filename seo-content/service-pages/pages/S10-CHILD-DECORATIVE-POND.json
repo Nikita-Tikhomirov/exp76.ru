@@ -187,5 +187,19 @@
       "строительство капитальных бассейнов",
       "инженерные городские фонтаны"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-decorative-pond.webp",
+      "alt": "Декоративный пруд с каменной береговой линией и водными растениями"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-decorative-pond.webp",
+      "alt": "Декоративный пруд с каменной береговой линией и водными растениями"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-decorative-pond.webp",
+      "alt": "Декоративный пруд с каменной береговой линией и водными растениями"
+    }
   }
 }

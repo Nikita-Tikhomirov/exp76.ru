@@ -15,8 +15,8 @@
   "canonical": "https://exp76.ru/vertikalnaya-planirovka-uchastka/",
   "post_title": "Вертикальная планировка и формирование уклонов",
   "seo": {
-    "title": "Вертикальная планировка и формирование уклонов в Ярославле — земляные работы на участке",
-    "description": "Вертикальная планировка и формирование уклонов в Ярославле, Рыбинске и области: заданные уклоны, этапы работ, границы услуги и факторы индивидуального расчёта стоимости."
+    "title": "Вертикальная планировка участка в Ярославле — формирование уклонов",
+    "description": "Вертикальная планировка участка в Ярославле, Рыбинске и области: формирование уклонов, этапы работ, границы услуги и индивидуальный расчёт стоимости."
   },
   "h1": "Вертикальная планировка и формирование уклонов в Ярославле",
   "lead": "Формируем проектные уклоны на местности по имеющейся высотной схеме, увязывая поверхность с домом, дорожками, площадками и направлениями стока.",
@@ -191,16 +191,16 @@
   },
   "presentation_images": {
     "hero": {
-      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
-      "alt": "Высотная съёмка и формирование уклонов участка"
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vertikalnaya-planirovka.webp",
+      "alt": "Формирование уклонов грунта возле дома по высотным отметкам"
     },
     "context": {
-      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
-      "alt": "Высотная съёмка и формирование уклонов участка"
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vertikalnaya-planirovka.webp",
+      "alt": "Формирование уклонов грунта возле дома по высотным отметкам"
     },
     "card": {
-      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
-      "alt": "Высотная съёмка и формирование уклонов участка"
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vertikalnaya-planirovka.webp",
+      "alt": "Формирование уклонов грунта возле дома по высотным отметкам"
     }
   }
 }

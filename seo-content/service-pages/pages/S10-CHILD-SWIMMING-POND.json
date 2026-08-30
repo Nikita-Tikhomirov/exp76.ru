@@ -185,5 +185,19 @@
       "строительство капитальных бассейнов",
       "инженерные городские фонтаны"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-swimming-pond.webp",
+      "alt": "Плавательный пруд с купальной зоной и зоной регенерации"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-swimming-pond.webp",
+      "alt": "Плавательный пруд с купальной зоной и зоной регенерации"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-swimming-pond.webp",
+      "alt": "Плавательный пруд с купальной зоной и зоной регенерации"
+    }
   }
 }

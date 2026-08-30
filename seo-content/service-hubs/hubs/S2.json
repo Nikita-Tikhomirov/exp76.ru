@@ -24,8 +24,10 @@
     "title": "Рулонный и посевной газон под ключ",
     "lead": "Подготавливаем основание и устраиваем газон с учётом назначения площадки, выбранного типа покрытия и дальнейшего ухода.",
     "image": {
-      "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
-      "alt": "Готовый газон на благоустроенном участке"
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s2-finished-private-lawn.webp",
+      "alt": "Готовый газон на благоустроенном загородном участке",
+      "asset_kind": "context_photo",
+      "caption": "Контекстная иллюстрация: Готовый газон на благоустроенном загородном участке"
     },
     "primary_cta": {
       "label": "Рассчитать устройство газона",
@@ -228,16 +230,20 @@
         "title": "Подготовка почвы",
         "text": "Поверхность очищают от сорной растительности, обрабатывают грунт и выравнивают основание. До начала озеленения важно убрать препятствия, которые помешают ровно распределить почву и покрытие.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
-          "alt": "Газон на объекте посёлок Слип"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s2-lawn-soil-tilling.webp",
+          "alt": "Обработка и очистка грунта перед устройством газона",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Обработка и очистка грунта перед устройством газона"
         }
       },
       {
         "title": "Рулонный газон",
         "text": "Рулоны укладывают на подготовленную поверхность, сохраняя аккуратное сопряжение полотен. Такой вариант выбирают, когда нужен готовый травяной покров после завершения укладки.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
-          "alt": "Рулонный газон на объекте в Нестерово"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s2-rolled-turf-layout.webp",
+          "alt": "Раскладка и стыковка полос рулонного газона",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Раскладка и стыковка полос рулонного газона"
         }
       },
       {
@@ -252,8 +258,10 @@
         "title": "Уход после устройства",
         "text": "На начальном этапе газон нуждается в регулярном поливе и контроле состояния покрытия. Подход к уходу зависит от погоды, типа газона и фактического состояния травы.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
-          "alt": "Уход за газоном на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-new-lawn-aftercare.webp",
+          "alt": "Первый полив и проверка свежего рулонного газона",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Первый полив и проверка свежего рулонного газона"
         }
       }
     ]
@@ -268,11 +276,10 @@
         "title": "Рулонный газон под ключ",
         "text": "Подготовка поверхности и укладка готового травяного покрытия с согласованием примыканий, полива и первых действий после завершения работ.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
-          "alt": "Подготовка почвы и укладка рулонного газона",
-          "asset_kind": "case_photo",
-          "source_page_id": 9554,
-          "case_id": 9554
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s2-rolled-lawn-installation.webp",
+          "alt": "Комплексная укладка рулонного газона на участке",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Комплексная укладка рулонного газона на участке"
         }
       },
       {
@@ -281,11 +288,10 @@
         "title": "Посевной газон под ключ",
         "text": "Создание покрытия посевом по подготовленному грунту с учётом распределения семян и режима ухода в период формирования молодой травы.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
-          "alt": "Готовый посевной газон на загородном участке",
-          "asset_kind": "case_photo",
-          "source_page_id": 10096,
-          "case_id": 10096
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s2-seeded-lawn-sowing.webp",
+          "alt": "Равномерный посев и прикатывание семян газона",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Равномерный посев и прикатывание семян газона"
         }
       },
       {
@@ -294,11 +300,10 @@
         "title": "Подготовка грунта под газон",
         "text": "Формирование верхнего слоя и основания будущего покрытия без присвоения работ по общему изменению рельефа и вертикальной планировке участка.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp",
-          "alt": "Объект, где подтверждены подготовка почвы и укладка газона",
-          "asset_kind": "case_photo",
-          "source_page_id": 9554,
-          "case_id": 9554
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-soil-preparation.webp",
+          "alt": "Выравнивание подготовленного грунта перед устройством газона",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Выравнивание подготовленного грунта перед устройством газона"
         }
       },
       {
@@ -310,7 +315,7 @@
           "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp",
           "alt": "Подготовка грунта и восстановление газона",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: подготовка грунта и восстановление газона"
+          "caption": "Контекстная иллюстрация: Подготовка грунта и восстановление газона"
         }
       }
     ]
@@ -353,5 +358,5 @@
       "source_ref": "ftp_dump_minimal/wp-content/themes/land76wp/js/main.js#tab-grass-total"
     }
   ],
-  "rendered_sha256": "7c95cc3c8cafc8283f3feb5b80e1fe00b4ea44734253dd72ae5059620b9de4e9"
+  "rendered_sha256": "55691e4929ef991d9921caf13dfb8cfe6a3c16d51d2be3a4f34a6a3949584937"
 }

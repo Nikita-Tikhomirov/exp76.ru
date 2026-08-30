@@ -114,6 +114,20 @@
     "main_image_alt": "Печь на странице кладочных отопительных услуг",
     "caption": "Фото со страницы печей и каминов служит визуальным контекстом; мощность, материалы и параметры конкретной отопительной печи не подтверждаются."
   },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-heating-stove-masonry.webp",
+      "alt": "Кирпичная отопительная печь в деревянном доме"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-heating-stove-masonry.webp",
+      "alt": "Кирпичная отопительная печь в деревянном доме"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-heating-stove-masonry.webp",
+      "alt": "Кирпичная отопительная печь в деревянном доме"
+    }
+  },
   "geo": {
     "heading": "Отопительные печи в Ярославской области",
     "text": "Выполняем обследования в Ярославле, Рыбинске и области; проектное решение привязывается к реальному дому и его конструкциям.",

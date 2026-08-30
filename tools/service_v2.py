@@ -590,6 +590,19 @@ def render_service(service: dict[str, Any]) -> str:
     related = service["related_links"]
     cta = service["cta"]
 
+    next_section_is_soft = False
+
+    def section_class(*extra: str) -> str:
+        """Return the next alternating full-width section class list."""
+        nonlocal next_section_is_soft
+        variant = (
+            "service-v2__section--soft"
+            if next_section_is_soft
+            else "service-v2__section--plain"
+        )
+        next_section_is_soft = not next_section_is_soft
+        return " ".join(("service-v2__section", variant, *extra))
+
     schema_version = 2 if schema_two else 1
     output: list[str] = [
         f'<div class="service-v2" data-service-id="{service_id}" '
@@ -619,18 +632,19 @@ def render_service(service: dict[str, Any]) -> str:
 
     output.extend(
         [
-            '<section class="service-v2__section service-v2__intro wrapper">',
+            f'<section class="{section_class()}">',
+            '<div class="wrapper service-v2__intro">',
             f'<div class="service-v2__section-copy"><h2>{_e(intro["heading"])}</h2>{_paragraphs(intro["body"])}</div>',
             '<div class="service-v2__highlights">',
         ]
     )
     for item in intro["highlights"]:
         output.append(f'<article><h3>{_e(item["title"])}</h3><p>{_e(item["text"])}</p></article>')
-    output.append('</div></section>')
+    output.append('</div></div></section>')
 
     output.extend(
         [
-            '<section class="service-v2__section service-v2__section--soft">',
+            f'<section class="{section_class()}">',
             '<div class="wrapper">',
             f'<div class="service-v2__section-heading"><h2>{_e(services["heading"])}</h2><p>{_e(services["lead"])}</p></div>',
             '<div class="service-v2__cards">',
@@ -655,7 +669,8 @@ def render_service(service: dict[str, Any]) -> str:
                 continue
             output.extend(
                 [
-                    '<section class="service-v2__section wrapper">',
+                    f'<section class="{section_class()}">',
+                    '<div class="wrapper">',
                     f'<div class="service-v2__section-heading"><h2>{_e(section["heading"])}</h2><p>{_e(section["lead"])}</p></div>',
                     '<div class="service-v2__cards">',
                 ]
@@ -670,11 +685,12 @@ def render_service(service: dict[str, Any]) -> str:
                         '</span></a>',
                     ]
                 )
-            output.append('</div></section>')
+            output.append('</div></div></section>')
 
     output.extend(
         [
-            '<section class="service-v2__section wrapper">',
+            f'<section class="{section_class()}">',
+            '<div class="wrapper">',
             f'<div class="service-v2__section-heading"><h2>{_e(process["heading"])}</h2><p>{_e(process["lead"])}</p></div>',
             '<ol class="service-v2__steps">',
         ]
@@ -683,11 +699,11 @@ def render_service(service: dict[str, Any]) -> str:
         output.append(
             f'<li><span>{index}</span><div><h3>{_e(step["title"])}</h3><p>{_e(step["text"])}</p></div></li>'
         )
-    output.append('</ol></section>')
+    output.append('</ol></div></section>')
 
     output.extend(
         [
-            '<section class="service-v2__section service-v2__section--dark" id="service-v2-pricing">',
+            f'<section class="{section_class("service-v2__section--dark")}" id="service-v2-pricing">',
             '<div class="wrapper service-v2__pricing">',
             '<div class="service-v2__pricing-copy">',
             f'<h2>{_e(pricing["heading"])}</h2><p class="service-v2__pricing-lead">{_e(pricing["lead"])}</p>',
@@ -713,7 +729,8 @@ def render_service(service: dict[str, Any]) -> str:
     if proof["cases"] or proof["gallery"]:
         output.extend(
             [
-                '<section class="service-v2__section wrapper" id="service-v2-cases">',
+                f'<section class="{section_class()}" id="service-v2-cases">',
+                '<div class="wrapper">',
                 f'<div class="service-v2__section-heading"><h2>{_e(proof["heading"])}</h2><p>{_e(proof["lead"])}</p></div>',
                 '<div class="service-v2__proof-grid">',
             ]
@@ -739,15 +756,16 @@ def render_service(service: dict[str, Any]) -> str:
                     '</figure>',
                 ]
             )
-        output.append('</div></section>')
+        output.append('</div></div></section>')
 
     output.extend(
         [
-            '<section class="service-v2__section service-v2__geo">',
-            '<div class="wrapper service-v2__geo-inner">',
+            f'<section class="{section_class("service-v2__geo")}">',
+            '<div class="wrapper"><div class="service-v2__geo-inner">',
             f'<h2>{_e(geo["heading"])}</h2>{_paragraphs(geo["body"])}',
-            '</div></section>',
-            '<section class="service-v2__section wrapper">',
+            '</div></div></section>',
+            f'<section class="{section_class()}">',
+            '<div class="wrapper">',
             f'<div class="service-v2__section-heading"><h2>{_e(related["heading"])}</h2><p>{_e(related["lead"])}</p></div>',
             '<div class="service-v2__related">',
         ]
@@ -756,12 +774,12 @@ def render_service(service: dict[str, Any]) -> str:
         output.append(
             f'<a href="{_e(item["url"])}"><strong>{_e(item["label"])}</strong><span>{_e(item["text"])}</span></a>'
         )
-    output.append('</div></section>')
+    output.append('</div></div></section>')
 
     output.extend(
         [
-            '<section class="service-v2__section service-v2__section--soft">',
-            '<div class="wrapper service-v2__faq">',
+            f'<section class="{section_class()}">',
+            '<div class="wrapper"><div class="service-v2__faq">',
             f'<h2>{_e(faq["heading"])}</h2>',
         ]
     )
@@ -771,12 +789,12 @@ def render_service(service: dict[str, Any]) -> str:
             f'<summary>{_e(item["question"])}</summary><p>{_e(item["answer"])}</p>'
             '</details>'
         )
-    output.append('</div></section>')
+    output.append('</div></div></section>')
 
     output.extend(
         [
-            '<section class="service-v2__section service-v2__cta" id="service-v2-form">',
-            '<div class="wrapper service-v2__cta-inner">',
+            f'<section class="{section_class("service-v2__cta")}" id="service-v2-form">',
+            '<div class="wrapper"><div class="service-v2__cta-inner">',
             f'<div><h2>{_e(cta["heading"])}</h2><p>{_e(cta["text"])}</p></div>',
             '<div class="formWrapper service-v2__form-wrapper">',
             '<form class="form service-v2__form" method="post" action="/server.php">',
@@ -788,7 +806,7 @@ def render_service(service: dict[str, Any]) -> str:
             f'<button class="service-v2__button form__btn" type="submit">{_e(cta["button_label"])}</button>',
             '</form>',
             '<div class="ajaxMessage"><div class="ajaxMessage__success"><div class="ajaxMessage__title"><p>Спасибо!</p><p>Заявка отправлена</p></div><div class="ajaxMessage__text">Свяжемся с вами, чтобы уточнить задачу и договориться о следующем шаге.</div></div><div class="ajaxMessage__error"><div class="ajaxMessage__title">Не удалось отправить заявку</div><div class="ajaxMessage__text">Позвоните нам по номеру 8 (915) 978-88-09.</div></div><button class="ajaxMessage__btn btn closeModal" type="button">Закрыть</button></div>',
-            '</div></div></section>',
+            '</div></div></div></section>',
         ]
     )
 

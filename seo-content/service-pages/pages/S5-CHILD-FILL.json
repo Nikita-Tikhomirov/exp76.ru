@@ -190,5 +190,19 @@
       "проект водоотвода",
       "финишное озеленение"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-otsypka-podem-gruntom.webp",
+      "alt": "Отсыпка и послойное выравнивание участка привозным грунтом"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-otsypka-podem-gruntom.webp",
+      "alt": "Отсыпка и послойное выравнивание участка привозным грунтом"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-otsypka-podem-gruntom.webp",
+      "alt": "Отсыпка и послойное выравнивание участка привозным грунтом"
+    }
   }
 }

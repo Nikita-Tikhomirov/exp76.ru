@@ -24,8 +24,10 @@
     "title": "Посадка деревьев и кустарников",
     "lead": "Размещаем растения в логике участка: с учётом будущих размеров, условий места, соседних покрытий и дальнейшего ухода.",
     "image": {
-      "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
-      "alt": "Хвойные деревья и кустарники на благоустроенном участке"
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s3-tree-shrub-planting-hero.webp",
+      "alt": "Деревья и кустарники в композиции загородного сада",
+      "asset_kind": "context_photo",
+      "caption": "Контекстная иллюстрация: Деревья и кустарники в композиции загородного сада"
     },
     "primary_cta": {
       "label": "Обсудить озеленение",
@@ -221,15 +223,17 @@
           "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-large-tree-planting.webp",
           "alt": "Посадка крупномерного дерева с корневым комом",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: посадка крупномерного дерева с корневым комом"
+          "caption": "Контекстная иллюстрация: Посадка крупномерного дерева с корневым комом"
         }
       },
       {
         "title": "Хвойные посадки",
         "text": "Хвойные могут формировать акценты, группы или структуру посадок. Их размещение важно увязать с открытыми зонами, газоном и будущими размерами растений.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
-          "alt": "Хвойные посадки на объекте в посёлке Слип"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s3-conifer-layout.webp",
+          "alt": "Разметка мест для хвойных растений перед посадкой",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Разметка мест для хвойных растений перед посадкой"
         }
       },
       {
@@ -239,15 +243,17 @@
           "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-hedge-planting.webp",
           "alt": "Посадка ряда кустарников для живой изгороди",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: посадка ряда кустарников для живой изгороди"
+          "caption": "Контекстная иллюстрация: Посадка ряда кустарников для живой изгороди"
         }
       },
       {
         "title": "Подготовка и размещение",
         "text": "Работы включают подготовку мест под растения и размещение в соответствии с согласованной композицией. Если есть ландшафтный проект, посадки выполняют в его логике.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
-          "alt": "Озеленение и газон в посёлке Слип"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-global-hub-s3-planting-layout.webp",
+          "alt": "Разметка и подготовка посадочных мест по ландшафтному плану",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Разметка и подготовка посадочных мест по ландшафтному плану"
         }
       },
       {
@@ -273,7 +279,7 @@
           "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp",
           "alt": "Посадка молодого плодового дерева на участке",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: посадка молодого плодового дерева на участке"
+          "caption": "Контекстная иллюстрация: Посадка молодого плодового дерева на участке"
         }
       },
       {
@@ -282,11 +288,10 @@
         "title": "Посадка хвойных деревьев",
         "text": "Создание одиночных и групповых хвойных посадок; последующее постоянное обслуживание растений остаётся отдельным направлением ухода.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
-          "alt": "Посадка хвойных растений на благоустроенном участке",
-          "asset_kind": "case_photo",
-          "source_page_id": 10096,
-          "case_id": 10096
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s3-mature-conifer-planting.webp",
+          "alt": "Посадка взрослой ели с сохранённым корневым комом",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Посадка взрослой ели с сохранённым корневым комом"
         }
       },
       {
@@ -295,11 +300,10 @@
         "title": "Посадка кустарников",
         "text": "Подбор места и устройство кустарниковых групп без включения формирующей стрижки и регулярного содержания взрослых посадок.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp",
-          "alt": "Кустарники в композиции загородного участка",
-          "asset_kind": "case_photo",
-          "source_page_id": 10096,
-          "case_id": 10096
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-shrub-planting.webp",
+          "alt": "Посадка группы декоративных кустарников на участке",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Посадка группы декоративных кустарников на участке"
         }
       },
       {
@@ -308,10 +312,10 @@
         "title": "Посадка крупномеров",
         "text": "Работы с крупными посадочными формами после оценки размеров растений, доступа для доставки и условий размещения на территории.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-large-tree-planting.webp",
-          "alt": "Посадка крупномерного дерева с корневым комом",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s3-large-deciduous-tree-planting.webp",
+          "alt": "Посадка крупномерного лиственного дерева с техникой",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: посадка крупномерного дерева с корневым комом"
+          "caption": "Контекстная иллюстрация: Посадка крупномерного лиственного дерева с техникой"
         }
       },
       {
@@ -320,10 +324,10 @@
         "title": "Посадка живой изгороди",
         "text": "Создание линейной посадки для границы или зонирования участка; последующая стрижка изгороди относится к самостоятельной услуге ухода.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-hedge-planting.webp",
-          "alt": "Посадка ряда кустарников для живой изгороди",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s3-living-hedge-planting.webp",
+          "alt": "Высадка растений живой изгороди по направляющей линии",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: посадка ряда кустарников для живой изгороди"
+          "caption": "Контекстная иллюстрация: Высадка растений живой изгороди по направляющей линии"
         }
       }
     ]
@@ -335,5 +339,5 @@
   },
   "evidence_gaps": [],
   "fact_evidence": [],
-  "rendered_sha256": "559af0b0ed8fd25ed11664430f65345632591efd1ff2e24502d2345ed28dd30c"
+  "rendered_sha256": "5d73d204d3d57ef125aca6755e088fdccfbcf6ed862d03c1d11d42fec01e4ce9"
 }

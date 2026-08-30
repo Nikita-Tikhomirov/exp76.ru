@@ -668,7 +668,7 @@ class DefaultServiceArchitectureTests(unittest.TestCase):
 
 
 class ServicePageRenderingTests(unittest.TestCase):
-    def test_import_item_keeps_proof_main_image_and_uses_context_asset_for_acf(self) -> None:
+    def test_import_item_keeps_proof_main_image_and_uses_numbered_problem_rows(self) -> None:
         row = architecture_row()
         page = valid_page()
         page["presentation_images"] = {
@@ -697,20 +697,22 @@ class ServicePageRenderingTests(unittest.TestCase):
             item["main_image"],
         )
         self.assertEqual(page["presentation_images"], item["presentation_images"])
-        self.assertEqual(
-            page["presentation_images"]["context"]["url"],
-            item["acf"]["ns87_problem_items"][0]["image"],
-        )
+        problem_items = item["acf"]["ns87_problem_items"]
+        self.assertEqual(3, len(problem_items))
+        self.assertTrue(all(problem_item["image"] == "" for problem_item in problem_items))
 
-    def test_context_photo_manifest_has_21_ready_verified_theme_assets(self) -> None:
+    def test_context_photo_manifest_covers_every_ready_hub_and_child_asset(self) -> None:
         manifest = json.loads(PRESENTATION_IMAGE_MANIFEST.read_text(encoding="utf-8"))
         assets = manifest["assets"]
 
         self.assertEqual(1, manifest["schema_version"])
         self.assertEqual("ready", manifest["release_status"])
-        self.assertEqual(21, manifest["asset_count"])
-        self.assertEqual(21, len(assets))
-        self.assertEqual(21, len({asset["asset_id"] for asset in assets}))
+        self.assertEqual(manifest["asset_count"], len(assets))
+        self.assertEqual(len(assets), len({asset["asset_id"] for asset in assets}))
+        self.assertEqual(
+            len(assets),
+            len({asset["output"]["url"] for asset in assets}),
+        )
         self.assertTrue(all(asset["asset_kind"] == "context_photo" for asset in assets))
         self.assertTrue(all("attachment_id" not in asset["output"] for asset in assets))
         generated_prefix = (
@@ -725,11 +727,18 @@ class ServicePageRenderingTests(unittest.TestCase):
             local_path = ROOT / output["local_path"]
             self.assertTrue(local_path.is_file(), local_path)
             self.assertEqual(output["bytes"], local_path.stat().st_size)
-            self.assertRegex(output["sha256"], r"^[0-9a-f]{64}$")
+            self.assertEqual(
+                output["sha256"],
+                hashlib.sha256(local_path.read_bytes()).hexdigest(),
+            )
             self.assertEqual(1600, output["width"])
             self.assertEqual(1000, output["height"])
         targets = [target for asset in assets for target in asset["targets"]]
-        self.assertEqual(163, len(targets))
+        self.assertEqual(manifest["target_count"], len(targets))
+        self.assertEqual(
+            len(targets),
+            len({(target["page_key"], target["field"]) for target in targets}),
+        )
         self.assertTrue(all(not target["field"].startswith("proof.") for target in targets))
         evidence = json.loads(DEFAULT_EVIDENCE_PATH.read_text(encoding="utf-8"))
         verified_case_urls = {
@@ -761,8 +770,15 @@ class ServicePageRenderingTests(unittest.TestCase):
                 expected_child_roles.setdefault(target["page_key"], {})[
                     role_match.group(1)
                 ] = expected_image
-        self.assertEqual(32, len(expected_child_roles))
+        self.assertEqual(65, len(expected_child_roles))
+        child_asset_owners: dict[str, str] = {}
         for page_key, expected_roles in expected_child_roles.items():
+            self.assertEqual({"hero", "context", "card"}, set(expected_roles), page_key)
+            role_urls = {image["url"] for image in expected_roles.values()}
+            self.assertEqual(1, len(role_urls), page_key)
+            child_url = role_urls.pop()
+            self.assertNotIn(child_url, child_asset_owners, page_key)
+            child_asset_owners[child_url] = page_key
             page = json.loads(
                 (DEFAULT_PAGES_DIR / f"{page_key}.json").read_text(encoding="utf-8")
             )
@@ -798,15 +814,7 @@ class ServicePageRenderingTests(unittest.TestCase):
                 target,
             )
             self.assertNotIn(current_image["url"], verified_case_urls, target)
-        for role in ("hero", "context", "card"):
-            self.assertIn(
-                {"page_key": "S6-CHILD-STONE", "field": f"presentation_images.{role}"},
-                next(
-                    asset["targets"]
-                    for asset in assets
-                    if asset["asset_id"] == "stone-retaining-wall"
-                ),
-            )
+        self.assertEqual(65, len(child_asset_owners))
 
     def test_import_item_uses_standard_schema_and_php_compatible_checksum(self) -> None:
         row = architecture_row()

@@ -186,5 +186,19 @@
       "посев или укладка газона",
       "дренажная система"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-podgotovka-grunta-gazon.webp",
+      "alt": "Подготовка и выравнивание грунта под газон на частном участке"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-podgotovka-grunta-gazon.webp",
+      "alt": "Подготовка и выравнивание грунта под газон на частном участке"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-podgotovka-grunta-gazon.webp",
+      "alt": "Подготовка и выравнивание грунта под газон на частном участке"
+    }
   }
 }

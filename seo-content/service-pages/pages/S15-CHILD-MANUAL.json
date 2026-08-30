@@ -114,6 +114,20 @@
     "main_image_alt": "Строение на странице услуг по демонтажу зданий",
     "caption": "Фото со страницы демонтажа зданий используется как контекст; ручной способ разборки, доступ и состояние конкретного объекта не подтверждаются."
   },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-manual-building-dismantling.webp",
+      "alt": "Поэлементная ручная разборка деревянной постройки"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-manual-building-dismantling.webp",
+      "alt": "Поэлементная ручная разборка деревянной постройки"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-manual-building-dismantling.webp",
+      "alt": "Поэлементная ручная разборка деревянной постройки"
+    }
+  },
   "geo": {
     "heading": "Ручной демонтаж в Ярославской области",
     "text": "Работаем в Ярославле, Рыбинске и области с малоэтажными объектами, где способ подтверждён обследованием и доступ соответствует безопасной организации.",

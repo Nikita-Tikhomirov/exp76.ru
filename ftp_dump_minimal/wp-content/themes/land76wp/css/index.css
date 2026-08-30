@@ -447,6 +447,48 @@ body,
   margin: 16px 0 0;
 }
 
+.home-hub-directory {
+  margin-top: 34px;
+  padding: 26px 0 4px;
+  border-top: 1px solid rgba(51, 51, 51, 0.2);
+  border-bottom: 1px solid rgba(51, 51, 51, 0.2);
+}
+
+.home-hub-directory__title {
+  margin-bottom: 12px !important;
+  font-family: "Poiret One", cursive;
+  font-size: 30px !important;
+}
+
+.home-hub-directory__links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 30px;
+}
+
+.home-hub-directory__link {
+  position: relative;
+  padding: 13px 24px 13px 0;
+  border-top: 1px solid rgba(51, 51, 51, 0.12);
+  color: #333;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.home-hub-directory__link::after {
+  content: "→";
+  position: absolute;
+  right: 2px;
+  color: #0a9215;
+}
+
+.home-hub-directory__link:hover {
+  color: #0a9215;
+}
+
 .home-inline-link {
   display: inline-flex;
   align-items: center;
@@ -753,6 +795,10 @@ body,
   .home-request {
     grid-template-columns: 1fr;
   }
+
+  .home-hub-directory__links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
@@ -812,6 +858,14 @@ body,
   .home-process-list,
   .home-check-list {
     grid-template-columns: 1fr;
+  }
+
+  .home-hub-directory__links {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hub-directory__title {
+    font-size: 27px !important;
   }
 
   .land76-mobile-slider-shell.is-active {

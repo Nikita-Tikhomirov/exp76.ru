@@ -114,6 +114,20 @@
     "main_image_alt": "Печной комплекс на странице каминов и барбекю",
     "caption": "Фото со страницы печей и каминов иллюстрирует направление кладочных работ; комплектация и материалы конкретного барбекю-комплекса не подтверждаются."
   },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-bbq-complex.webp",
+      "alt": "Готовый кирпичный барбекю-комплекс с рабочей зоной"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-bbq-complex.webp",
+      "alt": "Готовый кирпичный барбекю-комплекс с рабочей зоной"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-bbq-complex.webp",
+      "alt": "Готовый кирпичный барбекю-комплекс с рабочей зоной"
+    }
+  },
   "geo": {
     "heading": "Барбекю-комплексы в Ярославской области",
     "text": "Проектируем комплексы для Ярославля, Рыбинска и области; на выезде связываем состав модулей с реальной площадкой и навесом.",

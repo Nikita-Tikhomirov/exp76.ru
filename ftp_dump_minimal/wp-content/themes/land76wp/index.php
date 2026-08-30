@@ -48,6 +48,24 @@ $service_cards = array(
   array('title' => 'Автополив на участке', 'text' => 'Спринклеры, капельные линии, насос, емкость, клапаны и контроллер для газона, сада, теплицы и посадок.', 'url' => land76_home_term_link(92, '/category/avtopoliv-na-uchastke/'), 'image' => land76_home_media_url('montazh-avtopoliva.webp'), 'alt' => 'Монтаж автополива на участке'),
 );
 
+$land76_home_hub_links = array(
+  array('service_id' => 'S1', 'title' => 'Ландшафтное проектирование', 'url' => '/services/landshaftnoe-proektirovanie/'),
+  array('service_id' => 'S2', 'title' => 'Газон под ключ', 'url' => '/services/gazon-posevnojj-i-gazon-rulonnyjj/'),
+  array('service_id' => 'S3', 'title' => 'Посадка деревьев и кустарников', 'url' => '/services/posadka-derevev-i-kustarnikov/'),
+  array('service_id' => 'S4', 'title' => 'Уход за садом', 'url' => '/services/ukhod-za-sadom/'),
+  array('service_id' => 'S5', 'title' => 'Планировка территории', 'url' => '/services/planirovka-territorii/'),
+  array('service_id' => 'S6', 'title' => 'Подпорные стенки', 'url' => '/services/podpornye-stenki/'),
+  array('service_id' => 'S7', 'title' => 'Освещение участка', 'url' => '/services/ulichnoe-osveshhenie-uchastka/'),
+  array('service_id' => 'S8', 'title' => 'Въезд на участок через канаву', 'url' => '/services/vezd-zaezd-na-uchastok-cherez-kanavu-pod-kljuch/'),
+  array('service_id' => 'S9', 'title' => 'Расчистка участка и корчевание', 'url' => '/services/vykorchevyvanie-pnejj-spil-derevev/'),
+  array('service_id' => 'S10', 'title' => 'Пруды, водоёмы и водопады', 'url' => '/services/sozdanie-ujutnogo-ugolka-s-pomoshhju-vodopada-vodoema-ili-ruchev/'),
+  array('service_id' => 'S11', 'title' => 'Системы туманообразования', 'url' => '/services/sistemy-tumanoobrazovaniya/'),
+  array('service_id' => 'S12', 'title' => 'Фундамент на железобетонных сваях', 'url' => '/services/fundament-na-zhelezobetonnykh-svajakh/'),
+  array('service_id' => 'S13', 'title' => 'Металлические навесы', 'url' => '/services/navesy-iz-metalla/'),
+  array('service_id' => 'S14', 'title' => 'Камины, печи и барбекю', 'url' => '/services/kaminy-pechi-barbekju/'),
+  array('service_id' => 'S15', 'title' => 'Снос домов и демонтаж', 'url' => '/services/snos-i-demontazh-zdanijj-domov/'),
+);
+
 $works = get_posts(array(
   'numberposts' => 6,
   'category' => 75,
@@ -101,6 +119,16 @@ $works = get_posts(array(
       </article>
     <?php endforeach; ?>
   </div>
+  <nav class="home-hub-directory" aria-label="Все направления услуг">
+    <h3 class="home-hub-directory__title">Все направления работ</h3>
+    <div class="home-hub-directory__links">
+      <?php foreach ($land76_home_hub_links as $hub_link): ?>
+        <a class="home-hub-directory__link" data-service-id="<?php echo esc_attr($hub_link['service_id']); ?>" href="<?php echo esc_url(home_url($hub_link['url'])); ?>">
+          <?php echo esc_html($hub_link['title']); ?>
+        </a>
+      <?php endforeach; ?>
+    </div>
+  </nav>
   <div class="home-section-note">
     <p>Здесь собраны основные направления работ, с которых обычно начинается благоустройство участка. В каждом разделе можно посмотреть состав услуг, варианты монтажа, цены, этапы работ и ответы на частые вопросы по конкретной задаче.</p>
     <p>Если на участке несколько проблем сразу, например вода у дома, будущие дорожки и газон, лучше смотреть не отдельную карточку, а связку работ. Так проще заранее заложить дренаж, ливневку, основание и уклоны без переделок.</p>

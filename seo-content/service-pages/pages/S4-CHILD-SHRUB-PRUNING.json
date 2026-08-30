@@ -188,5 +188,19 @@
       "обрезка высоких деревьев",
       "вывоз отходов без согласования"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrezka-kustarnikov.webp",
+      "alt": "Формирующая обрезка живой изгороди на частном участке"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrezka-kustarnikov.webp",
+      "alt": "Формирующая обрезка живой изгороди на частном участке"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrezka-kustarnikov.webp",
+      "alt": "Формирующая обрезка живой изгороди на частном участке"
+    }
   }
 }

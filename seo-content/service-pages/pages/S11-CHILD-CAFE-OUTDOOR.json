@@ -114,6 +114,20 @@
     "main_image_alt": "Оборудование туманообразования на странице услуги",
     "caption": "Изображение со страницы систем туманообразования иллюстрирует направление услуги; коммерческая площадка и достигнутый эффект не подтверждаются."
   },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-cafe-outdoor.webp",
+      "alt": "Система туманообразования над открытой летней верандой кафе"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-cafe-outdoor.webp",
+      "alt": "Система туманообразования над открытой летней верандой кафе"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-cafe-outdoor.webp",
+      "alt": "Система туманообразования над открытой летней верандой кафе"
+    }
+  },
   "geo": {
     "heading": "Туманообразование для кафе Ярославской области",
     "text": "Работаем с площадками в Ярославле, Рыбинске и по области; организацию обследования и монтажа связываем с графиком заведения и адресом.",

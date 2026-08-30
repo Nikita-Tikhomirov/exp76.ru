@@ -294,7 +294,7 @@ class ImporterSafetyTests(unittest.TestCase):
                 re.DOTALL,
             )
         )
-        for body, expected_calls in ((stage_body, 2), (publish_body, 3)):
+        for body, expected_calls in ((stage_body, 2), (publish_body, 4)):
             calls = re.findall(
                 r"land76wp_service_hubs_verify_staged_item\((.*?)\)",
                 body,
@@ -345,7 +345,7 @@ class ImporterSafetyTests(unittest.TestCase):
         self.assertLess(merge_index, managed_close)
         self.assertNotIn(raw_call, source[:managed_index])
 
-    def test_importer_defaults_to_preview_and_contains_no_delete_api(self):
+    def test_importer_defaults_to_preview_and_contains_no_content_delete_api(self):
         source = self.source()
         self.assertIn("$mode = 'preview'", source)
         for forbidden in (
@@ -353,10 +353,10 @@ class ImporterSafetyTests(unittest.TestCase):
             "wp_delete_term",
             "wp_trash_post",
             "delete_term_meta",
-            "delete_post_meta",
             "$wpdb->delete",
         ):
             self.assertNotIn(forbidden, source)
+        self.assertIn("delete_post_meta", source)
 
     def test_forbidden_keys_are_rejected_recursively(self):
         source = self.source()
@@ -579,6 +579,55 @@ class ImporterSafetyTests(unittest.TestCase):
         ):
             self.assertIn(marker, snapshot)
 
+    def test_managed_published_records_can_be_updated_without_unpublishing(self):
+        source = self.source()
+        verifier = php_function_body(
+            source, "land76wp_service_hubs_verify_managed_update_target"
+        )
+        for marker in (
+            "managed_update",
+            "get_post",
+            "get_permalink",
+            "post_status",
+            "post_type",
+            "post_name",
+            "post_parent",
+            "_land76_import_owner",
+            "_land76_page_key",
+            "_land76_service_id",
+            "_land76_topic_key",
+            "land76wp_service_hubs_find_page_key_posts",
+            "land76wp_service_hubs_find_global_slug_posts",
+        ):
+            self.assertIn(marker, verifier)
+
+        build = php_function_body(source, "land76wp_service_hubs_build_plan")
+        self.assertIn("managed_update", build)
+        self.assertIn("land76wp_service_hubs_verify_managed_update_target", build)
+
+        stage = php_function_body(source, "land76wp_service_hubs_execute_stage")
+        self.assertGreaterEqual(stage.count("managed_update"), 3)
+        self.assertIn("land76wp_service_hubs_verify_managed_update_target", stage)
+
+        apply_update = php_function_body(
+            source, "land76wp_service_hubs_apply_managed_update_item"
+        )
+        self.assertIn("wp_update_post", apply_update)
+        self.assertIn("land76wp_service_hubs_apply_post_metadata", apply_update)
+        self.assertIn("wp_set_post_categories", apply_update)
+        for forbidden in ("'post_type'", "'post_status'", "'post_name'", "'post_parent'"):
+            self.assertNotIn(forbidden, apply_update)
+
+        publish = php_function_body(source, "land76wp_service_hubs_publish_plan")
+        self.assertIn("managed_update", publish)
+        self.assertIn("land76wp_service_hubs_verify_managed_update_target", publish)
+        self.assertIn("land76wp_service_hubs_apply_managed_update_item", publish)
+        verify_index = publish.index("land76wp_service_hubs_verify_managed_update_target")
+        transaction_index = publish.index("START TRANSACTION")
+        apply_index = publish.index("land76wp_service_hubs_apply_managed_update_item")
+        self.assertLess(verify_index, transaction_index)
+        self.assertGreater(apply_index, transaction_index)
+
     def test_reuse_page_keys_resolve_only_through_the_frozen_managed_owner(self):
         body = php_function_body(
             self.source(), "land76wp_service_hubs_resolve_page_key"
@@ -710,7 +759,8 @@ class ImporterSafetyTests(unittest.TestCase):
         ):
             self.assertNotIn(mutation, body)
         self.assertIn(
-            "if ($publish_ids === array() && $reuse_operations === array())", body
+            "if ($publish_ids === array() && $reuse_operations === array() && $managed_update_operations === array())",
+            body,
         )
         self.assertGreaterEqual(body.count("land76wp_service_hubs_verify_staged_item"), 2)
 
@@ -900,6 +950,33 @@ class ImporterSafetyTests(unittest.TestCase):
             "other_grouping_ids",
         ):
             self.assertIn(marker, body)
+
+    def test_optional_media_and_article_relations_are_cleared_and_verified(self):
+        source = self.source()
+        apply_body = php_function_body(
+            source, "land76wp_service_hubs_apply_post_metadata"
+        )
+        verify_body = php_function_body(
+            source, "land76wp_service_hubs_verify_staged_item"
+        )
+
+        self.assertIn("delete_post_meta($post_id, $meta_keys['url'])", apply_body)
+        self.assertIn("delete_post_meta($post_id, $meta_keys['alt'])", apply_body)
+        self.assertIn("$expected_meta[$meta_keys['url']] = ''", verify_body)
+        self.assertIn("$expected_meta[$meta_keys['alt']] = ''", verify_body)
+        self.assertIn("$related_article_page_keys = array()", apply_body)
+        self.assertIn(
+            "delete_post_meta($post_id, '_land76_related_article_ids')",
+            apply_body,
+        )
+        self.assertNotIn(
+            "if (array_key_exists('related_article_page_keys', $item))",
+            verify_body,
+        )
+        self.assertIn(
+            "$related_article_page_keys = isset($item['related_article_page_keys'])",
+            verify_body,
+        )
 
     def test_draft_verification_never_uses_the_plain_draft_permalink(self):
         source = self.source()
@@ -1146,6 +1223,9 @@ class ImporterSafetyTests(unittest.TestCase):
                 self.assertIn(meta_key, meta_keys_body)
         self.assertIn("land76wp_service_hubs_presentation_meta_keys", apply_body)
         self.assertIn("land76wp_service_hubs_presentation_meta_keys", verify_body)
+        self.assertIn("delete_post_meta", apply_body)
+        self.assertIn("$meta_keys['url']", apply_body)
+        self.assertIn("$meta_keys['alt']", apply_body)
         self.assertIn("_land76_main_image_url", apply_body)
         self.assertIn("set_post_thumbnail", apply_body)
 
@@ -1257,14 +1337,17 @@ class ThemeRoutingTests(unittest.TestCase):
         self.assertIn("['hero']['image']['url']", helper)
         self.assertIn("['hero']['image']['alt']", helper)
         self.assertIn(
-            "land76_newservice_related_card_image($ns87_related_service_id)",
+            "land76_newservice_related_card_image($ns87_related_service_id, $ns87_rendered_image_identities)",
             service,
         )
+        self.assertIn("foreach ($candidates as $candidate)", helper)
+        self.assertIn(
+            "land76_newservice_reserve_image($seen, $candidate['url'])",
+            helper,
+        )
         for marker in (
-            "_land76_card_image_url",
-            "_land76_card_image_alt",
-            "_land76_main_image_url",
-            "_land76_main_image_alt",
+            "'_land76_' . $role . '_image_url'",
+            "'_land76_' . $role . '_image_alt'",
         ):
             self.assertGreaterEqual(service.count(marker), 1, marker)
         for marker in (
@@ -1276,6 +1359,26 @@ class ThemeRoutingTests(unittest.TestCase):
         css = read(SERVICEPOST_CSS)
         self.assertIn(".service-related-card-image", css)
         self.assertIn("object-fit: cover", css)
+
+    def test_article_related_cards_avoid_reusing_the_article_main_image(self):
+        article = read(SEO_BLOG)
+        identity = php_function_body(article, "land76_blogseo_image_identity")
+        selector = php_function_body(article, "land76_blogseo_related_card_image")
+
+        self.assertIn("-\\d+x\\d+", identity)
+        self.assertIn("-scaled", identity)
+        self.assertIn("land76_service_v2_load", selector)
+        self.assertIn("['hero']['image']['url']", selector)
+        self.assertIn("foreach (array('card', 'main') as $role)", selector)
+        self.assertIn("land76_blogseo_reserve_image($seen, $candidate['url'])", selector)
+        self.assertIn(
+            "land76_blogseo_reserve_image($blogseo_seen_images, $blogseo_main_image_url)",
+            article,
+        )
+        self.assertIn(
+            "land76_blogseo_related_card_image($related_post->ID, $blogseo_seen_images)",
+            article,
+        )
 
     def test_managed_templates_do_not_use_drainage_fallback(self):
         service = read(NEW_SERVICE)

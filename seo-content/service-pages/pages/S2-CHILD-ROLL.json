@@ -185,5 +185,19 @@
       "монтаж автоматического полива",
       "регулярное сезонное обслуживание"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-rulonny-gazon.webp",
+      "alt": "Укладка рулонного газона на подготовленном частном участке"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-rulonny-gazon.webp",
+      "alt": "Укладка рулонного газона на подготовленном частном участке"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-rulonny-gazon.webp",
+      "alt": "Укладка рулонного газона на подготовленном частном участке"
+    }
   }
 }

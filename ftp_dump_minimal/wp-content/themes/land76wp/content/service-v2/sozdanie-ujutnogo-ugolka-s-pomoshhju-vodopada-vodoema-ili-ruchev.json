@@ -252,20 +252,20 @@
         "title": "Декоративные пруды",
         "text": "Ландшафтный водоём создают как композиционную часть участка, связывая форму, берега, растения и ближайшие зоны отдыха с общей концепцией территории.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp",
-          "alt": "Пруд с каскадом на загородном участке в Мариевке",
-          "asset_kind": "case_photo",
-          "case_id": 8608
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s10-decorative-pond.webp",
+          "alt": "Небольшой декоративный пруд с камнями и растениями",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Небольшой декоративный пруд с камнями и растениями"
         }
       },
       {
         "title": "Плавательные пруды",
         "text": "Купальный пруд сочетает ландшафтный характер с функцией отдыха у воды; зонирование и фильтрацию определяют в проекте конкретного объекта.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2023/12/20231011_131925-scaled.webp",
-          "alt": "Контекстный пример пруда для купания",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s10-swimming-pond.webp",
+          "alt": "Плавательный пруд с зоной водных растений",
           "asset_kind": "context_photo",
-          "source_page_id": 10303
+          "caption": "Контекстная иллюстрация: Плавательный пруд с зоной водных растений"
         }
       },
       {
@@ -282,10 +282,10 @@
         "title": "Декоративные ручьи",
         "text": "Искусственный ручей проектируют как ландшафтную линию движения воды, а не как замену дренажу или ливневой канаве на участке.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem1.webp",
-          "alt": "Водный объект с камнем и прибрежными растениями",
-          "asset_kind": "service_photo",
-          "source_page_id": 6900
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s10-decorative-stream.webp",
+          "alt": "Декоративный ручей в загородном саду",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Декоративный ручей в загородном саду"
         }
       },
       {
@@ -295,7 +295,7 @@
           "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-private-garden-fountain.webp",
           "alt": "Декоративный фонтан с рециркуляцией воды",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: декоративный фонтан с рециркуляцией воды"
+          "caption": "Контекстная иллюстрация: Декоративный фонтан с рециркуляцией воды"
         }
       }
     ]
@@ -310,10 +310,10 @@
         "title": "Декоративный пруд на участке",
         "text": "Создание нового ландшафтного водоёма как части композиции частного участка; очистка существующего запущенного пруда остаётся вне этой страницы.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp",
-          "alt": "Пруд на объекте в Мариевке",
-          "asset_kind": "case_photo",
-          "case_id": 8608
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s10-decorative-pond-construction.webp",
+          "alt": "Устройство гидроизоляции декоративного пруда",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Устройство гидроизоляции декоративного пруда"
         }
       },
       {
@@ -322,10 +322,10 @@
         "title": "Плавательный пруд",
         "text": "Купальный пруд с природным обликом и предусмотренной фильтрацией; строительство капитального бассейна рассчитывается отдельно.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2023/12/20231011_131925-scaled.webp",
-          "alt": "Пруд для купания с природным оформлением",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s10-swimming-pond-filtration.webp",
+          "alt": "Настройка фильтрации плавательного пруда",
           "asset_kind": "context_photo",
-          "source_page_id": 10303
+          "caption": "Контекстная иллюстрация: Настройка фильтрации плавательного пруда"
         }
       },
       {
@@ -334,10 +334,10 @@
         "title": "Водопад и каскад на участке",
         "text": "Искусственный водопад или каскад как частный ландшафтный объект, связанный с рельефом, зоной обзора и системой движения воды.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp",
-          "alt": "Каскад водопадов на объекте в Мариевке",
-          "asset_kind": "case_photo",
-          "case_id": 8608
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-garden-waterfall-cascade.webp",
+          "alt": "Садовый водопад с каскадом из природного камня",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Садовый водопад с каскадом из природного камня"
         }
       },
       {
@@ -346,10 +346,10 @@
         "title": "Декоративный ручей",
         "text": "Создание искусственного ручья для ландшафта и движения воды; задачи дренажа и ливневого водоотвода сохраняют отдельные страницы.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/vodoem1.webp",
-          "alt": "Декоративный водоём на частном участке",
-          "asset_kind": "service_photo",
-          "source_page_id": 6900
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s10-decorative-stream-construction.webp",
+          "alt": "Устройство русла декоративного ручья",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Устройство русла декоративного ручья"
         }
       },
       {
@@ -358,10 +358,10 @@
         "title": "Фонтан на участке",
         "text": "Частный ландшафтный фонтан для сада или зоны отдыха; городские инженерные фонтаны и общественные сооружения остаются вне предложения.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-private-garden-fountain.webp",
-          "alt": "Декоративный фонтан с рециркуляцией воды",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s10-fountain-installation.webp",
+          "alt": "Монтаж и настройка садового фонтана",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: декоративный фонтан с рециркуляцией воды"
+          "caption": "Контекстная иллюстрация: Монтаж и настройка садового фонтана"
         }
       }
     ]
@@ -376,8 +376,10 @@
         "title": "Как сделать декоративный пруд на участке",
         "text": "Этапы планирования декоративного пруда, исходные данные и ошибки, которые важно учесть до земляных работ.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/ustroistvo-vodoemov.webp",
-          "alt": "Декоративный водоём на частном участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s10-pond-planning.webp",
+          "alt": "Разметка будущего декоративного пруда на участке",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Разметка будущего декоративного пруда на участке"
         }
       },
       {
@@ -386,13 +388,15 @@
         "title": "Уход за декоративным прудом по сезонам",
         "text": "Сезонные задачи владельца водоёма и граница между регулярным уходом и отдельной реконструкцией запущенного пруда.",
         "image": {
-          "url": "https://exp76.ru/wp-content/uploads/2017/01/ustroistvo-vodoemov.webp",
-          "alt": "Ландшафтный пруд в период эксплуатации"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-seasonal-pond-care.webp",
+          "alt": "Сезонная очистка декоративного пруда от листьев",
+          "asset_kind": "context_photo",
+          "caption": "Контекстная иллюстрация: Сезонная очистка декоративного пруда от листьев"
         }
       }
     ]
   },
   "evidence_gaps": [],
   "fact_evidence": [],
-  "rendered_sha256": "dbd81fd5e631167c5f023e16521f4aaf6e495d6f55464f159caf243fab053f1d"
+  "rendered_sha256": "bec2ce55c4c4100bb4c54a91eafc3234548958d9c9e0f068af4f91fcf64fda3a"
 }

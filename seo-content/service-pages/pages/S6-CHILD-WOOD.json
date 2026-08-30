@@ -178,5 +178,19 @@
       "использование непроверенной старой древесины",
       "обещание неограниченного срока службы"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-wood-retaining-wall.webp",
+      "alt": "Деревянная подпорная стенка из обработанного бруса"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-wood-retaining-wall.webp",
+      "alt": "Деревянная подпорная стенка из обработанного бруса"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-wood-retaining-wall.webp",
+      "alt": "Деревянная подпорная стенка из обработанного бруса"
+    }
   }
 }

@@ -191,5 +191,19 @@
       "культивация почвы",
       "вывоз грунта без согласования"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vyravnivanie-uchastka.webp",
+      "alt": "Ручное выравнивание поверхности грунта на частном участке"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vyravnivanie-uchastka.webp",
+      "alt": "Ручное выравнивание поверхности грунта на частном участке"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vyravnivanie-uchastka.webp",
+      "alt": "Ручное выравнивание поверхности грунта на частном участке"
+    }
   }
 }

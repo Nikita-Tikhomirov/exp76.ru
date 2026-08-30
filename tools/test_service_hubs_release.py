@@ -7,6 +7,7 @@ import csv
 import hashlib
 import importlib
 import json
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -79,6 +80,99 @@ def _backlog_article_ids() -> set[str]:
 
 
 class UnifiedReleaseGeneratorTests(unittest.TestCase):
+    def test_hub_media_map_covers_every_child_related_card_without_repeats(self) -> None:
+        release = _release_module(self)
+        items = release.build_default_unified_import_items()
+        children = [item for item in items if item["role"] == "child_service"]
+        items_by_key = {str(item["page_key"]): item for item in items}
+        self.assertEqual(65, len(children))
+
+        for child in children:
+            service_id = str(child["service_id"])
+            hub = json.loads(
+                (
+                    ROOT
+                    / "seo-content"
+                    / "service-hubs"
+                    / "hubs"
+                    / f"{service_id}.json"
+                ).read_text(encoding="utf-8-sig")
+            )
+            image_map = {
+                str(hub["page_key"]): str(hub["hero"]["image"]["url"]),
+            }
+            hub_fallback_images = {
+                str(hub["page_key"]): [
+                    str(item["image"]["url"])
+                    for section_name in ("scope", "services", "articles")
+                    for item in hub.get(section_name, {}).get("items", [])
+                    if isinstance(item.get("image"), dict)
+                    and item["image"].get("url")
+                ]
+            }
+            for section_name in ("services", "articles"):
+                image_map.update(
+                    {
+                        str(item["page_key"]): str(item["image"]["url"])
+                        for item in hub[section_name]["items"]
+                    }
+                )
+            relation_keys = list(child["related_service_page_keys"]) + list(
+                child.get("related_article_page_keys", [])
+            )
+            missing = [page_key for page_key in relation_keys if page_key not in image_map]
+            self.assertEqual([], missing, child["page_key"])
+            identities = [
+                re.sub(r"-\d+x\d+(?=\.[A-Za-z0-9]+(?:[?#]|$))", "", image_map[key])
+                for key in relation_keys
+            ]
+            self.assertEqual(
+                len(identities),
+                len(set(identities)),
+                f"{child['page_key']} repeats related card media",
+            )
+
+            # Follow the template's actual reservation order and require every
+            # relation to retain a visual even when its first candidate was used.
+            normalize = lambda url: re.sub(
+                r"-\d+x\d+(?=\.[A-Za-z0-9]+(?:[?#]|$))",
+                "",
+                str(url),
+            )
+            seen = {
+                normalize(child["presentation_images"]["hero"]["url"]),
+                normalize(child["main_image"]["url"]),
+            }
+            selected: list[str] = []
+            for relation_key in relation_keys:
+                relation_item = items_by_key.get(relation_key, {})
+                candidates = [image_map[relation_key]]
+                candidates.extend(hub_fallback_images.get(relation_key, []))
+                presentation = relation_item.get("presentation_images", {})
+                if isinstance(presentation, dict) and isinstance(
+                    presentation.get("card"), dict
+                ):
+                    candidates.append(presentation["card"].get("url", ""))
+                main_image = relation_item.get("main_image", {})
+                if isinstance(main_image, dict):
+                    candidates.append(main_image.get("url", ""))
+                available = next(
+                    (
+                        normalize(candidate)
+                        for candidate in candidates
+                        if candidate and normalize(candidate) not in seen
+                    ),
+                    "",
+                )
+                self.assertNotEqual(
+                    "",
+                    available,
+                    f"{child['page_key']} would render {relation_key} without an image",
+                )
+                seen.add(available)
+                selected.append(available)
+            self.assertEqual(len(relation_keys), len(selected), child["page_key"])
+
     def test_article_item_matches_unified_importer_contract(self) -> None:
         release = _release_module(self)
         source = json.loads(

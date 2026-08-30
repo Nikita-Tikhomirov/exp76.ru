@@ -159,7 +159,7 @@ class DurableActivationGateTests(unittest.TestCase):
         source = read(IMPORTER)
         publish = php_function_body(source, "land76wp_service_hubs_publish_plan")
         no_op_start = publish.index(
-            "if ($publish_ids === array() && $reuse_operations === array())"
+            "if ($publish_ids === array() && $reuse_operations === array() && $managed_update_operations === array())"
         )
         transaction_start = publish.index("START TRANSACTION", no_op_start)
         no_op_branch = publish[no_op_start:transaction_start]

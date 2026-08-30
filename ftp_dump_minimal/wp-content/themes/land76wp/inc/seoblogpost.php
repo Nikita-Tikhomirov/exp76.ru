@@ -35,6 +35,109 @@ if (!function_exists('land76_blogseo_image_url')) {
     }
 }
 
+if (!function_exists('land76_blogseo_image_identity')) {
+    /** Normalize one WordPress image across full, resized and scaled variants. */
+    function land76_blogseo_image_identity($url)
+    {
+        $path = (string) wp_parse_url((string) $url, PHP_URL_PATH);
+        if ($path === '') {
+            return '';
+        }
+
+        $path = (string) preg_replace('/-\d+x\d+(?=\.[a-z0-9]+$)/i', '', $path);
+        $path = (string) preg_replace('/-scaled(?=\.[a-z0-9]+$)/i', '', $path);
+        return strtolower(rawurldecode($path));
+    }
+}
+
+if (!function_exists('land76_blogseo_reserve_image')) {
+    function land76_blogseo_reserve_image(array &$seen, $url)
+    {
+        $identity = land76_blogseo_image_identity($url);
+        if ($identity === '' || isset($seen[$identity])) {
+            return false;
+        }
+
+        $seen[$identity] = true;
+        return true;
+    }
+}
+
+if (!function_exists('land76_blogseo_related_card_image')) {
+    /** Select a page-unique visual for one related service card. */
+    function land76_blogseo_related_card_image($post_id, array &$seen)
+    {
+        $post_id = (int) $post_id;
+        $empty = array('url' => '', 'alt' => '');
+        $post = get_post($post_id);
+        if (!$post instanceof WP_Post) {
+            return $empty;
+        }
+
+        $candidates = array();
+        $candidate_identities = array();
+        $append_candidate = static function ($url, $alt) use (&$candidates, &$candidate_identities) {
+            $url = (string) $url;
+            $alt = (string) $alt;
+            $identity = land76_blogseo_image_identity($url);
+            if ($url === '' || $alt === '' || $identity === '' || isset($candidate_identities[$identity])) {
+                return;
+            }
+            $candidate_identities[$identity] = true;
+            $candidates[] = array('url' => $url, 'alt' => $alt);
+        };
+
+        $registry = function_exists('land76wp_service_hub_registry')
+            ? land76wp_service_hub_registry()
+            : array();
+        foreach ($registry as $hub) {
+            if ((int) $hub['hub_post_id'] !== $post_id || !function_exists('land76_service_v2_load')) {
+                continue;
+            }
+            $service_v2 = land76_service_v2_load($post_id);
+            if (is_array($service_v2)
+                && !empty($service_v2['hero']['image']['url'])
+                && !empty($service_v2['hero']['image']['alt'])) {
+                $append_candidate(
+                    $service_v2['hero']['image']['url'],
+                    $service_v2['hero']['image']['alt']
+                );
+            }
+            break;
+        }
+
+        $page_key = (string) get_post_meta($post_id, '_land76_page_key', true);
+        $is_managed_child = function_exists('land76wp_is_managed_service_hub_post')
+            && land76wp_is_managed_service_hub_post($post_id)
+            && strpos($page_key, '-CHILD-') !== false;
+        if ($is_managed_child) {
+            foreach (array('card', 'main') as $role) {
+                $append_candidate(
+                    get_post_meta($post_id, '_land76_' . $role . '_image_url', true),
+                    get_post_meta($post_id, '_land76_' . $role . '_image_alt', true)
+                );
+            }
+        }
+
+        if (has_post_thumbnail($post_id)) {
+            $thumbnail_id = (int) get_post_thumbnail_id($post_id);
+            $thumbnail_alt = (string) get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+            $append_candidate(
+                get_the_post_thumbnail_url($post_id, 'medium'),
+                $thumbnail_alt !== '' ? $thumbnail_alt : get_the_title($post_id)
+            );
+        }
+
+        foreach ($candidates as $candidate) {
+            if (land76_blogseo_reserve_image($seen, $candidate['url'])) {
+                return $candidate;
+            }
+        }
+
+        return $empty;
+    }
+}
+
 if (!function_exists('land76_blogseo_asset_url')) {
     function land76_blogseo_asset_url($filename)
     {
@@ -245,6 +348,8 @@ if (!is_array($blogseo_related_services)) {
 if (!is_array($blogseo_faq_items)) {
     $blogseo_faq_items = array();
 }
+$blogseo_seen_images = array();
+land76_blogseo_reserve_image($blogseo_seen_images, $blogseo_main_image_url);
 ?>
 
 <section class="hero seoblog-hero">
@@ -362,10 +467,11 @@ if (!is_array($blogseo_faq_items)) {
                 || (!$is_registered_hub && !$is_managed_child && !$is_legacy_commercial)) {
                 continue;
             }
+            $related_card_image = land76_blogseo_related_card_image($related_post->ID, $blogseo_seen_images);
             ?>
             <a class="seoblog__related-card" href="<?php echo esc_url(get_permalink($related_post)); ?>">
-              <?php if (has_post_thumbnail($related_post)) : ?>
-                <img src="<?php echo esc_url(get_the_post_thumbnail_url($related_post, 'medium')); ?>" alt="<?php echo esc_attr(get_the_title($related_post)); ?>">
+              <?php if ($related_card_image['url'] !== '' && $related_card_image['alt'] !== '') : ?>
+                <img src="<?php echo esc_url($related_card_image['url']); ?>" alt="<?php echo esc_attr($related_card_image['alt']); ?>" loading="lazy" decoding="async">
               <?php endif; ?>
               <span><?php echo esc_html(get_the_title($related_post)); ?></span>
             </a>

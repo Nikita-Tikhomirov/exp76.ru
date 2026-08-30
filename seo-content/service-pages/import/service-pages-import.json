@@ -2,7 +2,7 @@
   "schema_version": 1,
   "release_id": "service-hubs-2026-08-28",
   "release_status": "ready",
-  "manifest_sha256": "478ee41ad47eb320dc824e01f9ac66ec637b77c4075c857af349ba1d4f0fe261",
+  "manifest_sha256": "d2cd110d5e086ab61bc9ef76544822879d7acfefce211c9f31a0c37844ea2897",
   "items": [
     {
       "page_key": "S1-CHILD-SKETCH",
@@ -43,17 +43,17 @@
           {
             "title": "Участок без планировки",
             "text": "Подходит, когда есть список пожеланий, но ещё не понятно, как разместить всё на территории.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp"
+            "image": ""
           },
           {
             "title": "Перестройка существующего сада",
             "text": "Помогает увязать сохраняемые посадки и постройки с новыми зонами и маршрутами.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp"
+            "image": ""
           },
           {
             "title": "Выбор направления",
             "text": "Нужен владельцам, которые хотят сначала согласовать общую идею, а затем заказывать рабочие разделы.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как готовим проектное решение",
@@ -145,19 +145,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp",
-          "alt": "Разработка ландшафтного проекта загородного участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-eskizny-proekt-uchastka.webp",
+          "alt": "Ландшафтный архитектор готовит эскизный проект частного участка"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp",
-          "alt": "Разработка ландшафтного проекта загородного участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-eskizny-proekt-uchastka.webp",
+          "alt": "Ландшафтный архитектор готовит эскизный проект частного участка"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp",
-          "alt": "Разработка ландшафтного проекта загородного участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-eskizny-proekt-uchastka.webp",
+          "alt": "Ландшафтный архитектор готовит эскизный проект частного участка"
         }
       },
-      "checksum": "6bd4db494730a7e192a5d3726100f9821aa8cf1769d11de08b856bbe338414cf"
+      "checksum": "3a5af8d640a1b1c15ab0ceb757fb1338eed929feb80e9061e07bc080fc9984b0"
     },
     {
       "page_key": "S1-CHILD-MASTERPLAN",
@@ -200,17 +200,17 @@
           {
             "title": "Перед комплексными работами",
             "text": "Генплан нужен, когда на участке одновременно планируются покрытия, озеленение и инженерные решения.",
-            "image": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp"
+            "image": ""
           },
           {
             "title": "После согласования эскиза",
             "text": "Документ развивает выбранную концепцию и переводит её в более точную планировочную форму.",
-            "image": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp"
+            "image": ""
           },
           {
             "title": "Для координации подрядчиков",
             "text": "Сводная схема помогает сопоставлять работы разных исполнителей на одной территории.",
-            "image": "https://exp76.ru/wp-content/uploads/2023/12/20230817_084022-1-scaled.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как готовим проектное решение",
@@ -300,7 +300,21 @@
           }
         ]
       },
-      "checksum": "67b4ebf2bc9b79f7e9ea4529dc69e83811f219bfe715d7de5395e91b95e8f40e"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-generalny-plan-uchastka.webp",
+          "alt": "Ландшафтный архитектор работает над генеральным планом частного участка"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-generalny-plan-uchastka.webp",
+          "alt": "Ландшафтный архитектор работает над генеральным планом частного участка"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-generalny-plan-uchastka.webp",
+          "alt": "Ландшафтный архитектор работает над генеральным планом частного участка"
+        }
+      },
+      "checksum": "620b572efb4b1305c2a18e75567c4a70303264d94fd19b63a4554047b38a7223"
     },
     {
       "page_key": "S1-CHILD-DENDROPLAN",
@@ -341,17 +355,17 @@
           {
             "title": "Новое озеленение",
             "text": "Подходит для участка, где нужно заранее определить состав и расположение будущих посадок.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp"
+            "image": ""
           },
           {
             "title": "Дополнение существующего сада",
             "text": "Помогает встроить новые группы между сохраняемыми деревьями и уже используемыми зонами.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp"
+            "image": ""
           },
           {
             "title": "Подготовка к закупке",
             "text": "Нужен перед заказом растений, чтобы согласовать ассортимент и избежать случайных несвязанных покупок.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как готовим проектное решение",
@@ -443,19 +457,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp",
-          "alt": "Разработка ландшафтного проекта загородного участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-dendroplan.webp",
+          "alt": "Разработка дендроплана с размещением деревьев и кустарников на участке"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp",
-          "alt": "Разработка ландшафтного проекта загородного участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-dendroplan.webp",
+          "alt": "Разработка дендроплана с размещением деревьев и кустарников на участке"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-design-worktable.webp",
-          "alt": "Разработка ландшафтного проекта загородного участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-dendroplan.webp",
+          "alt": "Разработка дендроплана с размещением деревьев и кустарников на участке"
         }
       },
-      "checksum": "ed72cc3398b3e5b37d8ed6cf395993569c80acfc50e725cc4c8c759f910a33c5"
+      "checksum": "69ac9496aa726c9687636bb62f6895e1bc6bd2c81cb91d1283ab825b1ed93c89"
     },
     {
       "page_key": "S1-CHILD-3D",
@@ -498,17 +512,17 @@
           {
             "title": "Сложная композиция",
             "text": "Полезно, когда плоской схемы недостаточно для понимания перепадов, объёмов и взаимного перекрытия элементов.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-3d-visualization.webp"
+            "image": ""
           },
           {
             "title": "Выбор внешнего решения",
             "text": "Позволяет сравнить отделку, цветовые сочетания и характер посадок на согласованных ракурсах.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-3d-visualization.webp"
+            "image": ""
           },
           {
             "title": "Подготовка к реализации",
             "text": "Помогает заказчику и исполнителям одинаково понимать визуальную цель проекта.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-3d-visualization.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как готовим проектное решение",
@@ -600,19 +614,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-3d-visualization.webp",
-          "alt": "3D-визуализация будущего благоустройства участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-3d-vizualizatsiya.webp",
+          "alt": "Специалист проверяет 3D-визуализацию ландшафтного проекта частного участка"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-3d-visualization.webp",
-          "alt": "3D-визуализация будущего благоустройства участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-3d-vizualizatsiya.webp",
+          "alt": "Специалист проверяет 3D-визуализацию ландшафтного проекта частного участка"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-landscape-3d-visualization.webp",
-          "alt": "3D-визуализация будущего благоустройства участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-3d-vizualizatsiya.webp",
+          "alt": "Специалист проверяет 3D-визуализацию ландшафтного проекта частного участка"
         }
       },
-      "checksum": "63ebc8e8f913dea00dfed49506310b54cf6df6716986e415bcd2e864f0188fa6"
+      "checksum": "97db4dfebe1113ee893d3b225ded2068fdb9055594338819662673574c1e9f61"
     },
     {
       "page_key": "S1-CHILD-RELIEF",
@@ -653,17 +667,17 @@
           {
             "title": "Участок с перепадами",
             "text": "Нужен, когда естественный рельеф мешает размещению площадок и удобным маршрутам.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp"
+            "image": ""
           },
           {
             "title": "Подготовка к земляным работам",
             "text": "Позволяет сначала определить проектную поверхность, а затем рассчитывать фактическое перемещение грунта.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp"
+            "image": ""
           },
           {
             "title": "Сопряжение объектов",
             "text": "Помогает согласовать высоты дома, террас, дорожек и въезда в единой системе.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как готовим проектное решение",
@@ -755,19 +769,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
-          "alt": "Высотная съёмка и формирование уклонов участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-proekt-vertikalnoi-planirovki.webp",
+          "alt": "Проектирование отметок и уклонов частного участка на топографической основе"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
-          "alt": "Высотная съёмка и формирование уклонов участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-proekt-vertikalnoi-planirovki.webp",
+          "alt": "Проектирование отметок и уклонов частного участка на топографической основе"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
-          "alt": "Высотная съёмка и формирование уклонов участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-proekt-vertikalnoi-planirovki.webp",
+          "alt": "Проектирование отметок и уклонов частного участка на топографической основе"
         }
       },
-      "checksum": "47c67508bd74cebb545578ac0dbb59e488a8f67d6ad683c0c78178ba7b93de4e"
+      "checksum": "de4e00569570128b385bad2b2844b11da88670818a48e4040948b615478cebd4"
     },
     {
       "page_key": "S2-CHILD-ROLL",
@@ -809,17 +823,17 @@
           {
             "title": "Участок перед заселением",
             "text": "Подходит, когда сформированное покрытие требуется получить без ожидания всходов посевной смеси.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp"
+            "image": ""
           },
           {
             "title": "Зона возле дома",
             "text": "Удобен для территорий, где важен аккуратный вид сразу после завершения основных работ.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp"
+            "image": ""
           },
           {
             "title": "Замена старого покрытия",
             "text": "Применяется после оценки причин повреждения и подготовки основания под новую дернину.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как выполняем работы с газоном",
@@ -909,7 +923,21 @@
           }
         ]
       },
-      "checksum": "0cbb4804aa7a837caeca9b40ea550daf7439f214b0d6250ef5a432a06423193b"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-rulonny-gazon.webp",
+          "alt": "Укладка рулонного газона на подготовленном частном участке"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-rulonny-gazon.webp",
+          "alt": "Укладка рулонного газона на подготовленном частном участке"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-rulonny-gazon.webp",
+          "alt": "Укладка рулонного газона на подготовленном частном участке"
+        }
+      },
+      "checksum": "cd19b10a50719142f3ea0e7969a35f269200e668b3a33b0fabb5b3232c261a99"
     },
     {
       "page_key": "S2-CHILD-SEED",
@@ -953,17 +981,17 @@
           {
             "title": "Большая открытая площадь",
             "text": "Посев подходит территориям, где допустим период формирования травяного покрова.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp"
+            "image": ""
           },
           {
             "title": "Индивидуальный подбор смеси",
             "text": "Позволяет учитывать освещённость, назначение зоны и особенности режима ухода.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp"
+            "image": ""
           },
           {
             "title": "Поэтапное благоустройство",
             "text": "Удобен, когда газон создаётся после завершения основных земляных и строительных операций.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как выполняем работы с газоном",
@@ -1053,7 +1081,21 @@
           }
         ]
       },
-      "checksum": "95302eb6f07cf40ec2b15222c3dcf9e9bcbf8ce83503b5a23145d4d66f8e4865"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posevnoi-gazon.webp",
+          "alt": "Посев газона на подготовленной почве частного участка"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posevnoi-gazon.webp",
+          "alt": "Посев газона на подготовленной почве частного участка"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posevnoi-gazon.webp",
+          "alt": "Посев газона на подготовленной почве частного участка"
+        }
+      },
+      "checksum": "aabc0d0ba0df2e2c5896850e5dee4de6c9ac47f406909eeea48eff55d7585335"
     },
     {
       "page_key": "S2-CHILD-SOIL",
@@ -1096,17 +1138,17 @@
           {
             "title": "Участок после строительства",
             "text": "Нужен, когда поверхность уплотнена техникой, смешана с мусором или имеет выраженные неровности.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp"
+            "image": ""
           },
           {
             "title": "Замена покрытия",
             "text": "Помогает устранить проблемы основания перед повторным посевом или укладкой дернины.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp"
+            "image": ""
           },
           {
             "title": "Подготовка отдельной зоны",
             "text": "Подходит для локальных площадей возле дорожек, дома и посадок с заданными высотами примыкания.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/NEwk9KFYTXY.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как выполняем работы с газоном",
@@ -1196,7 +1238,21 @@
           }
         ]
       },
-      "checksum": "8ed591040db81c81c2551db3722f6e1ad5e36046b48ca1c9c65472353e52155d"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-podgotovka-grunta-gazon.webp",
+          "alt": "Подготовка и выравнивание грунта под газон на частном участке"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-podgotovka-grunta-gazon.webp",
+          "alt": "Подготовка и выравнивание грунта под газон на частном участке"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-podgotovka-grunta-gazon.webp",
+          "alt": "Подготовка и выравнивание грунта под газон на частном участке"
+        }
+      },
+      "checksum": "800bc6eca54cdd5bfca294999116b27adfdb75d53cda8fa856519a185bbd85e3"
     },
     {
       "page_key": "S2-CHILD-RESTORE",
@@ -1236,17 +1292,17 @@
           {
             "title": "Проплешины и редкий травостой",
             "text": "Подходит, когда часть площади утратила плотность, но полная замена газона ещё не обоснована.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp"
+            "image": ""
           },
           {
             "title": "Следы работ или нагрузки",
             "text": "Помогает восстановить локальные зоны после прохода техники, ремонта коммуникаций или активного использования.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp"
+            "image": ""
           },
           {
             "title": "Неровное покрытие",
             "text": "Применяется после оценки, можно ли исправить поверхность локально без переустройства всей территории.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как выполняем работы с газоном",
@@ -1338,19 +1394,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp",
-          "alt": "Подготовка грунта и восстановление газона"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vosstanovlenie-gazona.webp",
+          "alt": "Локальное восстановление повреждённого газона на частном участке"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp",
-          "alt": "Подготовка грунта и восстановление газона"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vosstanovlenie-gazona.webp",
+          "alt": "Локальное восстановление повреждённого газона на частном участке"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp",
-          "alt": "Подготовка грунта и восстановление газона"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vosstanovlenie-gazona.webp",
+          "alt": "Локальное восстановление повреждённого газона на частном участке"
         }
       },
-      "checksum": "c76f29546daad502e0b9abfc161ef981f2b3eadf0336b806e4b28e000f93a9ed"
+      "checksum": "13beb9c94fb197975bd88f3d463c3f4188c5231ca6f02d2732613292c7b5636b"
     },
     {
       "page_key": "S3-CHILD-FRUIT",
@@ -1391,17 +1447,17 @@
           {
             "title": "Закладка плодового сада",
             "text": "Подходит, когда нужно разместить несколько культур как связанную и удобную для ухода систему.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp"
+            "image": ""
           },
           {
             "title": "Дополнение существующих посадок",
             "text": "Помогает выбрать свободные места, не создавая лишней тени и тесноты взрослым растениям.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp"
+            "image": ""
           },
           {
             "title": "Замена выпавших деревьев",
             "text": "Применяется после оценки причины гибели и пригодности прежнего посадочного места.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как организуем посадку растений",
@@ -1493,19 +1549,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp",
-          "alt": "Посадка молодого плодового дерева на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-plodovyh-derevev.webp",
+          "alt": "Посадка молодого плодового дерева с подвязкой на частном участке"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp",
-          "alt": "Посадка молодого плодового дерева на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-plodovyh-derevev.webp",
+          "alt": "Посадка молодого плодового дерева с подвязкой на частном участке"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-fruit-tree-planting.webp",
-          "alt": "Посадка молодого плодового дерева на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-plodovyh-derevev.webp",
+          "alt": "Посадка молодого плодового дерева с подвязкой на частном участке"
         }
       },
-      "checksum": "35b1b9b5ec00dd4d2d109d96d97799b2070b613f5df9d9017ca387e598289a38"
+      "checksum": "83c9ec4149b0081aae85ab31fc45afa361699e4d542822860658ce7029f2b51f"
     },
     {
       "page_key": "S3-CHILD-CONIFERS",
@@ -1548,17 +1604,17 @@
           {
             "title": "Структура сада круглый год",
             "text": "Подходит для создания постоянного объёма и фона рядом с лиственными посадками.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp"
+            "image": ""
           },
           {
             "title": "Акцентные растения",
             "text": "Позволяет разместить солитеры у входа, зоны отдыха или видовой точки без перегрузки композиции.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp"
+            "image": ""
           },
           {
             "title": "Защитные группы",
             "text": "Используется для зелёных экранов, если выбранным растениям подходят условия территории.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как организуем посадку растений",
@@ -1648,7 +1704,21 @@
           }
         ]
       },
-      "checksum": "e0b4df98fac77bf96b61c31e8506126fa1ab9c0e58391ba093657daed96a75c5"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-hvoinyh-derevev.webp",
+          "alt": "Посадка хвойного дерева с корневым комом на частном участке"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-hvoinyh-derevev.webp",
+          "alt": "Посадка хвойного дерева с корневым комом на частном участке"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-hvoinyh-derevev.webp",
+          "alt": "Посадка хвойного дерева с корневым комом на частном участке"
+        }
+      },
+      "checksum": "3b38f77fea3c29d8ac698711bcc20681f4595f09a60d11ceb99d6c9bf310b56e"
     },
     {
       "page_key": "S3-CHILD-SHRUBS",
@@ -1691,17 +1761,17 @@
           {
             "title": "Заполнение садовых групп",
             "text": "Подходит для среднего яруса композиций между деревьями, многолетниками и газоном.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp"
+            "image": ""
           },
           {
             "title": "Оформление границ",
             "text": "Используется вдоль дорожек, площадок и зон отдыха при достаточном месте для развития растений.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp"
+            "image": ""
           },
           {
             "title": "Обновление посадок",
             "text": "Помогает заменить выпавшие кусты и дополнить существующую композицию совместимыми видами.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/20200514_085626.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как организуем посадку растений",
@@ -1791,7 +1861,21 @@
           }
         ]
       },
-      "checksum": "ca175bbb1faa2b308870a361aa37887892c5bdc0c03f3014adcf44bb386c728b"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-kustarnikov.webp",
+          "alt": "Посадка декоративных кустарников группой на частном участке"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-kustarnikov.webp",
+          "alt": "Посадка декоративных кустарников группой на частном участке"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-kustarnikov.webp",
+          "alt": "Посадка декоративных кустарников группой на частном участке"
+        }
+      },
+      "checksum": "2e9e8c47bff8bcdf477c5a4d0bb2e862f2226c0e0d60c5185922e5d593175137"
     },
     {
       "page_key": "S3-CHILD-LARGE",
@@ -1832,17 +1916,17 @@
           {
             "title": "Быстрый пространственный эффект",
             "text": "Подходит, когда проекту нужны заметные древесные объёмы без ожидания роста маленьких саженцев.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-large-tree-planting.webp"
+            "image": ""
           },
           {
             "title": "Акцент возле дома",
             "text": "Используется для одиночного дерева в видовой точке после проверки расстояний до конструкций.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-large-tree-planting.webp"
+            "image": ""
           },
           {
             "title": "Формирование взрослой группы",
             "text": "Позволяет собрать каркас озеленения из нескольких совместимых деревьев крупного размера.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-large-tree-planting.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как организуем посадку растений",
@@ -1934,19 +2018,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-large-tree-planting.webp",
-          "alt": "Посадка крупномерного дерева с корневым комом"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-krupnomerov.webp",
+          "alt": "Установка крупномерного дерева с корневым комом в посадочную яму"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-large-tree-planting.webp",
-          "alt": "Посадка крупномерного дерева с корневым комом"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-krupnomerov.webp",
+          "alt": "Установка крупномерного дерева с корневым комом в посадочную яму"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-large-tree-planting.webp",
-          "alt": "Посадка крупномерного дерева с корневым комом"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-krupnomerov.webp",
+          "alt": "Установка крупномерного дерева с корневым комом в посадочную яму"
         }
       },
-      "checksum": "ef8d8a548d649198ed8a1875f041ad26f06ddb35eb03cf18cdd6ad744433248c"
+      "checksum": "36deffdd4f290d959cdf24d349ab2c5e51fcec7f69da5ce61692eb12f3b36225"
     },
     {
       "page_key": "S3-CHILD-HEDGE",
@@ -1987,17 +2071,17 @@
           {
             "title": "Зонирование участка",
             "text": "Изгородь помогает отделить хозяйственную часть, зону отдыха или внутренний маршрут зелёной линией.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-hedge-planting.webp"
+            "image": ""
           },
           {
             "title": "Оформление границы",
             "text": "Подходит для смягчения вида ограждения при наличии места для взрослой ширины растений.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-hedge-planting.webp"
+            "image": ""
           },
           {
             "title": "Защита от обзора",
             "text": "Используется как растущий экран, если условия позволяют выбранному ассортименту развиваться равномерно.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-hedge-planting.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как организуем посадку растений",
@@ -2089,19 +2173,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-hedge-planting.webp",
-          "alt": "Посадка ряда кустарников для живой изгороди"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-zhivoi-izgorodi.webp",
+          "alt": "Посадка кустарников в размеченную линию живой изгороди"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-hedge-planting.webp",
-          "alt": "Посадка ряда кустарников для живой изгороди"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-zhivoi-izgorodi.webp",
+          "alt": "Посадка кустарников в размеченную линию живой изгороди"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-hedge-planting.webp",
-          "alt": "Посадка ряда кустарников для живой изгороди"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-zhivoi-izgorodi.webp",
+          "alt": "Посадка кустарников в размеченную линию живой изгороди"
         }
       },
-      "checksum": "83d6b94b05b7b9c252303b3d5273da94423ee02effa8ac70c9f17ee291e8fc24"
+      "checksum": "82b05c88f24f14601e77dc60559e71f4ac42f05e76304f664dfaea6c94b80899"
     },
     {
       "page_key": "S4-CHILD-TREE-PRUNING",
@@ -2142,17 +2226,17 @@
           {
             "title": "Повреждённые ветви",
             "text": "Услуга нужна, если в кроне есть сухие, сломанные или трущиеся части, требующие оценки.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-tree-pruning.webp"
+            "image": ""
           },
           {
             "title": "Конфликт с постройками",
             "text": "Помогает скорректировать ветви возле крыши, дорожек и других объектов без автоматического удаления дерева.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-tree-pruning.webp"
+            "image": ""
           },
           {
             "title": "Формирование молодой кроны",
             "text": "Применяется для последовательной работы с архитектурой дерева при подходящем состоянии и сезоне.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-tree-pruning.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как проходит обслуживание",
@@ -2244,19 +2328,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-tree-pruning.webp",
-          "alt": "Профессиональная обрезка кроны дерева"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrezka-derevev.webp",
+          "alt": "Профессиональная обрезка дерева на частном участке с безопасным доступом к кроне"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-tree-pruning.webp",
-          "alt": "Профессиональная обрезка кроны дерева"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrezka-derevev.webp",
+          "alt": "Профессиональная обрезка дерева на частном участке с безопасным доступом к кроне"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-tree-pruning.webp",
-          "alt": "Профессиональная обрезка кроны дерева"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrezka-derevev.webp",
+          "alt": "Профессиональная обрезка дерева на частном участке с безопасным доступом к кроне"
         }
       },
-      "checksum": "5a2e09b08027b377495d57ef8c7b34c04a8eee91cbf47d904bf29230e8b52e71"
+      "checksum": "d1a76b0e9983414137c6232dfb47a45be748f74167ea2b829751258ba6e0acf8"
     },
     {
       "page_key": "S4-CHILD-SHRUB-PRUNING",
@@ -2297,17 +2381,17 @@
           {
             "title": "Переросшая изгородь",
             "text": "Подходит, когда ряд утратил читаемый контур и мешает проходу или обзору.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona1.webp"
+            "image": ""
           },
           {
             "title": "Декоративные группы",
             "text": "Нужна для кустарников, которым требуется санитарная или формирующая работа с отдельными побегами.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona1.webp"
+            "image": ""
           },
           {
             "title": "Подготовка сада к сезону",
             "text": "Применяется как часть ухода с учётом сроков цветения и состояния конкретных видов.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona1.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как проходит обслуживание",
@@ -2397,7 +2481,21 @@
           }
         ]
       },
-      "checksum": "1fb0ea1f4c32f4e9bf103b6348dd1fe99c4485dc67ed6b524960c23110008fc2"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrezka-kustarnikov.webp",
+          "alt": "Формирующая обрезка живой изгороди на частном участке"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrezka-kustarnikov.webp",
+          "alt": "Формирующая обрезка живой изгороди на частном участке"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrezka-kustarnikov.webp",
+          "alt": "Формирующая обрезка живой изгороди на частном участке"
+        }
+      },
+      "checksum": "198730a88ad85e89bc06ebf230ded82361d31abb0992cfadfc53031589643cad"
     },
     {
       "page_key": "S4-CHILD-LAWN-CARE",
@@ -2438,17 +2536,17 @@
           {
             "title": "Зрелый частный газон",
             "text": "Подходит владельцам, которым нужен последовательный уход вместо разовых несвязанных операций.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp"
+            "image": ""
           },
           {
             "title": "Покрытие после укоренения",
             "text": "Помогает перейти от стартового режима к регулярной стрижке и сезонным процедурам.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp"
+            "image": ""
           },
           {
             "title": "Газон с неоднородным ростом",
             "text": "Позволяет оценить режим ухода до принятия решения о капитальном восстановлении.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как проходит обслуживание",
@@ -2540,19 +2638,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp",
-          "alt": "Подготовка грунта и восстановление газона"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-ukhod-gazon.webp",
+          "alt": "Аэрация и обслуживание газона на частном участке"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp",
-          "alt": "Подготовка грунта и восстановление газона"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-ukhod-gazon.webp",
+          "alt": "Аэрация и обслуживание газона на частном участке"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lawn-renovation.webp",
-          "alt": "Подготовка грунта и восстановление газона"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-ukhod-gazon.webp",
+          "alt": "Аэрация и обслуживание газона на частном участке"
         }
       },
-      "checksum": "c7caf36282b309d56ba1f3a9bcfef7d495f767bfaf08759b4f45c0ada34d834a"
+      "checksum": "510454ce6911e4759f6c338a926464e9c8bab3f503ecda4f539378ad5ac697ee"
     },
     {
       "page_key": "S4-CHILD-FLOWERBEDS",
@@ -2593,17 +2691,17 @@
           {
             "title": "Многолетний цветник",
             "text": "Подходит для сезонного ухода за сложившейся композицией без её полной перепланировки.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-flowerbed-care.webp"
+            "image": ""
           },
           {
             "title": "Клумба после зимы",
             "text": "Помогает убрать остатки, оценить выпады и подготовить растения к дальнейшему развитию.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-flowerbed-care.webp"
+            "image": ""
           },
           {
             "title": "Посадки с потерянным контуром",
             "text": "Нужна, когда сорняки и разросшиеся виды затрудняют чтение исходной композиции.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-flowerbed-care.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как проходит обслуживание",
@@ -2695,19 +2793,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-flowerbed-care.webp",
-          "alt": "Сезонный уход за цветником на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-ukhod-tsvetniki.webp",
+          "alt": "Сезонный уход за многолетним цветником на частном участке"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-flowerbed-care.webp",
-          "alt": "Сезонный уход за цветником на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-ukhod-tsvetniki.webp",
+          "alt": "Сезонный уход за многолетним цветником на частном участке"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-flowerbed-care.webp",
-          "alt": "Сезонный уход за цветником на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-ukhod-tsvetniki.webp",
+          "alt": "Сезонный уход за многолетним цветником на частном участке"
         }
       },
-      "checksum": "3df6b7f025a826871315ae440042b03a1f577ca73bf9f33c4d903b3057dc14f8"
+      "checksum": "ead750c5a19372f58d2a374c1f829c291951820fabeecaff2576b22d9e29d88f"
     },
     {
       "page_key": "S4-CHILD-PEST",
@@ -2748,17 +2846,17 @@
           {
             "title": "Повреждение листьев и побегов",
             "text": "Услуга подходит, когда на растениях появились пятна, деформации, налёт или следы питания насекомых.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp"
+            "image": ""
           },
           {
             "title": "Риск распространения",
             "text": "Нужна при нескольких поражённых растениях, если проблему важно локализовать после определения причины.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp"
+            "image": ""
           },
           {
             "title": "Сезонная профилактика",
             "text": "Возможна для конкретных культур по обоснованному регламенту, а не как бесконтрольное распыление.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/strizka_gazona2.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как проходит обслуживание",
@@ -2848,7 +2946,21 @@
           }
         ]
       },
-      "checksum": "3e69192e4cd2096719e714dc19a1257bb1e75309474fba7919e1c505c6154532"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrabotka-sada-vrediteli.webp",
+          "alt": "Обработка плодового сада от болезней и вредителей"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrabotka-sada-vrediteli.webp",
+          "alt": "Обработка плодового сада от болезней и вредителей"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-obrabotka-sada-vrediteli.webp",
+          "alt": "Обработка плодового сада от болезней и вредителей"
+        }
+      },
+      "checksum": "1ce63e5873787310b3493c6929e474ee0b84ccde1f3ae537f5cbcfd95f772bf9"
     },
     {
       "page_key": "S5-CHILD-LEVEL",
@@ -2892,17 +3004,17 @@
           {
             "title": "Территория после стройки",
             "text": "Подходит для устранения колей, куч грунта и неровностей после завершения основных строительных операций.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20180919_165532_HDR.webp"
+            "image": ""
           },
           {
             "title": "Подготовка под благоустройство",
             "text": "Нужна перед устройством газона и площадок, если общий рельеф уже принят.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20180919_165532_HDR.webp"
+            "image": ""
           },
           {
             "title": "Локальная корректировка",
             "text": "Применяется на отдельных зонах, где не требуется полноценная вертикальная планировка.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/IMG_20180919_165532_HDR.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как выполняем земляные работы",
@@ -2992,7 +3104,21 @@
           }
         ]
       },
-      "checksum": "c2877b2527ea8b801a59693ed91551e12b67a3b846f5f3b5c0e4544abfbbbea9"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vyravnivanie-uchastka.webp",
+          "alt": "Ручное выравнивание поверхности грунта на частном участке"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vyravnivanie-uchastka.webp",
+          "alt": "Ручное выравнивание поверхности грунта на частном участке"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vyravnivanie-uchastka.webp",
+          "alt": "Ручное выравнивание поверхности грунта на частном участке"
+        }
+      },
+      "checksum": "e127ed4bac3375b91b4cb8dd63c3db05335b2f91d4906f329d9f57985a54b9a0"
     },
     {
       "page_key": "S5-CHILD-VERTICAL",
@@ -3005,8 +3131,8 @@
       "post_content": "<section class=\"service-content service-content--scope\"><h2>Что входит в подготовку территории</h2><p>Эта услуга относится к физической работе с грунтом. Если отметки и уклоны ещё не определены, сначала требуется проект вертикальной планировки, а не решения по ходу земляных операций.</p><ul><li class=\"service-result\"><strong>Заданные уклоны</strong><p>Перемещаем грунт так, чтобы поверхность соответствовала согласованным направлениям и контрольным отметкам.</p></li><li class=\"service-result\"><strong>Корректные сопряжения</strong><p>Увязываем грунт с входами, покрытиями и другими элементами, высоту которых нельзя менять произвольно.</p></li><li class=\"service-result\"><strong>Подготовленный рельеф</strong><p>Создаём основу для финишных слоёв и последующих работ без подмены их выполнения.</p></li></ul></section><section class=\"service-content service-content--geo\"><h2>Вертикальная планировка и формирование уклонов: география выезда</h2><p>Работы по услуге «Вертикальная планировка и формирование уклонов» выполняем в Ярославле, Рыбинске и населённых пунктах Ярославской области; логистику и возможность выезда оцениваем по адресу и составу задачи.</p><ul><li>Ярославль</li><li>Рыбинск</li><li>Ярославская область</li></ul></section><section class=\"service-content service-content--boundary\"><h2>Условия и границы работ</h2><p>Услуга включает физическое формирование высотных отметок и уклонов по согласованному решению.</p><h3>Не входит в услугу</h3><ul><li>разработка проекта отметок</li><li>монтаж дренажа</li><li>финишное устройство газона</li></ul></section><section class=\"service-content service-content--cta\"><h2>Рассчитать услугу «Вертикальная планировка и формирование уклонов»</h2><p>Пришлите фотографии, адрес и краткое описание задачи по услуге «Вертикальная планировка и формирование уклонов» — проверим исходные условия и подготовим состав работ для расчёта.</p><p><a class=\"service-cta__primary\" href=\"#calc\">Получить расчёт</a> <a class=\"service-cta__secondary\" href=\"#consultation\">Обсудить задачу</a></p></section>",
       "post_excerpt": "Формируем проектные уклоны на местности по имеющейся высотной схеме, увязывая поверхность с домом, дорожками, площадками и направлениями стока.",
       "seo": {
-        "title": "Вертикальная планировка и формирование уклонов в Ярославле — земляные работы на участке",
-        "description": "Вертикальная планировка и формирование уклонов в Ярославле, Рыбинске и области: заданные уклоны, этапы работ, границы услуги и факторы индивидуального расчёта стоимости."
+        "title": "Вертикальная планировка участка в Ярославле — формирование уклонов",
+        "description": "Вертикальная планировка участка в Ярославле, Рыбинске и области: формирование уклонов, этапы работ, границы услуги и индивидуальный расчёт стоимости."
       },
       "main_image": {
         "url": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii10.webp",
@@ -3033,17 +3159,17 @@
           {
             "title": "Реализация готового проекта",
             "text": "Подходит, когда есть высотное решение и нужно перенести его на реальную поверхность.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp"
+            "image": ""
           },
           {
             "title": "Участок со сложным стоком",
             "text": "Нужна для направленного формирования рельефа, согласованного со смежными инженерными решениями.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp"
+            "image": ""
           },
           {
             "title": "Сопряжение нескольких зон",
             "text": "Применяется при увязке дома, въезда, террас и дорожек по высоте.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как выполняем земляные работы",
@@ -3135,19 +3261,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
-          "alt": "Высотная съёмка и формирование уклонов участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vertikalnaya-planirovka.webp",
+          "alt": "Формирование уклонов грунта возле дома по высотным отметкам"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
-          "alt": "Высотная съёмка и формирование уклонов участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vertikalnaya-planirovka.webp",
+          "alt": "Формирование уклонов грунта возле дома по высотным отметкам"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-site-grading-survey.webp",
-          "alt": "Высотная съёмка и формирование уклонов участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-vertikalnaya-planirovka.webp",
+          "alt": "Формирование уклонов грунта возле дома по высотным отметкам"
         }
       },
-      "checksum": "0b81c47eb665238d644a39b78982b1c6a0ed7bf3b8002047e8ec960696afbc98"
+      "checksum": "5f3aa3eef46134baf751fb2345c1c79030f3d2827e545982be12d1ff3d27afcd"
     },
     {
       "page_key": "S5-CHILD-MACHINERY",
@@ -3188,17 +3314,17 @@
           {
             "title": "Большой объём грунта",
             "text": "Подходит для территорий, где ручное перемещение материала нерационально по масштабу.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp"
+            "image": ""
           },
           {
             "title": "Участок после строительства",
             "text": "Используется для разбора куч, обратной засыпки и общей подготовки свободной площади.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp"
+            "image": ""
           },
           {
             "title": "Подготовка перед покрытиями",
             "text": "Применяется как черновой этап, если будущие конструкции и отметки уже определены.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/planirovka_territorii2.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как выполняем земляные работы",
@@ -3288,7 +3414,21 @@
           }
         ]
       },
-      "checksum": "6418aa31cfe11f44df239f0e3c96d72bde32d2ab2d87505475aaa1b7a1e569dd"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-planirovka-spetstekhnikoi.webp",
+          "alt": "Планировка частного участка мини-погрузчиком"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-planirovka-spetstekhnikoi.webp",
+          "alt": "Планировка частного участка мини-погрузчиком"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-planirovka-spetstekhnikoi.webp",
+          "alt": "Планировка частного участка мини-погрузчиком"
+        }
+      },
+      "checksum": "f1082018abdefe17aa6bdb1071e38fb8fc4377d8d03999e04ccd711756282587"
     },
     {
       "page_key": "S5-CHILD-FILL",
@@ -3331,17 +3471,17 @@
           {
             "title": "Низкая часть участка",
             "text": "Подходит для подъёма зоны, если решение согласовано с общим стоком и соседними отметками.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp"
+            "image": ""
           },
           {
             "title": "Замена непригодного слоя",
             "text": "Применяется после удаления слабого или загрязнённого грунта в установленном объёме.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp"
+            "image": ""
           },
           {
             "title": "Подготовка основания",
             "text": "Нужна перед благоустройством, когда проект предусматривает добавление определённого материала.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как выполняем земляные работы",
@@ -3431,7 +3571,21 @@
           }
         ]
       },
-      "checksum": "a9bf68decd1bd8f1f0bfaf569b9d74361b7a1c1d8bb3fff74089967ad08d5a14"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-otsypka-podem-gruntom.webp",
+          "alt": "Отсыпка и послойное выравнивание участка привозным грунтом"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-otsypka-podem-gruntom.webp",
+          "alt": "Отсыпка и послойное выравнивание участка привозным грунтом"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-otsypka-podem-gruntom.webp",
+          "alt": "Отсыпка и послойное выравнивание участка привозным грунтом"
+        }
+      },
+      "checksum": "001b10c8875a5b72d8f52a93b161f82fd6e4362b8e5c19d1fff74627d67850a7"
     },
     {
       "page_key": "S5-CHILD-CULTIVATION",
@@ -3474,17 +3628,17 @@
           {
             "title": "Уплотнённая почва",
             "text": "Подходит после оценки участка, где верхний слой трудно обрабатывать вручную.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0843.webp"
+            "image": ""
           },
           {
             "title": "Подготовка под посев",
             "text": "Используется как одна из операций перед формированием посевного ложа.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0843.webp"
+            "image": ""
           },
           {
             "title": "Переработка завезённого грунта",
             "text": "Помогает перемешать и разрыхлить материал до финишного выравнивания.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0843.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как выполняем земляные работы",
@@ -3574,7 +3728,21 @@
           }
         ]
       },
-      "checksum": "91819621fed08a6b476385f53946ec36f59db94ea9705faff5119605043b3dcc"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-kultivatsiya-uchastka.webp",
+          "alt": "Культивация почвы мотокультиватором на частном участке"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-kultivatsiya-uchastka.webp",
+          "alt": "Культивация почвы мотокультиватором на частном участке"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-kultivatsiya-uchastka.webp",
+          "alt": "Культивация почвы мотокультиватором на частном участке"
+        }
+      },
+      "checksum": "c943bc30d6e99c19d1f49dc5ee28303fd67da864700062d1a28a66be99aab0ac"
     },
     {
       "page_key": "S6-CHILD-CONCRETE",
@@ -3615,17 +3783,17 @@
           {
             "title": "Выраженный перепад",
             "text": "Подходит там, где требуется жёсткая конструкция, параметры которой подтверждены расчётом.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/DSC01487.webp"
+            "image": ""
           },
           {
             "title": "Терраса возле покрытий",
             "text": "Используется при точном сопряжении с лестницами, площадками и другими капитальными элементами.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/DSC01487.webp"
+            "image": ""
           },
           {
             "title": "Сложная геометрия",
             "text": "Монолит позволяет реализовать повороты и участки, предусмотренные проектным решением.",
-            "image": "https://exp76.ru/wp-content/uploads/2020/10/DSC01487.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как строится подпорная конструкция",
@@ -3715,7 +3883,21 @@
           }
         ]
       },
-      "checksum": "16b2eb5de267ab889de3692ddf5afca9e8d5136856ec0a3326aff747f7e68bb8"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-concrete-retaining-wall.webp",
+          "alt": "Устройство монолитной бетонной подпорной стенки на участке"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-concrete-retaining-wall.webp",
+          "alt": "Устройство монолитной бетонной подпорной стенки на участке"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-concrete-retaining-wall.webp",
+          "alt": "Устройство монолитной бетонной подпорной стенки на участке"
+        }
+      },
+      "checksum": "f84dd971b6106937072be9004ec14c2ccf5e1580d4d7c85dd1e9589b0d294ce2"
     },
     {
       "page_key": "S6-CHILD-STONE",
@@ -3756,17 +3938,17 @@
           {
             "title": "Камерный перепад",
             "text": "Подходит для садовых террас, где конструкция одновременно формирует рельеф и заметный декоративный элемент.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-stone-retaining-wall.webp"
+            "image": ""
           },
           {
             "title": "Связь с мощением",
             "text": "Камень или кирпич можно согласовать с материалами дорожек и площадок.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-stone-retaining-wall.webp"
+            "image": ""
           },
           {
             "title": "Реконструкция участка",
             "text": "Применяется при замене разрушенного края после проверки причины деформации основания.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-stone-retaining-wall.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как строится подпорная конструкция",
@@ -3858,19 +4040,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-stone-retaining-wall.webp",
-          "alt": "Подпорная стенка из натурального камня на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-stone-brick-retaining-wall.webp",
+          "alt": "Подпорная стенка с облицовкой камнем и кирпичным акцентом"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-stone-retaining-wall.webp",
-          "alt": "Подпорная стенка из натурального камня на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-stone-brick-retaining-wall.webp",
+          "alt": "Подпорная стенка с облицовкой камнем и кирпичным акцентом"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-stone-retaining-wall.webp",
-          "alt": "Подпорная стенка из натурального камня на участке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-stone-brick-retaining-wall.webp",
+          "alt": "Подпорная стенка с облицовкой камнем и кирпичным акцентом"
         }
       },
-      "checksum": "585117b172c81c231a40914d2bd87c25c1e97b0a6400457ea955a781c9ba861d"
+      "checksum": "eb18400b623b44027caabfaa7f97f0b659f845766868189038275ef9e1178459"
     },
     {
       "page_key": "S6-CHILD-WOOD",
@@ -3909,17 +4091,17 @@
           {
             "title": "Небольшой перепад",
             "text": "Подходит для декоративных террас и приподнятых посадочных зон при подтверждённой допустимой нагрузке.",
-            "image": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp"
+            "image": ""
           },
           {
             "title": "Сад в природной стилистике",
             "text": "Древесина может связать подпорный элемент с настилами, грядками и другими садовыми деталями.",
-            "image": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp"
+            "image": ""
           },
           {
             "title": "Разборное решение",
             "text": "Применяется там, где важна более лёгкая конструкция и владелец понимает особенности обслуживания материала.",
-            "image": "https://exp76.ru/wp-content/uploads/2015/07/podporki1.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как строится подпорная конструкция",
@@ -4009,7 +4191,21 @@
           }
         ]
       },
-      "checksum": "c0b4d73d8de74c0186a70c13505061fc7fc49dc7676537c03a61742d58d6e550"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-wood-retaining-wall.webp",
+          "alt": "Деревянная подпорная стенка из обработанного бруса"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-wood-retaining-wall.webp",
+          "alt": "Деревянная подпорная стенка из обработанного бруса"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s6-wood-retaining-wall.webp",
+          "alt": "Деревянная подпорная стенка из обработанного бруса"
+        }
+      },
+      "checksum": "39f85d066e4f0af4ef10ddefd2879509868b2424dfc048c407c524ef860489ec"
     },
     {
       "page_key": "S7-CHILD-DESIGN",
@@ -4050,17 +4246,17 @@
           {
             "title": "Новый участок",
             "text": "Проект нужен до прокладки трасс, чтобы освещение согласовывалось с дорожками и озеленением.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lighting-design.webp"
+            "image": ""
           },
           {
             "title": "Реконструкция сети",
             "text": "Помогает заменить набор разрозненных светильников на понятные функциональные группы.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lighting-design.webp"
+            "image": ""
           },
           {
             "title": "Сложный вечерний сценарий",
             "text": "Подходит, когда отдельно управляются фасад, маршруты, зона отдыха и декоративные акценты.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lighting-design.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как создаём освещение",
@@ -4152,19 +4348,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lighting-design.webp",
-          "alt": "Проектирование наружного освещения загородного участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-lighting-design.webp",
+          "alt": "Разметка мест установки светильников по проекту освещения"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lighting-design.webp",
-          "alt": "Проектирование наружного освещения загородного участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-lighting-design.webp",
+          "alt": "Разметка мест установки светильников по проекту освещения"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-lighting-design.webp",
-          "alt": "Проектирование наружного освещения загородного участка"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-lighting-design.webp",
+          "alt": "Разметка мест установки светильников по проекту освещения"
         }
       },
-      "checksum": "cad688cd99c58d06293f8e733b1d94d7f5324d8fde96cf1d1ab3e138504d2c89"
+      "checksum": "7f279c153015aa27093ae1b1e983d562f15ee9eb40d2ac729e0a2eabba51c483"
     },
     {
       "page_key": "S7-CHILD-INSTALL",
@@ -4209,17 +4405,17 @@
           {
             "title": "Реализация нового проекта",
             "text": "Подходит для монтажа одновременно с благоустройством до устройства финишных покрытий.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/EvxPksHMjgc.webp"
+            "image": ""
           },
           {
             "title": "Замена старой системы",
             "text": "Нужна для обновления наружных приборов и линий после обследования существующей сети.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/EvxPksHMjgc.webp"
+            "image": ""
           },
           {
             "title": "Добавление отдельных зон",
             "text": "Применяется при расширении света на дорожки, въезд или площадку с проверкой доступной мощности.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/EvxPksHMjgc.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как создаём освещение",
@@ -4309,7 +4505,21 @@
           }
         ]
       },
-      "checksum": "d4df46f3194e2631e885c33423e36f3a86cce8a7157335e4824ef24c8f53d378"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-outdoor-lighting-installation.webp",
+          "alt": "Монтаж уличных светильников вдоль садовой дорожки"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-outdoor-lighting-installation.webp",
+          "alt": "Монтаж уличных светильников вдоль садовой дорожки"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-outdoor-lighting-installation.webp",
+          "alt": "Монтаж уличных светильников вдоль садовой дорожки"
+        }
+      },
+      "checksum": "33e8bf64dd7c1f439d2dba974b355a1464c8d10e6a0834eb6311942ec4bee22d"
     },
     {
       "page_key": "S7-CHILD-LANDSCAPE",
@@ -4322,8 +4532,8 @@
       "post_content": "<section class=\"service-content service-content--scope\"><h2>Какой результат даёт отдельное решение</h2><p>Садовый свет строится вокруг вечерних видов и безопасности движения. Размещение приборов учитывает рост растений, работу садовой техники и возможность обслуживания.</p><ul><li class=\"service-result\"><strong>Освещённые маршруты</strong><p>Помогаем различать края дорожек, ступени и повороты в вечернем сценарии участка.</p></li><li class=\"service-result\"><strong>Акценты на растениях</strong><p>Направляем свет на выбранные кроны и композиции, контролируя видимые источники и соседние зоны.</p></li><li class=\"service-result\"><strong>Связная вечерняя картина</strong><p>Согласуем яркость функционального и декоративного света, чтобы отдельные точки не спорили между собой.</p></li></ul></section><section class=\"service-content service-content--geo\"><h2>Ландшафтное и декоративное освещение сада: география выезда</h2><p>Работы по услуге «Ландшафтное и декоративное освещение сада» выполняем в Ярославле, Рыбинске и населённых пунктах Ярославской области; логистику и возможность выезда оцениваем по адресу и составу задачи.</p><ul><li>Ярославль</li><li>Рыбинск</li><li>Ярославская область</li></ul></section><section class=\"service-content service-content--boundary\"><h2>Условия и границы работ</h2><p>Сад и композиция; архитектурная подсветка дома разведена.</p><h3>Не входит в услугу</h3><ul><li>постоянная архитектурная подсветка фасада</li><li>новогоднее оформление</li><li>освещение внутри дома</li></ul></section><section class=\"service-content service-content--cta\"><h2>Рассчитать услугу «Ландшафтное и декоративное освещение сада»</h2><p>Пришлите фотографии, адрес и краткое описание задачи по услуге «Ландшафтное и декоративное освещение сада» — проверим исходные условия и подготовим состав работ для расчёта.</p><p><a class=\"service-cta__primary\" href=\"#calc\">Получить расчёт</a> <a class=\"service-cta__secondary\" href=\"#consultation\">Обсудить задачу</a></p></section>",
       "post_excerpt": "Создаём ландшафтное освещение сада, выделяя маршруты, растения и малые формы мягкими световыми акцентами без избыточной яркости и случайных бликов.",
       "seo": {
-        "title": "Ландшафтное и декоративное освещение сада в Ярославле — проектирование и монтаж",
-        "description": "Ландшафтное и декоративное освещение сада в Ярославле, Рыбинске и области: освещённые маршруты, этапы работ, границы услуги и факторы индивидуального расчёта стоимости."
+        "title": "Ландшафтное освещение сада в Ярославле — проект и монтаж",
+        "description": "Ландшафтное освещение сада в Ярославле, Рыбинске и области: световые сценарии, этапы работ, границы услуги и индивидуальный расчёт стоимости."
       },
       "main_image": {
         "url": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp",
@@ -4350,17 +4560,17 @@
           {
             "title": "Сформированный сад",
             "text": "Подходит для участка, где уже понятны ключевые растения и вечерние маршруты.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp"
+            "image": ""
           },
           {
             "title": "Новая концепция благоустройства",
             "text": "Позволяет заложить кабельные трассы до газона и финишных посадочных работ.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp"
+            "image": ""
           },
           {
             "title": "Зона отдыха",
             "text": "Помогает создать мягкий свет вокруг террасы, беседки и прилегающих садовых композиций.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/landshaftnoe-osveshenie.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как создаём освещение",
@@ -4450,7 +4660,21 @@
           }
         ]
       },
-      "checksum": "35dca6ebf5b46eba977708232553f8260b9c8f593f30134104184096baecf14c"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-landscape-lighting.webp",
+          "alt": "Ландшафтное освещение деревьев, кустарников и дорожки"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-landscape-lighting.webp",
+          "alt": "Ландшафтное освещение деревьев, кустарников и дорожки"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-landscape-lighting.webp",
+          "alt": "Ландшафтное освещение деревьев, кустарников и дорожки"
+        }
+      },
+      "checksum": "ea30a06524e01952146d4d4f09c5cc72e2819f9445fb4740c545fbf89173a951"
     },
     {
       "page_key": "S7-CHILD-ARCHITECTURAL",
@@ -4494,17 +4718,17 @@
           {
             "title": "Новый загородный дом",
             "text": "Подходит, когда трассы можно заранее связать с фасадными и ландшафтными работами.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/DbDKG2WLtEk.webp"
+            "image": ""
           },
           {
             "title": "Готовый фасад",
             "text": "Решение разрабатывается с учётом допустимого крепления и минимизации заметных коммуникаций.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/DbDKG2WLtEk.webp"
+            "image": ""
           },
           {
             "title": "Входная группа",
             "text": "Можно отдельно подчеркнуть крыльцо, колонны и другие архитектурные детали постоянным светом.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/DbDKG2WLtEk.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как создаём освещение",
@@ -4594,7 +4818,21 @@
           }
         ]
       },
-      "checksum": "8b369e6fb6548182f80aba553a5c9e282b6db37874492fd35e9f1768abadb2e0"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-architectural-lighting.webp",
+          "alt": "Архитектурная подсветка фасада загородного дома"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-architectural-lighting.webp",
+          "alt": "Архитектурная подсветка фасада загородного дома"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-architectural-lighting.webp",
+          "alt": "Архитектурная подсветка фасада загородного дома"
+        }
+      },
+      "checksum": "a194d427e683aed4d6cfdebd46159f16a5deba66fb5f25b796ab1a9d9e2f24f5"
     },
     {
       "page_key": "S7-CHILD-HOLIDAY",
@@ -4635,17 +4873,17 @@
           {
             "title": "Частный загородный дом",
             "text": "Подходит для сезонного оформления фасада, крыльца и прилегающей территории.",
-            "image": "https://exp76.ru/wp-content/uploads/2024/02/image1.webp"
+            "image": ""
           },
           {
             "title": "Входная группа",
             "text": "Можно создать локальную композицию без подсветки всего здания.",
-            "image": "https://exp76.ru/wp-content/uploads/2024/02/image1.webp"
+            "image": ""
           },
           {
             "title": "Праздничный сад",
             "text": "Допускает оформление отдельных деревьев и малых форм подходящими наружными элементами.",
-            "image": "https://exp76.ru/wp-content/uploads/2024/02/image1.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как создаём освещение",
@@ -4735,7 +4973,21 @@
           }
         ]
       },
-      "checksum": "e2548fe7296c3b7ec9d509720233b965c065c0b38093426f8f1be394b2e9d71b"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-holiday-lighting.webp",
+          "alt": "Новогоднее освещение загородного дома и хвойных деревьев"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-holiday-lighting.webp",
+          "alt": "Новогоднее освещение загородного дома и хвойных деревьев"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-holiday-lighting.webp",
+          "alt": "Новогоднее освещение загородного дома и хвойных деревьев"
+        }
+      },
+      "checksum": "f969131927a7ba26f4957463733dd9deb5f3cd4ee35943084a1b34aac9ff7f79"
     },
     {
       "page_key": "S8-CHILD-PIPE",
@@ -4775,17 +5027,17 @@
           {
             "title": "Новый въезд",
             "text": "Подходит для начала устройства проезда через открытую придорожную канаву.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp"
+            "image": ""
           },
           {
             "title": "Замена повреждённой трубы",
             "text": "Применяется после оценки причины деформации, заиливания или недостаточной пропускной способности.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp"
+            "image": ""
           },
           {
             "title": "Расширение проезда",
             "text": "Нужна, когда меняется ширина въезда и существующая конструкция не соответствует новой задаче.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как устраиваем въезд через канаву",
@@ -4877,19 +5129,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
-          "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-culvert-pipe.webp",
+          "alt": "Укладка гофрированной водопропускной трубы на щебёночное основание"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
-          "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-culvert-pipe.webp",
+          "alt": "Укладка гофрированной водопропускной трубы на щебёночное основание"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
-          "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-culvert-pipe.webp",
+          "alt": "Укладка гофрированной водопропускной трубы на щебёночное основание"
         }
       },
-      "checksum": "0bf066075b96355d56e2282f1a4dc8b1f3927895c4899b69696d606b086be43a"
+      "checksum": "0af1cc51bce8319462b04420a1529da30fc2b587db65553d840a142f7ae14d35"
     },
     {
       "page_key": "S8-CHILD-GRAVEL",
@@ -4929,17 +5181,17 @@
           {
             "title": "Основной въезд к дому",
             "text": "Подходит, если щебёночное покрытие отвечает нагрузке и желаемому уровню благоустройства.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp"
+            "image": ""
           },
           {
             "title": "Строительный проезд",
             "text": "Может использоваться как основание для доступа техники с заранее согласованной конструкцией.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp"
+            "image": ""
           },
           {
             "title": "Замена размытой насыпи",
             "text": "Применяется после проверки трубы, откосов и причины потери материала.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как устраиваем въезд через канаву",
@@ -5031,19 +5283,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
-          "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-gravel-entry.webp",
+          "alt": "Уплотнение щебёночного въезда через канаву виброплитой"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
-          "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-gravel-entry.webp",
+          "alt": "Уплотнение щебёночного въезда через канаву виброплитой"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-culvert-gravel-entry.webp",
-          "alt": "Монтаж водопропускной трубы и щебёночного въезда"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-gravel-entry.webp",
+          "alt": "Уплотнение щебёночного въезда через канаву виброплитой"
         }
       },
-      "checksum": "c2143ff919abc744dd97230068c8b6576f00274641dee1e9256ab05085beea7b"
+      "checksum": "8b7c5f5063818c16b373cb6255f5c8c03d1bc627d045dc6ab96f52ba2aad20e0"
     },
     {
       "page_key": "S8-CHILD-CONCRETE",
@@ -5083,17 +5335,17 @@
           {
             "title": "Постоянный въезд",
             "text": "Подходит владельцам, которым требуется жёсткое финишное покрытие при подтверждённой конструкции основания.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp"
+            "image": ""
           },
           {
             "title": "Интенсивный заезд",
             "text": "Рассматривается, когда режим эксплуатации заранее известен и учтён в решении.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp"
+            "image": ""
           },
           {
             "title": "Обновление готового основания",
             "text": "Возможно после обследования трубы, щебёночных слоёв и деформаций существующего проезда.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как устраиваем въезд через канаву",
@@ -5185,19 +5437,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp",
-          "alt": "Бетонный въезд через канаву с парковочной площадкой"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-concrete-entry.webp",
+          "alt": "Бетонирование въезда через канаву над водопропускной трубой"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp",
-          "alt": "Бетонный въезд через канаву с парковочной площадкой"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-concrete-entry.webp",
+          "alt": "Бетонирование въезда через канаву над водопропускной трубой"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp",
-          "alt": "Бетонный въезд через канаву с парковочной площадкой"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-concrete-entry.webp",
+          "alt": "Бетонирование въезда через канаву над водопропускной трубой"
         }
       },
-      "checksum": "6bf6739679ced75f615d0de18a7e643d4c3edac07a3899272211f29efe3b1aac"
+      "checksum": "4b21e25acf33b548d91d11a9908cbd4cf32fed071a2126393a4ee7cb760adf7c"
     },
     {
       "page_key": "S8-CHILD-PARKING",
@@ -5237,17 +5489,17 @@
           {
             "title": "Узкая входная зона",
             "text": "Подходит, когда парковочное место нужно разместить сразу за въездом при ограниченной глубине участка.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp"
+            "image": ""
           },
           {
             "title": "Новый участок",
             "text": "Позволяет одновременно спланировать пересечение канавы и площадку до озеленения территории.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp"
+            "image": ""
           },
           {
             "title": "Расширение существующего проезда",
             "text": "Применяется после оценки действующей трубы, основания и доступного места для стоянки.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как устраиваем въезд через канаву",
@@ -5339,19 +5591,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp",
-          "alt": "Бетонный въезд через канаву с парковочной площадкой"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-entry-parking.webp",
+          "alt": "Въезд через канаву с водопропускной трубой и парковочной площадкой"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp",
-          "alt": "Бетонный въезд через канаву с парковочной площадкой"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-entry-parking.webp",
+          "alt": "Въезд через канаву с водопропускной трубой и парковочной площадкой"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-concrete-entry-parking.webp",
-          "alt": "Бетонный въезд через канаву с парковочной площадкой"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s8-entry-parking.webp",
+          "alt": "Въезд через канаву с водопропускной трубой и парковочной площадкой"
         }
       },
-      "checksum": "766bdb7a319fd2242f8cb558d18b9f5a80d24679bce357dfce6dff7e881b2c3d"
+      "checksum": "3d32f6ca12f8b5e9f7d6f732745e12b338ef3c62a4a13600e85a08d4a69679c3"
     },
     {
       "page_key": "S9-CHILD-TREE-REMOVAL",
@@ -5390,17 +5642,17 @@
           {
             "title": "Дерево мешает работам",
             "text": "Ствол находится в зоне будущего строительства, проезда или переустройства участка.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp"
+            "image": ""
           },
           {
             "title": "Мало свободного места",
             "text": "Рядом расположены забор, дом, линии участка или сохраняемые растения, поэтому нужен поэтапный подход.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp"
+            "image": ""
           },
           {
             "title": "Нужно освободить зону",
             "text": "Владелец хочет убрать выбранные деревья и заранее понять состав сопутствующих операций.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как организуем спил",
@@ -5494,7 +5746,21 @@
           }
         ]
       },
-      "checksum": "af139b22bd418639f54ac24875645a225666d1582b2c50b2258f0750bfb9774e"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-tree-removal.webp",
+          "alt": "Удаление дерева по частям с контролируемым спуском ствола"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-tree-removal.webp",
+          "alt": "Удаление дерева по частям с контролируемым спуском ствола"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-tree-removal.webp",
+          "alt": "Удаление дерева по частям с контролируемым спуском ствола"
+        }
+      },
+      "checksum": "34f3572f31d3dad64a8de82ee8345a34b16c2e0e0d7cdaf905f5d44a4a292b5d"
     },
     {
       "page_key": "S9-CHILD-STUMPS",
@@ -5535,17 +5801,17 @@
           {
             "title": "Перед благоустройством",
             "text": "Пень находится в зоне будущего газона, посадок, дорожки или площадки.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp"
+            "image": ""
           },
           {
             "title": "После удаления дерева",
             "text": "Ствол уже спилен, но основание и корни не позволяют продолжить запланированные работы.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp"
+            "image": ""
           },
           {
             "title": "При локальной расчистке",
             "text": "Нужно убрать один или несколько пней без заказа выравнивания всей территории.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/IMG_0808.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как проходит корчевание",
@@ -5639,7 +5905,21 @@
           }
         ]
       },
-      "checksum": "3512f1cbcf4d8089b83d7960075642e3e76924e7dfb0025a4f9891bc71a4fa06",
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-stump-grinding.webp",
+          "alt": "Механическое измельчение пня на частном участке"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-stump-grinding.webp",
+          "alt": "Механическое измельчение пня на частном участке"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-stump-grinding.webp",
+          "alt": "Механическое измельчение пня на частном участке"
+        }
+      },
+      "checksum": "5f95e62a65add19a2e043b040e589e86e53b284fea19f1c9a24619b28ceaab27",
       "related_article_page_keys": [
         "S9-ARTICLE-STUMP-DIY"
       ]
@@ -5681,17 +5961,17 @@
           {
             "title": "Новый участок",
             "text": "Перед проектированием или благоустройством нужно открыть территорию для обследования и работ.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp"
+            "image": ""
           },
           {
             "title": "Заросшая часть сада",
             "text": "Кустарник и поросль заняли зону, которую владелец планирует использовать иначе.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp"
+            "image": ""
           },
           {
             "title": "Пятно под объект",
             "text": "Требуется расчистить строго определённое место под дорожку, площадку или строение.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Выкорчевывание-пней-спил-деревьев.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Этапы расчистки участка",
@@ -5785,7 +6065,21 @@
           }
         ]
       },
-      "checksum": "ff7d7062f95b319975a8a44a9bf1f0afdead38d978b2c2a2e4c5c77ebbff6a2b",
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-site-clearing.webp",
+          "alt": "Расчистка заросшего участка с измельчением веток"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-site-clearing.webp",
+          "alt": "Расчистка заросшего участка с измельчением веток"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-site-clearing.webp",
+          "alt": "Расчистка заросшего участка с измельчением веток"
+        }
+      },
+      "checksum": "670c49e3652485de49ca9dd513b8dfca3eda0c470e5f09cf219a7e129a6055c4",
       "related_article_page_keys": [
         "S9-ARTICLE-OVERGROWN-SITE"
       ]
@@ -5829,17 +6123,17 @@
           {
             "title": "Центр сада",
             "text": "Пруд должен стать основной точкой притяжения и связать окружающие посадки и маршруты.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp"
+            "image": ""
           },
           {
             "title": "Тихая зона отдыха",
             "text": "Водоём размещают рядом с террасой, беседкой или местом спокойного наблюдения.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp"
+            "image": ""
           },
           {
             "title": "Развитие рельефа",
             "text": "Существующие перепады хочется использовать в водной композиции вместе с ручьём или каскадом.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как создаётся декоративный пруд",
@@ -5933,7 +6227,21 @@
           }
         ]
       },
-      "checksum": "7313583f068aa643f2e855a89ffbfe96800772218c8aa8ef2fe2757e3af52d2c",
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-decorative-pond.webp",
+          "alt": "Декоративный пруд с каменной береговой линией и водными растениями"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-decorative-pond.webp",
+          "alt": "Декоративный пруд с каменной береговой линией и водными растениями"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-decorative-pond.webp",
+          "alt": "Декоративный пруд с каменной береговой линией и водными растениями"
+        }
+      },
+      "checksum": "c089b1ea782cbc590a439333205d3d40d6e491f1fc7857c3446049c27b75610e",
       "related_article_page_keys": [
         "S10-ARTICLE-POND-DIY",
         "S10-ARTICLE-POND-CARE"
@@ -5976,17 +6284,17 @@
           {
             "title": "Природный сад",
             "text": "Обычная геометрия бассейна не соответствует характеру участка и окружающим посадкам.",
-            "image": "https://exp76.ru/wp-content/uploads/2023/12/20231011_131925-scaled.webp"
+            "image": ""
           },
           {
             "title": "Зона семейного отдыха",
             "text": "Нужны купальная вода, удобный подход и пространство для отдыха рядом.",
-            "image": "https://exp76.ru/wp-content/uploads/2023/12/20231011_131925-scaled.webp"
+            "image": ""
           },
           {
             "title": "Большой водоём",
             "text": "Планируется заметная водная поверхность с разделением функций внутри одной композиции.",
-            "image": "https://exp76.ru/wp-content/uploads/2023/12/20231011_131925-scaled.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Проектирование и устройство купального пруда",
@@ -6080,7 +6388,21 @@
           }
         ]
       },
-      "checksum": "e9c9bce000b0a661e64f58a2998561bfac86bf8458b1bee82df4386ddc201a0a"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-swimming-pond.webp",
+          "alt": "Плавательный пруд с купальной зоной и зоной регенерации"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-swimming-pond.webp",
+          "alt": "Плавательный пруд с купальной зоной и зоной регенерации"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-swimming-pond.webp",
+          "alt": "Плавательный пруд с купальной зоной и зоной регенерации"
+        }
+      },
+      "checksum": "19a4d89fd592d1932c7129974a03a03c52ce43f01a9639e1ef265c2cc44fbff9"
     },
     {
       "page_key": "S10-CHILD-WATERFALL-CASCADE",
@@ -6121,17 +6443,17 @@
           {
             "title": "Участок с перепадом",
             "text": "Естественный или созданный склон можно включить в движение воды.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp"
+            "image": ""
           },
           {
             "title": "Пруд требует акцента",
             "text": "Каскад должен дополнить водоём, обеспечить визуальное движение и характерный звук.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp"
+            "image": ""
           },
           {
             "title": "Зона отдыха",
             "text": "Нужна водная композиция, которую видно с террасы, беседки или прогулочного маршрута.",
-            "image": "https://exp76.ru/wp-content/uploads/2018/02/ceCDnbc-gM4.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как создаём каскад",
@@ -6225,7 +6547,21 @@
           }
         ]
       },
-      "checksum": "05d37904a687fffe2e1e033e472972b3605854d6ec49eded967e2ab223ee33d7"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-waterfall-cascade.webp",
+          "alt": "Садовый водопад с тремя каскадами из природного камня"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-waterfall-cascade.webp",
+          "alt": "Садовый водопад с тремя каскадами из природного камня"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-waterfall-cascade.webp",
+          "alt": "Садовый водопад с тремя каскадами из природного камня"
+        }
+      },
+      "checksum": "db31a83f0bf0f8fde781556613f99d493e69eb0824dd02584350e4d2d52874f3"
     },
     {
       "page_key": "S10-CHILD-STREAM",
@@ -6264,17 +6600,17 @@
           {
             "title": "Длинный маршрут",
             "text": "Водная линия сопровождает дорожку и последовательно открывается с разных ракурсов.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/ustroistvo-vodoemov.webp"
+            "image": ""
           },
           {
             "title": "Связь с прудом",
             "text": "Ручей должен объединить верхнюю часть композиции и расположенный ниже водоём.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/ustroistvo-vodoemov.webp"
+            "image": ""
           },
           {
             "title": "Мягкий перепад",
             "text": "Небольшой уклон хочется подчеркнуть спокойным течением без выраженных водопадных ступеней.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/ustroistvo-vodoemov.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как устраивается искусственный ручей",
@@ -6368,7 +6704,21 @@
           }
         ]
       },
-      "checksum": "00d8830443843d30fa23f9a35edefa17de5ca9c3cd32c91b0e7aa48a642b8acb"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-stream.webp",
+          "alt": "Декоративный ручей с камнями и переходом через русло"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-stream.webp",
+          "alt": "Декоративный ручей с камнями и переходом через русло"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-stream.webp",
+          "alt": "Декоративный ручей с камнями и переходом через русло"
+        }
+      },
+      "checksum": "0add417c5b822f1dd2b07adbcb356381f8e0235b42d5b94c7c5121ae0e3aca96"
     },
     {
       "page_key": "S10-CHILD-FOUNTAIN",
@@ -6407,17 +6757,17 @@
           {
             "title": "Парадная зона",
             "text": "Фонтан формирует акцент у входа и поддерживает архитектуру дома.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-private-garden-fountain.webp"
+            "image": ""
           },
           {
             "title": "Закрытый двор",
             "text": "Компактная водная композиция оживляет мощёную площадку или камерный сад.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-private-garden-fountain.webp"
+            "image": ""
           },
           {
             "title": "Место отдыха",
             "text": "Звук и движение воды дополняют террасу, беседку или прогулочную зону.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-private-garden-fountain.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Этапы создания фонтана",
@@ -6513,19 +6863,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-private-garden-fountain.webp",
-          "alt": "Декоративный фонтан с рециркуляцией воды"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-fountain.webp",
+          "alt": "Небольшой садовый фонтан в каменной чаше"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-private-garden-fountain.webp",
-          "alt": "Декоративный фонтан с рециркуляцией воды"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-fountain.webp",
+          "alt": "Небольшой садовый фонтан в каменной чаше"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-private-garden-fountain.webp",
-          "alt": "Декоративный фонтан с рециркуляцией воды"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-fountain.webp",
+          "alt": "Небольшой садовый фонтан в каменной чаше"
         }
       },
-      "checksum": "73600deda543efefaf35255df4d9c59c8f402c1f85a09a29ad29e2135908a285"
+      "checksum": "383c417e59ce31bf9fa5e5190f634caafc5ef3aa98fa10cff5b874ab3076c5c5"
     },
     {
       "page_key": "S11-CHILD-TERRACE-VERANDA",
@@ -6564,17 +6914,17 @@
           {
             "title": "Открытая терраса",
             "text": "Нужно смягчить ощущение жары вокруг сидячей зоны в подходящих погодных условиях.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp"
+            "image": ""
           },
           {
             "title": "Веранда под навесом",
             "text": "Есть конструкция для прокладки линии и возможность отвода системы на зимний период.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp"
+            "image": ""
           },
           {
             "title": "Патио у дома",
             "text": "Требуется аккуратно встроить распыление в существующее пространство без функции полива растений.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как монтируем туманообразование",
@@ -6668,7 +7018,21 @@
           }
         ]
       },
-      "checksum": "3d2b51fe3ad0ee1d022af28966235ed1dfb7291c4a6c257dfb380aab1b024a98",
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-private-terrace.webp",
+          "alt": "Система туманообразования под навесом частной террасы"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-private-terrace.webp",
+          "alt": "Система туманообразования под навесом частной террасы"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-private-terrace.webp",
+          "alt": "Система туманообразования под навесом частной террасы"
+        }
+      },
+      "checksum": "be3acfc5c9c502852f33bce8e557457d0366f410aca8cc28dc61aad75eb54147",
       "related_article_page_keys": [
         "S11-ARTICLE-PRESSURE"
       ]
@@ -6710,17 +7074,17 @@
           {
             "title": "Летняя веранда",
             "text": "Посадочная зона открыта жаре и нуждается в отдельном сценарии микроклимата.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp"
+            "image": ""
           },
           {
             "title": "Открытая площадка",
             "text": "Нужно распределить распыление по нескольким группам столов без захвата проходов.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp"
+            "image": ""
           },
           {
             "title": "Сезонный павильон",
             "text": "Систему требуется связать с временной конструкцией и понятным порядком консервации.",
-            "image": "https://exp76.ru/wp-content/uploads/2017/01/Системы-туманообразования.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Этапы работы с площадкой кафе",
@@ -6814,7 +7178,21 @@
           }
         ]
       },
-      "checksum": "5a6b55143f809391fb55f22e7f462e94c19729d16624a0a0391ea7950a607037"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-cafe-outdoor.webp",
+          "alt": "Система туманообразования над открытой летней верандой кафе"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-cafe-outdoor.webp",
+          "alt": "Система туманообразования над открытой летней верандой кафе"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-cafe-outdoor.webp",
+          "alt": "Система туманообразования над открытой летней верандой кафе"
+        }
+      },
+      "checksum": "147842e6ff589a8c92c2e3e9e3091f7efe1350b429618f89ee917d3c55f58862"
     },
     {
       "page_key": "S11-CHILD-GREENHOUSE",
@@ -6853,17 +7231,17 @@
           {
             "title": "Теплица",
             "text": "Нужно управлять влажностью и испарительным охлаждением совместно с вентиляцией.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-greenhouse-misting.webp"
+            "image": ""
           },
           {
             "title": "Оранжерея",
             "text": "Разные группы растений требуют продуманного зонирования и наблюдения за режимом.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-greenhouse-misting.webp"
+            "image": ""
           },
           {
             "title": "Зона укоренения",
             "text": "Требуется мягкое распыление по заданию специалиста без превращения системы в полив корней.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-greenhouse-misting.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как разрабатывается система для теплицы",
@@ -6959,19 +7337,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-greenhouse-misting.webp",
-          "alt": "Система туманообразования внутри теплицы"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-greenhouse-misting.webp",
+          "alt": "Система туманообразования над растениями в частной теплице"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-greenhouse-misting.webp",
-          "alt": "Система туманообразования внутри теплицы"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-greenhouse-misting.webp",
+          "alt": "Система туманообразования над растениями в частной теплице"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-greenhouse-misting.webp",
-          "alt": "Система туманообразования внутри теплицы"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-greenhouse-misting.webp",
+          "alt": "Система туманообразования над растениями в частной теплице"
         }
       },
-      "checksum": "8c3f1012ce87f9d5c0508dfdb502e642ffd2624fb637cb94882fd4132243a208"
+      "checksum": "bbc637650463460587c1519171939e82bf1ea41c4eb880b1ffdee0554f728825"
     },
     {
       "page_key": "S12-CHILD-DRIVING",
@@ -7010,17 +7388,17 @@
           {
             "title": "Есть проект",
             "text": "Проектировщик уже определил свайное решение, и требуется проверить возможность его исполнения на участке.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp"
+            "image": ""
           },
           {
             "title": "Новый фундамент",
             "text": "Площадка готовится к свайным работам до монтажа дальнейших конструкций дома или бани.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp"
+            "image": ""
           },
           {
             "title": "Нужна оценка доступа",
             "text": "Важно заранее понять, допускают ли подъезд и габариты участка выбранную технологию.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как организуется погружение свай",
@@ -7116,19 +7494,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp",
-          "alt": "Забивка железобетонной сваи на строительной площадке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-reinforced-concrete-pile-driving.webp",
+          "alt": "Забивка железобетонной сваи на участке частного дома"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp",
-          "alt": "Забивка железобетонной сваи на строительной площадке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-reinforced-concrete-pile-driving.webp",
+          "alt": "Забивка железобетонной сваи на участке частного дома"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp",
-          "alt": "Забивка железобетонной сваи на строительной площадке"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-reinforced-concrete-pile-driving.webp",
+          "alt": "Забивка железобетонной сваи на участке частного дома"
         }
       },
-      "checksum": "4c65f80e5c466a7276e4e77dea110c95621685de659af5639338e3232acb0e8a",
+      "checksum": "3256ef0f0859dfde615284911a848a89f8a46b986c2d05282d1ccd76f4a712dd",
       "related_article_page_keys": [
         "S12-ARTICLE-PILE-PROS-CONS"
       ]
@@ -7170,17 +7548,17 @@
           {
             "title": "Дом на новом участке",
             "text": "До начала строительства нужно связать проект здания с основанием и фактической площадкой.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp"
+            "image": ""
           },
           {
             "title": "Сложный доступ",
             "text": "Требуется заранее проверить, сможет ли площадка принять выбранную технологию и материалы.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp"
+            "image": ""
           },
           {
             "title": "Готовое свайное поле",
             "text": "Проект уже содержит расположение свай, и нужна организация выполнения по этим данным.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Путь от проекта дома к фундаменту",
@@ -7276,19 +7654,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-pile-foundation-private-house.webp",
+          "alt": "Свайное поле из железобетонных свай под частный дом"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-pile-foundation-private-house.webp",
+          "alt": "Свайное поле из железобетонных свай под частный дом"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-pile-foundation-private-house.webp",
+          "alt": "Свайное поле из железобетонных свай под частный дом"
         }
       },
-      "checksum": "c294cd601e5f975916b264732fe80e52c734e468c94f29e9a475d6e6c77023c8"
+      "checksum": "f70acc848fb84bc5741a49afd03f6e3c77ca1bb9d6dd09c1d716f9a8317e4dec"
     },
     {
       "page_key": "S12-CHILD-BATHHOUSE",
@@ -7327,17 +7705,17 @@
           {
             "title": "Новая баня",
             "text": "Есть план строения и требуется обоснованное решение основания до заказа комплекта или материалов.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp"
+            "image": ""
           },
           {
             "title": "Печь внутри",
             "text": "Нужно заранее учесть положение печи и связанные с ней конструктивные требования.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp"
+            "image": ""
           },
           {
             "title": "Участок с ограничениями",
             "text": "Важно проверить рельеф, подъезд и взаимное положение бани, дома и существующих сетей.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как готовится свайный фундамент бани",
@@ -7433,19 +7811,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-pile-foundation-bathhouse.webp",
+          "alt": "Свайное поле из железобетонных свай под будущую баню"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-pile-foundation-bathhouse.webp",
+          "alt": "Свайное поле из железобетонных свай под будущую баню"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-pile-foundation-bathhouse.webp",
+          "alt": "Свайное поле из железобетонных свай под будущую баню"
         }
       },
-      "checksum": "c835f26271eb24b5ebc5fadd05bb728287e1e2daa4836f9fb07828d5f497b6ea"
+      "checksum": "69c919e45ebc24e21c79e29f6d38425e20c98730e8655b46ab3798e4fdee20e6"
     },
     {
       "page_key": "S13-CHILD-CARPORT",
@@ -7484,17 +7862,17 @@
           {
             "title": "Одна машина",
             "text": "Нужно перекрыть компактное место, сохранив удобный выход и подход к дому.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-high-resolution-carport.webp"
+            "image": ""
           },
           {
             "title": "Несколько автомобилей",
             "text": "Требуется общая конструкция с понятными пролётами и свободным манёвром.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-high-resolution-carport.webp"
+            "image": ""
           },
           {
             "title": "Навес у фасада",
             "text": "Необходимо согласовать высоту, стиль и водоотвод с существующим зданием.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-high-resolution-carport.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как создаётся навес для машины",
@@ -7590,19 +7968,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-high-resolution-carport.webp",
-          "alt": "Металлический навес для автомобиля у частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-carport-private-house.webp",
+          "alt": "Металлический навес для автомобиля на частном участке"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-high-resolution-carport.webp",
-          "alt": "Металлический навес для автомобиля у частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-carport-private-house.webp",
+          "alt": "Металлический навес для автомобиля на частном участке"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-high-resolution-carport.webp",
-          "alt": "Металлический навес для автомобиля у частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-carport-private-house.webp",
+          "alt": "Металлический навес для автомобиля на частном участке"
         }
       },
-      "checksum": "26aa827b7733f1586d7f8b4e8607f4515f630170d87086d4ce81ffd8d9393c34",
+      "checksum": "10d52b8ddc6d3277503c6f27b8501e26909cbda0fcb64e19d75527d5c96185c3",
       "related_article_page_keys": [
         "S13-ARTICLE-CARPORT-DIY"
       ]
@@ -7644,17 +8022,17 @@
           {
             "title": "Открытая терраса",
             "text": "Мебель и покрытие хочется защитить, сохранив визуальную связь с садом.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp"
+            "image": ""
           },
           {
             "title": "Выход из дома",
             "text": "Навес должен перекрыть переход и не мешать открыванию дверей и окон.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp"
+            "image": ""
           },
           {
             "title": "Отдельная веранда",
             "text": "Нужна самостоятельная конструкция, привязанная к размерам площадки и окружающим посадкам.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Проектирование навеса для террасы",
@@ -7750,19 +8128,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
-          "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-terrace-veranda-canopy.webp",
+          "alt": "Металлический навес над террасой частного дома"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
-          "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-terrace-veranda-canopy.webp",
+          "alt": "Металлический навес над террасой частного дома"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
-          "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-terrace-veranda-canopy.webp",
+          "alt": "Металлический навес над террасой частного дома"
         }
       },
-      "checksum": "58e7bf5e157a5c13f079fddf7d78096d5e4ad1d646613e1f2078bf1a29b91f8a"
+      "checksum": "98e67df928b8b55b007ce22c27b5ea90a9e6145bdeab03583178e59f27ffcdd1"
     },
     {
       "page_key": "S13-CHILD-BARBECUE",
@@ -7801,17 +8179,17 @@
           {
             "title": "Печной комплекс",
             "text": "Нужно перекрыть рабочую зону, сохранив требования к дымоходу и воздушным расстояниям.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp"
+            "image": ""
           },
           {
             "title": "Мангал и стол",
             "text": "Навес объединяет приготовление и посадочные места без опор в проходах.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp"
+            "image": ""
           },
           {
             "title": "Отдельная площадка",
             "text": "Конструкция должна вписаться в сад и связаться с дорожками и покрытием.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как проектируем навес барбекю",
@@ -7907,19 +8285,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
-          "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-bbq-zone-canopy.webp",
+          "alt": "Металлический навес над зоной барбекю и отдыха"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
-          "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-bbq-zone-canopy.webp",
+          "alt": "Металлический навес над зоной барбекю и отдыха"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
-          "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-bbq-zone-canopy.webp",
+          "alt": "Металлический навес над зоной барбекю и отдыха"
         }
       },
-      "checksum": "f69ed60bb2158d51f1d1c9cbc90135bc196776b3cd782b1c20574a1f626e39f6"
+      "checksum": "d8b03f573b1877706c7f817bcfa8fe2e5b58b099de31e9cf29d3c6be56d69415"
     },
     {
       "page_key": "S13-CHILD-POLYCARBONATE-HOME",
@@ -7958,17 +8336,17 @@
           {
             "title": "Крыльцо и вход",
             "text": "Нужно защитить подход и дверь от прямых осадков в пределах доступного вылета.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp"
+            "image": ""
           },
           {
             "title": "Боковой проход",
             "text": "Узкая зона вдоль дома требует аккуратных опор и направления воды.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp"
+            "image": ""
           },
           {
             "title": "Небольшая терраса",
             "text": "Светопрозрачное покрытие должно меньше затенять прилегающие окна.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как монтируется навес к дому",
@@ -8064,19 +8442,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
-          "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-polycarbonate-canopy-home.webp",
+          "alt": "Пристенный навес из поликарбоната у частного дома"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
-          "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-polycarbonate-canopy-home.webp",
+          "alt": "Пристенный навес из поликарбоната у частного дома"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-attached-bbq-canopy.webp",
-          "alt": "Навес из поликарбоната над террасой и зоной барбекю"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-polycarbonate-canopy-home.webp",
+          "alt": "Пристенный навес из поликарбоната у частного дома"
         }
       },
-      "checksum": "098b9d9249674ccec450290d448461208c5b235e1c5e754bc4c76dfecf0a22be",
+      "checksum": "f93b23caf2c64742c5a4016517ebd64118e2ad66e057820e6d43d7c9f0ff772c",
       "related_article_page_keys": [
         "S13-ARTICLE-POLYCARBONATE-DIY"
       ]
@@ -8118,17 +8496,17 @@
           {
             "title": "Новый дом",
             "text": "Место камина и дымоход можно увязать с проектом до завершения отделки.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           },
           {
             "title": "Готовое помещение",
             "text": "Требуется проверить основание, перекрытия, кровлю и возможность монтажа без опасных компромиссов.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           },
           {
             "title": "Гостиная или зал",
             "text": "Камин должен стать архитектурным акцентом и соответствовать реальному сценарию использования.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как строится кладочный камин",
@@ -8222,7 +8600,21 @@
           }
         ]
       },
-      "checksum": "37ff9efea9a63fda5a323c168533f2f263d4c7fff401fdbf388c154facc07b79"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-masonry-fireplace-interior.webp",
+          "alt": "Кладочный камин в интерьере загородного дома"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-masonry-fireplace-interior.webp",
+          "alt": "Кладочный камин в интерьере загородного дома"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-masonry-fireplace-interior.webp",
+          "alt": "Кладочный камин в интерьере загородного дома"
+        }
+      },
+      "checksum": "6e4ee910b55600f154860307b37b1a4a63a9d2e7d3596c0f28ac662f78717e75"
     },
     {
       "page_key": "S14-CHILD-HEATING-STOVE",
@@ -8261,17 +8653,17 @@
           {
             "title": "Новый дом",
             "text": "Печь можно заложить в планировку, фундамент и кровельные узлы на проектной стадии.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           },
           {
             "title": "Дачный режим",
             "text": "Важен сценарий периодического использования и прогрева помещений после перерыва.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           },
           {
             "title": "Замена старой печи",
             "text": "Перед новой кладкой требуется обследовать основание, дымоход и окружающие конструкции.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Этапы устройства отопительной печи",
@@ -8365,7 +8757,21 @@
           }
         ]
       },
-      "checksum": "ecee0c57563c88c6db6348102c11a750afa8fff3e5df7f1f1e0e864230a75f2a",
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-heating-stove-masonry.webp",
+          "alt": "Кирпичная отопительная печь в деревянном доме"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-heating-stove-masonry.webp",
+          "alt": "Кирпичная отопительная печь в деревянном доме"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-heating-stove-masonry.webp",
+          "alt": "Кирпичная отопительная печь в деревянном доме"
+        }
+      },
+      "checksum": "42f96bad86271c00239d7b203fa4daca364daf9dbb068f05a92179059b1eae03",
       "related_article_page_keys": [
         "S14-ARTICLE-HEATING-STOVE-DIY"
       ]
@@ -8407,17 +8813,17 @@
           {
             "title": "Летняя кухня",
             "text": "Нужны печные модули, рабочая поверхность и хранение в одном ряду.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           },
           {
             "title": "Беседка",
             "text": "Комплекс требуется вписать в готовую или проектируемую конструкцию с дымоходом.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           },
           {
             "title": "Открытая площадка",
             "text": "Важно связать кладку, основание и маршруты между готовкой и столовой зоной.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как создаётся барбекю-комплекс",
@@ -8511,7 +8917,21 @@
           }
         ]
       },
-      "checksum": "3e77390f81fcadc833b9612c341687dbc7eb7dca7cf8d19536de1ab15820e9da"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-bbq-complex.webp",
+          "alt": "Готовый кирпичный барбекю-комплекс с рабочей зоной"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-bbq-complex.webp",
+          "alt": "Готовый кирпичный барбекю-комплекс с рабочей зоной"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-bbq-complex.webp",
+          "alt": "Готовый кирпичный барбекю-комплекс с рабочей зоной"
+        }
+      },
+      "checksum": "c33e4f4eaebb4fd464d329d37bb668ce60b189547800d09e2a80f5d7ef56c370"
     },
     {
       "page_key": "S14-CHILD-BRICK-GRILL",
@@ -8550,17 +8970,17 @@
           {
             "title": "Открытая площадка",
             "text": "Мангал должен стать самостоятельным элементом рядом с местом отдыха.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           },
           {
             "title": "Беседка",
             "text": "Нужна привязка к кровле, дымоходу и свободным расстояниям внутри конструкции.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           },
           {
             "title": "Начало комплекса",
             "text": "Сначала требуется базовый мангал с возможностью заранее продумать соседние рабочие модули.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как выполняется кладка мангала",
@@ -8654,7 +9074,21 @@
           }
         ]
       },
-      "checksum": "946b8e20e1e79bb0dc1d235305e5497a614fdb36e58c5b30b0a66d3e3adc2847",
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-compact-brick-grill.webp",
+          "alt": "Компактный стационарный кирпичный мангал на участке"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-compact-brick-grill.webp",
+          "alt": "Компактный стационарный кирпичный мангал на участке"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-compact-brick-grill.webp",
+          "alt": "Компактный стационарный кирпичный мангал на участке"
+        }
+      },
+      "checksum": "fd03eab30fcaabfe43b3f1889c30dfc005f360ac1bcf5b9c85227eb7626918a5",
       "related_article_page_keys": [
         "S14-ARTICLE-BRICK-GRILL-DIY"
       ]
@@ -8696,17 +9130,17 @@
           {
             "title": "Любители готовки в казане",
             "text": "Нужна стационарная топочная часть и удобное рабочее окружение.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           },
           {
             "title": "Домашнее копчение",
             "text": "Коптильную функцию требуется вписать в единый печной и дымовой тракт.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           },
           {
             "title": "Летняя кухня",
             "text": "Несколько модулей должны работать рядом со столешницей, хранением и посадочной зоной.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/sc0NTM29Iv0.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Проектирование печи с модулями",
@@ -8800,7 +9234,21 @@
           }
         ]
       },
-      "checksum": "4bcf40f576c17bd950a811205855b85f88eb984d62ab3f88f729d024dfa23646"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-cauldron-smokehouse-complex.webp",
+          "alt": "Кирпичная печь с казаном и коптильной камерой"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-cauldron-smokehouse-complex.webp",
+          "alt": "Кирпичная печь с казаном и коптильной камерой"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-cauldron-smokehouse-complex.webp",
+          "alt": "Кирпичная печь с казаном и коптильной камерой"
+        }
+      },
+      "checksum": "9bb4e541c01c28e57ef8c9b52c49350645d908ff52f64727e14faad4d0bf1a4d"
     },
     {
       "page_key": "S15-CHILD-PRIVATE-HOUSE",
@@ -8839,17 +9287,17 @@
           {
             "title": "Подготовка к новому дому",
             "text": "Старое строение занимает пятно будущего строительства и должно быть удалено по понятной границе.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           },
           {
             "title": "Непригодное здание",
             "text": "Ремонт не входит в планы владельца, и требуется оценить безопасную последовательность разборки.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           },
           {
             "title": "Изменение участка",
             "text": "Дом мешает новой планировке, но рядом нужно сохранить хозяйственные объекты и благоустройство.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как организуем снос дома",
@@ -8945,19 +9393,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-private-house-demolition.webp",
+          "alt": "Контролируемый снос частного деревянного дома на участке"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-private-house-demolition.webp",
+          "alt": "Контролируемый снос частного деревянного дома на участке"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-private-house-demolition.webp",
+          "alt": "Контролируемый снос частного деревянного дома на участке"
         }
       },
-      "checksum": "d5ed6a785ece37eda77b8fad8993d5004d4caff0cdc8fdbcb3dbc5aa8db30b00",
+      "checksum": "c5cedc8f2b6a50b83bbea2510bbf35adb8efa69afadfd1238845ce7df4babcdf",
       "related_article_page_keys": [
         "S15-ARTICLE-DEMOLITION-PERMIT"
       ]
@@ -8999,17 +9447,17 @@
           {
             "title": "Старый дачный дом",
             "text": "Строение больше не используется и мешает новому размещению на участке.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           },
           {
             "title": "Сарай или хозблок",
             "text": "Нужно убрать отдельную постройку, не затронув дом, забор и сад.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           },
           {
             "title": "Дом с верандой",
             "text": "Требуется определить, разбирается весь объект или только конкретная пристройка.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Порядок разборки дачного дома",
@@ -9105,19 +9553,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-country-house-dismantling.webp",
+          "alt": "Поэтапный демонтаж дачного дома и веранды"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-country-house-dismantling.webp",
+          "alt": "Поэтапный демонтаж дачного дома и веранды"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-country-house-dismantling.webp",
+          "alt": "Поэтапный демонтаж дачного дома и веранды"
         }
       },
-      "checksum": "419e45b84eb6aea51959413fd84fd250ac5cbb8d4f0913bb5ff451465481d247"
+      "checksum": "e3fb1a6786108280b83d43ea6968a9f44a72ab642e41c2da2c0c0f61b41f1866"
     },
     {
       "page_key": "S15-CHILD-DANGEROUS-BUILDING",
@@ -9156,17 +9604,17 @@
           {
             "title": "Частичное обрушение",
             "text": "У здания уже нарушены отдельные стены, кровля или перекрытия и обычная разборка небезопасна.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           },
           {
             "title": "Длительно пустующий дом",
             "text": "Состояние конструкций неизвестно, присутствуют прогибы, гниение или трещины.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           },
           {
             "title": "Повреждение после события",
             "text": "Перед доступом внутрь требуется определить границы опасной зоны и дальнейшие действия.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Порядок работы с аварийным зданием",
@@ -9262,19 +9710,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-dangerous-building-assessment.webp",
+          "alt": "Обследование аварийного малоэтажного здания перед демонтажом"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-dangerous-building-assessment.webp",
+          "alt": "Обследование аварийного малоэтажного здания перед демонтажом"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-dangerous-building-assessment.webp",
+          "alt": "Обследование аварийного малоэтажного здания перед демонтажом"
         }
       },
-      "checksum": "074748f566a1f630db60d2e501e41422af63d014b10ec4b93058751822399b4b"
+      "checksum": "070bd8994bd2705591f26c923578c724ac5cced5c22e31a08e453cf60f5752f1"
     },
     {
       "page_key": "S15-CHILD-MANUAL",
@@ -9313,17 +9761,17 @@
           {
             "title": "Нет подъезда",
             "text": "К строению нельзя безопасно подать подходящую технику, но есть рабочие проходы.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp"
+            "image": ""
           },
           {
             "title": "Плотное окружение",
             "text": "Рядом находятся сохраняемые постройки, ограждения или садовые элементы.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp"
+            "image": ""
           },
           {
             "title": "Нужны отдельные материалы",
             "text": "Владелец хочет попытаться сохранить заранее перечисленные элементы без обещания их пригодности.",
-            "image": "https://exp76.ru/wp-content/uploads/2019/02/snos.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как проходит ручная разборка",
@@ -9417,7 +9865,21 @@
           }
         ]
       },
-      "checksum": "f7b76925771f56088b3a8cf6ad4028255d6e93c928efac16de66a608a0450f3d"
+      "presentation_images": {
+        "hero": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-manual-building-dismantling.webp",
+          "alt": "Поэлементная ручная разборка деревянной постройки"
+        },
+        "context": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-manual-building-dismantling.webp",
+          "alt": "Поэлементная ручная разборка деревянной постройки"
+        },
+        "card": {
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-manual-building-dismantling.webp",
+          "alt": "Поэлементная ручная разборка деревянной постройки"
+        }
+      },
+      "checksum": "00b01ce1ef981d7555c735d736baffb704a76c5fc83f2290cebb584a9eb589b3"
     },
     {
       "page_key": "S15-CHILD-MECHANIZED",
@@ -9456,17 +9918,17 @@
           {
             "title": "Свободная площадка",
             "text": "Вокруг здания есть место для манёвра и безопасная дистанция до сохраняемых объектов.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           },
           {
             "title": "Большой объём материалов",
             "text": "Ручная разборка нецелесообразна для основной массы согласованной конструкции.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           },
           {
             "title": "Погрузка на месте",
             "text": "Подъезд позволяет связать разрушение, сортировку и перемещение строительных остатков.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Организация механизированного демонтажа",
@@ -9562,19 +10024,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-mechanized-building-demolition.webp",
+          "alt": "Механизированный снос малоэтажного здания экскаватором"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-mechanized-building-demolition.webp",
+          "alt": "Механизированный снос малоэтажного здания экскаватором"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-controlled-house-demolition.webp",
-          "alt": "Механизированный демонтаж старого частного дома"
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-mechanized-building-demolition.webp",
+          "alt": "Механизированный снос малоэтажного здания экскаватором"
         }
       },
-      "checksum": "004b94f93d58d89c6c82a62978d44c3d10e5392c5b0ac8c1abb5930eb679083e"
+      "checksum": "5c945db112213497dcd14a4a74aa549fd295ac80abc346635b8e225da31b7099"
     },
     {
       "page_key": "S15-CHILD-DEBRIS",
@@ -9613,17 +10075,17 @@
           {
             "title": "Полный снос дома",
             "text": "Нужно заранее включить сортировку и освобождение площадки в общий план демонтажа.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp"
+            "image": ""
           },
           {
             "title": "Разборка постройки",
             "text": "После дачного дома или сарая остаются разные материалы, требующие отдельного учёта.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp"
+            "image": ""
           },
           {
             "title": "Завершённый этап",
             "text": "Демонтаж уже выполнен, но происхождение и состав остатков можно подтвердить для оценки.",
-            "image": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp"
+            "image": ""
           }
         ],
         "ns87_solution_title": "Как организуется вывоз остатков",
@@ -9719,19 +10181,19 @@
       },
       "presentation_images": {
         "hero": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-demolition-debris-loading.webp",
           "alt": "Сортировка и погрузка строительного мусора после сноса"
         },
         "context": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-demolition-debris-loading.webp",
           "alt": "Сортировка и погрузка строительного мусора после сноса"
         },
         "card": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-demolition-debris-loading.webp",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-demolition-debris-loading.webp",
           "alt": "Сортировка и погрузка строительного мусора после сноса"
         }
       },
-      "checksum": "7508f54c124efa9cbd67db277b1eee4db133efa67b7e4968586c658fb013d4ea"
+      "checksum": "fd7a9c6343cf2efbe6755549d2db3a69ef1fd6c09487df276e911a4aad240ac2"
     },
     {
       "page_key": "S9-ARTICLE-STUMP-DIY",

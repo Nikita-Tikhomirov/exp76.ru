@@ -903,7 +903,7 @@ def _render_managed_post_content(page: Mapping[str, object]) -> str:
     )
 
 
-def _acf_payload(page: Mapping[str, object], image_url: str) -> dict[str, object]:
+def _acf_payload(page: Mapping[str, object]) -> dict[str, object]:
     audience = page["audience"]
     process = page["process"]
     pricing = page["pricing"]
@@ -925,7 +925,7 @@ def _acf_payload(page: Mapping[str, object], image_url: str) -> dict[str, object
         "ns87_problem_title": audience["heading"],
         "ns87_problem_text": audience["text"],
         "ns87_problem_items": [
-            {"title": item["title"], "text": item["text"], "image": image_url}
+            {"title": item["title"], "text": item["text"], "image": ""}
             for item in audience["items"]
             if isinstance(item, dict)
         ],
@@ -1020,14 +1020,7 @@ def build_import_item(
         },
         "case_ids": list(proof["case_ids"]),
         "related_service_page_keys": relation_keys,
-        "acf": _acf_payload(
-            page,
-            str(
-                page["presentation_images"]["context"]["url"]
-                if isinstance(page.get("presentation_images"), dict)
-                else selected["url"]
-            ),
-        ),
+        "acf": _acf_payload(page),
     }
     presentation_images = page.get("presentation_images")
     if isinstance(presentation_images, dict):

@@ -29,7 +29,7 @@
       "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp",
       "alt": "Забивка железобетонной сваи на строительной площадке",
       "asset_kind": "context_photo",
-      "caption": "Контекстная иллюстрация: забивка железобетонной сваи на строительной площадке"
+      "caption": "Контекстная иллюстрация: Забивка железобетонной сваи на строительной площадке"
     },
     "primary_cta": {
       "label": "Обсудить фундамент",
@@ -239,40 +239,40 @@
         "title": "Исходные данные объекта",
         "text": "До предложения уточняют тип здания, доступные проектные материалы, состояние территории, расположение подъезда и ограничения рабочей площадки.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s12-pile-foundation-survey-layout.webp",
+          "alt": "Инженерная разбивка свайного поля на участке частного дома",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: фундаментная сетка из забивных железобетонных свай"
+          "caption": "Контекстная иллюстрация: Инженерная разбивка свайного поля на участке частного дома"
         }
       },
       {
         "title": "Проектная схема свай",
         "text": "Количество, параметры и точки размещения железобетонных элементов определяют по проектному решению для конкретного здания.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-layout-plan-on-site.webp",
+          "alt": "Сверка схемы свай с разметкой строительной площадки",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: фундаментная сетка из забивных железобетонных свай"
+          "caption": "Контекстная иллюстрация: Сверка схемы свай с разметкой строительной площадки"
         }
       },
       {
         "title": "Забивка и монтаж",
         "text": "Монтажный объём формируем по согласованной схеме, параметрам свай, условиям подъезда и возможностям рабочей площадки.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp",
-          "alt": "Забивка железобетонной сваи на строительной площадке",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s12-pile-driving-closeup.webp",
+          "alt": "Забивка железобетонной сваи свайной установкой",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: забивка железобетонной сваи на строительной площадке"
+          "caption": "Контекстная иллюстрация: Забивка железобетонной сваи свайной установкой"
         }
       },
       {
         "title": "Организация площадки",
         "text": "Доставку, подъезд, рабочую зону и предварительную подготовку проверяют до начала монтажа, а расчистку или планировку при необходимости считают отдельно.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-site-preparation.webp",
+          "alt": "Подготовленная площадка и подъезд для забивки железобетонных свай",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: фундаментная сетка из забивных железобетонных свай"
+          "caption": "Контекстная иллюстрация: Подготовленная площадка и подъезд для забивки железобетонных свай"
         }
       }
     ]
@@ -287,10 +287,10 @@
         "title": "Забивка и монтаж железобетонных свай",
         "text": "Забивка и монтаж железобетонных свай по согласованной схеме; винтовые и буронабивные технологии рассчитываются отдельно.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-pile-driving.webp",
-          "alt": "Забивка железобетонной сваи на строительной площадке",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s12-installed-pile-heads.webp",
+          "alt": "Выровненные оголовки железобетонных свай под частный дом",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: забивка железобетонной сваи на строительной площадке"
+          "caption": "Контекстная иллюстрация: Выровненные оголовки железобетонных свай под частный дом"
         }
       },
       {
@@ -299,10 +299,10 @@
         "title": "Фундамент для частного дома",
         "text": "Объектная страница для частных и каркасных домов, где применимость и свайная схема определяются проектом, а не одним названием конструкции здания.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-s12-pile-foundation-inspection.webp",
+          "alt": "Проверка свайного поля инженером перед строительством",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: фундаментная сетка из забивных железобетонных свай"
+          "caption": "Контекстная иллюстрация: Проверка свайного поля инженером перед строительством"
         }
       },
       {
@@ -311,10 +311,10 @@
         "title": "Фундамент на ЖБ сваях для бани",
         "text": "Отдельная страница для основания бани, сохраняющая требование проектного подтверждения количества, параметров и расположения свай на участке.",
         "image": {
-          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
-          "alt": "Фундаментная сетка из забивных железобетонных свай",
+          "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-bathhouse-pile-foundation.webp",
+          "alt": "Свайное основание под компактную деревянную баню",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: фундаментная сетка из забивных железобетонных свай"
+          "caption": "Контекстная иллюстрация: Свайное основание под компактную деревянную баню"
         }
       }
     ]
@@ -332,12 +332,12 @@
           "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-installed-pile-grid.webp",
           "alt": "Фундаментная сетка из забивных железобетонных свай",
           "asset_kind": "context_photo",
-          "caption": "Контекстная иллюстрация: фундаментная сетка из забивных железобетонных свай"
+          "caption": "Контекстная иллюстрация: Фундаментная сетка из забивных железобетонных свай"
         }
       }
     ]
   },
   "evidence_gaps": [],
   "fact_evidence": [],
-  "rendered_sha256": "138744971156d53a27093956831d7d67d0d1524dd750d1c157b533f56b517b97"
+  "rendered_sha256": "ea6ec8e44efb25cb70ba80d1edba3fe026474e07e4995cbf949addad745c2153"
 }

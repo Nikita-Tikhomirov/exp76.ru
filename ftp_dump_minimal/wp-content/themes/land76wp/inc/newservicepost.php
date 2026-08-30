@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="<?php bloginfo("template_directory"); ?>/css/index.css" />
 <link rel="stylesheet" href="<?php bloginfo("template_directory"); ?>/css/services.css" />
 <style>
+  .hero {
+    min-height: 620px;
+  }
+
   .hero__subtitle {
     color: #fff;
     font-size: 24px;
@@ -16,7 +20,7 @@
   }
 
   .hero__buttons {
-    margin-top: 40px;
+    margin-top: 24px;
   }
 
   .hero__breadcramps {
@@ -66,6 +70,23 @@
     margin-right: 20px;
     border-radius: 50%;
     object-fit: cover;
+  }
+
+  .problem-item__number {
+    align-items: center;
+    background: #0a9215;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
+    color: #fff;
+    display: inline-flex;
+    flex: 0 0 60px;
+    font-size: 18px;
+    font-weight: 700;
+    height: 60px;
+    justify-content: center;
+    margin-right: 20px;
+    width: 60px;
   }
 
   .solution-block {
@@ -289,7 +310,7 @@
     padding-bottom: 50px;
     -webkit-box-shadow: inset 0 5px 5px rgba(0, 0, 0, .1);
     box-shadow: inset 0 5px 5px rgba(0, 0, 0, .1);
-    background: url(../img/adv.png) 0 0/cover fixed;
+    background: url('<?php echo esc_url(get_template_directory_uri() . '/img/adv.png'); ?>') 0 0/cover fixed;
     border-top: 2px solid #0a9215
   }
 
@@ -398,7 +419,8 @@
       text-align: center;
     }
 
-    .problem-item img {
+    .problem-item img,
+    .problem-item__number {
       margin-right: 0;
       margin-bottom: 15px;
     }
@@ -625,38 +647,198 @@ if (!function_exists('land76_newservice_managed_presentation_image')) {
 }
 
 if (!function_exists('land76_newservice_related_card_image')) {
-    function land76_newservice_related_card_image($post_id)
+    /** Pick the first page-unique related-card image from semantic and real-media fallbacks. */
+    function land76_newservice_related_card_image($post_id, &$seen = null)
     {
         $post_id = (int) $post_id;
         $empty = array('url' => '', 'alt' => '');
-        foreach (array('card', 'main') as $role) {
-            $url = (string) get_post_meta($post_id, '_land76_' . $role . '_image_url', true);
-            $alt = (string) get_post_meta($post_id, '_land76_' . $role . '_image_alt', true);
-            if ($url !== '' && $alt !== '') {
-                return array('url' => $url, 'alt' => $alt);
+        $candidates = array();
+        $candidate_identities = array();
+        $append_candidate = static function ($url, $alt) use (&$candidates, &$candidate_identities) {
+            $url = (string) $url;
+            $alt = (string) $alt;
+            if ($url === '' || $alt === '') {
+                return;
             }
-        }
-
+            $identity = land76_newservice_image_identity($url);
+            if ($identity === '' || isset($candidate_identities[$identity])) {
+                return;
+            }
+            $candidate_identities[$identity] = true;
+            $candidates[] = array('url' => $url, 'alt' => $alt);
+        };
         $hub = function_exists('land76wp_service_hub_for_post')
             ? land76wp_service_hub_for_post($post_id)
             : null;
-        if (!is_array($hub)
-            || (int) $hub['hub_post_id'] !== $post_id
-            || !function_exists('land76_service_v2_load')) {
-            return $empty;
+        if (is_array($hub) && function_exists('land76_service_v2_load')) {
+            $hub_post_id = (int) $hub['hub_post_id'];
+            $service_v2 = $hub_post_id > 0 ? land76_service_v2_load($hub_post_id) : null;
+            if (is_array($service_v2)) {
+                if ($hub_post_id === $post_id) {
+                    if (!empty($service_v2['hero']['image']['url'])
+                        && !empty($service_v2['hero']['image']['alt'])) {
+                        $append_candidate(
+                            $service_v2['hero']['image']['url'],
+                            $service_v2['hero']['image']['alt']
+                        );
+                    }
+                    foreach (array('scope', 'services', 'articles') as $hub_section_name) {
+                        $hub_items = isset($service_v2[$hub_section_name]['items'])
+                            && is_array($service_v2[$hub_section_name]['items'])
+                            ? $service_v2[$hub_section_name]['items']
+                            : array();
+                        foreach ($hub_items as $hub_item) {
+                            if (!is_array($hub_item)
+                                || empty($hub_item['image']['url'])
+                                || empty($hub_item['image']['alt'])) {
+                                continue;
+                            }
+                            $append_candidate(
+                                $hub_item['image']['url'],
+                                $hub_item['image']['alt']
+                            );
+                        }
+                    }
+                }
+                $page_key = (string) get_post_meta($post_id, '_land76_page_key', true);
+                foreach (array('services', 'articles') as $section_name) {
+                    $items = isset($service_v2[$section_name]['items']) && is_array($service_v2[$section_name]['items'])
+                        ? $service_v2[$section_name]['items']
+                        : array();
+                    foreach ($items as $item) {
+                        if (!is_array($item)
+                            || empty($item['page_key'])
+                            || !hash_equals($page_key, (string) $item['page_key'])
+                            || empty($item['image']['url'])
+                            || empty($item['image']['alt'])) {
+                            continue;
+                        }
+                        $append_candidate(
+                            $item['image']['url'],
+                            $item['image']['alt']
+                        );
+                        break 2;
+                    }
+                }
+            }
         }
 
-        $service_v2 = land76_service_v2_load($post_id);
-        if (!is_array($service_v2)
-            || empty($service_v2['hero']['image']['url'])
-            || empty($service_v2['hero']['image']['alt'])) {
-            return $empty;
+        foreach (array('card', 'main') as $role) {
+            $url = (string) get_post_meta($post_id, '_land76_' . $role . '_image_url', true);
+            $alt = (string) get_post_meta($post_id, '_land76_' . $role . '_image_alt', true);
+            $append_candidate($url, $alt);
         }
 
-        return array(
-            'url' => (string) $service_v2['hero']['image']['url'],
-            'alt' => (string) $service_v2['hero']['image']['alt'],
-        );
+        foreach ($candidates as $candidate) {
+            if (!is_array($seen)
+                || land76_newservice_reserve_image($seen, $candidate['url'])) {
+                return $candidate;
+            }
+        }
+
+        return $empty;
+    }
+}
+
+if (!function_exists('land76_newservice_image_identity')) {
+    /** Normalize one media file across full-size and WordPress resized URLs. */
+    function land76_newservice_image_identity($url)
+    {
+        $path = (string) wp_parse_url((string) $url, PHP_URL_PATH);
+        if ($path === '') {
+            return '';
+        }
+
+        $path = (string) preg_replace('/-\d+x\d+(?=\.[a-z0-9]+$)/i', '', $path);
+        $path = (string) preg_replace('/-scaled(?=\.[a-z0-9]+$)/i', '', $path);
+        return strtolower(rawurldecode($path));
+    }
+}
+
+if (!function_exists('land76_newservice_reserve_image')) {
+    /** Reserve an image for the current page and reject a repeated visual. */
+    function land76_newservice_reserve_image(array &$seen, $url)
+    {
+        $identity = land76_newservice_image_identity($url);
+        if ($identity === '' || isset($seen[$identity])) {
+            return false;
+        }
+
+        $seen[$identity] = true;
+        return true;
+    }
+}
+
+if (!function_exists('land76_newservice_unique_project_image')) {
+    /** Select the first real case image that has not already appeared on the page. */
+    function land76_newservice_unique_project_image($post_id, array &$seen, $size = 'medium')
+    {
+        $post_id = (int) $post_id;
+        $fallback_alt = wp_strip_all_tags((string) get_the_title($post_id));
+        $candidates = array();
+        $append_candidate = static function ($image) use (&$candidates, $size, $fallback_alt) {
+            $url = '';
+            $alt = $fallback_alt;
+            if (is_array($image)) {
+                if (!empty($image['sizes'][$size])) {
+                    $url = (string) $image['sizes'][$size];
+                } elseif (!empty($image['url'])) {
+                    $url = (string) $image['url'];
+                }
+                if (!empty($image['alt'])) {
+                    $alt = (string) $image['alt'];
+                }
+            } elseif ($image instanceof WP_Post) {
+                $url = (string) wp_get_attachment_image_url((int) $image->ID, $size);
+                $attachment_alt = (string) get_post_meta((int) $image->ID, '_wp_attachment_image_alt', true);
+                if ($attachment_alt !== '') {
+                    $alt = $attachment_alt;
+                }
+            } elseif (is_int($image) || (is_string($image) && ctype_digit($image))) {
+                $attachment_id = (int) $image;
+                $url = (string) wp_get_attachment_image_url($attachment_id, $size);
+                $attachment_alt = (string) get_post_meta($attachment_id, '_wp_attachment_image_alt', true);
+                if ($attachment_alt !== '') {
+                    $alt = $attachment_alt;
+                }
+            } elseif (is_string($image)) {
+                $url = $image;
+            }
+            if ($url !== '') {
+                $candidates[] = array('url' => $url, 'alt' => $alt);
+            }
+        };
+
+        if (function_exists('land76_get_card_image_url')) {
+            $append_candidate(land76_get_card_image_url($post_id, $size, false));
+        } else {
+            $append_candidate(get_the_post_thumbnail_url($post_id, $size));
+        }
+        if (function_exists('get_field')) {
+            $slider = get_field('slider', $post_id);
+            if (is_array($slider)) {
+                foreach ($slider as $row) {
+                    if (is_array($row) && array_key_exists('image', $row)) {
+                        $append_candidate($row['image']);
+                    }
+                }
+            }
+        }
+        $attachments = get_attached_media('image', $post_id);
+        if (is_array($attachments)) {
+            foreach ($attachments as $attachment) {
+                $append_candidate($attachment);
+            }
+        }
+
+        foreach ($candidates as $candidate) {
+            $url = $candidate['url'];
+            if (land76_newservice_reserve_image($seen, $url)) {
+                return $candidate;
+            }
+        }
+
+        return array('url' => '', 'alt' => '');
     }
 }
 
@@ -674,6 +856,15 @@ $ns87_hero_image_url = $ns87_hero_image['url'];
 $ns87_hero_image_alt = $ns87_hero_image['alt'];
 $ns87_context_image_url = $ns87_context_image['url'];
 $ns87_context_image_alt = $ns87_context_image['alt'];
+$ns87_rendered_image_identities = array();
+$ns87_render_hero_image = $ns87_hero_image_url !== '';
+$ns87_render_main_image = $ns87_main_image_url !== '' && $ns87_main_image_alt !== '';
+$ns87_render_context_image = $ns87_context_image_url !== '' && $ns87_context_image_alt !== '';
+if ($land76_managed_service_hub_post) {
+    $ns87_render_hero_image = $ns87_render_hero_image && land76_newservice_reserve_image($ns87_rendered_image_identities, $ns87_hero_image_url);
+    $ns87_render_main_image = $ns87_render_main_image && land76_newservice_reserve_image($ns87_rendered_image_identities, $ns87_main_image_url);
+    $ns87_render_context_image = $ns87_render_context_image && land76_newservice_reserve_image($ns87_rendered_image_identities, $ns87_context_image_url);
+}
 $ns87_hero_title = function_exists('get_field') ? get_field('ns87_hero_title', $ns87_post_context) : '';
 $ns87_hero_subtitle = function_exists('get_field') ? get_field('ns87_hero_subtitle', $ns87_post_context) : '';
 $ns87_hero_btn_primary_text = function_exists('get_field') ? get_field('ns87_hero_btn_primary_text', $ns87_post_context) : '';
@@ -961,7 +1152,7 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
 <!-- 1. Hero блок -->
 <section class="hero">
   <div class="hero__scene" id="scene">
-    <div class="hero__bg" data-depth="0.4"<?php if ($ns87_hero_image_url !== '') : ?> style="background-image: url('<?php echo esc_url($ns87_hero_image_url); ?>');"<?php endif; ?>></div>
+    <div class="hero__bg" data-depth="0.4"<?php if ($ns87_render_hero_image) : ?> style="background-image: url('<?php echo esc_url($ns87_hero_image_url); ?>');"<?php endif; ?>></div>
   </div>
   <div class="hero__content wrapper">
     <h1 class="hero__title" data-aos="fade-right" data-aos-duration="800"><?php echo esc_html($ns87_hero_title ? $ns87_hero_title : get_the_title()); ?>
@@ -978,9 +1169,6 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
       <span aria-hidden="true"> | </span><span class="hero__active-page"><?php echo esc_html($ns87_breadcrumb_title); ?></span></div>
   </div>
 
-  <div class="animation-wrap"><img style="margin-left:100px" class="animation-wrap__img"
-      src="<?php echo get_template_directory_uri() ?>/img/mouse.png" alt="" role="presentation" /><span
-      class="animation-wrap__text">Листайте</span></div>
 </section>
 
 <!-- 2. Проблема -->
@@ -989,20 +1177,15 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
     <h3><?php echo esc_html($ns87_problem_title ? $ns87_problem_title : 'Какая задача решается'); ?></h3>
     <p><?php echo esc_html($ns87_problem_text ? $ns87_problem_text : 'Подбираем решение по месту, чтобы работы были понятными по составу, стоимости и результату.'); ?></p>
 
-    <?php
-    $ns87_problem_reserved_image_urls = $land76_managed_service_hub_post
-        ? array_values(array_filter(array($ns87_main_image_url, $ns87_context_image_url)))
-        : array();
-    $ns87_rendered_problem_image_urls = array();
-    ?>
+    <?php $ns87_rendered_problem_image_urls = array(); ?>
     <?php foreach ($ns87_problem_items as $index => $ns87_problem_item) : ?>
     <?php
       $ns87_problem_img = '';
       $ns87_problem_img_alt = !empty($ns87_problem_item['title']) ? $ns87_problem_item['title'] : 'Проблема';
-      if (!empty($ns87_problem_item['image'])) {
+      if (!$land76_managed_service_hub_post && !empty($ns87_problem_item['image'])) {
           if (is_array($ns87_problem_item['image']) && !empty($ns87_problem_item['image']['url'])) {
               $ns87_problem_img = $ns87_problem_item['image']['url'];
-              if ($land76_managed_service_hub_post && !empty($ns87_problem_item['image']['alt'])) {
+              if (!empty($ns87_problem_item['image']['alt'])) {
                   $ns87_problem_img_alt = $ns87_problem_item['image']['alt'];
               }
           } elseif (is_numeric($ns87_problem_item['image'])) {
@@ -1011,23 +1194,20 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
               $ns87_problem_img = $ns87_problem_item['image'];
           }
       }
-      if (empty($ns87_problem_img)) {
+      if (!$land76_managed_service_hub_post && empty($ns87_problem_img)) {
           $ns87_problem_img = land76_newservice_context_image(get_the_ID(), !empty($ns87_problem_item['title']) ? $ns87_problem_item['title'] : '');
       }
-      if ($land76_managed_service_hub_post && $ns87_problem_img === $ns87_context_image_url) {
-          $ns87_problem_img_alt = $ns87_context_image_alt;
-      }
-      if ($land76_managed_service_hub_post
-          && (in_array($ns87_problem_img, $ns87_problem_reserved_image_urls, true)
-              || in_array($ns87_problem_img, $ns87_rendered_problem_image_urls, true))) {
+      if (!$land76_managed_service_hub_post && $ns87_problem_img !== '' && in_array($ns87_problem_img, $ns87_rendered_problem_image_urls, true)) {
           $ns87_problem_img = '';
       }
-      if ($ns87_problem_img !== '') {
+      if (!$land76_managed_service_hub_post && $ns87_problem_img !== '') {
           $ns87_rendered_problem_image_urls[] = $ns87_problem_img;
       }
     ?>
     <div class="problem-item" data-aos="fade-up" data-aos-duration="<?php echo esc_attr(700 + ($index * 100)); ?>">
-      <?php if ($ns87_problem_img !== '') : ?>
+      <?php if ($land76_managed_service_hub_post) : ?>
+        <span class="problem-item__number" aria-hidden="true"><?php echo esc_html(str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT)); ?></span>
+      <?php elseif ($ns87_problem_img !== '') : ?>
         <img src="<?php echo esc_url($ns87_problem_img); ?>" alt="<?php echo esc_attr($ns87_problem_img_alt); ?>" loading="lazy" decoding="async">
       <?php endif; ?>
       <div>
@@ -1063,16 +1243,13 @@ Poiret One
 <!-- 4. SEO текст страницы -->
 <section class="services wrapper">
   <div class="seo-text" style="line-height: 1.6; margin-bottom: 40px;">
-    <?php if ($land76_managed_service_hub_post && $ns87_main_image_url !== '' && $ns87_main_image_alt !== '') : ?>
+    <?php if ($land76_managed_service_hub_post && $ns87_render_main_image) : ?>
       <figure class="service-main-image">
         <img src="<?php echo esc_url($ns87_main_image_url); ?>" alt="<?php echo esc_attr($ns87_main_image_alt); ?>">
       </figure>
     <?php endif; ?>
     <?php the_content(); ?>
-    <?php if ($land76_managed_service_hub_post
-        && $ns87_context_image_url !== ''
-        && $ns87_context_image_alt !== ''
-        && $ns87_context_image_url !== $ns87_main_image_url) : ?>
+    <?php if ($land76_managed_service_hub_post && $ns87_render_context_image) : ?>
       <figure class="service-context-image">
         <img src="<?php echo esc_url($ns87_context_image_url); ?>" alt="<?php echo esc_attr($ns87_context_image_alt); ?>" loading="lazy" decoding="async">
       </figure>
@@ -1097,11 +1274,16 @@ Poiret One
           continue;
         }
         setup_postdata($post);
-        $project_image = function_exists('land76_get_card_image_url')
-          ? land76_get_card_image_url($post_id, 'medium', !$land76_managed_service_hub_post)
-          : get_the_post_thumbnail_url($post_id, 'medium');
-        if (!$project_image && !$land76_managed_service_hub_post) {
-          $project_image = land76_newservice_context_image($ns87_post_context, 'пример работ');
+        if ($land76_managed_service_hub_post) {
+          $project_media = land76_newservice_unique_project_image($post_id, $ns87_rendered_image_identities, 'medium');
+          $project_image = $project_media['url'];
+        } else {
+          $project_image = function_exists('land76_get_card_image_url')
+            ? land76_get_card_image_url($post_id, 'medium', !$land76_managed_service_hub_post)
+            : get_the_post_thumbnail_url($post_id, 'medium');
+          if (!$project_image) {
+            $project_image = land76_newservice_context_image($ns87_post_context, 'пример работ');
+          }
         }
         $project_title = function_exists('get_field') ? get_field('cs87_hero_title', $post_id) : '';
         if (!$project_title) {
@@ -1165,7 +1347,7 @@ Poiret One
           || !hash_equals((string) $ns87_parent_hub['service_id'], (string) $ns87_related_service_hub['service_id'])) {
           continue;
       }
-      $ns87_related_service_card = land76_newservice_related_card_image($ns87_related_service_id);
+      $ns87_related_service_card = land76_newservice_related_card_image($ns87_related_service_id, $ns87_rendered_image_identities);
       ?>
       <article class="service">
         <?php if ($ns87_related_service_card['url'] !== '' && $ns87_related_service_card['alt'] !== '') : ?>
@@ -1210,12 +1392,9 @@ if (!is_array($ns87_related_article_ids)) {
           || strpos($ns87_related_article_page_key, '-ARTICLE-') === false) {
           continue;
       }
-      $ns87_related_article_card_url = (string) get_post_meta($ns87_related_article->ID, '_land76_card_image_url', true);
-      $ns87_related_article_card_alt = (string) get_post_meta($ns87_related_article->ID, '_land76_card_image_alt', true);
-      if ($ns87_related_article_card_url === '' || $ns87_related_article_card_alt === '') {
-          $ns87_related_article_card_url = (string) get_post_meta($ns87_related_article->ID, '_land76_main_image_url', true);
-          $ns87_related_article_card_alt = (string) get_post_meta($ns87_related_article->ID, '_land76_main_image_alt', true);
-      }
+      $ns87_related_article_card = land76_newservice_related_card_image($ns87_related_article->ID, $ns87_rendered_image_identities);
+      $ns87_related_article_card_url = $ns87_related_article_card['url'];
+      $ns87_related_article_card_alt = $ns87_related_article_card['alt'];
       ?>
       <article class="service">
         <?php if ($ns87_related_article_card_url !== '' && $ns87_related_article_card_alt !== '') : ?>

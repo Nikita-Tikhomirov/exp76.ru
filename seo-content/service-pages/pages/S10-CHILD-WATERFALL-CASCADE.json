@@ -187,5 +187,19 @@
       "строительство капитальных бассейнов",
       "инженерные городские фонтаны"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-waterfall-cascade.webp",
+      "alt": "Садовый водопад с тремя каскадами из природного камня"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-waterfall-cascade.webp",
+      "alt": "Садовый водопад с тремя каскадами из природного камня"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-waterfall-cascade.webp",
+      "alt": "Садовый водопад с тремя каскадами из природного камня"
+    }
   }
 }

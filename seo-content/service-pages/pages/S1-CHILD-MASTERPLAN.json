@@ -189,5 +189,19 @@
       "исполнительная геодезическая документация",
       "рабочие узлы конструкций"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-generalny-plan-uchastka.webp",
+      "alt": "Ландшафтный архитектор работает над генеральным планом частного участка"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-generalny-plan-uchastka.webp",
+      "alt": "Ландшафтный архитектор работает над генеральным планом частного участка"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-generalny-plan-uchastka.webp",
+      "alt": "Ландшафтный архитектор работает над генеральным планом частного участка"
+    }
   }
 }

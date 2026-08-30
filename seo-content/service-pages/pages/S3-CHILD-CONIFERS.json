@@ -190,5 +190,19 @@
       "лечение существующих хвойных",
       "обещание полной приживаемости"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-hvoinyh-derevev.webp",
+      "alt": "Посадка хвойного дерева с корневым комом на частном участке"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-hvoinyh-derevev.webp",
+      "alt": "Посадка хвойного дерева с корневым комом на частном участке"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-hvoinyh-derevev.webp",
+      "alt": "Посадка хвойного дерева с корневым комом на частном участке"
+    }
   }
 }

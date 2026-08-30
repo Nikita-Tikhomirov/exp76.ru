@@ -114,6 +114,20 @@
     "main_image_alt": "Система туманообразования на странице профильной услуги",
     "caption": "Изображение со страницы систем туманообразования показывает тип оборудования; конкретная терраса и выполненный объект не заявляются."
   },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-private-terrace.webp",
+      "alt": "Система туманообразования под навесом частной террасы"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-private-terrace.webp",
+      "alt": "Система туманообразования под навесом частной террасы"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-misting-private-terrace.webp",
+      "alt": "Система туманообразования под навесом частной террасы"
+    }
+  },
   "geo": {
     "heading": "Системы для террас в Ярославской области",
     "text": "Рассматриваем монтаж в Ярославле, Рыбинске и по области; при выезде проверяем конструкцию площадки, подключение воды и локальные ветровые условия.",

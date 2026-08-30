@@ -184,5 +184,19 @@
       "вывоз и утилизация без отдельного расчёта",
       "аренда спецтехники без работ"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-site-clearing.webp",
+      "alt": "Расчистка заросшего участка с измельчением веток"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-site-clearing.webp",
+      "alt": "Расчистка заросшего участка с измельчением веток"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s9-site-clearing.webp",
+      "alt": "Расчистка заросшего участка с измельчением веток"
+    }
   }
 }

@@ -114,6 +114,20 @@
     "main_image_alt": "Печной комплекс на странице профильных услуг",
     "caption": "Фото со страницы печей и каминов иллюстрирует кладочное направление; наличие казана, коптильни и параметры конкретного объекта не подтверждаются."
   },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-cauldron-smokehouse-complex.webp",
+      "alt": "Кирпичная печь с казаном и коптильной камерой"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-cauldron-smokehouse-complex.webp",
+      "alt": "Кирпичная печь с казаном и коптильной камерой"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-cauldron-smokehouse-complex.webp",
+      "alt": "Кирпичная печь с казаном и коптильной камерой"
+    }
+  },
   "geo": {
     "heading": "Печные комплексы в Ярославской области",
     "text": "Проектируем и кладём в Ярославле, Рыбинске и области; для точной компоновки осматриваем площадку и существующий навес.",

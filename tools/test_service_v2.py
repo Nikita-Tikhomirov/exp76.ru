@@ -117,7 +117,7 @@ EXPECTED_LEGACY_TEXT_WORDS = {
     "S5": 1231,
     "S6": 1207,
     "S7": 1143,
-    "S8": 1182,
+    "S8": 1186,
     "S9": 1170,
     "S10": 1219,
     "S11": 1147,
@@ -135,7 +135,7 @@ EXPECTED_LEGACY_TEXT_FINGERPRINTS = {
     "S5": "d11f0f12014a9e63a433150434af062d38cf41e83bda613f505fa916accee612",
     "S6": "971c0615af4fba7dd82ff7c14c3bbd67b00bb1406332994877cb27e1b776751a",
     "S7": "377235f0c427c1d0b72c5b3b5d9f1eaef111ca35402a7db362313002c0d4c053",
-    "S8": "78326a36cbc9a20c0cb9253a536d9e8a20479c5b0f81636b7ec561a0841d032c",
+    "S8": "43a422865cd8a5011f17f8e1fdb4b9a275d10468773dc74a11f91187a3c99dc0",
     "S9": "76f2ca09e0b7539e2ccb7860595dc9c4564f94f93e82000c7fa802ecd835e413",
     "S10": "555bf77ca4e24b9a293cd524855972c5222dbbf5284c40d0e3fbbc7a6c0a995e",
     "S11": "4eaa003f77cf9af68d535956ea7f59c0b98369a2620ba7b7276665faf53c620c",
@@ -205,21 +205,21 @@ EXPECTED_FROZEN_LINKS = {
 UPLOADS = "https://exp76.ru/wp-content/uploads/"
 GENERATED_CONTEXT = "https://exp76.ru/wp-content/themes/land76wp/generated/context/"
 EXPECTED_IMAGE_POOL_FINGERPRINTS = {
-    "S1": "552f41962fb9d1630009734626a1df0390f80c3e2d527aed2c05fc8600963243",
-    "S2": "adc9591969971d842adbc4f81559ea1275e5df6acc27bc8b243c61f65606e17a",
-    "S3": "60fc825e3ddb905eadaf0b039b22323b3bcfc61ae55b3544fcea267b20278a1b",
-    "S4": "c6d9958aa93fe067ce32649ad60da2a682f9cd7dd827a918e2698f78b5f9746d",
-    "S5": "f652a2a7d01f878ac50cbd5dfc68c419af240ba18813e71719fd9a5e87944cbf",
-    "S6": "463ff48e29872aaee65c74d0b20e72d6ebf201af741f9e13a9515b05ce02272f",
-    "S7": "07d4f6d81f5469a48ffdbf61192f5a7691b6b73d6351554ffea6cfcda5db03a4",
-    "S8": "1fa208d0d47d309763017f8b7463f52a07e398e4675af595b4d821c6c88b4ebd",
-    "S9": "6a722580fb4cae2cdb05ada8fb6632f4e2144760aa321565e9356357dee1b4e6",
-    "S10": "ebacd8b3c4bb22986ce6eed2a11c25609c581c56274d57e386804aa3cbef45a3",
-    "S11": "89c5b5a844e8de910587ef57fbc0d8966bc1f41dd0ef88cf4022ab6c00074fd6",
-    "S12": "aa0817a1c4ac1540de9041153a7e257c3629229612a45484a3a2d41def679b35",
-    "S13": "d7eb8e330248a697a36644b150bdcf3dedb684be878c6ca1ff27a13e74a44a45",
-    "S14": "b9f8a3f0ea16cd9fae5310e7165c75951064872868a863c14c6fa0b3b2671f9c",
-    "S15": "ddb5d786ba2dbfb889351dc445746258a42be9c19b16b8e69a9119e9aa9c5b76",
+    "S1": "47ee90773667711dbb7c4ef0a85d114bcef4be7400c2320c944f6debc6c084b9",
+    "S2": "5f06b1d2a1005928d5802433693d8f4b1f8899e67190aa9f1f5b2c7d66e92bc8",
+    "S3": "8c313a9f9cd627751b7c9fac506d32afe4eb758781b04fe64242ef7aa0af95ef",
+    "S4": "d3cea0ec8fb29ea52e763cd6aea806b1176415ef49f7ae32d0091ae18f187efe",
+    "S5": "e44dbc6e3be546d8f3f3b728d1d57d7763759b9847d6571d0b3b757dfba87fa8",
+    "S6": "d8a73ac4abe2b57a9f63c3c33c3511473e8c9721fb044be9a14c6ffbc346de11",
+    "S7": "17693781459f84ee7530524dc6a94a624a9ef0eb125be0a9cbc9ab89d6ca38a5",
+    "S8": "715fd2b42be3dfee6ebd6a452e51279cd763f7773f9a1bd0fa415751e23b6b68",
+    "S9": "5c50032e75e97e27ac8dced82a83d7baaf88d63777b935041685d4ccd162c3cd",
+    "S10": "9f43a08e23dcb29a0da4da698a8fc8f3f80cc481476374e1e1b3a01578d33287",
+    "S11": "5780f9b1f405a876904275d59fd2db6211febfeed16b31f149219209155553ad",
+    "S12": "50161a9049bb724f942315264d230027710fc777f384bb1a9331b4f92afe9f1e",
+    "S13": "417db9dc780facaed8f4f09d9e6579e0e67109bf9c42f5c0d2748fd640e02e17",
+    "S14": "34577e131260239e17d65109f5ab233de4951be3bf2cc6fa349c47cca279a018",
+    "S15": "91df33e932db98a4ed2ddda7ac04137aaf5c3e5abac6b22e46ae3f0f2698b729",
 }
 
 EXPECTED_FACT_PATHS = {
@@ -851,6 +851,62 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
             }
             self.assertEqual(expected_gaps, actual_gaps)
 
+    def test_visible_hub_never_repeats_an_image_across_sections(self) -> None:
+        """Catches one photo being rendered more than once anywhere on a hub."""
+        for service in self.load_sources():
+            service_id = str(service["service_id"])
+            images = [("hero", str(service["hero"]["image"]["url"]))]
+            for section_name in ("scope", "services", "articles"):
+                images.extend(
+                    (f"{section_name}[{index}]", str(item["image"]["url"]))
+                    for index, item in enumerate(service[section_name]["items"])
+                )
+            images.extend(
+                (f"proof.cases[{index}]", str(item["image"]["url"]))
+                for index, item in enumerate(service["proof"]["cases"])
+            )
+            images.extend(
+                (f"proof.gallery[{index}]", str(item["url"]))
+                for index, item in enumerate(service["proof"]["gallery"])
+            )
+
+            occurrences: dict[str, list[str]] = {}
+            for location, url in images:
+                identity = re.sub(
+                    r"-\d+x\d+(?=\.[A-Za-z0-9]+(?:[?#]|$))",
+                    "",
+                    url,
+                )
+                occurrences.setdefault(identity, []).append(location)
+            duplicates = {
+                identity: locations
+                for identity, locations in occurrences.items()
+                if len(locations) > 1
+            }
+            self.assertEqual({}, duplicates, f"{service_id} repeats visible images")
+
+    def test_generated_context_photo_is_not_reused_by_different_hubs(self) -> None:
+        """Prevents catalog browsing from showing the same generated scene on services."""
+        occurrences: dict[str, list[str]] = {}
+        for service in self.load_sources():
+            service_id = str(service["service_id"])
+            images = [("hero", str(service["hero"]["image"]["url"]))]
+            for section_name in ("scope", "services", "articles"):
+                images.extend(
+                    (f"{section_name}[{index}]", str(item["image"]["url"]))
+                    for index, item in enumerate(service[section_name]["items"])
+                )
+            for location, url in images:
+                if url.startswith(GENERATED_CONTEXT):
+                    occurrences.setdefault(url, []).append(f"{service_id}.{location}")
+
+        reused = {
+            url: locations
+            for url, locations in occurrences.items()
+            if len({location.split(".", 1)[0] for location in locations}) > 1
+        }
+        self.assertEqual({}, reused)
+
     def test_numeric_claims_have_exact_main_js_evidence(self) -> None:
         source_refs = {
             "S1": "ftp_dump_minimal/wp-content/themes/land76wp/js/main.js#tab-project-total",
@@ -951,6 +1007,111 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
         self.assertIn(".service-v2__card--linked:focus-visible", css)
         self.assertIn("@media (prefers-reduced-motion: reduce)", css)
         self.assertRegex(css, r"@media\s*\(max-width:")
+
+    def test_service_v2_preserves_the_legacy_light_section_background_rhythm(self) -> None:
+        """Catches dark or solid-green full-width bands returning to service hubs."""
+        css = (THEME / "css" / "service-v2.css").read_text(encoding="utf-8")
+
+        def declarations(selector: str) -> str:
+            match = re.search(
+                rf"{re.escape(selector)}\s*\{{(?P<body>[^}}]+)\}}",
+                css,
+                flags=re.MULTILINE,
+            )
+            self.assertIsNotNone(match, selector)
+            return str(match.group("body"))
+
+        plain = declarations(".service-v2__section--plain")
+        soft = declarations(".service-v2__section--soft")
+        pricing = declarations(".service-v2__section--dark")
+        cta = declarations(".service-v2__cta")
+        cta_inner = declarations(".service-v2__cta-inner")
+        self.assertRegex(plain, r"background:\s*#fff(?:fff)?\s*;")
+        self.assertIn("url(../img/sb5.png)", soft)
+        self.assertNotIn("#0b4f12", pricing.casefold())
+        self.assertNotIn("#0a9215", cta.casefold())
+        self.assertRegex(cta_inner, r"background:\s*#f9f9f9\s*;")
+
+    def test_service_v2_full_width_sections_alternate_plain_and_texture(self) -> None:
+        """Prevents several identical section backgrounds being stacked together."""
+        for service in self.load_sources():
+            rendered = render_service(service)
+            section_classes = re.findall(
+                r'<section class="([^"]*\bservice-v2__section\b[^"]*)"',
+                rendered,
+            )
+            variants: list[str] = []
+            for class_names in section_classes:
+                present = [
+                    variant
+                    for variant in ("service-v2__section--plain", "service-v2__section--soft")
+                    if variant in class_names.split()
+                ]
+                self.assertEqual([present[0]] if present else [], present, class_names)
+                self.assertEqual(1, len(present), class_names)
+                variants.append(present[0])
+            self.assertGreaterEqual(len(variants), 8)
+            self.assertTrue(
+                all(left != right for left, right in zip(variants, variants[1:])),
+                f"{service['service_id']} repeats a section background: {variants}",
+            )
+
+    def test_service_v2_hero_breadcrumbs_stay_in_normal_flow(self) -> None:
+        """Prevents breadcrumbs from overlapping hero actions on desktop."""
+        css = (THEME / "css" / "service-v2.css").read_text(encoding="utf-8")
+
+        match = re.search(
+            r"\.service-v2__breadcrumbs\s*\{(?P<body>[^}]+)\}",
+            css,
+            flags=re.MULTILINE,
+        )
+        self.assertIsNotNone(match)
+        declarations = str(match.group("body"))
+        self.assertNotRegex(declarations, r"position:\s*absolute")
+        self.assertRegex(declarations, r"margin-top:\s*[1-9]")
+
+    def test_service_v2_box_padding_never_overrides_the_global_wrapper_gutter(self) -> None:
+        """Keeps GEO, FAQ and CTA boxes inside the same 1200px page grid."""
+        for service in self.load_sources():
+            rendered = render_service(service)
+            for inner_class in (
+                "service-v2__geo-inner",
+                "service-v2__faq",
+                "service-v2__cta-inner",
+            ):
+                self.assertNotIn(f'class="wrapper {inner_class}"', rendered)
+                self.assertIn(
+                    f'<div class="wrapper"><div class="{inner_class}">',
+                    rendered,
+                )
+
+    def test_service_v2_primary_button_meets_text_contrast_on_light_sections(self) -> None:
+        """Prevents a translucent orange CTA from making white labels unreadable."""
+        css = (THEME / "css" / "service-v2.css").read_text(encoding="utf-8")
+        match = re.search(r"\.service-v2__button\s*\{(?P<body>[^}]+)\}", css)
+        self.assertIsNotNone(match)
+        body = str(match.group("body"))
+        background = re.search(r"background:\s*(#[0-9a-fA-F]{6})\s*;", body)
+        foreground = re.search(r"color:\s*(#[0-9a-fA-F]{6})\s*;", body)
+        self.assertIsNotNone(background, body)
+        self.assertIsNotNone(foreground, body)
+
+        def luminance(value: str) -> float:
+            channels = [int(value[index : index + 2], 16) / 255 for index in (1, 3, 5)]
+            linear = [
+                channel / 12.92
+                if channel <= 0.04045
+                else ((channel + 0.055) / 1.055) ** 2.4
+                for channel in channels
+            ]
+            return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+        assert background is not None and foreground is not None
+        bright, dark = sorted(
+            (luminance(background.group(1)), luminance(foreground.group(1))),
+            reverse=True,
+        )
+        self.assertGreaterEqual((bright + 0.05) / (dark + 0.05), 4.5)
 
     def test_php_loader_fails_closed_and_templates_cached_verified_bytes(self) -> None:
         helper = (THEME / "inc" / "service-v2.php").read_text(encoding="utf-8")
@@ -1187,14 +1348,17 @@ class SchemaTwoSyncTest(unittest.TestCase):
         self.assertEqual([], service["proof"]["cases"])
 
     def test_schema_two_rejects_another_services_audited_illustration(self) -> None:
-        s1 = next(
-            payload for payload in self.service_seeds if payload["service_id"] == "S1"
+        s10 = next(
+            payload for payload in self.service_seeds if payload["service_id"] == "S10"
         )
         s8 = next(
             payload for payload in self.service_seeds if payload["service_id"] == "S8"
         )
         service = schema_two_fixture(s8)
-        service["hero"]["image"] = copy.deepcopy(s1["hero"]["image"])
+        service["hero"]["image"] = copy.deepcopy(s10["hero"]["image"])
+        service["rendered_sha256"] = hashlib.sha256(
+            render_service(service).encode("utf-8")
+        ).hexdigest()
 
         with self.assertRaisesRegex(ContractError, "verified catalog images for S8"):
             validate_service_v2(service, self.architecture, self.cases)

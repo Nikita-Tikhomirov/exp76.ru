@@ -188,5 +188,19 @@
       "ландшафтное освещение",
       "хранение оборудования без отдельной договорённости"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-holiday-lighting.webp",
+      "alt": "Новогоднее освещение загородного дома и хвойных деревьев"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-holiday-lighting.webp",
+      "alt": "Новогоднее освещение загородного дома и хвойных деревьев"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s7-holiday-lighting.webp",
+      "alt": "Новогоднее освещение загородного дома и хвойных деревьев"
+    }
   }
 }

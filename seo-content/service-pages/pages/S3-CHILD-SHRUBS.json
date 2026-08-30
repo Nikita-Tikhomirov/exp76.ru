@@ -190,5 +190,19 @@
       "регулярная обрезка кустарников",
       "поставка без посадочных работ"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-kustarnikov.webp",
+      "alt": "Посадка декоративных кустарников группой на частном участке"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-kustarnikov.webp",
+      "alt": "Посадка декоративных кустарников группой на частном участке"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-posadka-kustarnikov.webp",
+      "alt": "Посадка декоративных кустарников группой на частном участке"
+    }
   }
 }

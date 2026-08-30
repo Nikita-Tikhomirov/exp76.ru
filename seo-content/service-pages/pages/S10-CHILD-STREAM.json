@@ -185,5 +185,19 @@
       "строительство капитальных бассейнов",
       "инженерные городские фонтаны"
     ]
+  },
+  "presentation_images": {
+    "hero": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-stream.webp",
+      "alt": "Декоративный ручей с камнями и переходом через русло"
+    },
+    "context": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-stream.webp",
+      "alt": "Декоративный ручей с камнями и переходом через русло"
+    },
+    "card": {
+      "url": "https://exp76.ru/wp-content/themes/land76wp/generated/context/context-photo-child-s10-stream.webp",
+      "alt": "Декоративный ручей с камнями и переходом через русло"
+    }
   }
 }
