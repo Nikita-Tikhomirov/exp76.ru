@@ -31,6 +31,8 @@ const VIEWPORTS = Object.freeze([
 ]);
 const DEFAULT_TIMEOUT_MS = 45_000;
 const DEFAULT_CONCURRENCY = 3;
+const LAZY_IMAGE_WAIT_MAX_MS = 8_000;
+const LAZY_IMAGE_POLL_MS = 100;
 
 const FAILURE = Object.freeze({
   NAVIGATION: "navigation_failed",
@@ -55,6 +57,7 @@ const FAILURE = Object.freeze({
   RESOURCE_HTTP: "resource_http_error",
   FAQ_MISSING: "faq_missing",
   FAQ_OPEN: "faq_not_opened",
+  LAZY_IMAGE: "lazy_image_failed",
   SCREENSHOT: "screenshot_failed",
   AUDIT: "audit_exception",
 });
@@ -400,7 +403,155 @@ function addFailure(failures, code, message, details = undefined) {
   failures.push({ code, message, ...(details === undefined ? {} : { details }) });
 }
 
-async function preparePage(page) {
+function lazyImageWaitBudget(timeoutMs) {
+  return Math.max(1, Math.min(timeoutMs, LAZY_IMAGE_WAIT_MAX_MS));
+}
+
+function isDeferredImageState(state) {
+  return Boolean(
+    state.dataSrc
+    || state.dataSrcset
+    || state.lazyClass
+    || state.lazyLoadedClass
+    || state.nativeLazy
+    || state.pictureDataSrcset,
+  );
+}
+
+function pendingLazyImageStates(states) {
+  return states.filter((state) => (
+    state.rendered
+    && state.deferred
+    && (
+      state.lazyClassPending
+      || !state.complete
+      || state.naturalWidth <= 1
+      || state.naturalHeight <= 1
+      || !state.currentSrc
+      || /^data:image\//i.test(state.currentSrc)
+    )
+  ));
+}
+
+async function collectLazyImageStates(page) {
+  const states = await page.evaluate(() => Array.from(document.images)
+    .map((image, index) => {
+      const classList = image.classList;
+      const style = getComputedStyle(image);
+      const rect = image.getBoundingClientRect();
+      const currentSrc = image.currentSrc || image.getAttribute("src") || "";
+      const dataSrc = image.getAttribute("data-src") || "";
+      const dataSrcset = image.getAttribute("data-srcset") || "";
+      return {
+        index,
+        label: image.getAttribute("alt") || dataSrc || currentSrc || `img[${index}]`,
+        rendered: rect.width > 0
+          && rect.height > 0
+          && rect.right > 0
+          && rect.left < window.innerWidth
+          && style.display !== "none"
+          && style.visibility !== "hidden",
+        dataSrc,
+        dataSrcset,
+        lazyClass: classList.contains("lazyload"),
+        lazyLoadedClass: classList.contains("lazyloaded"),
+        nativeLazy: image.loading === "lazy",
+        pictureDataSrcset: Boolean(
+          image.closest("picture")?.querySelector("source[data-srcset]"),
+        ),
+        lazyClassPending: classList.contains("lazyload")
+          && !classList.contains("lazyloaded"),
+        complete: image.complete,
+        currentSrc,
+        naturalWidth: image.naturalWidth,
+        naturalHeight: image.naturalHeight,
+      };
+    }));
+  return states
+    .map((state) => ({ ...state, deferred: isDeferredImageState(state) }))
+    .filter((state) => state.deferred);
+}
+
+async function decodeLazyImages(page, timeoutMs) {
+  return page.evaluate(async (waitMs) => {
+    const images = Array.from(document.images).filter((image) => {
+      const style = getComputedStyle(image);
+      const rect = image.getBoundingClientRect();
+      const currentSrc = image.currentSrc || image.getAttribute("src") || "";
+      const deferred = image.hasAttribute("data-src")
+        || image.hasAttribute("data-srcset")
+        || image.classList.contains("lazyload")
+        || image.classList.contains("lazyloaded")
+        || image.loading === "lazy"
+        || Boolean(image.closest("picture")?.querySelector("source[data-srcset]"));
+      return deferred
+        && rect.width > 0
+        && rect.height > 0
+        && rect.right > 0
+        && rect.left < window.innerWidth
+        && style.display !== "none"
+        && style.visibility !== "hidden"
+        && image.complete
+        && image.naturalWidth > 1
+        && image.naturalHeight > 1
+        && !/^data:image\//i.test(currentSrc);
+    });
+    let timeoutId;
+    const decodeResults = Promise.allSettled(images.map((image) => (
+      typeof image.decode === "function" ? image.decode() : Promise.resolve()
+    ))).then((results) => ({
+      timedOut: false,
+      rejected: results.filter((result) => result.status === "rejected").length,
+    }));
+    const timeout = new Promise((resolve) => {
+      timeoutId = setTimeout(() => resolve({ timedOut: true, rejected: 0 }), waitMs);
+    });
+    const outcome = await Promise.race([decodeResults, timeout]);
+    clearTimeout(timeoutId);
+    return {
+      candidateCount: images.length,
+      ...outcome,
+    };
+  }, timeoutMs);
+}
+
+async function waitForLazyImages(page, timeoutMs) {
+  const budgetMs = lazyImageWaitBudget(timeoutMs);
+  const deadline = Date.now() + budgetMs;
+  let states = [];
+
+  while (true) {
+    states = await collectLazyImageStates(page);
+    const pending = pendingLazyImageStates(states);
+    if (pending.length === 0) break;
+    const remainingMs = deadline - Date.now();
+    if (remainingMs <= 0) {
+      const labels = pending.slice(0, 5).map((state) => state.label).join("; ");
+      throw new Error(
+        `Lazy images did not resolve within ${budgetMs} ms: ${labels}`,
+      );
+    }
+    await page.waitForTimeout(Math.min(LAZY_IMAGE_POLL_MS, remainingMs));
+  }
+
+  const remainingMs = deadline - Date.now();
+  if (remainingMs <= 0 && states.length > 0) {
+    throw new Error(`Lazy image decode exceeded ${budgetMs} ms`);
+  }
+  const decode = await decodeLazyImages(page, Math.max(1, remainingMs));
+  if (decode.timedOut) {
+    throw new Error(`Lazy image decode exceeded ${budgetMs} ms`);
+  }
+  if (decode.rejected > 0) {
+    throw new Error(`${decode.rejected} lazy image decode operation(s) failed`);
+  }
+  return {
+    candidates: states.length,
+    decoded: decode.candidateCount,
+  };
+}
+
+async function preparePage(page, timeoutMs = DEFAULT_TIMEOUT_MS) {
   await page.addStyleTag({
     content: `
       *, *::before, *::after {
@@ -422,11 +573,15 @@ async function preparePage(page) {
     const step = Math.max(300, Math.floor(window.innerHeight * 0.75));
     for (let offset = 0; offset < document.documentElement.scrollHeight; offset += step) {
       window.scrollTo(0, offset);
-      await new Promise((resolve) => setTimeout(resolve, 25));
+      await new Promise((resolve) => setTimeout(resolve, 50));
     }
+  });
+  const lazyImages = await waitForLazyImages(page, timeoutMs);
+  await page.evaluate(() => {
     window.scrollTo(0, 0);
   });
   await page.waitForTimeout(150);
+  return lazyImages;
 }
 
 async function openFirstFaq(page) {
@@ -1113,7 +1268,13 @@ async function runCase(browser, job, options, outputPaths) {
     if (!failures.some((failure) => failure.code === FAILURE.NAVIGATION)) {
       await page.waitForLoadState("networkidle", { timeout: Math.min(options.timeoutMs, 8_000) })
         .catch(() => {});
-      await preparePage(page);
+      try {
+        await preparePage(page, options.timeoutMs);
+      } catch (error) {
+        addFailure(failures, FAILURE.LAZY_IMAGE, error.message, { stack: error.stack });
+        await page.evaluate(() => window.scrollTo(0, 0)).catch(() => {});
+        await page.waitForTimeout(150).catch(() => {});
+      }
       faq = await openFirstFaq(page).catch((error) => ({
         present: true,
         opened: false,
@@ -1304,6 +1465,48 @@ async function runSelfTest() {
     [],
   );
   assert.equal(backgroundAlternationFailures(["none|white", "none|white"]).length, 2);
+
+  const lazyImageStates = [
+    {
+      label: "viewport placeholder",
+      rendered: true,
+      deferred: true,
+      lazyClassPending: true,
+      complete: true,
+      currentSrc: "data:image/gif;base64,placeholder",
+      naturalWidth: 1,
+      naturalHeight: 1,
+    },
+    {
+      label: "decoded image",
+      rendered: true,
+      deferred: true,
+      lazyClassPending: false,
+      complete: true,
+      currentSrc: "https://example.test/ready.webp",
+      naturalWidth: 1600,
+      naturalHeight: 1000,
+    },
+    {
+      label: "hidden admin image",
+      rendered: false,
+      deferred: true,
+      lazyClassPending: true,
+      complete: true,
+      currentSrc: "data:image/gif;base64,placeholder",
+      naturalWidth: 1,
+      naturalHeight: 1,
+    },
+  ];
+  assert.deepEqual(
+    pendingLazyImageStates(lazyImageStates).map((state) => state.label),
+    ["viewport placeholder"],
+  );
+  assert.equal(lazyImageWaitBudget(45_000), 8_000);
+  assert.equal(lazyImageWaitBudget(1_250), 1_250);
+  assert.equal(isDeferredImageState({ nativeLazy: true }), true);
+  assert.equal(isDeferredImageState({ pictureDataSrcset: true }), true);
+  assert.equal(isDeferredImageState({}), false);
 
   const actualManifest = await readManifest(DEFAULT_MANIFEST_PATH);
   const children = validateManagedChildInventory(actualManifest);
