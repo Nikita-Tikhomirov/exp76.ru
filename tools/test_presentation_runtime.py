@@ -527,11 +527,18 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
     def test_related_hub_card_uses_service_v2_hero_when_post_meta_is_absent(self) -> None:
         """Catches every child-to-hub relation degrading to a text-only card."""
         source = read_template()
+        sized_url = php_function_body(
+            source,
+            "land76_newservice_sized_attachment_url",
+        )
         selector = php_function_body(
             source,
             "land76_newservice_related_card_image",
         )
 
+        self.assertIn("attachment_url_to_postid", sized_url)
+        self.assertIn("wp_get_attachment_image_url($attachment_id, $size)", sized_url)
+        self.assertIn("return $url", sized_url)
         self.assertIn("array('card', 'main')", selector)
         self.assertIn("foreach (array('services', 'articles') as $section_name)", selector)
         self.assertIn("$item['page_key']", selector)
@@ -554,8 +561,7 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         )
         self.assertIn("$candidates", selector)
         self.assertIn("foreach ($candidates as $candidate)", selector)
-        self.assertIn("attachment_url_to_postid", selector)
-        self.assertIn("wp_get_attachment_image_url($attachment_id, $size)", selector)
+        self.assertIn("land76_newservice_sized_attachment_url($url, $size)", selector)
         self.assertIn(
             "land76_newservice_reserve_image($seen, $candidate['url'])",
             selector,
@@ -572,6 +578,24 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         self.assertIn(
             "land76_newservice_related_card_image($ns87_related_article->ID, $ns87_rendered_image_identities, 'medium_large')",
             related_articles,
+        )
+
+    def test_final_managed_main_content_image_uses_large_attachment_derivative(self) -> None:
+        """Prevents a multi-megabyte original from being rendered in the body slot."""
+        bootstrap = section(
+            read_template(),
+            "$ns87_post_context = get_the_ID();",
+            "$ns87_main_image_url = $ns87_main_image['url'];",
+        )
+
+        self.assertRegex(
+            bootstrap,
+            r"land76_newservice_sized_attachment_url\(\s*"
+            r"\$ns87_main_image\['url'\],\s*'large'\s*\)",
+        )
+        self.assertLess(
+            bootstrap.index("land76_newservice_related_card_image($ns87_post_context)"),
+            bootstrap.index("land76_newservice_sized_attachment_url("),
         )
 
     def test_managed_pricing_renders_factors_while_legacy_keeps_its_table(self) -> None:

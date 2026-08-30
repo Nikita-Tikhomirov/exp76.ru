@@ -1332,6 +1332,9 @@ class ThemeRoutingTests(unittest.TestCase):
     def test_related_cards_render_target_card_image_alt_with_proof_fallback(self):
         service = read(NEW_SERVICE)
         helper = php_function_body(service, "land76_newservice_related_card_image")
+        sized_url = php_function_body(
+            service, "land76_newservice_sized_attachment_url"
+        )
         self.assertIn("foreach (array('card', 'main') as $role)", helper)
         self.assertIn("land76_service_v2_load", helper)
         self.assertIn("['hero']['image']['url']", helper)
@@ -1340,8 +1343,9 @@ class ThemeRoutingTests(unittest.TestCase):
             "land76_newservice_related_card_image($ns87_related_service_id, $ns87_rendered_image_identities, 'medium_large')",
             service,
         )
-        self.assertIn("attachment_url_to_postid", helper)
-        self.assertIn("wp_get_attachment_image_url($attachment_id, $size)", helper)
+        self.assertIn("land76_newservice_sized_attachment_url($url, $size)", helper)
+        self.assertIn("attachment_url_to_postid", sized_url)
+        self.assertIn("wp_get_attachment_image_url($attachment_id, $size)", sized_url)
         self.assertIn("foreach ($candidates as $candidate)", helper)
         self.assertIn(
             "land76_newservice_reserve_image($seen, $candidate['url'])",

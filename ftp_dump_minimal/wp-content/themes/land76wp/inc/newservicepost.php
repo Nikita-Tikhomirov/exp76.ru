@@ -620,6 +620,30 @@
   }
 </style>
 <?php
+if (!function_exists('land76_newservice_sized_attachment_url')) {
+    /** Return a registered WordPress derivative while preserving non-library URLs. */
+    function land76_newservice_sized_attachment_url($url, $size)
+    {
+        $url = (string) $url;
+        $size = (string) $size;
+        if ($url === ''
+            || $size === ''
+            || $size === 'full'
+            || !function_exists('attachment_url_to_postid')
+            || !function_exists('wp_get_attachment_image_url')) {
+            return $url;
+        }
+
+        $attachment_id = (int) attachment_url_to_postid($url);
+        if ($attachment_id < 1) {
+            return $url;
+        }
+
+        $sized_url = (string) wp_get_attachment_image_url($attachment_id, $size);
+        return $sized_url !== '' ? $sized_url : $url;
+    }
+}
+
 if (!function_exists('land76_newservice_managed_presentation_image')) {
     function land76_newservice_managed_presentation_image($post_id, $role)
     {
@@ -641,7 +665,6 @@ if (!function_exists('land76_newservice_managed_presentation_image')) {
         if ($url === '' || $alt === '') {
             return $empty;
         }
-
         return array('url' => $url, 'alt' => $alt);
     }
 }
@@ -660,15 +683,7 @@ if (!function_exists('land76_newservice_related_card_image')) {
             if ($url === '' || $alt === '') {
                 return;
             }
-            if ($size !== 'full' && function_exists('attachment_url_to_postid')) {
-                $attachment_id = (int) attachment_url_to_postid($url);
-                if ($attachment_id > 0) {
-                    $sized_url = (string) wp_get_attachment_image_url($attachment_id, $size);
-                    if ($sized_url !== '') {
-                        $url = $sized_url;
-                    }
-                }
-            }
+            $url = land76_newservice_sized_attachment_url($url, $size);
             $identity = land76_newservice_image_identity($url);
             if ($identity === '' || isset($candidate_identities[$identity])) {
                 return;
@@ -869,6 +884,12 @@ if ($land76_managed_service_hub_post) {
         && !hash_equals($ns87_hero_image_identity, $ns87_hub_service_identity)) {
         $ns87_main_image = $ns87_hub_service_image;
     }
+}
+if ($land76_managed_service_hub_post && !empty($ns87_main_image['url'])) {
+    $ns87_main_image['url'] = land76_newservice_sized_attachment_url(
+        $ns87_main_image['url'],
+        'large'
+    );
 }
 $ns87_main_image_url = $ns87_main_image['url'];
 $ns87_main_image_alt = $ns87_main_image['alt'];
