@@ -1150,7 +1150,6 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
 ?>
 
 <?php if ($land76_managed_service_hub_post) : ?>
-<link rel="stylesheet" href="<?php echo esc_url(get_template_directory_uri() . '/css/service-v2.css'); ?>">
 <div class="managed-service-child">
 <?php endif; ?>
 

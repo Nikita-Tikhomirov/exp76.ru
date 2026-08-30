@@ -13,6 +13,14 @@ TEMPLATE = (
     / "inc"
     / "newservicepost.php"
 )
+SERVICE_TEMPLATE = (
+    ROOT
+    / "ftp_dump_minimal"
+    / "wp-content"
+    / "themes"
+    / "land76wp"
+    / "servicepost.php"
+)
 SERVICEPOST_CSS = (
     ROOT
     / "ftp_dump_minimal"
@@ -58,8 +66,13 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
     def test_managed_child_uses_the_hub_presentation_scope(self) -> None:
         """Catches managed children falling back to the unscoped legacy canvas."""
         source = read_template()
+        router = SERVICE_TEMPLATE.read_text(encoding="utf-8")
+        managed_route = section(router, "if ($land76_claims_managed_runtime)", "<?php endif; ?>")
 
-        self.assertIn("/css/service-v2.css", source)
+        self.assertIn("/css/servicepost.css", managed_route)
+        self.assertIn("/css/service-v2.css", managed_route)
+        self.assertLess(managed_route.index("wp_enqueue_style"), managed_route.index("get_header('seo')"))
+        self.assertNotIn('<link rel="stylesheet"', source[source.index("$ns87_breadcrumb_title") :])
         self.assertIn('class="managed-service-child"', source)
         self.assertNotIn('class="service-v2 managed-service-child"', source)
         self.assertIn('class="service-v2__section managed-service-child__section', source)
