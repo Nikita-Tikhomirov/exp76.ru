@@ -280,14 +280,14 @@ function rectIntersectionArea(first, second) {
   return width * height;
 }
 
-function backgroundAlternationFailures(kinds) {
+function backgroundAlternationFailures(tokens) {
   const failures = [];
-  if (kinds.length < 2 || new Set(kinds).size < 2) {
+  if (tokens.length < 2 || new Set(tokens).size < 2) {
     failures.push("backgrounds_have_no_visual_variation");
   }
-  for (let index = 1; index < kinds.length; index += 1) {
-    if (kinds[index] === kinds[index - 1]) {
-      failures.push(`sections_${index}_and_${index + 1}_repeat_${kinds[index]}`);
+  for (let index = 1; index < tokens.length; index += 1) {
+    if (tokens[index] === tokens[index - 1]) {
+      failures.push(`sections_${index}_and_${index + 1}_repeat_surface`);
     }
   }
   return failures;
@@ -649,6 +649,7 @@ async function collectDomAudit(page, mode) {
         rect,
         widthRatio: round(widthRatio, 4),
         backgroundKind,
+        backgroundToken: `${style.backgroundImage}|${style.backgroundColor}`,
         backgroundColor: style.backgroundColor,
         backgroundImage: style.backgroundImage,
         backgroundAttachment: style.backgroundAttachment,
@@ -656,6 +657,7 @@ async function collectDomAudit(page, mode) {
     });
 
     const backgroundKinds = sectionMetrics.map((section) => section.backgroundKind);
+    const backgroundTokens = sectionMetrics.map((section) => section.backgroundToken);
     if (backgroundKinds.length < 2 || new Set(backgroundKinds).size < 2) {
       add(
         "background_not_alternating",
@@ -663,11 +665,11 @@ async function collectDomAudit(page, mode) {
         { backgroundKinds },
       );
     }
-    for (let index = 1; index < backgroundKinds.length; index += 1) {
-      if (backgroundKinds[index] === backgroundKinds[index - 1]) {
+    for (let index = 1; index < backgroundTokens.length; index += 1) {
+      if (backgroundTokens[index] === backgroundTokens[index - 1]) {
         add(
           "background_not_alternating",
-          `Sections ${index} and ${index + 1} repeat ${backgroundKinds[index]} background`,
+          `Sections ${index} and ${index + 1} repeat the same background surface`,
           { previous: sectionMetrics[index - 1], current: sectionMetrics[index] },
         );
       }
@@ -1297,8 +1299,11 @@ async function runSelfTest() {
     ),
     25,
   );
-  assert.deepEqual(backgroundAlternationFailures(["solid", "pattern", "solid"]), []);
-  assert.equal(backgroundAlternationFailures(["solid", "solid"]).length, 2);
+  assert.deepEqual(
+    backgroundAlternationFailures(["none|white", "sb5|soft", "none|white", "casebg|soft"]),
+    [],
+  );
+  assert.equal(backgroundAlternationFailures(["none|white", "none|white"]).length, 2);
 
   const actualManifest = await readManifest(DEFAULT_MANIFEST_PATH);
   const children = validateManagedChildInventory(actualManifest);
