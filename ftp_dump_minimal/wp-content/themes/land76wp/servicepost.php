@@ -25,21 +25,6 @@ if ($land76_claims_managed_runtime) {
     return;
   }
 
-  $land76_child_servicepost_css_path = get_template_directory() . '/css/servicepost.css';
-  $land76_child_service_v2_css_path = get_template_directory() . '/css/service-v2.css';
-  wp_enqueue_style(
-    'land76-servicepost',
-    get_template_directory_uri() . '/css/servicepost.css',
-    array('style2'),
-    is_readable($land76_child_servicepost_css_path) ? filemtime($land76_child_servicepost_css_path) : null
-  );
-  wp_enqueue_style(
-    'land76-service-v2',
-    get_template_directory_uri() . '/css/service-v2.css',
-    array('land76-servicepost'),
-    is_readable($land76_child_service_v2_css_path) ? filemtime($land76_child_service_v2_css_path) : null
-  );
-
   get_header('seo');
   require get_template_directory() . '/inc/newservicepost.php';
   get_footer();

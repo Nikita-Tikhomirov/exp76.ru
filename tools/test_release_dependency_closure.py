@@ -24,7 +24,6 @@ BASE_DEPLOYMENT = {
 }
 EXPECTED_RUNTIME_DEPENDENCIES = {
     "wp-content/themes/land76wp/css/service-v2.css",
-    "wp-content/themes/land76wp/css/servicepost.css",
     "wp-content/themes/land76wp/inc/service-v2-template.php",
 }
 
@@ -247,10 +246,6 @@ class ReleaseDependencyClosureTests(unittest.TestCase):
                 ),
                 (
                     "wp-content/themes/land76wp/inc/service-v2-template.php",
-                    "wp-content/themes/land76wp/servicepost.php",
-                ),
-                (
-                    "wp-content/themes/land76wp/css/servicepost.css",
                     "wp-content/themes/land76wp/servicepost.php",
                 ),
             },

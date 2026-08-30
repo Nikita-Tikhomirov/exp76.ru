@@ -154,6 +154,24 @@ add_action('template_redirect', function () {
   exit;
 }, 0);
 
+function land76wp_enqueue_managed_child_styles() {
+  $servicepost_styles_path = get_template_directory() . '/css/servicepost.css';
+  $service_v2_styles_path = get_template_directory() . '/css/service-v2.css';
+
+  wp_enqueue_style(
+    'land76-servicepost',
+    get_template_directory_uri() . '/css/servicepost.css',
+    array('style2'),
+    is_readable($servicepost_styles_path) ? filemtime($servicepost_styles_path) : null
+  );
+  wp_enqueue_style(
+    'land76-service-v2',
+    get_template_directory_uri() . '/css/service-v2.css',
+    array('land76-servicepost'),
+    is_readable($service_v2_styles_path) ? filemtime($service_v2_styles_path) : null
+  );
+}
+
 
 function style_theme() {
 
@@ -174,6 +192,18 @@ function style_theme() {
     'endpoint' => home_url('/server.php'),
     'nonce' => wp_create_nonce('land76_contact_form'),
   ));
+  $land76_managed_post_id = (int) get_queried_object_id();
+  if ($land76_managed_post_id > 0
+      && function_exists('land76wp_claims_managed_service_hub_post')
+      && land76wp_claims_managed_service_hub_post($land76_managed_post_id)
+      && function_exists('land76wp_managed_page_contract')) {
+    $land76_managed_contract = land76wp_managed_page_contract($land76_managed_post_id);
+    if (is_array($land76_managed_contract)
+        && isset($land76_managed_contract['role'])
+        && $land76_managed_contract['role'] === 'child') {
+      land76wp_enqueue_managed_child_styles();
+    }
+  }
   if (is_singular('post') && has_category(72, get_queried_object_id())) {
     wp_enqueue_style('land76-services', get_template_directory_uri() . '/css/services.css', array(), null);
     wp_enqueue_style('land76-seoblog', get_template_directory_uri() . '/css/seoblog.css', array('land76-services'), null);

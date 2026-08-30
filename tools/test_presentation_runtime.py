@@ -13,13 +13,13 @@ TEMPLATE = (
     / "inc"
     / "newservicepost.php"
 )
-SERVICE_TEMPLATE = (
+FUNCTIONS = (
     ROOT
     / "ftp_dump_minimal"
     / "wp-content"
     / "themes"
     / "land76wp"
-    / "servicepost.php"
+    / "functions.php"
 )
 SERVICEPOST_CSS = (
     ROOT
@@ -66,12 +66,17 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
     def test_managed_child_uses_the_hub_presentation_scope(self) -> None:
         """Catches managed children falling back to the unscoped legacy canvas."""
         source = read_template()
-        router = SERVICE_TEMPLATE.read_text(encoding="utf-8")
-        managed_route = section(router, "if ($land76_claims_managed_runtime)", "<?php endif; ?>")
+        functions = FUNCTIONS.read_text(encoding="utf-8")
+        enqueue_helper = php_function_body(functions, "land76wp_enqueue_managed_child_styles")
+        runtime_enqueue = php_function_body(functions, "style_theme")
 
-        self.assertIn("/css/servicepost.css", managed_route)
-        self.assertIn("/css/service-v2.css", managed_route)
-        self.assertLess(managed_route.index("wp_enqueue_style"), managed_route.index("get_header('seo')"))
+        self.assertIn("add_action( 'wp_enqueue_scripts', 'style_theme' );", functions)
+        self.assertIn("/css/servicepost.css", enqueue_helper)
+        self.assertIn("/css/service-v2.css", enqueue_helper)
+        self.assertIn("land76wp_claims_managed_service_hub_post", runtime_enqueue)
+        self.assertIn("land76wp_managed_page_contract", runtime_enqueue)
+        self.assertIn("['role'] === 'child'", runtime_enqueue)
+        self.assertIn("land76wp_enqueue_managed_child_styles();", runtime_enqueue)
         self.assertNotIn('<link rel="stylesheet"', source[source.index("$ns87_breadcrumb_title") :])
         self.assertIn('class="managed-service-child"', source)
         self.assertNotIn('class="service-v2 managed-service-child"', source)
