@@ -1149,6 +1149,11 @@ if (empty($ns87_faq_items) || !is_array($ns87_faq_items)) {
 $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
 ?>
 
+<?php if ($land76_managed_service_hub_post) : ?>
+<link rel="stylesheet" href="<?php echo esc_url(get_template_directory_uri() . '/css/service-v2.css'); ?>">
+<div class="managed-service-child">
+<?php endif; ?>
+
 <!-- 1. Hero блок -->
 <section class="hero">
   <div class="hero__scene" id="scene">
@@ -1172,7 +1177,7 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
 </section>
 
 <!-- 2. Проблема -->
-<section class="services wrapper howWorkCustom portfolio">
+<section class="service-v2__section managed-service-child__section services wrapper howWorkCustom portfolio">
   <div class="problem-block" data-aos="fade-up" data-aos-duration="600">
     <h3><?php echo esc_html($ns87_problem_title ? $ns87_problem_title : 'Какая задача решается'); ?></h3>
     <p><?php echo esc_html($ns87_problem_text ? $ns87_problem_text : 'Подбираем решение по месту, чтобы работы были понятными по составу, стоимости и результату.'); ?></p>
@@ -1220,7 +1225,7 @@ $ns87_breadcrumb_title = $ns87_hero_title ? $ns87_hero_title : get_the_title();
 </section>
 
 <!-- 3. Решение -->
-<section class="services wrapper">
+<section class="service-v2__section managed-service-child__section services wrapper">
   <div class="solution-block" data-aos="fade-up" data-aos-duration="600">
     <h3><?php echo esc_html($ns87_solution_title ? $ns87_solution_title : 'Как мы решаем задачу'); ?></h3>
     <p><?php echo esc_html($ns87_solution_text ? $ns87_solution_text : 'Сначала разбираем условия участка, затем согласуем схему, смету и выполняем монтаж с проверкой результата.'); ?></p>
@@ -1241,7 +1246,7 @@ Poiret One
 </section>
 
 <!-- 4. SEO текст страницы -->
-<section class="services wrapper">
+<section class="service-v2__section managed-service-child__section services wrapper">
   <div class="seo-text" style="line-height: 1.6; margin-bottom: 40px;">
     <?php if ($land76_managed_service_hub_post && $ns87_render_main_image) : ?>
       <figure class="service-main-image">
@@ -1259,7 +1264,7 @@ Poiret One
 <?php $ns87_selected_projects = land76_newservice_selected_real_projects(get_the_ID()); ?>
 <?php if (!empty($ns87_selected_projects)) : ?>
 <!-- 5. Подтверждённые кейсы -->
-<section class="services wrapper casesCustom">
+<section class="service-v2__section managed-service-child__section services wrapper casesCustom">
   <h2 style="text-align: center; color: #0a9215; font-family: 
 '
 Poiret One
@@ -1324,7 +1329,7 @@ Poiret One
 <?php endif; ?>
 
 <?php if ($land76_managed_service_hub_post && !empty($ns87_related_services)) : ?>
-<section class="services wrapper service-related-services">
+<section class="service-v2__section managed-service-child__section services wrapper service-related-services">
   <h2>Другие услуги направления</h2>
   <div class="services__cards columns3">
     <?php foreach ($ns87_related_services as $ns87_related_service) : ?>
@@ -1374,7 +1379,7 @@ if (!is_array($ns87_related_article_ids)) {
 }
 ?>
 <?php if ($land76_managed_service_hub_post && !empty($ns87_related_article_ids)) : ?>
-<section class="services wrapper service-related-articles">
+<section class="service-v2__section managed-service-child__section services wrapper service-related-articles">
   <h2>Материалы по теме</h2>
   <div class="services__cards columns3">
     <?php foreach ($ns87_related_article_ids as $ns87_related_article_id) : ?>
@@ -1415,7 +1420,10 @@ if (!is_array($ns87_related_article_ids)) {
 <?php endif; ?>
 
 <!-- 6. Цена -->
-<section class="services wrapper">
+<section class="service-v2__section managed-service-child__section services wrapper service-price-section">
+  <?php if ($land76_managed_service_hub_post) : ?>
+  <div class="managed-service-child__price-surface">
+  <?php endif; ?>
   <h2 style="text-align: center; color: #0a9215; font-family: 
 '
 Poiret One
@@ -1472,10 +1480,13 @@ Poiret One
     </ul>
   </div>
   <?php endif; ?>
+  <?php if ($land76_managed_service_hub_post) : ?>
+  </div>
+  <?php endif; ?>
 </section>
 
 <!-- 8. Мини FAQ -->
-<section class="services wrapper service-faq-section">
+<section class="service-v2__section managed-service-child__section services wrapper service-faq-section">
   <h2 class="service-faq-title"><?php echo esc_html($ns87_faq_title ? $ns87_faq_title : 'Ответы на вопросы'); ?></h2>
 
   <div class="service-faq-list">
@@ -1495,6 +1506,46 @@ Poiret One
   </div>
 </section>
 <!-- 10. CTA -->
+<?php if ($land76_managed_service_hub_post) : ?>
+<section class="service-v2 service-v2__section managed-service-child__section service-v2__cta wrapper" id="calc">
+  <div class="service-v2__cta-inner">
+    <div class="managed-service-child__cta-copy">
+      <h2>Получите расчёт по вашему участку</h2>
+      <p>Пришлите фото, план или краткое описание задачи. Предварительно оценим состав работ, а точную смету подготовим после уточнения условий объекта.</p>
+    </div>
+    <div class="formWrapper service-v2__form-wrapper">
+      <form class="form service-v2__form" method="post" action="<?php echo esc_url(home_url('/server.php')); ?>">
+        <?php land76_render_form_security_fields('managed-service-cta-v4'); ?>
+        <label class="form__label">
+          <span>Ваше имя</span>
+          <input class="form__input" type="text" name="name" autocomplete="name" required>
+        </label>
+        <label class="form__label">
+          <span>Телефон</span>
+          <input class="form__input" type="tel" name="phone" autocomplete="tel" inputmode="tel" required>
+        </label>
+        <label class="service-v2__consent">
+          <input type="checkbox" name="consent" value="1" required>
+          <span>Соглашаюсь с <a href="<?php echo esc_url(home_url('/privacy/')); ?>">политикой конфиденциальности</a> и <a href="<?php echo esc_url(home_url('/consent/')); ?>">обработкой персональных данных</a>.</span>
+        </label>
+        <button class="service-v2__button form__btn" type="submit">Получить расчёт</button>
+      </form>
+      <div class="ajaxMessage">
+        <div class="ajaxMessage__success">
+          <div class="ajaxMessage__title"><p>Спасибо!</p><p>Ваша заявка принята</p></div>
+          <div class="ajaxMessage__text">Мы свяжемся с вами в ближайшее время</div>
+        </div>
+        <div class="ajaxMessage__error">
+          <div class="ajaxMessage__title">Ошибка при отправке!</div>
+          <div class="ajaxMessage__text">Попробуйте позднее</div>
+        </div>
+        <button class="ajaxMessage__btn btn closeModal" type="button">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<?php else : ?>
 <section class="advantages wrapper">
   <div style="text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px;">
     <h2 style="font-weight: 600; margin-bottom: 35px;">Получите расчёт по вашему участку</h2>
@@ -1521,3 +1572,4 @@ Poiret One
     </div>
   </div>
 </section>
+<?php endif; ?>

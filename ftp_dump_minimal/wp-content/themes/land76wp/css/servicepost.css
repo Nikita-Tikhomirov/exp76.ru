@@ -608,3 +608,223 @@ aside {
 .service-price-factor p {
   margin: 0;
 }
+
+/* Managed child-service pages reuse the visual rhythm of service-v2 hubs. */
+.managed-service-child {
+  --service-v2-green: #0a9215;
+  --service-v2-green-dark: #076f10;
+  --service-v2-orange: #b84400;
+  --service-v2-orange-dark: #963700;
+  --service-v2-ink: #333;
+  --service-v2-muted: #6f6f6f;
+  background: #fff;
+  color: #555;
+  overflow: hidden;
+}
+
+.managed-service-child > .managed-service-child__section {
+  width: 100%;
+  margin: 0;
+  background-attachment: scroll !important;
+  border-top: 2px solid #0a9215;
+  box-shadow: inset 0 5px 5px rgba(0, 0, 0, .1);
+  color: #555;
+}
+
+.managed-service-child > .managed-service-child__section:nth-of-type(even) {
+  background: #fff;
+}
+
+.managed-service-child > .managed-service-child__section:nth-of-type(odd) {
+  background: url(../img/sb5.png) center / cover #f7f5f2;
+  background-size: cover;
+}
+
+.managed-service-child .problem-block,
+.managed-service-child .solution-block,
+.managed-service-child .seo-text {
+  width: 100%;
+  max-width: none;
+  margin: 0 !important;
+  background: rgba(255, 255, 255, .94);
+  box-sizing: border-box;
+}
+
+.managed-service-child .problem-block,
+.managed-service-child .solution-block {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border: 1px solid rgba(10, 146, 21, .32);
+  border-left: 4px solid #0a9215;
+  border-radius: 10px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .1);
+}
+
+.managed-service-child .seo-text {
+  padding: clamp(1.5rem, 3vw, 2.125rem);
+}
+
+.managed-service-child .service-main-image img,
+.managed-service-child .service-context-image img {
+  width: 100%;
+}
+
+.managed-service-child .service-related-services > h2 {
+  color: #333;
+  font-family: "Poiret One", cursive;
+  font-size: clamp(2.25rem, 4vw, 3.125rem);
+  line-height: 1.16;
+  margin: 0;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.managed-service-child .service-related-articles > h2 {
+  color: #333;
+  font-family: "Poiret One", cursive;
+  font-size: clamp(2.25rem, 4vw, 3.125rem);
+  line-height: 1.16;
+  margin: 0;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.managed-service-child .service-related-services .service {
+  height: 100%;
+  margin-bottom: 0;
+  overflow: hidden;
+  align-items: stretch;
+  border-top: 2px solid #0a9215;
+}
+
+.managed-service-child .service-related-articles .service {
+  height: 100%;
+  margin-bottom: 0;
+  overflow: hidden;
+  align-items: stretch;
+  border-top: 2px solid #0a9215;
+}
+
+.managed-service-child .service-related-services .service__text-wrap,
+.managed-service-child .service-related-articles .service__text-wrap {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 1.5rem;
+}
+
+.managed-service-child .service-related-services .service__title,
+.managed-service-child .service-related-articles .service__title {
+  color: #333;
+  font-family: Montserrat, Tahoma, sans-serif;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  margin: 0 0 1.25rem;
+  text-align: center;
+  text-shadow: none;
+}
+
+.managed-service-child .service-related-services .service__link-wrap,
+.managed-service-child .service-related-articles .service__link-wrap {
+  position: static;
+  width: 100%;
+  margin-top: auto;
+}
+
+.managed-service-child .service-related-services .service__link,
+.managed-service-child .service-related-articles .service__link {
+  border: 2px solid #0a9215;
+  color: #fff;
+  text-decoration: none;
+}
+
+.managed-service-child .managed-service-child__price-surface {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: rgba(255, 255, 255, .96);
+  border: 1px solid rgba(10, 146, 21, .3);
+  border-left: 4px solid #0a9215;
+  border-radius: 10px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .1);
+  color: #333;
+}
+
+.managed-service-child .service-price-factors__lead {
+  color: #333;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.managed-service-child .service-price-factor {
+  background: #f9f9f9;
+  border: 1px solid rgba(10, 146, 21, .24);
+  border-left: 4px solid #0a9215;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .08);
+  color: #555;
+}
+
+.managed-service-child .service-faq-title {
+  color: #0a9215;
+}
+
+.managed-service-child > .managed-service-child__section.service-v2__cta {
+  background: url(../img/casebg.png) 0 0 / 100px 100px repeat #f7f5f2;
+  background-attachment: scroll !important;
+}
+
+.managed-service-child .service-v2__cta-inner {
+  width: 100%;
+  background: rgba(249, 249, 249, .97);
+  border: 1px solid rgba(10, 146, 21, .3);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .14);
+}
+
+.managed-service-child .managed-service-child__cta-copy {
+  color: #555;
+}
+
+.managed-service-child .service-v2__form-wrapper {
+  min-width: 0;
+}
+
+.managed-service-child .service-v2__form .form__label,
+.managed-service-child .service-v2__consent {
+  text-align: left;
+}
+
+.managed-service-child .service-v2__form .form__input {
+  margin-top: 0;
+}
+
+.managed-service-child .service-v2__form .service-v2__consent {
+  color: var(--service-v2-muted);
+  font-size: .84rem;
+}
+
+@media only screen and (max-width: 767px) {
+  .managed-service-child > .managed-service-child__section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .managed-service-child .seo-text,
+  .managed-service-child .problem-block,
+  .managed-service-child .solution-block,
+  .managed-service-child .managed-service-child__price-surface {
+    padding: 1.25rem;
+  }
+
+  .managed-service-child .service-related-services > h2,
+  .managed-service-child .service-related-articles > h2 {
+    margin-bottom: 2rem;
+  }
+
+  .managed-service-child .service-v2__cta-inner {
+    gap: 1.5rem;
+    padding: 1.25rem;
+  }
+
+  .managed-service-child .service-v2__form .form__btn {
+    justify-self: stretch;
+    min-height: 44px;
+    width: 100%;
+  }
+}

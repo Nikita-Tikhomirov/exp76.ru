@@ -33,10 +33,13 @@ class ChildServiceTemplateTests(unittest.TestCase):
             "if (!empty($ns87_selected_projects))",
             assignment,
         )
-        section = self.source.index(
-            '<section class="services wrapper casesCustom">',
-            guard,
+        section_match = re.search(
+            r'<section class="[^"]*\bcasesCustom\b[^"]*">',
+            self.source[guard:],
         )
+        self.assertIsNotNone(section_match)
+        assert section_match is not None
+        section = guard + section_match.start()
         self.assertLess(assignment, guard)
         self.assertLess(guard, section)
 

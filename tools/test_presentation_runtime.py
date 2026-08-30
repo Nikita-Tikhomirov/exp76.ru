@@ -13,6 +13,15 @@ TEMPLATE = (
     / "inc"
     / "newservicepost.php"
 )
+SERVICEPOST_CSS = (
+    ROOT
+    / "ftp_dump_minimal"
+    / "wp-content"
+    / "themes"
+    / "land76wp"
+    / "css"
+    / "servicepost.css"
+)
 
 
 def read_template() -> str:
@@ -46,6 +55,98 @@ def section(source: str, start: str, end: str) -> str:
 
 
 class ManagedPresentationRuntimeTests(unittest.TestCase):
+    def test_managed_child_uses_the_hub_presentation_scope(self) -> None:
+        """Catches managed children falling back to the unscoped legacy canvas."""
+        source = read_template()
+
+        self.assertIn("/css/service-v2.css", source)
+        self.assertIn('class="managed-service-child"', source)
+        self.assertNotIn('class="service-v2 managed-service-child"', source)
+        self.assertIn('class="service-v2__section managed-service-child__section', source)
+        self.assertIn(
+            'class="service-v2 service-v2__section managed-service-child__section service-v2__cta wrapper"',
+            source,
+        )
+
+    def test_managed_child_sections_alternate_full_width_plain_and_texture(self) -> None:
+        """Catches one tiled background being painted behind the whole child page."""
+        css = SERVICEPOST_CSS.read_text(encoding="utf-8")
+
+        plain = re.search(
+            r"\.managed-service-child\s*>\s*\.managed-service-child__section:nth-of-type\(even\)\s*\{(?P<body>[^}]+)\}",
+            css,
+        )
+        textured = re.search(
+            r"\.managed-service-child\s*>\s*\.managed-service-child__section:nth-of-type\(odd\)\s*\{(?P<body>[^}]+)\}",
+            css,
+        )
+        self.assertIsNotNone(plain)
+        self.assertIsNotNone(textured)
+        assert plain is not None and textured is not None
+        self.assertRegex(plain.group("body"), r"background:\s*#fff\s*;")
+        self.assertIn("sb5.png", textured.group("body"))
+        self.assertIn("background-size: cover", textured.group("body"))
+
+    def test_managed_child_related_heading_and_cards_are_not_stuck_or_faded(self) -> None:
+        """Catches a low-contrast heading touching the first row of related cards."""
+        css = SERVICEPOST_CSS.read_text(encoding="utf-8")
+
+        heading = re.search(
+            r"\.managed-service-child\s+\.service-related-services\s*>\s*h2\s*\{(?P<body>[^}]+)\}",
+            css,
+        )
+        cards = re.search(
+            r"\.managed-service-child\s+\.service-related-services\s+\.service\s*\{(?P<body>[^}]+)\}",
+            css,
+        )
+        self.assertIsNotNone(heading)
+        self.assertIsNotNone(cards)
+        assert heading is not None and cards is not None
+        self.assertIn("color: #333", heading.group("body"))
+        self.assertRegex(heading.group("body"), r"margin-bottom:\s*(?:2(?:\.\d+)?rem|3[2-9]px|[4-9]\dpx)")
+        self.assertIn("overflow: hidden", cards.group("body"))
+
+    def test_managed_child_content_price_and_cta_have_readable_surfaces(self) -> None:
+        """Catches the narrow content card and low-contrast copy on one fixed image."""
+        css = SERVICEPOST_CSS.read_text(encoding="utf-8")
+        managed = css[css.index("/* Managed child-service pages") :]
+
+        full_width = re.search(
+            r"\.managed-service-child\s+\.problem-block,\s*"
+            r"\.managed-service-child\s+\.solution-block,\s*"
+            r"\.managed-service-child\s+\.seo-text\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
+        price = re.search(
+            r"\.managed-service-child\s+\.managed-service-child__price-surface\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
+        cta = re.search(
+            r"\.managed-service-child\s*>\s*\.managed-service-child__section\.service-v2__cta\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
+        self.assertIsNotNone(full_width)
+        self.assertIsNotNone(price)
+        self.assertIsNotNone(cta)
+        assert full_width is not None and price is not None and cta is not None
+        self.assertIn("width: 100%", full_width.group("body"))
+        self.assertIn("max-width: none", full_width.group("body"))
+        self.assertIn("background: rgba(255, 255, 255, .96)", price.group("body"))
+        self.assertIn('class="managed-service-child__price-surface"', read_template())
+        self.assertIn("casebg.png", cta.group("body"))
+        self.assertIn("background-attachment: scroll !important", cta.group("body"))
+
+    def test_managed_child_cta_reuses_the_hub_form_layout(self) -> None:
+        """Catches the managed child CTA reverting to the inline legacy form."""
+        source = read_template()
+        cta = section(source, "<!-- 10. CTA -->", "<?php else : ?>")
+
+        self.assertIn('class="service-v2__cta-inner"', cta)
+        self.assertIn('class="formWrapper service-v2__form-wrapper"', cta)
+        self.assertIn('class="form service-v2__form"', cta)
+        self.assertIn('class="service-v2__consent"', cta)
+        self.assertNotIn('style="display: flex;', cta)
+
     def test_managed_hero_reserves_room_between_actions_and_breadcrumbs(self) -> None:
         """Catches the compact legacy hero making new CTA controls overlap."""
         source = read_template()
