@@ -652,11 +652,80 @@ aside {
 
 .managed-service-child .problem-block,
 .managed-service-child .solution-block {
-  padding: clamp(1.5rem, 3vw, 2.25rem);
+  background: transparent;
+  padding: 0;
   border: 0;
-  border-top: 2px solid #0a9215;
+  border-top: 0;
   border-radius: 0;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, .09);
+  box-shadow: none;
+}
+
+.managed-service-child .problem-block {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.managed-service-child .problem-block > h3,
+.managed-service-child .problem-block > p {
+  grid-column: 1 / -1;
+}
+
+.managed-service-child .problem-block > h3,
+.managed-service-child .solution-block > h3 {
+  margin: 0 !important;
+  text-align: left;
+}
+
+.managed-service-child .problem-block > p,
+.managed-service-child .solution-block > p {
+  color: #555;
+  margin: 0 !important;
+  max-width: 60rem;
+}
+
+.managed-service-child .problem-block .problem-item {
+  align-items: flex-start;
+  background: rgba(255, 255, 255, .96);
+  border-radius: 0;
+  border-top: 2px solid #0a9215;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .08);
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0 !important;
+  padding: clamp(1.1rem, 2vw, 1.4rem);
+}
+
+.managed-service-child .problem-block .problem-item__number {
+  flex-basis: 3.25rem;
+  height: 3.25rem;
+  margin-right: 1rem;
+  width: 3.25rem;
+}
+
+.managed-service-child .problem-block .problem-item h4 {
+  color: #333;
+  line-height: 1.35;
+  margin: 0 0 .45rem;
+}
+
+.managed-service-child .problem-block .problem-item p {
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.managed-service-child .solution-block > div {
+  gap: clamp(1rem, 2vw, 1.5rem) !important;
+  margin-top: clamp(1.5rem, 3vw, 2rem) !important;
+}
+
+.managed-service-child .solution-block > div > div {
+  background: rgba(255, 255, 255, .94);
+  border-top: 2px solid #0a9215;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .07);
+  box-sizing: border-box;
+  padding: clamp(1.1rem, 2vw, 1.4rem);
 }
 
 .managed-service-child .seo-text {
@@ -831,16 +900,43 @@ aside {
   text-underline-offset: 2px;
 }
 
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .managed-service-child .problem-block {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .managed-service-child > .managed-service-child__section {
     padding-top: 3rem;
     padding-bottom: 3rem;
   }
 
-  .managed-service-child .seo-text,
-  .managed-service-child .problem-block,
-  .managed-service-child .solution-block {
+  .managed-service-child .seo-text {
     padding: 1.25rem;
+  }
+
+  .managed-service-child .problem-block {
+    grid-template-columns: 1fr;
+  }
+
+  .managed-service-child .problem-block .problem-item {
+    align-items: flex-start;
+    flex-direction: row;
+    padding: 1.1rem;
+    text-align: left;
+  }
+
+  .managed-service-child .problem-block .problem-item__number {
+    flex-basis: 2.875rem;
+    height: 2.875rem;
+    margin-bottom: 0;
+    margin-right: .875rem;
+    width: 2.875rem;
+  }
+
+  .managed-service-child .problem-block .problem-item > div {
+    min-width: 0;
   }
 
   .managed-service-child .service-related-services > h2,

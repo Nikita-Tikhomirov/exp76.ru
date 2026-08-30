@@ -1205,6 +1205,42 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
         self.assertRegex(cta, r"background:\s*transparent\s*;")
         self.assertRegex(cta, r"box-shadow:\s*none\s*;")
 
+    def test_service_v2_process_uses_a_readable_card_grid(self) -> None:
+        """Keeps process copy off the sketch texture and avoids an unfinished 3+2 list."""
+        css = (THEME / "css" / "service-v2.css").read_text(encoding="utf-8")
+
+        process_section = re.search(
+            r"\.service-v2__section--soft:has\(\.service-v2__steps\),\s*"
+            r"\.service-v2__section--plain:has\(\.service-v2__steps\)\s*"
+            r"\{(?P<body>[^}]+)\}",
+            css,
+        )
+        steps = re.search(r"\.service-v2__steps\s*\{(?P<body>[^}]+)\}", css)
+        card = re.search(r"\.service-v2__steps li\s*\{(?P<body>[^}]+)\}", css)
+        number = re.search(
+            r"\.service-v2__steps li > span\s*\{(?P<body>[^}]+)\}",
+            css,
+        )
+        self.assertIsNotNone(process_section)
+        self.assertIsNotNone(steps)
+        self.assertIsNotNone(card)
+        self.assertIsNotNone(number)
+        assert process_section is not None and steps is not None
+        assert card is not None and number is not None
+
+        self.assertRegex(process_section.group("body"), r"background:\s*#[0-9a-fA-F]{6}\s*;")
+        self.assertNotIn("url(", process_section.group("body"))
+        self.assertRegex(steps.group("body"), r"align-items:\s*stretch\s*;")
+        self.assertRegex(steps.group("body"), r"display:\s*flex\s*;")
+        self.assertRegex(steps.group("body"), r"flex-wrap:\s*wrap\s*;")
+        self.assertRegex(steps.group("body"), r"justify-content:\s*center\s*;")
+        self.assertRegex(card.group("body"), r"background:\s*rgba?\(")
+        self.assertRegex(card.group("body"), r"border-top:\s*[2-9]px\s+solid")
+        self.assertRegex(card.group("body"), r"box-shadow:\s*(?!none)")
+        self.assertRegex(card.group("body"), r"flex:\s*0\s+1\s+calc\(")
+        self.assertIn("background: var(--service-v2-orange)", number.group("body"))
+        self.assertRegex(number.group("body"), r"color:\s*#fff(?:fff)?\s*;")
+
     def test_php_loader_fails_closed_and_templates_cached_verified_bytes(self) -> None:
         helper = (THEME / "inc" / "service-v2.php").read_text(encoding="utf-8")
         template = (THEME / "inc" / "service-v2-template.php").read_text(

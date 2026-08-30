@@ -1337,9 +1337,11 @@ class ThemeRoutingTests(unittest.TestCase):
         self.assertIn("['hero']['image']['url']", helper)
         self.assertIn("['hero']['image']['alt']", helper)
         self.assertIn(
-            "land76_newservice_related_card_image($ns87_related_service_id, $ns87_rendered_image_identities)",
+            "land76_newservice_related_card_image($ns87_related_service_id, $ns87_rendered_image_identities, 'medium_large')",
             service,
         )
+        self.assertIn("attachment_url_to_postid", helper)
+        self.assertIn("wp_get_attachment_image_url($attachment_id, $size)", helper)
         self.assertIn("foreach ($candidates as $candidate)", helper)
         self.assertIn(
             "land76_newservice_reserve_image($seen, $candidate['url'])",

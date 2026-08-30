@@ -648,17 +648,26 @@ if (!function_exists('land76_newservice_managed_presentation_image')) {
 
 if (!function_exists('land76_newservice_related_card_image')) {
     /** Pick the first page-unique related-card image from semantic and real-media fallbacks. */
-    function land76_newservice_related_card_image($post_id, &$seen = null)
+    function land76_newservice_related_card_image($post_id, &$seen = null, $size = 'full')
     {
         $post_id = (int) $post_id;
         $empty = array('url' => '', 'alt' => '');
         $candidates = array();
         $candidate_identities = array();
-        $append_candidate = static function ($url, $alt) use (&$candidates, &$candidate_identities) {
+        $append_candidate = static function ($url, $alt) use (&$candidates, &$candidate_identities, $size) {
             $url = (string) $url;
             $alt = (string) $alt;
             if ($url === '' || $alt === '') {
                 return;
+            }
+            if ($size !== 'full' && function_exists('attachment_url_to_postid')) {
+                $attachment_id = (int) attachment_url_to_postid($url);
+                if ($attachment_id > 0) {
+                    $sized_url = (string) wp_get_attachment_image_url($attachment_id, $size);
+                    if ($sized_url !== '') {
+                        $url = $sized_url;
+                    }
+                }
             }
             $identity = land76_newservice_image_identity($url);
             if ($identity === '' || isset($candidate_identities[$identity])) {
@@ -1362,7 +1371,7 @@ Poiret One
           || !hash_equals((string) $ns87_parent_hub['service_id'], (string) $ns87_related_service_hub['service_id'])) {
           continue;
       }
-      $ns87_related_service_card = land76_newservice_related_card_image($ns87_related_service_id, $ns87_rendered_image_identities);
+      $ns87_related_service_card = land76_newservice_related_card_image($ns87_related_service_id, $ns87_rendered_image_identities, 'medium_large');
       ?>
       <article class="service">
         <?php if ($ns87_related_service_card['url'] !== '' && $ns87_related_service_card['alt'] !== '') : ?>
@@ -1407,7 +1416,7 @@ if (!is_array($ns87_related_article_ids)) {
           || strpos($ns87_related_article_page_key, '-ARTICLE-') === false) {
           continue;
       }
-      $ns87_related_article_card = land76_newservice_related_card_image($ns87_related_article->ID, $ns87_rendered_image_identities);
+      $ns87_related_article_card = land76_newservice_related_card_image($ns87_related_article->ID, $ns87_rendered_image_identities, 'medium_large');
       $ns87_related_article_card_url = $ns87_related_article_card['url'];
       $ns87_related_article_card_alt = $ns87_related_article_card['alt'];
       ?>

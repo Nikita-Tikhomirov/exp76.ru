@@ -155,6 +155,19 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
             r"\.managed-service-child\s+\.seo-text\s*\{(?P<body>[^}]+)\}",
             managed,
         )
+        content_shells = re.search(
+            r"\.managed-service-child\s+\.problem-block,\s*"
+            r"\.managed-service-child\s+\.solution-block\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
+        problem_layout = re.search(
+            r"\.managed-service-child\s+\.problem-block\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
+        problem_cards = re.search(
+            r"\.managed-service-child\s+\.problem-block\s+\.problem-item\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
         seo_text = re.search(
             r"\.managed-service-child\s+\.seo-text\s*\{(?P<body>[^}]+)\}",
             managed,
@@ -176,6 +189,9 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
             managed,
         )
         self.assertIsNotNone(full_width)
+        self.assertIsNotNone(content_shells)
+        self.assertIsNotNone(problem_layout)
+        self.assertIsNotNone(problem_cards)
         self.assertIsNotNone(seo_text)
         self.assertIsNotNone(sections)
         self.assertIsNotNone(cases_grid)
@@ -183,6 +199,9 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         self.assertIsNotNone(cta)
         assert (
             full_width is not None
+            and content_shells is not None
+            and problem_layout is not None
+            and problem_cards is not None
             and seo_text is not None
             and sections is not None
             and cases_grid is not None
@@ -191,6 +210,17 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         )
         self.assertIn("width: 100%", full_width.group("body"))
         self.assertIn("max-width: none", full_width.group("body"))
+        self.assertRegex(content_shells.group("body"), r"background:\s*transparent\s*;")
+        self.assertRegex(content_shells.group("body"), r"padding:\s*0\s*;")
+        self.assertRegex(content_shells.group("body"), r"border:\s*0\s*;")
+        self.assertRegex(content_shells.group("body"), r"box-shadow:\s*none\s*;")
+        self.assertRegex(problem_layout.group("body"), r"display:\s*grid\s*;")
+        self.assertRegex(
+            problem_layout.group("body"),
+            r"grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)\s*;",
+        )
+        self.assertRegex(problem_cards.group("body"), r"border-top:\s*[2-9]px\s+solid")
+        self.assertRegex(problem_cards.group("body"), r"margin:\s*0\s*!important\s*;")
         self.assertNotRegex(seo_text.group("body"), r"border-left:\s*[1-9]")
         self.assertNotRegex(sections.group("body"), r"border-top:\s*[1-9]")
         self.assertRegex(cases_grid.group("body"), r"row-gap:\s*2rem")
@@ -218,6 +248,18 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         self.assertRegex(cta_inner.group("body"), r"background:\s*transparent\s*;")
         self.assertRegex(cta_inner.group("body"), r"border:\s*0\s*;")
         self.assertRegex(cta_inner.group("body"), r"box-shadow:\s*none\s*;")
+
+    def test_managed_child_problem_cards_collapse_to_two_columns_on_tablet(self) -> None:
+        """Keeps three child cards from becoming unreadably narrow at tablet widths."""
+        css = SERVICEPOST_CSS.read_text(encoding="utf-8")
+
+        self.assertRegex(
+            css,
+            r"(?s)@media only screen and \(min-width:\s*768px\) and "
+            r"\(max-width:\s*991px\)\s*\{.*?"
+            r"\.managed-service-child\s+\.problem-block\s*\{[^}]*"
+            r"grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)\s*;",
+        )
 
     def test_managed_child_cta_reuses_the_hub_form_layout(self) -> None:
         """Catches the managed child CTA reverting to the inline legacy form."""
@@ -296,9 +338,10 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
             ("service-related-services", "service-related-articles"),
             ("service-related-articles", "<!-- 6."),
         ):
-            self.assertIn(
-                ", $ns87_rendered_image_identities)",
+            self.assertRegex(
                 section(source, start, end),
+                r"land76_newservice_related_card_image\([^;\n]*,\s*"
+                r"\$ns87_rendered_image_identities(?:,\s*'medium_large')?\)",
             )
 
     def test_managed_hero_prefers_role_meta_and_falls_back_to_real_main_pair(self) -> None:
@@ -511,6 +554,8 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         )
         self.assertIn("$candidates", selector)
         self.assertIn("foreach ($candidates as $candidate)", selector)
+        self.assertIn("attachment_url_to_postid", selector)
+        self.assertIn("wp_get_attachment_image_url($attachment_id, $size)", selector)
         self.assertIn(
             "land76_newservice_reserve_image($seen, $candidate['url'])",
             selector,
@@ -518,14 +563,14 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
 
         related = section(source, "service-related-services", "service-related-articles")
         self.assertIn(
-            "land76_newservice_related_card_image($ns87_related_service_id, $ns87_rendered_image_identities)",
+            "land76_newservice_related_card_image($ns87_related_service_id, $ns87_rendered_image_identities, 'medium_large')",
             related,
         )
         self.assertRegex(related, r"if \(\$ns87_related_service_card\['url'\] !== ''")
 
         related_articles = section(source, "service-related-articles", "<!-- 6.")
         self.assertIn(
-            "land76_newservice_related_card_image($ns87_related_article->ID, $ns87_rendered_image_identities)",
+            "land76_newservice_related_card_image($ns87_related_article->ID, $ns87_rendered_image_identities, 'medium_large')",
             related_articles,
         )
 
