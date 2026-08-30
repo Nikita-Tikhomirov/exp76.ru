@@ -765,6 +765,10 @@ aside {
   color: #0a9215;
 }
 
+.managed-service-child .service-faq-list .service-v2__faq-item {
+  margin-top: 0;
+}
+
 .managed-service-child > .managed-service-child__section.service-v2__cta {
   background: url(../img/casebg.png) 0 0 / 100px 100px repeat #f7f5f2;
   background-attachment: scroll !important;
@@ -797,6 +801,12 @@ aside {
 .managed-service-child .service-v2__form .service-v2__consent {
   color: var(--service-v2-muted);
   font-size: .84rem;
+}
+
+.managed-service-child .service-v2__consent a {
+  color: var(--service-v2-green-dark);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 @media only screen and (max-width: 767px) {

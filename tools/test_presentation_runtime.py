@@ -1,3 +1,4 @@
+import json
 import re
 import unittest
 from pathlib import Path
@@ -29,6 +30,17 @@ SERVICEPOST_CSS = (
     / "land76wp"
     / "css"
     / "servicepost.css"
+)
+HUBS_DIR = ROOT / "seo-content" / "service-hubs" / "hubs"
+PAGES_DIR = ROOT / "seo-content" / "service-pages" / "pages"
+RUNTIME_HUBS_DIR = (
+    ROOT
+    / "ftp_dump_minimal"
+    / "wp-content"
+    / "themes"
+    / "land76wp"
+    / "content"
+    / "service-v2"
 )
 
 
@@ -164,6 +176,21 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         self.assertIn('class="form service-v2__form"', cta)
         self.assertIn('class="service-v2__consent"', cta)
         self.assertNotIn('style="display: flex;', cta)
+
+    def test_managed_child_faq_is_keyboard_accessible_and_consent_is_readable(self) -> None:
+        """Catches click-only FAQ controls and low-contrast legal links."""
+        source = read_template()
+        faq = section(source, "<!-- 8.", "<!-- 10.")
+        css = SERVICEPOST_CSS.read_text(encoding="utf-8")
+
+        self.assertIn("if ($land76_managed_service_hub_post)", faq)
+        self.assertIn('<details class="service-v2__faq-item service-faq-item">', faq)
+        self.assertIn("<summary>", faq)
+        self.assertRegex(
+            css,
+            r"\.managed-service-child\s+\.service-v2__consent\s+a\s*\{[^}]*"
+            r"color:\s*var\(--service-v2-green-dark\)",
+        )
 
     def test_managed_hero_reserves_room_between_actions_and_breadcrumbs(self) -> None:
         """Catches the compact legacy hero making new CTA controls overlap."""
@@ -328,9 +355,11 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         self.assertRegex(cases, r"if \(\$project_image\)\s*:\s*\?>")
 
     def test_real_main_image_keeps_its_own_url_and_alt(self) -> None:
-        """Catches replacing the evidence-backed main image with generated media."""
+        """Catches the child body falling back to a globally repeated legacy image."""
+        source = read_template()
+        bootstrap = section(source, "$ns87_post_context", "$ns87_hero_title")
         seo_content = section(
-            read_template(),
+            source,
             "<!-- 4.",
             "<!-- 5.",
         )
@@ -340,10 +369,64 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
             "</figure>",
         )
 
+        self.assertIn(
+            "land76_newservice_related_card_image($ns87_post_context)",
+            bootstrap,
+        )
+        self.assertLess(
+            bootstrap.index(
+                "land76_newservice_managed_presentation_image($ns87_post_context, 'hero')"
+            ),
+            bootstrap.index("land76_newservice_related_card_image($ns87_post_context)"),
+        )
+        self.assertLess(
+            bootstrap.index("land76_newservice_related_card_image($ns87_post_context)"),
+            bootstrap.index("$ns87_main_image_url = $ns87_main_image['url']"),
+        )
+        self.assertIn(
+            "land76_newservice_image_identity($ns87_hub_service_image['url'])",
+            bootstrap,
+        )
+        self.assertIn(
+            "land76_newservice_image_identity($ns87_hero_image['url'])",
+            bootstrap,
+        )
         self.assertIn("$ns87_main_image_url", main_figure)
         self.assertIn("$ns87_main_image_alt", main_figure)
         self.assertNotIn("$ns87_hero_image", main_figure)
         self.assertNotIn("$ns87_context_image", main_figure)
+
+    def test_each_child_has_a_unique_hub_service_image_distinct_from_hero(self) -> None:
+        """Keeps the 65 body images unique and semantically tied to their hub card."""
+        service_images: dict[str, dict[str, str]] = {}
+
+        for hub_path in sorted(HUBS_DIR.glob("S*.json")):
+            hub = json.loads(hub_path.read_text(encoding="utf-8"))
+            runtime_path = RUNTIME_HUBS_DIR / f"{hub['slug']}.json"
+            runtime_hub = json.loads(runtime_path.read_text(encoding="utf-8"))
+            self.assertEqual(hub["services"], runtime_hub["services"], hub["service_id"])
+
+            for item in runtime_hub["services"]["items"]:
+                page_key = item["page_key"]
+                self.assertNotIn(page_key, service_images)
+                image = item["image"]
+                self.assertTrue(image["url"], page_key)
+                self.assertTrue(image["alt"], page_key)
+                service_images[page_key] = image
+
+        self.assertEqual(65, len(service_images))
+        self.assertEqual(65, len({image["url"] for image in service_images.values()}))
+
+        for page_key, image in service_images.items():
+            page = json.loads(
+                (PAGES_DIR / f"{page_key}.json").read_text(encoding="utf-8")
+            )
+            for role, presentation_image in page["presentation_images"].items():
+                self.assertNotEqual(
+                    image["url"],
+                    presentation_image["url"],
+                    f"{page_key}:{role}",
+                )
 
     def test_related_hub_card_uses_service_v2_hero_when_post_meta_is_absent(self) -> None:
         """Catches every child-to-hub relation degrading to a text-only card."""

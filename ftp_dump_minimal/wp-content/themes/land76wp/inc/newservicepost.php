@@ -850,6 +850,17 @@ $land76_managed_service_hub_post = hash_equals(
 $ns87_main_image = land76_newservice_managed_presentation_image($ns87_post_context, 'main');
 $ns87_hero_image = land76_newservice_managed_presentation_image($ns87_post_context, 'hero');
 $ns87_context_image = land76_newservice_managed_presentation_image($ns87_post_context, 'context');
+if ($land76_managed_service_hub_post) {
+    $ns87_hub_service_image = land76_newservice_related_card_image($ns87_post_context);
+    $ns87_hub_service_identity = land76_newservice_image_identity($ns87_hub_service_image['url']);
+    $ns87_hero_image_identity = land76_newservice_image_identity($ns87_hero_image['url']);
+    if ($ns87_hub_service_image['url'] !== ''
+        && $ns87_hub_service_image['alt'] !== ''
+        && $ns87_hub_service_identity !== ''
+        && !hash_equals($ns87_hero_image_identity, $ns87_hub_service_identity)) {
+        $ns87_main_image = $ns87_hub_service_image;
+    }
+}
 $ns87_main_image_url = $ns87_main_image['url'];
 $ns87_main_image_alt = $ns87_main_image['alt'];
 $ns87_hero_image_url = $ns87_hero_image['url'];
@@ -1490,6 +1501,12 @@ Poiret One
 
   <div class="service-faq-list">
     <?php foreach ($ns87_faq_items as $ns87_faq_item) : ?>
+    <?php if ($land76_managed_service_hub_post) : ?>
+    <details class="service-v2__faq-item service-faq-item">
+      <summary><?php echo esc_html(!empty($ns87_faq_item['question']) ? $ns87_faq_item['question'] : ''); ?></summary>
+      <p><?php echo esc_html(!empty($ns87_faq_item['answer']) ? $ns87_faq_item['answer'] : ''); ?></p>
+    </details>
+    <?php else : ?>
     <div class="service-faq-item">
       <div class="service-faq-question" onclick="var answer = this.nextElementSibling; answer.style.display = answer.style.display === 'block' ? 'none' : 'block'; this.querySelector('.faq-icon').textContent = this.querySelector('.faq-icon').textContent === '+' ? '-' : '+';">
         <h3 class="faq-toggle" style="margin: 0;">
@@ -1501,6 +1518,7 @@ Poiret One
         <p><?php echo esc_html(!empty($ns87_faq_item['answer']) ? $ns87_faq_item['answer'] : ''); ?></p>
       </div>
     </div>
+    <?php endif; ?>
     <?php endforeach; ?>
   </div>
 </section>
