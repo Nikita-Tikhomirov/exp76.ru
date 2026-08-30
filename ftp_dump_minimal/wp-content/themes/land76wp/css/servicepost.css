@@ -613,10 +613,10 @@ aside {
 .managed-service-child {
   --service-v2-green: #0a9215;
   --service-v2-green-dark: #076f10;
-  --service-v2-orange: #b84400;
-  --service-v2-orange-dark: #963700;
+  --service-v2-orange: #ff5e00;
+  --service-v2-orange-dark: #e45200;
   --service-v2-ink: #333;
-  --service-v2-muted: #6f6f6f;
+  --service-v2-muted: #555555;
   background: #fff;
   color: #555;
   overflow: hidden;
@@ -626,8 +626,8 @@ aside {
   width: 100%;
   margin: 0;
   background-attachment: scroll !important;
-  border-top: 2px solid #0a9215;
-  box-shadow: inset 0 5px 5px rgba(0, 0, 0, .1);
+  border-top: 0;
+  box-shadow: none;
   color: #555;
 }
 
@@ -653,14 +653,16 @@ aside {
 .managed-service-child .problem-block,
 .managed-service-child .solution-block {
   padding: clamp(1.5rem, 3vw, 2.25rem);
-  border: 1px solid rgba(10, 146, 21, .32);
-  border-left: 4px solid #0a9215;
-  border-radius: 10px;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, .1);
+  border: 0;
+  border-top: 2px solid #0a9215;
+  border-radius: 0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .09);
 }
 
 .managed-service-child .seo-text {
   padding: clamp(1.5rem, 3vw, 2.125rem);
+  border-left: 0;
+  box-shadow: none;
 }
 
 .managed-service-child .service-main-image img,
@@ -686,6 +688,15 @@ aside {
   margin: 0;
   margin-bottom: 2.5rem;
   text-align: center;
+}
+
+.managed-service-child .service-related-services .services__cards,
+.managed-service-child .service-related-articles .services__cards {
+  row-gap: 2rem;
+}
+
+.managed-service-child .casesCustom .services__cards {
+  row-gap: 2rem;
 }
 
 .managed-service-child .service-related-services .service {
@@ -738,12 +749,11 @@ aside {
 }
 
 .managed-service-child .managed-service-child__price-surface {
-  padding: clamp(1.5rem, 3vw, 2.25rem);
-  background: rgba(255, 255, 255, .96);
-  border: 1px solid rgba(10, 146, 21, .3);
-  border-left: 4px solid #0a9215;
-  border-radius: 10px;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, .1);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
   color: #333;
 }
 
@@ -755,8 +765,8 @@ aside {
 
 .managed-service-child .service-price-factor {
   background: #f9f9f9;
-  border: 1px solid rgba(10, 146, 21, .24);
-  border-left: 4px solid #0a9215;
+  border: 0;
+  border-top: 2px solid #0a9215;
   box-shadow: 0 3px 10px rgba(0, 0, 0, .08);
   color: #555;
 }
@@ -776,9 +786,10 @@ aside {
 
 .managed-service-child .service-v2__cta-inner {
   width: 100%;
-  background: rgba(249, 249, 249, .97);
-  border: 1px solid rgba(10, 146, 21, .3);
-  box-shadow: 0 5px 18px rgba(0, 0, 0, .14);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
 }
 
 .managed-service-child .managed-service-child__cta-copy {
@@ -796,6 +807,17 @@ aside {
 
 .managed-service-child .service-v2__form .form__input {
   margin-top: 0;
+}
+
+.managed-service-child .service-v2__form .service-v2__button {
+  background: var(--service-v2-green);
+  border-color: var(--service-v2-green);
+  color: #fff;
+}
+
+.managed-service-child .service-v2__form .service-v2__button:hover {
+  background: var(--service-v2-green-dark);
+  border-color: var(--service-v2-green-dark);
 }
 
 .managed-service-child .service-v2__form .service-v2__consent {
@@ -817,8 +839,7 @@ aside {
 
   .managed-service-child .seo-text,
   .managed-service-child .problem-block,
-  .managed-service-child .solution-block,
-  .managed-service-child .managed-service-child__price-surface {
+  .managed-service-child .solution-block {
     padding: 1.25rem;
   }
 
@@ -829,7 +850,7 @@ aside {
 
   .managed-service-child .service-v2__cta-inner {
     gap: 1.5rem;
-    padding: 1.25rem;
+    padding: 0;
   }
 
   .managed-service-child .service-v2__form .form__btn {

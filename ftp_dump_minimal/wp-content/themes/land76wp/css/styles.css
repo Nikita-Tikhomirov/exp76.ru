@@ -2139,6 +2139,46 @@ body {
   }
 }
 
+@media only screen and (max-width: 1300px) {
+  body.admin-bar .burger {
+    top: 49px !important;
+  }
+
+  body.admin-bar .menu.active {
+    top: 32px;
+    height: calc(100vh - 32px);
+  }
+
+  body:has(#wpadminbar) .burger {
+    top: 49px !important;
+  }
+
+  body:has(#wpadminbar) .menu.active {
+    top: 32px;
+    height: calc(100vh - 32px);
+  }
+}
+
+@media only screen and (max-width: 782px) {
+  body.admin-bar .burger {
+    top: 63px !important;
+  }
+
+  body.admin-bar .menu.active {
+    top: 46px;
+    height: calc(100vh - 46px);
+  }
+
+  body:has(#wpadminbar) .burger {
+    top: 63px !important;
+  }
+
+  body:has(#wpadminbar) .menu.active {
+    top: 46px;
+    height: calc(100vh - 46px);
+  }
+}
+
 @media only screen and (max-width: 480px) {
   .header.wrapper {
     min-height: 62px;

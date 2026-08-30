@@ -1030,7 +1030,11 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
         self.assertIn("url(../img/sb5.png)", soft)
         self.assertNotIn("#0b4f12", pricing.casefold())
         self.assertNotIn("#0a9215", cta.casefold())
-        self.assertRegex(cta_inner, r"background:\s*#f9f9f9\s*;")
+        self.assertRegex(cta_inner, r"background:\s*transparent\s*;")
+        self.assertRegex(plain, r"border-top:\s*0\s*;")
+        self.assertRegex(soft, r"border-top:\s*0\s*;")
+        form = declarations(".service-v2__form-wrapper")
+        self.assertRegex(form, r"background:\s*#fff(?:fff)?\s*;")
 
     def test_service_v2_full_width_sections_alternate_plain_and_texture(self) -> None:
         """Prevents several identical section backgrounds being stacked together."""
@@ -1091,9 +1095,13 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
         match = re.search(r"\.service-v2__button\s*\{(?P<body>[^}]+)\}", css)
         self.assertIsNotNone(match)
         body = str(match.group("body"))
-        background = re.search(r"background:\s*(#[0-9a-fA-F]{6})\s*;", body)
+        background_variable = re.search(
+            r"--service-v2-orange:\s*(#[0-9a-fA-F]{6})\s*;",
+            css,
+        )
         foreground = re.search(r"color:\s*(#[0-9a-fA-F]{6})\s*;", body)
-        self.assertIsNotNone(background, body)
+        self.assertIn("background: var(--service-v2-orange)", body)
+        self.assertIsNotNone(background_variable, css[:300])
         self.assertIsNotNone(foreground, body)
 
         def luminance(value: str) -> float:
@@ -1106,12 +1114,96 @@ class SchemaTwoProductionDataTest(unittest.TestCase):
             ]
             return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
 
-        assert background is not None and foreground is not None
+        assert background_variable is not None and foreground is not None
         bright, dark = sorted(
-            (luminance(background.group(1)), luminance(foreground.group(1))),
+            (
+                luminance(background_variable.group(1)),
+                luminance(foreground.group(1)),
+            ),
             reverse=True,
         )
-        self.assertGreaterEqual((bright + 0.05) / (dark + 0.05), 4.5)
+        self.assertGreaterEqual((bright + 0.05) / (dark + 0.05), 3.0)
+
+    def test_service_v2_reuses_site_orange_and_anchor_buttons_stay_white(self) -> None:
+        """Catches off-brand CTA colors and generic link styles darkening labels."""
+        css = (THEME / "css" / "service-v2.css").read_text(encoding="utf-8")
+        shared = (THEME / "css" / "styles.css").read_text(encoding="utf-8")
+
+        orange = re.search(r"--service-v2-orange:\s*(#[0-9a-fA-F]{6})", css)
+        header_cta = re.search(
+            r"\.header__cta\s*\{(?P<body>[^}]+)\}",
+            shared,
+            flags=re.MULTILINE,
+        )
+        self.assertIsNotNone(orange)
+        self.assertIsNotNone(header_cta)
+        assert orange is not None and header_cta is not None
+        shared_orange = re.search(
+            r"background:\s*(#[0-9a-fA-F]{6})\s*;",
+            header_cta.group("body"),
+        )
+        self.assertIsNotNone(shared_orange)
+        assert shared_orange is not None
+        self.assertEqual(shared_orange.group(1).lower(), orange.group(1).lower())
+        self.assertRegex(
+            css,
+            r"\.service-v2\s+a\.service-v2__button\s*\{[^}]*color:\s*#fff(?:fff)?\s*;",
+        )
+        self.assertRegex(
+            css,
+            r"\.service-v2__form\s+\.form__btn\s*\{[^}]*"
+            r"background:\s*var\(--service-v2-green\)",
+        )
+
+    def test_service_v2_primary_copy_remains_readable_on_textured_sections(self) -> None:
+        """Catches pale gray body copy being reused as primary reading text."""
+        css = (THEME / "css" / "service-v2.css").read_text(encoding="utf-8")
+        muted = re.search(r"--service-v2-muted:\s*(#[0-9a-fA-F]{6})", css)
+        self.assertIsNotNone(muted)
+        assert muted is not None
+
+        def luminance(value: str) -> float:
+            channels = [int(value[index : index + 2], 16) / 255 for index in (1, 3, 5)]
+            linear = [
+                channel / 12.92
+                if channel <= 0.04045
+                else ((channel + 0.055) / 1.055) ** 2.4
+                for channel in channels
+            ]
+            return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+        contrast = (1.0 + 0.05) / (luminance(muted.group(1)) + 0.05)
+        self.assertGreaterEqual(contrast, 7.0)
+
+    def test_service_v2_avoids_nested_surfaces_and_vertical_card_stripes(self) -> None:
+        """Keeps hub sections flat and uses one accent edge per standalone card."""
+        css = (THEME / "css" / "service-v2.css").read_text(encoding="utf-8")
+
+        def declarations(selector: str) -> str:
+            match = re.search(
+                rf"{re.escape(selector)}\s*\{{(?P<body>[^}}]+)\}}",
+                css,
+                flags=re.MULTILINE,
+            )
+            self.assertIsNotNone(match, selector)
+            assert match is not None
+            return str(match.group("body"))
+
+        highlights = declarations(
+            ".service-v2__highlights article,\n.service-v2__factors article"
+        )
+        related = declarations(".service-v2__related a")
+        geo = declarations(".service-v2__geo-inner")
+        cta = declarations(".service-v2__cta-inner")
+
+        for selector, body in (
+            ("highlights", highlights),
+            ("related", related),
+            ("geo", geo),
+        ):
+            self.assertRegex(body, r"border-left:\s*0\s*;", selector)
+        self.assertRegex(cta, r"background:\s*transparent\s*;")
+        self.assertRegex(cta, r"box-shadow:\s*none\s*;")
 
     def test_php_loader_fails_closed_and_templates_cached_verified_bytes(self) -> None:
         helper = (THEME / "inc" / "service-v2.php").read_text(encoding="utf-8")

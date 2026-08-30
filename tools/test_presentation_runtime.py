@@ -129,15 +129,23 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
             r"\.managed-service-child\s+\.service-related-services\s+\.service\s*\{(?P<body>[^}]+)\}",
             css,
         )
+        grid = re.search(
+            r"\.managed-service-child\s+\.service-related-services\s+\.services__cards,\s*"
+            r"\.managed-service-child\s+\.service-related-articles\s+\.services__cards\s*"
+            r"\{(?P<body>[^}]+)\}",
+            css,
+        )
         self.assertIsNotNone(heading)
         self.assertIsNotNone(cards)
-        assert heading is not None and cards is not None
+        self.assertIsNotNone(grid)
+        assert heading is not None and cards is not None and grid is not None
         self.assertIn("color: #333", heading.group("body"))
         self.assertRegex(heading.group("body"), r"margin-bottom:\s*(?:2(?:\.\d+)?rem|3[2-9]px|[4-9]\dpx)")
         self.assertIn("overflow: hidden", cards.group("body"))
+        self.assertRegex(grid.group("body"), r"row-gap:\s*(?:2(?:\.\d+)?rem|3[0-9]px)")
 
-    def test_managed_child_content_price_and_cta_have_readable_surfaces(self) -> None:
-        """Catches the narrow content card and low-contrast copy on one fixed image."""
+    def test_managed_child_content_price_and_cta_have_readable_flat_surfaces(self) -> None:
+        """Catches nested panels and repeated vertical stripes returning to child pages."""
         css = SERVICEPOST_CSS.read_text(encoding="utf-8")
         managed = css[css.index("/* Managed child-service pages") :]
 
@@ -145,6 +153,18 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
             r"\.managed-service-child\s+\.problem-block,\s*"
             r"\.managed-service-child\s+\.solution-block,\s*"
             r"\.managed-service-child\s+\.seo-text\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
+        seo_text = re.search(
+            r"\.managed-service-child\s+\.seo-text\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
+        sections = re.search(
+            r"\.managed-service-child\s*>\s*\.managed-service-child__section\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
+        cases_grid = re.search(
+            r"\.managed-service-child\s+\.casesCustom\s+\.services__cards\s*\{(?P<body>[^}]+)\}",
             managed,
         )
         price = re.search(
@@ -156,15 +176,48 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
             managed,
         )
         self.assertIsNotNone(full_width)
+        self.assertIsNotNone(seo_text)
+        self.assertIsNotNone(sections)
+        self.assertIsNotNone(cases_grid)
         self.assertIsNotNone(price)
         self.assertIsNotNone(cta)
-        assert full_width is not None and price is not None and cta is not None
+        assert (
+            full_width is not None
+            and seo_text is not None
+            and sections is not None
+            and cases_grid is not None
+            and price is not None
+            and cta is not None
+        )
         self.assertIn("width: 100%", full_width.group("body"))
         self.assertIn("max-width: none", full_width.group("body"))
-        self.assertIn("background: rgba(255, 255, 255, .96)", price.group("body"))
+        self.assertNotRegex(seo_text.group("body"), r"border-left:\s*[1-9]")
+        self.assertNotRegex(sections.group("body"), r"border-top:\s*[1-9]")
+        self.assertRegex(cases_grid.group("body"), r"row-gap:\s*2rem")
+        self.assertRegex(price.group("body"), r"background:\s*transparent\s*;")
+        self.assertRegex(price.group("body"), r"border:\s*0\s*;")
+        self.assertRegex(price.group("body"), r"box-shadow:\s*none\s*;")
+        self.assertNotRegex(price.group("body"), r"border-left:\s*[1-9]")
         self.assertIn('class="managed-service-child__price-surface"', read_template())
         self.assertIn("casebg.png", cta.group("body"))
         self.assertIn("background-attachment: scroll !important", cta.group("body"))
+
+        factor = re.search(
+            r"\.managed-service-child\s+\.service-price-factor\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
+        cta_inner = re.search(
+            r"\.managed-service-child\s+\.service-v2__cta-inner\s*\{(?P<body>[^}]+)\}",
+            managed,
+        )
+        self.assertIsNotNone(factor)
+        self.assertIsNotNone(cta_inner)
+        assert factor is not None and cta_inner is not None
+        self.assertNotRegex(factor.group("body"), r"border-left:\s*[1-9]")
+        self.assertRegex(factor.group("body"), r"border-top:\s*[2-9]px\s+solid")
+        self.assertRegex(cta_inner.group("body"), r"background:\s*transparent\s*;")
+        self.assertRegex(cta_inner.group("body"), r"border:\s*0\s*;")
+        self.assertRegex(cta_inner.group("body"), r"box-shadow:\s*none\s*;")
 
     def test_managed_child_cta_reuses_the_hub_form_layout(self) -> None:
         """Catches the managed child CTA reverting to the inline legacy form."""
