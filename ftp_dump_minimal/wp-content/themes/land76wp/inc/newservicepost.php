@@ -628,19 +628,60 @@ if (!function_exists('land76_newservice_sized_attachment_url')) {
         $size = (string) $size;
         if ($url === ''
             || $size === ''
-            || $size === 'full'
-            || !function_exists('attachment_url_to_postid')
-            || !function_exists('wp_get_attachment_image_url')) {
+            || $size === 'full') {
             return $url;
         }
 
-        $attachment_id = (int) attachment_url_to_postid($url);
-        if ($attachment_id < 1) {
+        if (function_exists('attachment_url_to_postid')
+            && function_exists('wp_get_attachment_image_url')) {
+            $attachment_id = (int) attachment_url_to_postid($url);
+            if ($attachment_id > 0) {
+                $sized_url = (string) wp_get_attachment_image_url($attachment_id, $size);
+                if ($sized_url !== '') {
+                    return $sized_url;
+                }
+            }
+        }
+
+        if ($size !== 'medium_large'
+            || !function_exists('get_template_directory_uri')
+            || !function_exists('get_template_directory')
+            || !function_exists('wp_parse_url')) {
             return $url;
         }
 
-        $sized_url = (string) wp_get_attachment_image_url($attachment_id, $size);
-        return $sized_url !== '' ? $sized_url : $url;
+        $theme_uri = untrailingslashit((string) get_template_directory_uri());
+        $theme_uri_path = rawurldecode((string) wp_parse_url($theme_uri, PHP_URL_PATH));
+        $url_path = rawurldecode((string) wp_parse_url($url, PHP_URL_PATH));
+        $theme_host = strtolower((string) wp_parse_url($theme_uri, PHP_URL_HOST));
+        $url_host = strtolower((string) wp_parse_url($url, PHP_URL_HOST));
+        if ($theme_uri_path === ''
+            || $url_path === ''
+            || $url_host !== $theme_host
+            || strpos($url_path, $theme_uri_path . '/') !== 0) {
+            return $url;
+        }
+
+        $relative = ltrim(substr($url_path, strlen($theme_uri_path)), '/');
+        if ($relative === ''
+            || strpos($relative, '..') !== false
+            || strpos($relative, '//') !== false
+            || !preg_match('#^generated/[A-Za-z0-9._/-]+\.webp$#', $relative)) {
+            return $url;
+        }
+
+        $directory = pathinfo($relative, PATHINFO_DIRNAME);
+        $filename = pathinfo($relative, PATHINFO_FILENAME);
+        $extension = pathinfo($relative, PATHINFO_EXTENSION);
+        $derivative_relative = ($directory === '.' ? '' : $directory . '/')
+            . $filename . '-card.' . $extension;
+        $derivative_path = trailingslashit((string) get_template_directory())
+            . str_replace('/', DIRECTORY_SEPARATOR, $derivative_relative);
+        if (!is_file($derivative_path)) {
+            return $url;
+        }
+
+        return trailingslashit($theme_uri) . $derivative_relative;
     }
 }
 

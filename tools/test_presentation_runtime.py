@@ -598,6 +598,31 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
             bootstrap.index("land76_newservice_sized_attachment_url("),
         )
 
+    def test_theme_related_card_can_use_a_small_checked_in_derivative(self) -> None:
+        """Keeps static generated artwork from stalling a mobile related card."""
+        sized_url = php_function_body(
+            read_template(),
+            "land76_newservice_sized_attachment_url",
+        )
+        derivative = (
+            ROOT
+            / "ftp_dump_minimal"
+            / "wp-content"
+            / "themes"
+            / "land76wp"
+            / "generated"
+            / "context"
+            / "context-photo-s13-carport-layout-check-card.webp"
+        )
+
+        self.assertIn("$size !== 'medium_large'", sized_url)
+        self.assertIn("get_template_directory_uri", sized_url)
+        self.assertIn("get_template_directory", sized_url)
+        self.assertIn("is_file", sized_url)
+        self.assertIn("'-card.'", sized_url)
+        self.assertTrue(derivative.is_file())
+        self.assertLess(derivative.stat().st_size, 160_000)
+
     def test_managed_pricing_renders_factors_while_legacy_keeps_its_table(self) -> None:
         """Catches managed factor explanations being shown as fake price rows."""
         pricing = section(read_template(), "<!-- 6.", "<!-- 8.")
