@@ -1242,6 +1242,22 @@ function land76_output_structured_data() {
 }
 add_action('wp_head', 'land76_output_structured_data', 30);
 
+if (!function_exists('land76wp_skip_unstable_smush_card_lazyload')) {
+  /** Keep one known static related-card image on reliable native lazy loading. */
+  function land76wp_skip_unstable_smush_card_lazyload($skip, $src, $image) {
+    if ($skip) {
+      return true;
+    }
+
+    $markup = (string) $src . ' ' . (is_string($image) ? $image : '');
+    return strpos(
+      $markup,
+      'context-photo-s13-carport-layout-check-card.webp'
+    ) !== false;
+  }
+}
+add_filter('smush_skip_image_from_lazy_load', 'land76wp_skip_unstable_smush_card_lazyload', 99, 3);
+
 
 
 if ( function_exists('acf_add_options_page') ) {

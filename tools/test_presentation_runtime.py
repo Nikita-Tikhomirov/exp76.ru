@@ -623,6 +623,22 @@ class ManagedPresentationRuntimeTests(unittest.TestCase):
         self.assertTrue(derivative.is_file())
         self.assertLess(derivative.stat().st_size, 160_000)
 
+    def test_unstable_static_card_uses_native_instead_of_smush_js_lazyload(self) -> None:
+        """Avoids a known intermittent IntersectionObserver miss in long sessions."""
+        functions = FUNCTIONS.read_text(encoding="utf-8")
+        callback = php_function_body(
+            functions,
+            "land76wp_skip_unstable_smush_card_lazyload",
+        )
+
+        self.assertIn("context-photo-s13-carport-layout-check-card.webp", callback)
+        self.assertIn("return true", callback)
+        self.assertIn(
+            "add_filter('smush_skip_image_from_lazy_load', "
+            "'land76wp_skip_unstable_smush_card_lazyload', 99, 3)",
+            functions,
+        )
+
     def test_managed_pricing_renders_factors_while_legacy_keeps_its_table(self) -> None:
         """Catches managed factor explanations being shown as fake price rows."""
         pricing = section(read_template(), "<!-- 6.", "<!-- 8.")
